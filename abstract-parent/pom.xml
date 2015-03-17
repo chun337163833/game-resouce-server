@@ -7,6 +7,10 @@
 	<name>abstract-parent</name>
 	<url>http://maven.apache.org</url>
 	
+	<properties>
+		<spring.version>4.0.5.RELEASE</spring.version>
+	</properties>
+	
 	<parent>
 		<groupId>com.nex</groupId>
 		<artifactId>module-parent</artifactId>

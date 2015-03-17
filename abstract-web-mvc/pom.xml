@@ -5,12 +5,7 @@
 	<artifactId>abstract-web-mvc</artifactId>
 	<packaging>jar</packaging>
 	<name>abstract-web-mvc</name>
-	<url>http://maven.apache.org</url>
-	
-	<properties>
-		<spring.version>4.0.5.RELEASE</spring.version>
-	</properties>
-	
+	<url>http://maven.apache.org</url>	
 	<parent>
 		<groupId>com.nex</groupId>
 		<artifactId>abstract-parent</artifactId>
@@ -35,7 +30,6 @@
 					<groupId>commons-logging</groupId>
 					<artifactId>commons-logging</artifactId>
 				</exclusion>
-
 			</exclusions>
 		</dependency>
 		<dependency>
@@ -46,11 +40,6 @@
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-aspects</artifactId>
-			<version>${spring.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-orm</artifactId>
 			<version>${spring.version}</version>
 		</dependency>
 		<dependency>

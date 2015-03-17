@@ -13,10 +13,6 @@
 		<version>1.0.0</version>
 		<relativePath>../module-parent</relativePath>
 	</parent>
-
-	<properties>
-		<spring.version>4.0.5.RELEASE</spring.version>
-	</properties>
 	<dependencies>
 		<dependency>
 			<groupId>junit</groupId>

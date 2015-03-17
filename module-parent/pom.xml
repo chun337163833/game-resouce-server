@@ -19,6 +19,7 @@
 	</properties>
 	
 	<modules>
+	
 		<module>../abstract-parent</module>
 		<module>../module-game-domain</module>
 		

@@ -20,7 +20,7 @@
 	</filter>
 	<filter>
 		<filter-name>transactionalFilter</filter-name>
-		<filter-class>com.tmobile.web.filter.TransactionalFilter</filter-class>
+		<filter-class>com.nex.web.filter.TransactionalFilter</filter-class>
 		<async-supported>true</async-supported>
 	</filter>
 	<filter-mapping>
@@ -45,21 +45,21 @@
 			classpath*:META-INF/spring/security/*-security.xml
 		</param-value>
 	</context-param>
-	<servlet>
-		<servlet-name>stompDispatcher</servlet-name>
-		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
-		<init-param>
-			<param-name>contextConfigLocation</param-name>
-			<param-value>classpath:META-INF/spring-mvc/spring-servlet-stomp.xml
-			</param-value>
-		</init-param>
-		<load-on-startup>1</load-on-startup>
-		<async-supported>true</async-supported>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>stompDispatcher</servlet-name>
-		<url-pattern>/stomp/*</url-pattern>
-	</servlet-mapping>
+<!-- 	<servlet> -->
+<!-- 		<servlet-name>stompDispatcher</servlet-name> -->
+<!-- 		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class> -->
+<!-- 		<init-param> -->
+<!-- 			<param-name>contextConfigLocation</param-name> -->
+<!-- 			<param-value>classpath:META-INF/spring-mvc/spring-servlet-stomp.xml -->
+<!-- 			</param-value> -->
+<!-- 		</init-param> -->
+<!-- 		<load-on-startup>1</load-on-startup> -->
+<!-- 		<async-supported>true</async-supported> -->
+<!-- 	</servlet> -->
+<!-- 	<servlet-mapping> -->
+<!-- 		<servlet-name>stompDispatcher</servlet-name> -->
+<!-- 		<url-pattern>/stomp/*</url-pattern> -->
+<!-- 	</servlet-mapping> -->
 	<servlet>
 		<servlet-name>wsDispatcher</servlet-name>
 		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>

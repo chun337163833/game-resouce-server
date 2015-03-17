@@ -20,5 +20,4 @@ public class DefaultEntityManagerAccessor implements EntityManagerAccessor {
 	public EntityManager getEntityManager() {
 		return entityManager;
 	}
-	
 }

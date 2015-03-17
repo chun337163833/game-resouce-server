@@ -59,12 +59,12 @@
 		resource-id="oauthAtlantTaxi" token-services-ref="tokenServices" />
 	
 
-<!-- 	<sec:http  -->
-<!-- 		pattern="/ws/**"  -->
-<!-- 		create-session="never" -->
-<!-- 		entry-point-ref="authenticationEntryPoint" -->
-<!-- 		access-decision-manager-ref="accessDecisionManager"> -->
-<!-- 		<sec:anonymous enabled="false" /> -->
+	<sec:http 
+		pattern="/wsa/**" 
+		create-session="never"
+		entry-point-ref="authenticationEntryPoint"
+		access-decision-manager-ref="accessDecisionManager">
+		<sec:anonymous enabled="false" />
 		
 <!-- 		<sec:intercept-url pattern="/ws/registration/**" access="SCOPE_WRITE,DEVICE_CUSTOMER" /> -->
 		
@@ -74,9 +74,9 @@
 <!-- 		<sec:intercept-url pattern="/ws/**" access="SCOPE_READ" method="GET" /> -->
 <!-- 		<sec:intercept-url pattern="/ws/**" access="SCOPE_WRITE" /> -->
 		
-<!-- 		<sec:custom-filter ref="oauthResourceFilter" before="PRE_AUTH_FILTER" /> -->
-<!-- 		<sec:access-denied-handler ref="oauthAccessDeniedHandler" /> -->
-<!-- 		<sec:expression-handler ref="oauthWebExpressionHandler" /> -->
-<!-- 	</sec:http> -->
+		<sec:custom-filter ref="oauthResourceFilter" before="PRE_AUTH_FILTER" />
+		<sec:access-denied-handler ref="oauthAccessDeniedHandler" />
+		<sec:expression-handler ref="oauthWebExpressionHandler" />
+	</sec:http>
 
 </beans>
