@@ -5,27 +5,7 @@
 	version="2.0">
 		<persistence-unit name="puMainDB" transaction-type="RESOURCE_LOCAL">
 		<provider>org.hibernate.ejb.HibernatePersistence</provider>
-    	<non-jta-data-source>jdbc/db</non-jta-data-source>
-		<class>com.tmobile.domain.Role</class>
-		<class>com.tmobile.domain.TxUser</class>
-		<class>com.tmobile.domain.Dispatcher</class>
-		<class>com.tmobile.domain.Driver</class>
-		<class>com.tmobile.domain.Customer</class>
-		<class>com.tmobile.domain.OtherUser</class>
-		<class>com.tmobile.domain.Car</class>
-		<class>com.tmobile.domain.CarLog</class>
-		<class>com.tmobile.domain.CarUsage</class>
-		<class>com.tmobile.domain.SystemParams</class>
-		<class>com.tmobile.domain.smspayment.SmsPayment</class>
-		<class>com.tmobile.domain.Banner</class>
-		<class>com.tmobile.domain.Company</class>
-		<class>com.tmobile.domain.ChangeLog</class>		
-		<class>com.tmobile.domain.Rating</class>
-		<class>com.tmobile.domain.Tariff</class>
-		<class>com.tmobile.domain.UnfinishedOrderReason</class>
-		<class>com.tmobile.domain.Order</class>
-		<class>com.tmobile.domain.sms.SmsMessage</class>
-						
+    	<non-jta-data-source>jdbc/db</non-jta-data-source>						
 		<exclude-unlisted-classes>true</exclude-unlisted-classes>
 	</persistence-unit>
 </persistence>

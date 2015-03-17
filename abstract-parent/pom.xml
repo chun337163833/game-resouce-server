@@ -8,7 +8,7 @@
 	<url>http://maven.apache.org</url>
 	
 	<parent>
-		<groupId>com.tmobile</groupId>
+		<groupId>com.nex</groupId>
 		<artifactId>module-parent</artifactId>
 		<version>1.0.0</version>
 		<relativePath>../module-parent</relativePath>
@@ -65,7 +65,5 @@
 		<module>../abstract-web-mvc</module>
 		<module>../abstract-rest-ws</module>
 		<module>../abstract-websocket</module>
-		<module>../abstract-integration</module>
-		<module>../security</module>
 	</modules>
 </project>

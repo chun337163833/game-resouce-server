@@ -14,7 +14,7 @@
 	</properties>
 
 	<parent>
-		<groupId>com.tmobile</groupId>
+		<groupId>com.nex</groupId>
 		<artifactId>abstract-parent</artifactId>
 		<version>1.0.0</version>
 		<relativePath>../abstract-parent</relativePath>
@@ -48,9 +48,9 @@
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
-			<groupId>com.tmobile</groupId>
+			<groupId>com.nex</groupId>
 			<artifactId>utils</artifactId>
-			<version>1.0.0</version>
+			<version>${project.version}</version>
 		</dependency>		
 	</dependencies>
 	<build>
@@ -124,7 +124,7 @@
 							<artifactId>spring-aspects</artifactId>
 						</aspectLibrary>
 						<aspectLibrary>
-							<groupId>com.tmobile</groupId>
+							<groupId>com.nex</groupId>
 							<artifactId>utils</artifactId>
 						</aspectLibrary>						
 					</aspectLibraries>
