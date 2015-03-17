@@ -13,8 +13,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.nex.domain.aspect.CommonFieldsAspect.PublishedFieldDeclaration;
 import com.nex.domain.common.Entity;
+import com.nex.domain.injection.CommonFieldsAspect.PublishedFieldDeclaration;
 
 public abstract class DialsController<T extends Entity> extends NestingEntityRestfulCRUDController<T> {
 

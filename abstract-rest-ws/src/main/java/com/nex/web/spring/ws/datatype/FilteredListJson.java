@@ -4,11 +4,11 @@ import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.nex.domain.common.JsonResponse;
+import com.nex.domain.common.JsonObject;
 
 import cz.tsystems.common.data.filter.FilteredList;
 
-public class FilteredListJson<T extends JsonResponse> implements JsonResponse {
+public class FilteredListJson<T extends JsonObject> implements JsonObject {
 
 	public class ListMetadata {
 

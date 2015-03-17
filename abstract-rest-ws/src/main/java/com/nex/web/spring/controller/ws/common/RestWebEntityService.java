@@ -16,15 +16,15 @@ import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.servlet.HandlerMapping;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.nex.annotation.Logger;
-import com.nex.domain.common.JsonResponse;
+import com.nex.domain.common.JsonObject;
+import com.nex.logging.injection.Logger;
 import com.nex.utils.ReflectionUtils;
 import com.nex.web.spring.ws.error.FieldError;
 import com.nex.web.spring.ws.error.ValidationErrors;
 import com.nex.web.spring.ws.exception.ServerErrorException;
 
 @Logger
-public class RestWebEntityService<T extends JsonResponse> {
+public class RestWebEntityService<T extends JsonObject> {
 
 	@ModelAttribute("entity")
 	public T findEntity(@RequestBody(required=false) String body) {

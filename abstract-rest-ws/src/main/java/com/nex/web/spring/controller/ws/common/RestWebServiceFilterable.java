@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.slf4j.LoggerFactory;
 
-import com.nex.domain.common.JsonResponse;
+import com.nex.domain.common.JsonObject;
 
 import cz.tsystems.common.data.filter.Filter;
 import cz.tsystems.common.data.filter.FilterUtil;
@@ -19,7 +19,7 @@ import cz.tsystems.common.data.filter.Sort;
 import cz.tsystems.common.data.filter.SortDirection;
 
 //@Logger
-public abstract class RestWebServiceFilterable<T extends JsonResponse> extends RestWebEntityService<T> {
+public abstract class RestWebServiceFilterable<T extends JsonObject> extends RestWebEntityService<T> {
 
 	private String defaultSortProperty = "id";
 	private SortDirection defaultSortDirection = SortDirection.ASC;

@@ -7,7 +7,7 @@ import java.io.InputStream;
 import java.security.KeyStore;
 import java.security.KeyStoreException;
 
-import com.nex.annotation.Logger;
+import com.nex.logging.injection.Logger;
 
 @Logger
 public class FileSslCertificate implements  SSLCertificateDelegate {

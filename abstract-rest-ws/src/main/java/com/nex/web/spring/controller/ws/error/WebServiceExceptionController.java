@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.client.HttpStatusCodeException;
 
-import com.nex.annotation.Logger;
-import com.nex.domain.common.JsonResponse;
+import com.nex.domain.common.JsonObject;
+import com.nex.logging.injection.Logger;
 import com.nex.web.spring.ws.error.HttpStatusError;
 import com.nex.web.spring.ws.exception.RestWebServiceException;
 @Controller
@@ -28,7 +28,7 @@ public class WebServiceExceptionController {
 	}
 	
 	@ExceptionHandler({ RestWebServiceException.class })
-	public @ResponseBody JsonResponse handleValidationErrorsRequest(RestWebServiceException e, HttpServletResponse response) {
+	public @ResponseBody JsonObject handleValidationErrorsRequest(RestWebServiceException e, HttpServletResponse response) {
 		response.setStatus(e.getStatusCode().value());
 		return e.getResponse();
 	}

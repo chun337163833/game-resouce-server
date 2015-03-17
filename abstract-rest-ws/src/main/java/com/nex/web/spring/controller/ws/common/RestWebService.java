@@ -13,11 +13,11 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.nex.annotation.Logger;
 import com.nex.domain.common.Entity;
-import com.nex.domain.common.JsonResponse;
+import com.nex.domain.common.JsonObject;
 import com.nex.environment.Environment;
 import com.nex.environment.EnvironmentType;
+import com.nex.logging.injection.Logger;
 import com.nex.web.spring.ws.datatype.FilteredListJson;
 import com.nex.web.spring.ws.exception.MethodNotAllowedException;
 import com.nex.web.spring.ws.exception.RestWebServiceException;
@@ -27,7 +27,7 @@ import cz.tsystems.common.data.filter.FilterUtil;
 import cz.tsystems.common.data.filter.RequestBasedFilter;
 
 @Logger
-public abstract class RestWebService<T extends JsonResponse> extends RestWebServiceFilterable<T> {
+public abstract class RestWebService<T extends JsonObject> extends RestWebServiceFilterable<T> {
 	
 	@Resource(name = "jpqlfilter")
 	private FilterUtil jpqlFilter;

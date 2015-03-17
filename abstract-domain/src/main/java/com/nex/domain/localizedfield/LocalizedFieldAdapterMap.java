@@ -9,7 +9,7 @@ import java.util.Set;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.nex.domain.annotation.ShortString;
+import com.nex.domain.injection.ShortString;
 
 public class LocalizedFieldAdapterMap implements Map<String, String> {
 	private Logger log = LoggerFactory.getLogger(LocalizedFieldAdapterMap.class);

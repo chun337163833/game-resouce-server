@@ -3,9 +3,9 @@ package com.nex.web.spring.ws.error;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.nex.domain.common.JsonResponse;
+import com.nex.domain.common.JsonObject;
 
-public class ValidationErrors implements JsonResponse {
+public class ValidationErrors implements JsonObject {
 
 	private static final long serialVersionUID = 1L;
 
