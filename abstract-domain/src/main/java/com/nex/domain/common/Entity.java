@@ -1,7 +1,7 @@
 package com.nex.domain.common;
 
 
-public interface Entity extends JsonObject {
+public interface Entity {
 
 	Object getId();
 	Entity merge();

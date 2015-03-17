@@ -56,7 +56,7 @@
 			<groupId>com.nex</groupId>
 			<artifactId>utils</artifactId>
 			<version>${project.version}</version>
-		</dependency>		
+		</dependency>
 	</dependencies>
 	<build>
 		<plugins>
@@ -131,7 +131,7 @@
 						<aspectLibrary>
 							<groupId>com.nex</groupId>
 							<artifactId>utils</artifactId>
-						</aspectLibrary>						
+						</aspectLibrary>
 					</aspectLibraries>
 					<source>${java.version}</source>
 					<target>${java.version}</target>

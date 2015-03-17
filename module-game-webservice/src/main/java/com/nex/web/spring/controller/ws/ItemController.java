@@ -3,13 +3,11 @@ package com.nex.web.spring.controller.ws;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-@RestController
-@RequestMapping
-public class TestWs {
+import com.nex.game.domain.Item;
+import com.nex.web.spring.controller.ws.common.RestWebService;
 
-	@RequestMapping
-	public TestObject test() {
-		return new TestObject("hello");
-	}
-	
+@RestController
+@RequestMapping("/item")
+public class ItemController extends RestWebService<Item> {
+
 }

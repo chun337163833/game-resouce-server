@@ -32,7 +32,7 @@ public abstract class RestWebService<T extends JsonObject> extends RestWebServic
 	@Resource(name = "jpqlfilter")
 	private FilterUtil jpqlFilter;
 
-	@RequestMapping(value="/", method = RequestMethod.GET)
+	@RequestMapping(value={"/", ""}, method = RequestMethod.GET)
 	@Transactional(readOnly = true)
 	public FilteredListJson<T> list(HttpServletRequest request, HttpServletResponse response) {
 		RequestBasedFilter filter = createFilter(request);
@@ -46,7 +46,7 @@ public abstract class RestWebService<T extends JsonObject> extends RestWebServic
 		return new FilteredListJson<T>(getListFilter(this.jpqlFilter, filter));
 	}
 	
-	@RequestMapping(value="/", method = RequestMethod.POST, headers = { "content-type=application/json" })
+	@RequestMapping(value={"/", ""}, method = RequestMethod.POST, headers = { "content-type=application/json" })
 	@Transactional(propagation = Propagation.REQUIRES_NEW, noRollbackFor = { RestWebServiceException.class, ServerErrorException.class })
 	public T _create(@ModelAttribute("entity") @Valid T data, Errors errors) {
 		if (errors.hasErrors()) {

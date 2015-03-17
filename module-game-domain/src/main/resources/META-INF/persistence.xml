@@ -6,6 +6,7 @@
 		<persistence-unit name="puMainDB" transaction-type="RESOURCE_LOCAL">
 		<provider>org.hibernate.ejb.HibernatePersistence</provider>
     	<non-jta-data-source>jdbc/db</non-jta-data-source>						
+		<class>com.nex.game.domain.Item</class>
 		<exclude-unlisted-classes>true</exclude-unlisted-classes>
 	</persistence-unit>
 </persistence>
