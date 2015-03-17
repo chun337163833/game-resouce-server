@@ -9,7 +9,6 @@ import javax.persistence.Column;
 import javax.persistence.Transient;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.nex.domain.annotation.Modifiable;
 
 public aspect ModificationInfoAspect {
 	
@@ -36,6 +35,7 @@ public aspect ModificationInfoAspect {
 	private Calendar ModificationInfo.createdOn;
 
 	declare parents: @Modifiable * implements ModificationInfo;
+	declare parents: @ModifiableWithCustomListener * implements ModificationInfo;
 
 	@Column(name = "MODIFIED_ON")
 	@Access(AccessType.PROPERTY)

@@ -5,14 +5,23 @@ import java.util.Base64;
 import org.junit.Assert;
 import org.junit.Test;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.nex.http.HttpResponse;
 import com.nex.http.HttpRestClient;
 import com.nex.http.HttpRestClient.RequestMethod;
 import com.nex.http.oauth.OAuthClient;
 import com.nex.http.oauth.OAuthClient.Token;
+import com.nex.web.spring.controller.ws.TestObject;
 
 public class RestTest {
 
+	@Test
+	public void testJson() throws Exception {
+		ObjectMapper mapper = new ObjectMapper();
+		TestObject to = mapper.readValue("{\"obj\":{\"testEnum\":0}}", TestObject.class);
+		System.out.println(to);
+	}
+	
 	
 	@Test
 	public void test() throws Exception {
@@ -29,5 +38,7 @@ public class RestTest {
 		.setPassword("test");
 		return cl.getToken();
 	}
+	
+	
 	
 }

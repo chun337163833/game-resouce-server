@@ -1,4 +1,4 @@
-package com.nex.domain.annotation;
+package com.tmobile.domain.modification;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
@@ -7,10 +7,12 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
+import javax.persistence.EntityListeners;
+
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
 @Inherited
 @Documented
-public @interface Modifiable {
+public @interface ModifiableWithCustomListener {
 
 }

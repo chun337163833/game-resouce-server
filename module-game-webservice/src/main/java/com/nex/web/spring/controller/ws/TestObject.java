@@ -1,11 +1,17 @@
 package com.nex.web.spring.controller.ws;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class TestObject {
 
+	private NestetObject obj;
+
 	private String text;
+
+	public TestObject() {
+		// TODO Auto-generated constructor stub
+	}
+
 	public TestObject(String text) {
 		super();
 		this.text = text;
@@ -23,5 +29,13 @@ public class TestObject {
 	public String getImprovedText() {
 		return this.text + " is improved";
 	}
-	
+
+	public NestetObject getObj() {
+		return obj;
+	}
+
+	public void setObj(NestetObject obj) {
+		this.obj = obj;
+	}
+
 }

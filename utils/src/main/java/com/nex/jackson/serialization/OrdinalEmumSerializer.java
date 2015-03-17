@@ -1,4 +1,4 @@
-package com.nex.domain.json.serialization;
+package com.nex.jackson.serialization;
 
 import java.io.IOException;
 
