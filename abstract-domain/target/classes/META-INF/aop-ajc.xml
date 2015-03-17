@@ -1,0 +1,11 @@
+<aspectj>
+<aspects>
+<aspect name="com.tmobile.domain.aspect.CommonFieldsAspect"/>
+<aspect name="com.tmobile.domain.aspect.LocalizedFieldClobAspect"/>
+<aspect name="com.tmobile.domain.modification.ModificationInfoAspect"/>
+<aspect name="com.tmobile.domain.aspect.LocalizedFieldNormalAspect"/>
+<aspect name="com.tmobile.domain.aspect.EntityInterfaceAspect"/>
+<aspect name="com.tmobile.domain.aspect.LocalizedEntityAspect"/>
+</aspects>
+</aspectj>
+
