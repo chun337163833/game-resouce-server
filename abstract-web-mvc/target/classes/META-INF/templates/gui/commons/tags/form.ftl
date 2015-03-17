@@ -219,7 +219,7 @@
 	<#local required=_fieldModel.isRequired(_showRequireIndex)>
 	
 	<#if !util.isNull(_labelText)>
-		<label for="com.tmobile:abstract-web-mvc:jar:1.0.0" class="label<#if _fieldError!false> error</#if>">${_labelText}<#t><#if renderColon>:</#if><#if required>&nbsp;<span class="req">*</span></#if></label>
+		<label for="com.nex:abstract-web-mvc:jar:1.0.0" class="label<#if _fieldError!false> error</#if>">${_labelText}<#t><#if renderColon>:</#if><#if required>&nbsp;<span class="req">*</span></#if></label>
 		<#if breakLabel>
 		<br/>
 		</#if>

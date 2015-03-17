@@ -1,0 +1,37 @@
+/* ICONS */
+.ico { display:inline-block; overflow:hidden; vertical-align:middle; background:50% 50% no-repeat; }
+.ico { width:16px; height:16px; margin-top:-2px; }
+
+.ico-person { background-image:url('../img/icon/person-white.png'); }
+.ico-login { background-image:url('../img/icon/login-white.png'); }
+.ico-logout { background-image:url('../img/icon/logout-white.png'); }
+
+.ico-prev { background-image:url('../img/icon/arrow-prev.png'); }
+.ico-next { background-image:url('../img/icon/arrow-next.png'); }
+
+.ico-sort-down { background-image:url('../img/icon/sort-down.png'); }
+.ico-sort-up { background-image:url('../img/icon/sort-up.png'); }
+
+.ico-unpack { background-image:url('../img/icon/arrow-unpack.png'); }
+.ico-pack { background-image:url('../img/icon/arrow-pack.png'); }
+
+.ico-storno { background-image:url('../img/icon/storno.png'); }
+.ico-lock-storno { background-image:url('../img/icon/storno-bw.png'); }
+.ico-cancel { background-image:url('../img/icon/cancel.png'); }
+.ico-lock-cancel { background-image:url('../img/icon/cancel-bw.png'); }
+.ico-edit { background-image:url('../img/icon/edit.png'); }
+.ico-add { background-image:url('../img/icon/add.png'); margin-top:-3px; }
+
+.ico-public { background-image:url('../img/icon/state-public.png'); }
+.ico-unpublic { background-image:url('../img/icon/state-unpublic.png'); }
+
+.ico-user { background-image:url('../img/icon/person.png'); }
+.ico-time { background-image:url('../img/icon/time.png'); }
+
+.ico-crash-point { background-image:url('../img/icon/crash-point.png'); }
+
+/* FLAGS */
+.ico-lang-cs { background-image:url('../img/icon/flag/cs.png'); }
+.ico-lang-en { background-image:url('../img/icon/flag/en.png'); }
+.ico-lang-de { background-image:url('../img/icon/flag/de.png'); }
+.ico-lang-ru { background-image:url('../img/icon/flag/ru.png'); }
