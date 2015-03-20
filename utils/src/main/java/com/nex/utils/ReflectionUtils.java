@@ -49,6 +49,55 @@ public class ReflectionUtils extends org.springframework.util.ReflectionUtils {
 		}
 	}
 
+	public static void setNestedValue(String path, Object instance, Object value) throws Exception {
+		String[] keys = path.split("\\.");
+		if(keys.length == 1) {
+			setValue(path, instance, value);
+			return;
+		}
+		Object source = instance;
+		for(int i = 0; i < keys.length; i++) {
+			String k = keys[i];
+			Class<?> iclass = source.getClass();
+			Field f = iclass.getDeclaredField(k);
+			Object ivalue = getFieldValue(f, source);
+			if(i == keys.length - 1) {
+				setValue(k, source, value);
+			} else if(ivalue == null) {
+				ivalue = f.getType().newInstance();
+				setNestedValue(k, instance, ivalue);
+			}
+			
+			source = ivalue;
+		}
+	}
+	
+	public static void setValue(String path, Object instance, Object value) throws Exception {
+		Field f = findDeclaredField(instance.getClass(), path);
+		if(f == null) {
+			log.warn(String.format("No field $1%s found on class $2%s", path, instance.getClass().getSimpleName()));
+			return;
+		}
+		boolean accesible = f.isAccessible();
+		try {
+			f.setAccessible(true);
+			f.set(instance, value);
+		} finally {
+			f.setAccessible(accesible);
+		}
+	}
+	
+	public static Field findDeclaredField(Class<?> instance, String fieldName) throws NoSuchFieldException, SecurityException {
+		try {
+			return instance.getDeclaredField(fieldName);
+		} catch (NoSuchFieldException e) {
+			Class<?> superClass = instance.getSuperclass();
+			if(!superClass.equals(Object.class))
+			return findDeclaredField(superClass, fieldName);
+		}
+		return null;
+	}
+	
 	public static ArrayMetadata getArrayData(String key) {
 		ArrayMetadata metadata = new ArrayMetadata();
 		String[] spl = key.split("\\[|\\]");

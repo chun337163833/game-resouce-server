@@ -4,7 +4,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.nex.game.domain.Item;
-import com.nex.web.spring.controller.ws.common.RestWebService;
+import com.nex.web.spring.ws.direct.controller.RestWebService;
 
 @RestController
 @RequestMapping("/item")

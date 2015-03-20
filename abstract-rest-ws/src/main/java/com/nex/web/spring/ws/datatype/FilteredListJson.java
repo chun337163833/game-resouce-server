@@ -8,7 +8,7 @@ import com.nex.domain.common.JsonObject;
 
 import cz.tsystems.common.data.filter.FilteredList;
 
-public class FilteredListJson<T extends JsonObject> implements JsonObject {
+public class FilteredListJson implements JsonObject {
 
 	public class ListMetadata {
 
@@ -16,10 +16,8 @@ public class FilteredListJson<T extends JsonObject> implements JsonObject {
 		private long pageSize;
 		private long pageCount = 1;
 		private long page;
-
-		public ListMetadata(FilteredList<T> filter) {
+		public ListMetadata(FilteredList<?> filter, List<?> data) {
 			this.fullSize = filter.getFullDataSize();
-			List<T> data = filter.getData();
 			if (data != null) {
 				this.pageSize = data.size();
 			}
@@ -27,6 +25,10 @@ public class FilteredListJson<T extends JsonObject> implements JsonObject {
 				this.pageCount = filter.getPageCount();
 			}
 			this.page = filter.getCurrentPage();
+		}
+		
+		public ListMetadata(FilteredList<?> filter) {
+			this(filter, filter.getData());
 		}
 
 		public long getFullSize() {
@@ -66,16 +68,23 @@ public class FilteredListJson<T extends JsonObject> implements JsonObject {
 	private static final long serialVersionUID = 1L;
 
 	@JsonIgnore
-	private FilteredList<T> filter;
-
-	public FilteredListJson(FilteredList<T> filter) {
+	private FilteredList<?> filter;
+	
+	@JsonIgnore
+	private List<?> data;
+	
+	public FilteredListJson(FilteredList<?> filter) {
+		this(filter, filter.getData());
+	}
+	public FilteredListJson(FilteredList<?> filter, List<?> data) {
 		super();
 		this.filter = filter;
+		this.data = data;
 	}
 
 	@JsonProperty("data")
-	public List<T> getData() {
-		return this.filter.getData();
+	public List<?> getData() {
+		return this.data;
 	}
 
 	@JsonProperty("metadata")
