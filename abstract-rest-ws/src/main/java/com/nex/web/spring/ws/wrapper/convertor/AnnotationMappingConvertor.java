@@ -1,6 +1,7 @@
 package com.nex.web.spring.ws.wrapper.convertor;
 
 import java.lang.annotation.Annotation;
+import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
@@ -15,6 +16,7 @@ import com.nex.web.spring.ws.wrapper.convertor.annotation.BeforeWrapper;
 import com.nex.web.spring.ws.wrapper.convertor.annotation.WrapperIgnore;
 import com.nex.web.spring.ws.wrapper.convertor.annotation.WrapperProperty;
 import com.nex.web.spring.ws.wrapper.convertor.annotation.WrapperRelation;
+
 
 @Logger
 public class AnnotationMappingConvertor<E extends Object, W extends Object> extends AbstractEntityConvertor<E, W> {
@@ -119,12 +121,11 @@ public class AnnotationMappingConvertor<E extends Object, W extends Object> exte
 						relationValue = f.getName();
 					}
 					String idName = relation.idName();
-					@SuppressWarnings("unchecked")
-					FinderService<Object> service = (FinderService<Object>) relation.service().newInstance();
 					Field tfield = ReflectionUtils.findField(entity.getClass(), relationValue);
 					@SuppressWarnings("unchecked")
 					Class<Object> nestedEntityClass = (Class<Object>) tfield.getType();
-					service.setTargetClass(nestedEntityClass);
+					FinderService<? extends Object> service = this.createFinderInstance(relation.service(), nestedEntityClass);
+					
 					if(property == null) {
 						Object nestedWrapper = ReflectionUtils.getFieldValue(f, wrapper);
 						if (nestedWrapper == null) {
@@ -137,7 +138,7 @@ public class AnnotationMappingConvertor<E extends Object, W extends Object> exte
 							
 							@SuppressWarnings("unchecked")
 							Class<Object> nestedWrapperClass = (Class<Object>) f.getType();
-							AnnotationMappingConvertor<Object, Object> nestedConvertor = new AnnotationMappingConvertor<Object, Object>(nestedEntityClass, nestedWrapperClass);
+							AnnotationMappingConvertor<Object, Object> nestedConvertor = new AnnotationMappingConvertor<>(nestedEntityClass, nestedWrapperClass);
 							nestedConvertor.updateEntity(nestedEntity, nestedWrapper);
 						}
 					} else {
@@ -171,6 +172,17 @@ public class AnnotationMappingConvertor<E extends Object, W extends Object> exte
 		}
 	}
 
+	@SuppressWarnings("unchecked")
+	private FinderService<? extends Object> createFinderInstance(Class<? extends FinderService<? extends Object>> sclass, Class<Object> argument) throws InstantiationException, IllegalAccessException {
+		try {
+			Constructor<?> c = sclass.getDeclaredConstructor(argument.getClass());
+			return (FinderService<? extends Object>) c.newInstance(argument);
+		} catch (Exception e) {
+			log.warn("No constructor found with argument of type " + argument.getClass() + " of class " + sclass);
+		}
+		return sclass.newInstance();
+	}
+	
 	@Override
 	public E convertToEntity(W wrapper) throws WrapperConversionException {
 		try {
