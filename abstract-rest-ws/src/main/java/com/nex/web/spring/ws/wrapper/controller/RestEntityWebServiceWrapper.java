@@ -1,11 +1,8 @@
 package com.nex.web.spring.ws.wrapper.controller;
 
-import java.lang.reflect.Method;
 import java.lang.reflect.ParameterizedType;
 import java.util.List;
 import java.util.Map;
-
-import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.validation.Errors;
 import org.springframework.validation.ObjectError;
@@ -19,23 +16,25 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.nex.domain.common.Entity;
 import com.nex.domain.common.JsonObject;
 import com.nex.logging.injection.Logger;
-import com.nex.utils.ReflectionUtils;
 import com.nex.web.spring.ws.error.FieldError;
 import com.nex.web.spring.ws.error.ValidationErrors;
 import com.nex.web.spring.ws.exception.ServerErrorException;
+import com.nex.web.spring.ws.wrapper.RooBasedEntityFinderService;
 import com.nex.web.spring.ws.wrapper.convertor.WrapperConvertor;
 
 @Logger
 public abstract class RestEntityWebServiceWrapper<E extends Entity, W extends JsonObject> {
-	
+	private RooBasedEntityFinderService<E> finderService = new RooBasedEntityFinderService<>(
+			getEntityClass());
+
 	@ModelAttribute("entity")
-	public E findEntity(@RequestBody(required=false) String body) {
+	public E findEntity(@RequestBody(required = false) String body) {
 		String id = getPathVariables().get("id");
-		if(id == null && body == null) {
+		if (id == null && body == null) {
 			return null;
 		} else if (id == null) {
 			return this.updateEntity(createNewEntity(), body);
-		} else if(body != null) {
+		} else if (body != null) {
 			return this.updateEntity(findEntityById(id), body);
 		} else {
 			return findEntityById(id);
@@ -53,8 +52,9 @@ public abstract class RestEntityWebServiceWrapper<E extends Entity, W extends Js
 			throw new ServerErrorException(e.getMessage());
 		}
 	}
+
 	public abstract WrapperConvertor<E, W> getConvertor();
-	
+
 	protected E createNewEntity() {
 		try {
 			return (E) getEntityClass().newInstance();
@@ -64,39 +64,25 @@ public abstract class RestEntityWebServiceWrapper<E extends Entity, W extends Js
 		}
 	}
 
-	protected E findEntityWithId(HttpServletRequest request, String id) {
-		return findEntityById(id);
-	}
-
 	public E findEntityById(String id) {
-		Class<E> entityClass = getEntityClass();
-		String findByIdMethodName = "find" + entityClass.getSimpleName();
-		Method findByIdMethod = ReflectionUtils.findMethod(entityClass,
-				findByIdMethodName, Long.class);
-		@SuppressWarnings("unchecked")
-		E entity = (E) ReflectionUtils.invokeMethod(findByIdMethod, null,
-				new Long(id));
-		if (entity == null) {
-			throw new ServerErrorException("Entity "
-					+ entityClass.getSimpleName() + " with id=" + id
-					+ " not found.");
-		}
-		return entity;
+		return this.finderService.findById(id);
 	}
 
 	public ValidationErrors convertErrorsToJson(Errors errors) {
 		ValidationErrors e = new ValidationErrors();
 		e.setStatus("validation");
-		e.setMessage(getEntityClass().getSimpleName() + " is not valid, see errors for more.");
+		e.setMessage(getEntityClass().getSimpleName()
+				+ " is not valid, see errors for more.");
 		this.fillErrors(e, errors.getAllErrors());
 		return e;
 	}
-	
-	private void fillErrors(ValidationErrors e,  List<ObjectError> errors) {
-		for(ObjectError err: errors) {
+
+	private void fillErrors(ValidationErrors e, List<ObjectError> errors) {
+		for (ObjectError err : errors) {
 			FieldError fe = new FieldError();
-			if(err instanceof org.springframework.validation.FieldError) {
-				fe.setName(((org.springframework.validation.FieldError)err).getField());
+			if (err instanceof org.springframework.validation.FieldError) {
+				fe.setName(((org.springframework.validation.FieldError) err)
+						.getField());
 			} else {
 				fe.setName(err.getObjectName());
 			}
@@ -104,17 +90,19 @@ public abstract class RestEntityWebServiceWrapper<E extends Entity, W extends Js
 			e.getErrors().add(fe);
 		}
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	public Class<E> getEntityClass() {
 		return (Class<E>) ((ParameterizedType) getClass()
 				.getGenericSuperclass()).getActualTypeArguments()[0];
 	}
+
 	@SuppressWarnings("unchecked")
 	public Class<W> getJsonClass() {
 		return (Class<W>) ((ParameterizedType) getClass()
 				.getGenericSuperclass()).getActualTypeArguments()[1];
 	}
+
 	public static Map<String, String> getPathVariables() {
 		RequestAttributes requestAttributes = RequestContextHolder
 				.getRequestAttributes();
@@ -124,5 +112,5 @@ public abstract class RestEntityWebServiceWrapper<E extends Entity, W extends Js
 						RequestAttributes.SCOPE_REQUEST);
 		return uriTemplateVariables;
 	}
-	
+
 }

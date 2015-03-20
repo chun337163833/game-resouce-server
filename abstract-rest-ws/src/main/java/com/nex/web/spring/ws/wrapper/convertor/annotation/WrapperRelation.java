@@ -7,8 +7,8 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
+import com.nex.web.spring.ws.wrapper.BasicRooBasedEntityFinderService;
 import com.nex.web.spring.ws.wrapper.FinderService;
-import com.nex.web.spring.ws.wrapper.RooBasedEntityFinderService;
 
 @Target(ElementType.FIELD)
 @Retention(RetentionPolicy.RUNTIME)
@@ -32,7 +32,7 @@ public @interface WrapperRelation {
 	 * Finder service is used for finding persistence object when converting wrapper to target object
 	 * @return
 	 */
-	Class<? extends FinderService<? extends Object>> service() default RooBasedEntityFinderService.class;
+	Class<? extends FinderService<? extends Object>> service() default BasicRooBasedEntityFinderService.class;
 	
 	/**
 	 * When true allow injecting nested properties of target nested object, 
