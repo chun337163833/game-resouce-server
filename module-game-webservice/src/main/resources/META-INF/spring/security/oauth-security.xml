@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:sec="http://www.springframework.org/schema/security" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:sec="http://www.springframework.org/schema/security" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:jee="http://www.springframework.org/schema/jee"
 	xmlns:oauth="http://www.springframework.org/schema/security/oauth2"
 	xmlns:context="http://www.springframework.org/schema/context"
 	xmlns:p="http://www.springframework.org/schema/p"
-	xsi:schemaLocation="http://www.springframework.org/schema/beans
+	xsi:schemaLocation="http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-2.5.xsd
+						http://www.springframework.org/schema/beans
                       http://www.springframework.org/schema/beans/spring-beans.xsd
 					  http://www.springframework.org/schema/security/oauth2
 					  http://www.springframework.org/schema/security/spring-security-oauth2.xsd
@@ -13,7 +16,8 @@
 					  http://www.springframework.org/schema/context/spring-context.xsd
 					  http://www.springframework.org/schema/security
 					  http://www.springframework.org/schema/security/spring-security.xsd">
-
+	<jee:jndi-lookup jndi-name="jdbc/oauth" id="oauthDataSource"
+		lookup-on-startup="true" cache="true" />
 	<bean id="tokenStore"
 		class="org.springframework.security.oauth2.provider.token.store.JdbcTokenStore">
 		<constructor-arg name="dataSource" ref="oauthDataSource" />
@@ -56,7 +60,7 @@
 		<sec:expression-handler ref="oauthExpressionHandler" />
 	</sec:global-method-security>
 	<oauth:resource-server id="oauthResourceFilter"
-		resource-id="oauthAtlantTaxi" token-services-ref="tokenServices" />
+		resource-id="oauthGame" token-services-ref="tokenServices" />
 	
 
 	<sec:http 
