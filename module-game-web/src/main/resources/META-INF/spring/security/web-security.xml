@@ -10,11 +10,14 @@
 	<http pattern="/web/resources/**" security="none"/>
 	<http pattern="/web/error/**" security="none"/>
 	
-	<http pattern="/web/**" auto-config="true" >
+	<http pattern="/web/**" auto-config="true">
 		<intercept-url pattern="/web/login-form" access="ROLE_ANONYMOUS" />
 		<intercept-url pattern="/web/login-failed" access="ROLE_ANONYMOUS" />
+		<intercept-url pattern="/web/test/send" access="ROLE_ANONYMOUS" />
+		<intercept-url pattern="/web/admin/**" access="ROLE_ADMIN" />
+		<intercept-url pattern="/web/dial/**" access="ROLE_DISPATCHER,ROLE_ADMIN" />
 		
-		<intercept-url pattern="/web/**" access="ROLE_ADMIN" />
+		<intercept-url pattern="/web/**" access="ROLE_DISPATCHER,ROLE_ADMIN" />
 		
 		<form-login login-page="/web/login-form" 
 					default-target-url="/"
@@ -25,6 +28,7 @@
 		
 		<logout logout-success-url="/web/login-form" logout-url="/web/j_spring_security_logout" />
 	</http>	
+	
 	<authentication-manager>
 	   <authentication-provider>
 	   	<password-encoder hash="sha-256">

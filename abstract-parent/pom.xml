@@ -6,13 +6,14 @@
 	<packaging>pom</packaging>
 	<name>abstract-parent</name>
 	<url>http://maven.apache.org</url>
-	
+
 	<properties>
 		<spring.version>4.0.5.RELEASE</spring.version>
+		<hibernate.entitymanager.version>4.3.8.Final</hibernate.entitymanager.version>
 	</properties>
 	
 	<parent>
-		<groupId>com.nex</groupId>
+		<groupId>org.shovelgame</groupId>
 		<artifactId>module-parent</artifactId>
 		<version>1.0.0</version>
 		<relativePath>../module-parent</relativePath>
@@ -39,6 +40,12 @@
 			<groupId>org.springframework.roo</groupId>
 			<artifactId>org.springframework.roo.annotations</artifactId>
 			<version>${roo.version}</version>
+		</dependency>	
+		<!-- Spring -->
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-web</artifactId>
+			<version>${spring-security.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.security</groupId>
@@ -47,23 +54,19 @@
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.security</groupId>
-			<artifactId>spring-security-core</artifactId>
+			<artifactId>spring-security-taglibs</artifactId>
 			<version>${spring-security.version}</version>
 		</dependency>
 		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-context</artifactId>
-			<version>${spring.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-expression</artifactId>
-			<version>${spring.version}</version>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-core</artifactId>
+			<version>${spring-security.version}</version>
 		</dependency>
 	</dependencies>
 	
 	<modules>
 		<module>../utils</module>
+		<module>../jpqlfilter</module>
 		<module>../abstract-domain</module>
 		<module>../abstract-web-mvc</module>
 		<module>../abstract-rest-ws</module>

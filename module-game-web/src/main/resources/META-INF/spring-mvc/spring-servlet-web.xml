@@ -15,25 +15,29 @@
 	<context:annotation-config />
 	<mvc:resources mapping="/resources/**" location="/WEB-INF/resources/" />
 
-	<context:component-scan base-package="com.nex.web.spring.controller.web">
+	<context:component-scan base-package="org.shovelgame.web.spring.controller.web">
 		<context:include-filter expression="org.springframework.stereotype.Controller"
 			type="annotation" />
 	</context:component-scan>
+	
+	<bean id="dialsMenu" class="org.shovelgame.web.menu.MenuFactory"
+	p:scanPackage="org.shovelgame.web.spring.controller.web.dials" />
 
 	<mvc:interceptors>
 		<bean class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor"
 			p:paramName="lang" />
+		<bean class="org.shovelgame.web.spring.interceptor.PrivilegeEvaluatorResolverInterceptor" />	
 	</mvc:interceptors>
 	<bean id="localeResolver"
 		class="org.springframework.web.servlet.i18n.CookieLocaleResolver">
-		<property name="defaultLocale" value="en" />
+		<property name="defaultLocale" value="cs" />
 	</bean>
 	<!-- View resolvers can also be configured with ResourceBundles or XML files. 
 		If you need different view resolving based on Locale, you have to use the 
 		resource bundle resolver. -->
 	<bean id="viewResolver"
 		class="org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver">
-		<property name="viewClass" value="com.nex.web.spring.view.FreemarkerView" />
+		<property name="viewClass" value="org.shovelgame.web.spring.view.FreemarkerView" />
 		<property name="cache" value="true" />
 		<property name="prefix" value="" />
 		<property name="contentType" value="text/html;charset=UTF-8" />
@@ -44,5 +48,6 @@
 		validator="validatorFactory" />
 	<bean id="webBindingInitializer"
 		class="org.springframework.web.bind.support.ConfigurableWebBindingInitializer"
-		p:validator-ref="validatorFactory" p:conversionService-ref="conversionService" />
+		p:validator-ref="validatorFactory" p:conversionService-ref="conversionService" >	
+	</bean>
 </beans>

@@ -6,26 +6,32 @@
 	<packaging>jar</packaging>
 	<name>abstract-web-mvc</name>
 	<url>http://maven.apache.org</url>
+	
 	<parent>
-		<groupId>com.nex</groupId>
+		<groupId>org.shovelgame</groupId>
 		<artifactId>abstract-parent</artifactId>
 		<version>1.0.0</version>
 		<relativePath>../abstract-parent</relativePath>
 	</parent>
-
+	
 	<dependencies>
 		<dependency>
-			<groupId>com.nex</groupId>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.11</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.shovelgame</groupId>
 			<artifactId>utils</artifactId>
 			<version>${project.version}</version>
 		</dependency>
 		<dependency>
-			<groupId>javax.servlet</groupId>
-			<artifactId>servlet-api</artifactId>
-			<version>3.0-alpha-1</version>
-			<scope>provided</scope>
+			<groupId>org.shovelgame</groupId>
+			<artifactId>jpqlfilter</artifactId>
+			<version>${project.version}</version>
 		</dependency>
-		
+		<!-- Spring -->
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-context</artifactId>
@@ -36,6 +42,7 @@
 					<groupId>commons-logging</groupId>
 					<artifactId>commons-logging</artifactId>
 				</exclusion>
+
 			</exclusions>
 		</dependency>
 		<dependency>
@@ -54,7 +61,6 @@
 			<version>${spring.version}</version>
 		</dependency>
 
-		<!-- web dependencies -->
 		<dependency>
 			<groupId>org.freemarker</groupId>
 			<artifactId>freemarker</artifactId>
@@ -66,19 +72,15 @@
 			<version>2.4.2</version>
 		</dependency>
 		<dependency>
-			<groupId>com.nex</groupId>
+			<groupId>org.shovelgame</groupId>
 			<artifactId>abstract-domain</artifactId>
-			<version>1.0.0</version>
+			<version>${project.version}</version>
 		</dependency>
 		<dependency>
-			<groupId>org.springframework.security</groupId>
-			<artifactId>spring-security-web</artifactId>
-			<version>${spring-security.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.security</groupId>
-			<artifactId>spring-security-taglibs</artifactId>
-			<version>${spring-security.version}</version>
+			<groupId>javax.servlet</groupId>
+			<artifactId>servlet-api</artifactId>
+			<version>3.0-alpha-1</version>
+			<scope>provided</scope>
 		</dependency>
 	</dependencies>
 	<build>
@@ -138,7 +140,7 @@
 							<artifactId>spring-aspects</artifactId>
 						</aspectLibrary>
 						<aspectLibrary>
-							<groupId>com.nex</groupId>
+							<groupId>org.shovelgame</groupId>
 							<artifactId>utils</artifactId>
 						</aspectLibrary>
 					</aspectLibraries>
@@ -151,11 +153,11 @@
 			<resource>
 				<directory>src/main/resources</directory>
 			</resource>
-			<resource>
-				<directory>${basedir}/src/main/webapp/templates</directory>
-				<filtering>true</filtering>
-				<targetPath>${project.build.outputDirectory}/META-INF/templates/gui/commons</targetPath>
-			</resource>
+				<resource>
+                  <directory>${basedir}/src/main/webapp/templates</directory>
+                  <filtering>true</filtering>
+                  <targetPath>${project.build.outputDirectory}/META-INF/templates/gui/commons</targetPath>
+                </resource>
 		</resources>
 
 	</build>

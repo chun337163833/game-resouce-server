@@ -34,16 +34,13 @@
 		p:formatters-ref="uiFormatters" />
 
 	<util:set id="uiFormatters">
-		<!-- <bean class="com.nex.web.spring.oauth.OAuthFormatter" /> -->
+		<!-- <bean class="org.shovelgame.web.spring.oauth.OAuthFormatter" /> -->		
 	</util:set>
 
-	<bean id="default.em" class="com.nex.domain.common.DefaultEntityManagerAccessor" />
+	<bean id="jpqlfilter" class="org.shovelgame.common.data.filter.FilterUtil"
+		p:conversionService-ref="conversionService" />
 
-	<bean id="jpqlfilter" class="cz.tsystems.common.data.filter.FilterUtil"
-		p:conversionService-ref="conversionService"
-		p:entityManagerAccessor-ref="default.em" />
-
-	<bean class="com.nex.logback.configuration.LogBackConfigurator"
+	<bean class="org.shovelgame.logback.configuration.LogBackConfigurator"
 		init-method="configure" p:logBackFile="${logback.file}" />
 
 	<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
@@ -60,16 +57,15 @@
 		</property>
 	</bean>
 
-	<bean id="mailMail" class="com.nex.mail.MailService">
+	<bean id="mailMail" class="org.shovelgame.mail.MailService">
 		<property name="mailSender" ref="mailSender" />
 	</bean>
 
-	<bean class="com.nex.gcm.GCMService" p:apiKey="${google.cloud.messaging.api.key}"
+	<bean class="org.shovelgame.gcm.GCMService" p:apiKey="${google.cloud.messaging.api.key}"
 		p:apiUrl="${google.cloud.messaging.api.url}" />
 	<bean id="passwordEncoder"
 		class="org.springframework.security.authentication.encoding.ShaPasswordEncoder">
 		<constructor-arg value="256" />
 	</bean>
-	<bean class="com.nex.gcm.GCMTempCache" />
-	<bean id="userService" class="com.nex.domain.service.TaxiUserService"/>	
+	<bean class="org.shovelgame.gcm.GCMTempCache" />	
 </beans>

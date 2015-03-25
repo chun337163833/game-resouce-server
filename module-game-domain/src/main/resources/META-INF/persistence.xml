@@ -5,8 +5,28 @@
 	version="2.0">
 		<persistence-unit name="puMainDB" transaction-type="RESOURCE_LOCAL">
 		<provider>org.hibernate.ejb.HibernatePersistence</provider>
-    	<non-jta-data-source>jdbc/db</non-jta-data-source>						
-		<class>com.nex.game.domain.Item</class>
-		<exclude-unlisted-classes>true</exclude-unlisted-classes>
+    	<non-jta-data-source>jdbc/db</non-jta-data-source>
+			<class>org.shovelgame.domain.Role</class>
+		<class>org.shovelgame.domain.TxUser</class>
+		<class>org.shovelgame.domain.Dispatcher</class>
+		<class>org.shovelgame.domain.Driver</class>
+		<class>org.shovelgame.domain.Customer</class>
+		<class>org.shovelgame.domain.OtherUser</class>
+		<class>org.shovelgame.domain.Car</class>
+		<class>org.shovelgame.domain.CarLog</class>
+		<class>org.shovelgame.domain.CarUsage</class>
+		<class>org.shovelgame.domain.SystemParams</class>
+		<class>org.shovelgame.domain.smspayment.SmsPayment</class>
+		<class>org.shovelgame.domain.Banner</class>
+		<class>org.shovelgame.domain.Company</class>
+		<class>org.shovelgame.domain.ChangeLog</class>		
+		<class>org.shovelgame.domain.Rating</class>
+		<class>org.shovelgame.domain.Tariff</class>
+		<class>org.shovelgame.domain.UnfinishedOrderReason</class>
+		<class>org.shovelgame.domain.Order</class>
+		<class>org.shovelgame.domain.sms.SmsMessage</class>
+			
+						
+<!-- 		<exclude-unlisted-classes>true</exclude-unlisted-classes> -->
 	</persistence-unit>
 </persistence>

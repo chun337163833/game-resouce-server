@@ -24,10 +24,10 @@
 			</div>
 		</#if>
 		<#nested>
-		<@form.link href="?clearfilter">
-			<@util.message (_implClass!"Grid")+".filter.button" />
+		<@form.link href="?clearfilter" isBig=false>
+			<@util.message (_implClass!"Grid")+".clearfilter.button" />
 		</@form.link>
-		<@form.submit commandName=_commandName title=(_implClass!"Grid")+".filter.button"/>
+		<@form.submit commandName=_commandName title=(_implClass!"Grid")+".filter.button" isBig=false/>
 	</@form.form>
 </#macro>
 <#macro datalist showNewButton=true renderButtons=true idColumn="_NULL_" multipleButtons=[] showHeader=true>
@@ -122,23 +122,23 @@
 <#------- resolver column ----->
 <#macro column name sortable=true isId=false isPublish=false defaultCaption="_NULL_" captionArgs=[] isDetail=false localized=false>
 	<#if _rowdata??>
-		<@bodyColumn name=name isId=isId isDetail=isDetail localized=localized isPublish=isPublish; e, f, v, n>
+		<@bodyColumn columnName=name isId=isId isDetail=isDetail localized=localized isPublish=isPublish; e, f, v, n>
 			<#nested e, f, v, n>
 		</@bodyColumn>
 	<#else>
-		<@headColumn sortable=sortable name=name defaultCaption=defaultCaption captionArgs=captionArgs />
+		<@headColumn sortable=sortable columnName=name defaultCaption=defaultCaption captionArgs=captionArgs />
 	</#if>
 </#macro>
 
 <#-------body column ----->
-<#macro bodyColumn name isId=false isDetail=false localized=false isPublish=false>
-	<#assign _value=_th.evaluate(name, _rowdata)!>
-	<#local _nestedContent><#nested _rowdata, name, _value, false></#local>
+<#macro bodyColumn columnName isId=false isDetail=false localized=false isPublish=false>
+	<#assign _value=_th.evaluate(columnName, _rowdata)!>
+	<#local _nestedContent><#nested _rowdata, columnName, _value, false></#local>
 	<@printTableCell>
 		<#if _nestedContent?? && (_nestedContent?trim?length>0)>
 			${_nestedContent}
 		<#else>
-			<#local _convertedValue=_th.convertToString(_value)>
+			<#local _convertedValue=_th.convertToStringWithSource(columnName, _rowdata)!"">
 			<#if localized>
 				<#local _convertedValue=util.getMessage(_convertedValue)>
 			</#if>
@@ -166,8 +166,8 @@
 
 
 <#-------header column----->
-<#macro headColumn name="_NULL_" title="_NULL_" defaultCaption="_NULL_" captionArgs=[] sortable=true>
-	<#local _key="${form.buildMessageString(_baseCaptionGrid, name)}" />
+<#macro headColumn columnName="_NULL_" title="_NULL_" defaultCaption="_NULL_" captionArgs=[] sortable=true>
+	<#local _key="${form.buildMessageString(_baseCaptionGrid, columnName)}" />
 	<#if !util.isNull(defaultCaption)>
 		<#local _key=defaultCaption>
 	</#if>
@@ -175,7 +175,7 @@
 	<#local _sortBy=_filteredList.filter.sortBy.column!RequestParameters.sortBy!"">
 	<th class="sort">
 		<#t>
-		<#local _isSorted=_sortBy==name>
+		<#local _isSorted=_sortBy==columnName>
 		<#local _title>
 			<#if !util.isNull(title)>
 				${title}
@@ -193,7 +193,7 @@
 			<#local _currentOrder=_sortOrder>
 			<#if _sortOrder=="DESC"><#local _currentOrder="ASC">
 			<#else><#local _currentOrder="DESC"></#if>
-			<a href="?${_filterString}sortOrder=${_currentOrder}&sortBy=${name}&page=${_filteredList.currentPage}" class="<#if _isSorted> sorted</#if>">${_title}</a>
+			<a href="?${_filterString}sortOrder=${_currentOrder}&sortBy=${columnName}&page=${_filteredList.currentPage}" class="<#if _isSorted> sorted</#if>">${_title}</a>
 		<#else>
 			${_title}
 		</#if>

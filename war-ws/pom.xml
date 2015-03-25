@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<artifactId>war-ws</artifactId>
+	<packaging>war</packaging>
+	<name>Web Services</name>
+	<url>http://maven.apache.org</url>
+	<properties>
+		<modules.version>1.0.0</modules.version>
+		<org.aspectj-version>1.8.5</org.aspectj-version>
+	</properties>
+	<parent>
+		<groupId>org.shovelgame</groupId>
+		<artifactId>module-parent</artifactId>
+		<version>1.0.0</version>
+		<relativePath>../module-parent</relativePath>
+	</parent>
+	<dependencies>
+		<dependency>
+			<groupId>org.shovelgame</groupId>
+			<artifactId>module-game-webservice</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>servlet-api</artifactId>
+			<version>3.0-alpha-1</version>
+			<scope>provided</scope>
+		</dependency>
+	</dependencies>
+	<build>
+		<finalName>game-ws</finalName>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>2.5.1</version>
+				<configuration>
+					<encoding>UTF-8</encoding>
+					<source>${java.version}</source>
+					<target>${java.version}</target>
+					<compilerArgument>-Xlint:all</compilerArgument>
+					<showWarnings>true</showWarnings>
+					<showDeprecation>true</showDeprecation>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+</project>

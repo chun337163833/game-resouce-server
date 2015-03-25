@@ -149,7 +149,7 @@
 				<#if _nestedContent?? && (_nestedContent?trim?length>0)>
 					${_nestedContent}
 				<#else>
-					<#local _convertedValue=tagTemplateHelper.convertToString(_value)>
+					<#local _convertedValue=tagTemplateHelper.convertToString(_value)!"">
 					<#if localized>
 						<#local _convertedValue=util.getMessage(_convertedValue)>
 					</#if>

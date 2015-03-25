@@ -46,34 +46,39 @@
 	</#if>
 </#macro>
 
-<#macro inputText path renderLabel=true defaultCaption="_NULL_" id="_NULL_" labelArguments=[] displayFieldError=true>
-	<@input path=path renderLabel=renderLabel type="text" defaultCaption=defaultCaption id=id  labelArguments=labelArguments  displayFieldError=displayFieldError/>
+<#macro inputText path renderLabel=true defaultCaption="_NULL_" id="_NULL_" labelArguments=[] displayFieldError=true disabled="_NULL_">
+	<@input path=path renderLabel=renderLabel type="text" defaultCaption=defaultCaption id=id  labelArguments=labelArguments  displayFieldError=displayFieldError disabled=disabled />
 </#macro>
-<#macro inputPassword path renderLabel=true defaultCaption="_NULL_" id="_NULL_" labelArguments=[] displayFieldError=true>
-	<@input path=path renderLabel=renderLabel type="password" defaultCaption=defaultCaption id=id  labelArguments=labelArguments  displayFieldError=displayFieldError/>
+<#macro inputPassword path renderLabel=true defaultCaption="_NULL_" id="_NULL_" labelArguments=[] displayFieldError=true disabled="_NULL_">
+	<@input path=path renderLabel=renderLabel type="password" defaultCaption=defaultCaption id=id  labelArguments=labelArguments  displayFieldError=displayFieldError disabled=disabled />
 </#macro>
-<#macro inputDate path defaultCaption="_NULL_" id="_NULL_" labelArguments=[] displayFieldError=true>
-	<@input path=path type="text" spanClass="inpDate-fix" defaultCaption=defaultCaption id=id  labelArguments=labelArguments  displayFieldError=displayFieldError/>
-</#macro>
-
-<#macro inputNumber path defaultCaption="_NULL_" id="_NULL_" labelArguments=[] displayFieldError=true>
-	<@input path=path type="text" class="inp-number" defaultCaption=defaultCaption id=id  labelArguments=labelArguments displayFieldError=displayFieldError/>
+<#macro inputDate path defaultCaption="_NULL_" id="_NULL_" labelArguments=[] displayFieldError=true disabled="_NULL_">
+	<@input path=path type="text" spanClass="inpDate-fix" defaultCaption=defaultCaption id=id  labelArguments=labelArguments  displayFieldError=displayFieldError disabled=disabled />
 </#macro>
 
-<#macro input type path renderLabel=true value="_NULL_" defaultCaption="_NULL_" id="_NULL_" class="" spanClass="" labelArguments=[] displayFieldError=true>
+<#macro inputNumber path defaultCaption="_NULL_" id="_NULL_" labelArguments=[] displayFieldError=true forceRequired=false disabled="_NULL_">
+	<@input path=path type="text" class="inp-number" defaultCaption=defaultCaption id=id  labelArguments=labelArguments displayFieldError=displayFieldError forceRequired=forceRequired disabled=disabled />
+</#macro>
+
+<#macro input type path renderLabel=true value="_NULL_" defaultCaption="_NULL_" id="_NULL_" class="" spanClass="" labelArguments=[] displayFieldError=true forceRequired=false disabled="_NULL_">
 	<#assign _fieldModel=_formModel.getFieldModel(path)>
 	<#assign _fieldError=_fieldModel.hasError()>
 	<#local _id=resolveStyleId(path, id)>
+	<#local sclass=class>
 	<p>
 		<#if renderLabel>
-			<@printLabel defaultCaption=defaultCaption path=path id=_id labelArguments=labelArguments/>
+			<@printLabel defaultCaption=defaultCaption path=path id=_id labelArguments=labelArguments forceRequired=forceRequired/>
 		</#if>
 		<#local _value=value>
 		<#if util.isNull(_value)>
 			<#local _value=_formModel.readFormatedValue(path)>
 		</#if>
 		<span class="inp-fix <#if _fieldError>inp-error</#if> ${spanClass}">
-			<input type="${type}" id="${_id}" name="${path}" class="inp-text ${class}" value="${_value}"/>
+			<#local disabledAttribute="">
+			<#if disabled=="true" || (util.isNull(disabled) && _fieldModel.isDisabled())>
+				<#local disabledAttribute="disabled">
+			</#if>
+			<input type="${type}" id="${_id}" name="${path}" class="inp-text ${sclass}" value="${_value}" ${disabledAttribute}/>
 		</span>
 		<#if displayFieldError>
 			<@renderFieldError fieldModel=_fieldModel />
@@ -204,8 +209,9 @@
 </#if>
 </#macro>
 
-<#macro printLabel path id labelArguments=[] defaultCaption="_NULL_" defaultLabel="_NULL_" breakLabel=true renderColon=true>
+<#macro printLabel path id labelArguments=[] defaultCaption="_NULL_" defaultLabel="_NULL_" breakLabel=true renderColon=true forceRequired=false>
 	<#local _labelText="_NULL_"/>
+	<#local _id=id>
 	<#if !util.isNull(_formBaseCaption)>
 		<#local _fullMessageKey=buildMessageString(_formBaseCaption, path)>
 		<#local _labelText><@util.message code=_fullMessageKey arguments=labelArguments /></#local>
@@ -216,10 +222,10 @@
 	<#if !util.isNull(defaultLabel)>
 		<#local _labelText=defaultLabel />
 	</#if>
-	<#local required=_fieldModel.isRequired(_showRequireIndex)>
+	<#local required=_fieldModel.isRequired(_showRequireIndex) || forceRequired>
 	
 	<#if !util.isNull(_labelText)>
-		<label for="${id}" class="label<#if _fieldError!false> error</#if>">${_labelText}<#t><#if renderColon>:</#if><#if required>&nbsp;<span class="req">*</span></#if></label>
+		<label for="${_id}" class="label<#if _fieldError!false> error</#if>">${_labelText}<#t><#if renderColon>:</#if><#if required>&nbsp;<span class="req">*</span></#if></label>
 		<#if breakLabel>
 		<br/>
 		</#if>
@@ -249,13 +255,17 @@
 <#macro submit>
 
 </#macro>
-<#macro submit commandName title>
-	<@link href="javascript:$('form#${commandName}').submit();">
+<#macro submit commandName title isBig=true>
+	<@link href="javascript:$('form#${commandName}').submit();" isBig=isBig>
 		<@util.message title />
 	</@link>
 </#macro>
-<#macro link href>
-<a class="btn btn-blue btn-big" href="${href}">
+<#macro link href isBig=true>
+<#local bigClass="">
+<#if isBig>
+<#local bigClass="btn-big">
+</#if>
+<a class="btn btn-blue ${bigClass}" href="${href}">
 	<span><#nested></span>
 </a>
 </#macro>

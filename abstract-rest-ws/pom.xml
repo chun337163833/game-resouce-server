@@ -6,18 +6,18 @@
 	<packaging>jar</packaging>
 	<name>abstract-rest-ws</name>
 	<url>http://maven.apache.org</url>
-
+	
 	<properties>
 		<spring-ws.version>2.2.0.RELEASE</spring-ws.version>
 	</properties>
-
+	
 	<parent>
-		<groupId>com.nex</groupId>
+		<groupId>org.shovelgame</groupId>
 		<artifactId>abstract-parent</artifactId>
 		<version>1.0.0</version>
 		<relativePath>../abstract-parent</relativePath>
 	</parent>
-
+	
 	<dependencies>
 		<dependency>
 			<groupId>junit</groupId>
@@ -26,29 +26,16 @@
 			<scope>test</scope>
 		</dependency>
 		<dependency>
-			<groupId>javax.servlet</groupId>
-			<artifactId>servlet-api</artifactId>
-			<version>3.0-alpha-1</version>
-			<scope>provided</scope>
-		</dependency>
-		<dependency>
-			<groupId>com.nex</groupId>
+			<groupId>org.shovelgame</groupId>
 			<artifactId>utils</artifactId>
 			<version>${project.version}</version>
 		</dependency>
-		
 		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-context</artifactId>
-			<version>${spring.version}</version>
-			<exclusions>
-				<!-- Exclude Commons Logging in favor of SLF4j -->
-				<exclusion>
-					<groupId>commons-logging</groupId>
-					<artifactId>commons-logging</artifactId>
-				</exclusion>
-			</exclusions>
+			<groupId>org.shovelgame</groupId>
+			<artifactId>jpqlfilter</artifactId>
+			<version>${project.version}</version>
 		</dependency>
+		<!-- Spring -->
 		<dependency>
 			<groupId>org.springframework.security.oauth</groupId>
 			<artifactId>spring-security-oauth2</artifactId>
@@ -66,20 +53,15 @@
 			<version>${spring-ws.version}</version>
 		</dependency>
 		<dependency>
-			<groupId>com.nex</groupId>
+			<groupId>org.shovelgame</groupId>
 			<artifactId>abstract-domain</artifactId>
 			<version>${project.version}</version>
 		</dependency>
-		<!-- Spring -->
 		<dependency>
-			<groupId>org.springframework.security</groupId>
-			<artifactId>spring-security-web</artifactId>
-			<version>${spring-security.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.security</groupId>
-			<artifactId>spring-security-taglibs</artifactId>
-			<version>${spring-security.version}</version>
+			<groupId>javax.servlet</groupId>
+			<artifactId>servlet-api</artifactId>
+			<version>3.0-alpha-1</version>
+			<scope>provided</scope>
 		</dependency>
 	</dependencies>
 	<build>
@@ -139,7 +121,7 @@
 							<artifactId>spring-aspects</artifactId>
 						</aspectLibrary>
 						<aspectLibrary>
-							<groupId>com.nex</groupId>
+							<groupId>org.shovelgame</groupId>
 							<artifactId>utils</artifactId>
 						</aspectLibrary>
 					</aspectLibraries>

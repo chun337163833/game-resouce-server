@@ -6,9 +6,13 @@
 <body>
 	<@grid.grid data=entities baseCaption=_implClass>
 		<#--filter
-		<@grid.filter showHeader=false>
-		</@grid.filter>
+		
 		-->
+
+		<@grid.filter showHeader=false>
+			<@form.inputText path="discount" />
+		</@grid.filter>
+
 		<#assign _isDetail=true>
 		<#assign _mbuttons=["publish", "unpublish"]>
 		<#assign _publicable=true>

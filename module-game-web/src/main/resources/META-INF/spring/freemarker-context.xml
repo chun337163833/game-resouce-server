@@ -20,7 +20,7 @@
 			<list>
 				<!-- modules templates -->
 				<value>classpath:META-INF/templates/gui/commons/</value>
-				<value>classpath:META-INF/templates/gui/test/</value>
+				<value>classpath:META-INF/templates/gui/taxi/</value>
 				<value>/templates/</value>
 				<value>/</value>
 			</list>
