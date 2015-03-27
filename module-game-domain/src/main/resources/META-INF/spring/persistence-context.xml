@@ -29,8 +29,7 @@
 	<util:properties id="hibernate-properties-default">
 		<prop key="hibernate.dialect">org.hibernate.dialect.PostgreSQL9Dialect</prop>
 		<prop key="hibernate.ejb.naming_strategy">org.hibernate.cfg.ImprovedNamingStrategy</prop>
-		<prop key="transaction.factory_class">org.hibernate.engine.transaction.internal.jdbc.JdbcTransactionFactory
-		</prop>
+		<prop key="transaction.factory_class">org.hibernate.engine.transaction.internal.jdbc.JdbcTransactionFactory</prop>
 		<prop key="hibernate.show_sql">${hibernate.show_sql}</prop>
 		<prop key="hibernate.jdbc.batch_size">100</prop>
 		<prop key="hibernate.hbm2ddl.auto">${hibernate.hbm2ddl.auto}</prop>
@@ -55,5 +54,5 @@
 		class="org.springframework.beans.factory.aspectj.AnnotationBeanConfigurerAspect"
 		factory-method="aspectOf" />
 		
-	<bean id="userService" class="org.shovelgame.domain.service.TaxiUserService"/>
+<!-- 	<bean id="userService" class="org.shovelgame.domain.service.TaxiUserService"/> -->
 </beans>
