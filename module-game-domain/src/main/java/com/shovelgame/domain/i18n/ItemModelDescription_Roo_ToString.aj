@@ -3,14 +3,14 @@
 
 package com.shovelgame.domain.i18n;
 
-import com.shovelgame.domain.i18n.SpecializationDesc;
+import com.shovelgame.domain.i18n.ItemModelDescription;
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
-privileged aspect SpecializationDesc_Roo_ToString {
+privileged aspect ItemModelDescription_Roo_ToString {
     
-    public String SpecializationDesc.toString() {
-        return new ReflectionToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE).setExcludeFieldNames("lang", "specializationId", "seekerSpecialization").toString();
+    public String ItemModelDescription.toString() {
+        return new ReflectionToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE).setExcludeFieldNames("lang", "itemModel").toString();
     }
     
 }

@@ -5,8 +5,8 @@ import org.springframework.roo.addon.jpa.activerecord.RooJpaActiveRecord;
 import org.springframework.roo.addon.tostring.RooToString;
 
 @RooJavaBean
-@RooJpaActiveRecord(versionField = "", table = "specialization_desc", schema = "i18n")
+@RooJpaActiveRecord(versionField = "", table = "attribute_type_description", schema = "i18n")
 @RooDbManaged(automaticallyDelete = true)
-@RooToString(excludeFields = { "lang", "specializationId", "seekerSpecialization" })
-public class SpecializationDesc {
+@RooToString(excludeFields = { "lang", "attributeType", "attribute" })
+public class AttributeTypeDescription {
 }

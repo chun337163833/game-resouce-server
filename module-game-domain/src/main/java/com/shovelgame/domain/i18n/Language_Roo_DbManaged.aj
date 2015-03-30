@@ -3,9 +3,12 @@
 
 package com.shovelgame.domain.i18n;
 
+import com.shovelgame.domain.i18n.AttributeTypeDescription;
+import com.shovelgame.domain.i18n.EnchantmentTypeDescription;
 import com.shovelgame.domain.i18n.HeroTypeDescription;
+import com.shovelgame.domain.i18n.ItemModelDescription;
 import com.shovelgame.domain.i18n.Language;
-import com.shovelgame.domain.i18n.SpecializationDesc;
+import com.shovelgame.domain.i18n.SpecializationDescription;
 import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.OneToMany;
@@ -14,14 +17,39 @@ import javax.validation.constraints.NotNull;
 privileged aspect Language_Roo_DbManaged {
     
     @OneToMany(mappedBy = "lang")
+    private Set<AttributeTypeDescription> Language.attributeTypeDescriptions;
+    
+    @OneToMany(mappedBy = "lang")
+    private Set<EnchantmentTypeDescription> Language.enchantmentTypeDescriptions;
+    
+    @OneToMany(mappedBy = "lang")
     private Set<HeroTypeDescription> Language.heroTypeDescriptions;
     
     @OneToMany(mappedBy = "lang")
-    private Set<SpecializationDesc> Language.specializationDescs;
+    private Set<ItemModelDescription> Language.itemModelDescriptions;
+    
+    @OneToMany(mappedBy = "lang")
+    private Set<SpecializationDescription> Language.specializationDescriptions;
     
     @Column(name = "description", length = 50)
     @NotNull
     private String Language.description;
+    
+    public Set<AttributeTypeDescription> Language.getAttributeTypeDescriptions() {
+        return attributeTypeDescriptions;
+    }
+    
+    public void Language.setAttributeTypeDescriptions(Set<AttributeTypeDescription> attributeTypeDescriptions) {
+        this.attributeTypeDescriptions = attributeTypeDescriptions;
+    }
+    
+    public Set<EnchantmentTypeDescription> Language.getEnchantmentTypeDescriptions() {
+        return enchantmentTypeDescriptions;
+    }
+    
+    public void Language.setEnchantmentTypeDescriptions(Set<EnchantmentTypeDescription> enchantmentTypeDescriptions) {
+        this.enchantmentTypeDescriptions = enchantmentTypeDescriptions;
+    }
     
     public Set<HeroTypeDescription> Language.getHeroTypeDescriptions() {
         return heroTypeDescriptions;
@@ -31,12 +59,20 @@ privileged aspect Language_Roo_DbManaged {
         this.heroTypeDescriptions = heroTypeDescriptions;
     }
     
-    public Set<SpecializationDesc> Language.getSpecializationDescs() {
-        return specializationDescs;
+    public Set<ItemModelDescription> Language.getItemModelDescriptions() {
+        return itemModelDescriptions;
     }
     
-    public void Language.setSpecializationDescs(Set<SpecializationDesc> specializationDescs) {
-        this.specializationDescs = specializationDescs;
+    public void Language.setItemModelDescriptions(Set<ItemModelDescription> itemModelDescriptions) {
+        this.itemModelDescriptions = itemModelDescriptions;
+    }
+    
+    public Set<SpecializationDescription> Language.getSpecializationDescriptions() {
+        return specializationDescriptions;
+    }
+    
+    public void Language.setSpecializationDescriptions(Set<SpecializationDescription> specializationDescriptions) {
+        this.specializationDescriptions = specializationDescriptions;
     }
     
     public String Language.getDescription() {

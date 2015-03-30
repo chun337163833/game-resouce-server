@@ -3,14 +3,14 @@
 
 package com.shovelgame.domain.model;
 
-import com.shovelgame.domain.model.Attributes;
+import com.shovelgame.domain.model.ItemModel;
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
-privileged aspect Attributes_Roo_ToString {
+privileged aspect ItemModel_Roo_ToString {
     
-    public String Attributes.toString() {
-        return new ReflectionToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE).setExcludeFieldNames("heroModels", "minionModels").toString();
+    public String ItemModel.toString() {
+        return new ReflectionToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE).setExcludeFieldNames("itemModelDescriptions", "itemEnchantments", "attributeType").toString();
     }
     
 }

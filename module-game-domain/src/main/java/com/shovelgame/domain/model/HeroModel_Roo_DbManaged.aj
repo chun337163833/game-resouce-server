@@ -3,7 +3,7 @@
 
 package com.shovelgame.domain.model;
 
-import com.shovelgame.domain.model.Attributes;
+import com.shovelgame.domain.model.Attribute;
 import com.shovelgame.domain.model.HeroModel;
 import com.shovelgame.domain.model.HeroType;
 import com.shovelgame.domain.model.QualityGrade;
@@ -16,7 +16,7 @@ privileged aspect HeroModel_Roo_DbManaged {
     
     @ManyToOne
     @JoinColumn(name = "attributes", referencedColumnName = "id", nullable = false)
-    private Attributes HeroModel.attributes;
+    private Attribute HeroModel.attributes;
     
     @ManyToOne
     @JoinColumn(name = "hero_type", referencedColumnName = "id", nullable = false)
@@ -30,11 +30,11 @@ privileged aspect HeroModel_Roo_DbManaged {
     @NotNull
     private String HeroModel.name;
     
-    public Attributes HeroModel.getAttributes() {
+    public Attribute HeroModel.getAttributes() {
         return attributes;
     }
     
-    public void HeroModel.setAttributes(Attributes attributes) {
+    public void HeroModel.setAttributes(Attribute attributes) {
         this.attributes = attributes;
     }
     

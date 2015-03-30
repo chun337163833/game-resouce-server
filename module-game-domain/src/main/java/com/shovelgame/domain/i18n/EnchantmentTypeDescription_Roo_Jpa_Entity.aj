@@ -3,7 +3,7 @@
 
 package com.shovelgame.domain.i18n;
 
-import com.shovelgame.domain.i18n.SpecializationDesc;
+import com.shovelgame.domain.i18n.EnchantmentTypeDescription;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -11,22 +11,22 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-privileged aspect SpecializationDesc_Roo_Jpa_Entity {
+privileged aspect EnchantmentTypeDescription_Roo_Jpa_Entity {
     
-    declare @type: SpecializationDesc: @Entity;
+    declare @type: EnchantmentTypeDescription: @Entity;
     
-    declare @type: SpecializationDesc: @Table(schema = "i18n", name = "specialization_desc");
+    declare @type: EnchantmentTypeDescription: @Table(schema = "i18n", name = "enchantment_type_description");
     
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
-    private Long SpecializationDesc.id;
+    private Long EnchantmentTypeDescription.id;
     
-    public Long SpecializationDesc.getId() {
+    public Long EnchantmentTypeDescription.getId() {
         return this.id;
     }
     
-    public void SpecializationDesc.setId(Long id) {
+    public void EnchantmentTypeDescription.setId(Long id) {
         this.id = id;
     }
     

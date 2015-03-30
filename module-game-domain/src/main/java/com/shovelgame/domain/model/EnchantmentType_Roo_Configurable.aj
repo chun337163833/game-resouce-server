@@ -3,11 +3,11 @@
 
 package com.shovelgame.domain.model;
 
-import com.shovelgame.domain.model.Attributes;
+import com.shovelgame.domain.model.EnchantmentType;
 import org.springframework.beans.factory.annotation.Configurable;
 
-privileged aspect Attributes_Roo_Configurable {
+privileged aspect EnchantmentType_Roo_Configurable {
     
-    declare @type: Attributes: @Configurable;
+    declare @type: EnchantmentType: @Configurable;
     
 }

@@ -3,7 +3,7 @@
 
 package com.shovelgame.domain.model;
 
-import com.shovelgame.domain.model.Attributes;
+import com.shovelgame.domain.model.Attribute;
 import com.shovelgame.domain.model.MinionModel;
 import com.shovelgame.domain.model.QualityGrade;
 import javax.persistence.Column;
@@ -15,7 +15,7 @@ privileged aspect MinionModel_Roo_DbManaged {
     
     @ManyToOne
     @JoinColumn(name = "attributes", referencedColumnName = "id", nullable = false)
-    private Attributes MinionModel.attributes;
+    private Attribute MinionModel.attributes;
     
     @ManyToOne
     @JoinColumn(name = "quality_grade", referencedColumnName = "id", nullable = false)
@@ -25,11 +25,11 @@ privileged aspect MinionModel_Roo_DbManaged {
     @NotNull
     private String MinionModel.name;
     
-    public Attributes MinionModel.getAttributes() {
+    public Attribute MinionModel.getAttributes() {
         return attributes;
     }
     
-    public void MinionModel.setAttributes(Attributes attributes) {
+    public void MinionModel.setAttributes(Attribute attributes) {
         this.attributes = attributes;
     }
     

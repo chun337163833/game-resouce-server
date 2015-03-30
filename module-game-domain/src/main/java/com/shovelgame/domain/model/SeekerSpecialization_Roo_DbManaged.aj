@@ -3,7 +3,7 @@
 
 package com.shovelgame.domain.model;
 
-import com.shovelgame.domain.i18n.SpecializationDesc;
+import com.shovelgame.domain.i18n.SpecializationDescription;
 import com.shovelgame.domain.model.SeekerModel;
 import com.shovelgame.domain.model.SeekerSpecialization;
 import java.util.Set;
@@ -14,18 +14,18 @@ import javax.persistence.OneToMany;
 privileged aspect SeekerSpecialization_Roo_DbManaged {
     
     @OneToMany(mappedBy = "seekerSpecialization")
-    private Set<SpecializationDesc> SeekerSpecialization.specializationDescs;
+    private Set<SpecializationDescription> SeekerSpecialization.specializationDescriptions;
     
     @ManyToOne
     @JoinColumn(name = "seeker_model", referencedColumnName = "id", nullable = false)
     private SeekerModel SeekerSpecialization.seekerModel;
     
-    public Set<SpecializationDesc> SeekerSpecialization.getSpecializationDescs() {
-        return specializationDescs;
+    public Set<SpecializationDescription> SeekerSpecialization.getSpecializationDescriptions() {
+        return specializationDescriptions;
     }
     
-    public void SeekerSpecialization.setSpecializationDescs(Set<SpecializationDesc> specializationDescs) {
-        this.specializationDescs = specializationDescs;
+    public void SeekerSpecialization.setSpecializationDescriptions(Set<SpecializationDescription> specializationDescriptions) {
+        this.specializationDescriptions = specializationDescriptions;
     }
     
     public SeekerModel SeekerSpecialization.getSeekerModel() {

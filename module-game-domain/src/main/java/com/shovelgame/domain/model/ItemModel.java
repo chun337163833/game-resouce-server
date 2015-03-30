@@ -6,16 +6,16 @@ import org.springframework.roo.addon.dbre.RooDbManaged;
 import org.springframework.roo.addon.javabean.RooJavaBean;
 import org.springframework.roo.addon.jpa.activerecord.RooJpaActiveRecord;
 import org.springframework.roo.addon.tostring.RooToString;
-import com.shovelgame.enumaration.SpecializationType;
+import com.shovelgame.enumaration.ItemType;
 
 @RooJavaBean
-@RooJpaActiveRecord(versionField = "", table = "seeker_specialization", schema = "model")
+@RooJpaActiveRecord(versionField = "", table = "item_model", schema = "model")
 @RooDbManaged(automaticallyDelete = true)
-@RooToString(excludeFields = { "specializationDescs", "seekerId", "seekerModel", "specializationDescriptions" })
-public class SeekerSpecialization {
+@RooToString(excludeFields = { "itemModelDescriptions", "itemEnchantments", "attributeType" })
+public class ItemModel {
 
     @Column(name = "type", length = 10)
     @NotNull
     @Enumerated
-    private SpecializationType type;
+    private ItemType type;
 }

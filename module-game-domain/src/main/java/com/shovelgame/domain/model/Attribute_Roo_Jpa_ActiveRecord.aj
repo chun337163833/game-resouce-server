@@ -3,97 +3,97 @@
 
 package com.shovelgame.domain.model;
 
-import com.shovelgame.domain.model.Attributes;
+import com.shovelgame.domain.model.Attribute;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import org.springframework.transaction.annotation.Transactional;
 
-privileged aspect Attributes_Roo_Jpa_ActiveRecord {
+privileged aspect Attribute_Roo_Jpa_ActiveRecord {
     
     @PersistenceContext
-    transient EntityManager Attributes.entityManager;
+    transient EntityManager Attribute.entityManager;
     
-    public static final List<String> Attributes.fieldNames4OrderClauseFilter = java.util.Arrays.asList("");
+    public static final List<String> Attribute.fieldNames4OrderClauseFilter = java.util.Arrays.asList("");
     
-    public static final EntityManager Attributes.entityManager() {
-        EntityManager em = new Attributes().entityManager;
+    public static final EntityManager Attribute.entityManager() {
+        EntityManager em = new Attribute().entityManager;
         if (em == null) throw new IllegalStateException("Entity manager has not been injected (is the Spring Aspects JAR configured as an AJC/AJDT aspects library?)");
         return em;
     }
     
-    public static long Attributes.countAttributeses() {
-        return entityManager().createQuery("SELECT COUNT(o) FROM Attributes o", Long.class).getSingleResult();
+    public static long Attribute.countAttributes() {
+        return entityManager().createQuery("SELECT COUNT(o) FROM Attribute o", Long.class).getSingleResult();
     }
     
-    public static List<Attributes> Attributes.findAllAttributeses() {
-        return entityManager().createQuery("SELECT o FROM Attributes o", Attributes.class).getResultList();
+    public static List<Attribute> Attribute.findAllAttributes() {
+        return entityManager().createQuery("SELECT o FROM Attribute o", Attribute.class).getResultList();
     }
     
-    public static List<Attributes> Attributes.findAllAttributeses(String sortFieldName, String sortOrder) {
-        String jpaQuery = "SELECT o FROM Attributes o";
+    public static List<Attribute> Attribute.findAllAttributes(String sortFieldName, String sortOrder) {
+        String jpaQuery = "SELECT o FROM Attribute o";
         if (fieldNames4OrderClauseFilter.contains(sortFieldName)) {
             jpaQuery = jpaQuery + " ORDER BY " + sortFieldName;
             if ("ASC".equalsIgnoreCase(sortOrder) || "DESC".equalsIgnoreCase(sortOrder)) {
                 jpaQuery = jpaQuery + " " + sortOrder;
             }
         }
-        return entityManager().createQuery(jpaQuery, Attributes.class).getResultList();
+        return entityManager().createQuery(jpaQuery, Attribute.class).getResultList();
     }
     
-    public static Attributes Attributes.findAttributes(Long id) {
+    public static Attribute Attribute.findAttribute(Long id) {
         if (id == null) return null;
-        return entityManager().find(Attributes.class, id);
+        return entityManager().find(Attribute.class, id);
     }
     
-    public static List<Attributes> Attributes.findAttributesEntries(int firstResult, int maxResults) {
-        return entityManager().createQuery("SELECT o FROM Attributes o", Attributes.class).setFirstResult(firstResult).setMaxResults(maxResults).getResultList();
+    public static List<Attribute> Attribute.findAttributeEntries(int firstResult, int maxResults) {
+        return entityManager().createQuery("SELECT o FROM Attribute o", Attribute.class).setFirstResult(firstResult).setMaxResults(maxResults).getResultList();
     }
     
-    public static List<Attributes> Attributes.findAttributesEntries(int firstResult, int maxResults, String sortFieldName, String sortOrder) {
-        String jpaQuery = "SELECT o FROM Attributes o";
+    public static List<Attribute> Attribute.findAttributeEntries(int firstResult, int maxResults, String sortFieldName, String sortOrder) {
+        String jpaQuery = "SELECT o FROM Attribute o";
         if (fieldNames4OrderClauseFilter.contains(sortFieldName)) {
             jpaQuery = jpaQuery + " ORDER BY " + sortFieldName;
             if ("ASC".equalsIgnoreCase(sortOrder) || "DESC".equalsIgnoreCase(sortOrder)) {
                 jpaQuery = jpaQuery + " " + sortOrder;
             }
         }
-        return entityManager().createQuery(jpaQuery, Attributes.class).setFirstResult(firstResult).setMaxResults(maxResults).getResultList();
+        return entityManager().createQuery(jpaQuery, Attribute.class).setFirstResult(firstResult).setMaxResults(maxResults).getResultList();
     }
     
     @Transactional
-    public void Attributes.persist() {
+    public void Attribute.persist() {
         if (this.entityManager == null) this.entityManager = entityManager();
         this.entityManager.persist(this);
     }
     
     @Transactional
-    public void Attributes.remove() {
+    public void Attribute.remove() {
         if (this.entityManager == null) this.entityManager = entityManager();
         if (this.entityManager.contains(this)) {
             this.entityManager.remove(this);
         } else {
-            Attributes attached = Attributes.findAttributes(this.id);
+            Attribute attached = Attribute.findAttribute(this.id);
             this.entityManager.remove(attached);
         }
     }
     
     @Transactional
-    public void Attributes.flush() {
+    public void Attribute.flush() {
         if (this.entityManager == null) this.entityManager = entityManager();
         this.entityManager.flush();
     }
     
     @Transactional
-    public void Attributes.clear() {
+    public void Attribute.clear() {
         if (this.entityManager == null) this.entityManager = entityManager();
         this.entityManager.clear();
     }
     
     @Transactional
-    public Attributes Attributes.merge() {
+    public Attribute Attribute.merge() {
         if (this.entityManager == null) this.entityManager = entityManager();
-        Attributes merged = this.entityManager.merge(this);
+        Attribute merged = this.entityManager.merge(this);
         this.entityManager.flush();
         return merged;
     }

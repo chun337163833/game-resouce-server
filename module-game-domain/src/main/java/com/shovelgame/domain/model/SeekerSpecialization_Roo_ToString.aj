@@ -10,7 +10,7 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 privileged aspect SeekerSpecialization_Roo_ToString {
     
     public String SeekerSpecialization.toString() {
-        return new ReflectionToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE).setExcludeFieldNames("specializationDescs", "seekerId", "seekerModel").toString();
+        return new ReflectionToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE).setExcludeFieldNames("specializationDescs", "seekerId", "seekerModel", "specializationDescriptions").toString();
     }
     
 }
