@@ -35,13 +35,6 @@ privileged aspect Trait_Roo_DbManaged {
     @JoinColumn(name = "affected_attribute_type", referencedColumnName = "id")
     private AttributeType Trait.affectedAttributeType;
     
-    @Column(name = "affected_skill_alg", length = 50)
-    private String Trait.affectedSkillAlg;
-    
-    @Column(name = "alg", length = 50)
-    @NotNull
-    private String Trait.alg;
-    
     @Column(name = "power", precision = 10)
     private BigDecimal Trait.power;
     
@@ -87,22 +80,6 @@ privileged aspect Trait_Roo_DbManaged {
     
     public void Trait.setAffectedAttributeType(AttributeType affectedAttributeType) {
         this.affectedAttributeType = affectedAttributeType;
-    }
-    
-    public String Trait.getAffectedSkillAlg() {
-        return affectedSkillAlg;
-    }
-    
-    public void Trait.setAffectedSkillAlg(String affectedSkillAlg) {
-        this.affectedSkillAlg = affectedSkillAlg;
-    }
-    
-    public String Trait.getAlg() {
-        return alg;
-    }
-    
-    public void Trait.setAlg(String alg) {
-        this.alg = alg;
     }
     
     public BigDecimal Trait.getPower() {

@@ -10,7 +10,7 @@ import org.shovelgame.game.domain.data.Team;
 privileged aspect Team_Roo_ToString {
     
     public String Team.toString() {
-        return new ReflectionToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE).setExcludeFieldNames("heroes", "items", "minions", "missions").toString();
+        return new ReflectionToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE).setExcludeFieldNames("items", "missions", "hero", "minionTop", "minionMid", "minionBot").toString();
     }
     
 }

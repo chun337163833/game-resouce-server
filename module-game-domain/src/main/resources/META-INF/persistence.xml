@@ -21,12 +21,15 @@
 		<class>org.shovelgame.game.domain.model.Attribute</class>
 		<class>org.shovelgame.game.domain.model.AttributeType</class>
 		<class>org.shovelgame.game.domain.model.EnchantmentType</class>
+		<class>org.shovelgame.game.domain.model.HeroAttribute</class>
 		<class>org.shovelgame.game.domain.model.HeroModel</class>
 		<class>org.shovelgame.game.domain.model.HeroSkill</class>
+		<class>org.shovelgame.game.domain.model.HeroSpecialization</class>
 		<class>org.shovelgame.game.domain.model.HeroTrait</class>
 		<class>org.shovelgame.game.domain.model.HeroType</class>
 		<class>org.shovelgame.game.domain.model.ItemEnchantment</class>
 		<class>org.shovelgame.game.domain.model.ItemModel</class>
+		<class>org.shovelgame.game.domain.model.MinionAttribute</class>
 		<class>org.shovelgame.game.domain.model.MinionModel</class>
 		<class>org.shovelgame.game.domain.model.MinionSkill</class>
 		<class>org.shovelgame.game.domain.model.MinionTrait</class>
@@ -38,6 +41,6 @@
 		<class>org.shovelgame.game.domain.model.Skill</class>
 		<class>org.shovelgame.game.domain.model.Trait</class>
 		<class>org.shovelgame.game.domain.model.TraitTarget</class>
-<!-- 		<exclude-unlisted-classes>true</exclude-unlisted-classes> -->
+		<!-- <exclude-unlisted-classes>true</exclude-unlisted-classes> -->
 	</persistence-unit>
 </persistence>

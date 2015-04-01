@@ -5,12 +5,12 @@ package org.shovelgame.game.domain.model;
 
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
-import org.shovelgame.game.domain.model.HeroType;
+import org.shovelgame.game.domain.model.HeroAttribute;
 
-privileged aspect HeroType_Roo_ToString {
+privileged aspect HeroAttribute_Roo_ToString {
     
-    public String HeroType.toString() {
-        return new ReflectionToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE).setExcludeFieldNames("heroTypeDescriptions", "heroModels").toString();
+    public String HeroAttribute.toString() {
+        return new ReflectionToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE).setExcludeFieldNames("type", "heroModel").toString();
     }
     
 }

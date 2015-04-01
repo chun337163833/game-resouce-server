@@ -9,24 +9,24 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import org.shovelgame.game.domain.model.Attribute;
+import org.shovelgame.game.domain.model.HeroSpecialization;
 
-privileged aspect Attribute_Roo_Jpa_Entity {
+privileged aspect HeroSpecialization_Roo_Jpa_Entity {
     
-    declare @type: Attribute: @Entity;
+    declare @type: HeroSpecialization: @Entity;
     
-    declare @type: Attribute: @Table(schema = "model", name = "attribute");
+    declare @type: HeroSpecialization: @Table(schema = "model", name = "hero_specialization");
     
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
-    private Long Attribute.id;
+    private Long HeroSpecialization.id;
     
-    public Long Attribute.getId() {
+    public Long HeroSpecialization.getId() {
         return this.id;
     }
     
-    public void Attribute.setId(Long id) {
+    public void HeroSpecialization.setId(Long id) {
         this.id = id;
     }
     

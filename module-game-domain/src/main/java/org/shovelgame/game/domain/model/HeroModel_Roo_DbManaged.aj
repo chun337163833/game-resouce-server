@@ -10,11 +10,10 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
 import org.shovelgame.game.domain.data.Hero;
-import org.shovelgame.game.domain.model.Attribute;
 import org.shovelgame.game.domain.model.HeroModel;
 import org.shovelgame.game.domain.model.HeroSkill;
+import org.shovelgame.game.domain.model.HeroSpecialization;
 import org.shovelgame.game.domain.model.HeroTrait;
-import org.shovelgame.game.domain.model.HeroType;
 import org.shovelgame.game.domain.model.QualityGrade;
 
 privileged aspect HeroModel_Roo_DbManaged {
@@ -29,12 +28,8 @@ privileged aspect HeroModel_Roo_DbManaged {
     private Set<HeroTrait> HeroModel.heroTraits;
     
     @ManyToOne
-    @JoinColumn(name = "attributes", referencedColumnName = "id", nullable = false)
-    private Attribute HeroModel.attributes;
-    
-    @ManyToOne
-    @JoinColumn(name = "hero_type", referencedColumnName = "id", nullable = false)
-    private HeroType HeroModel.heroType;
+    @JoinColumn(name = "hero_specialization", referencedColumnName = "id", nullable = false)
+    private HeroSpecialization HeroModel.heroSpecialization;
     
     @ManyToOne
     @JoinColumn(name = "quality_grade", referencedColumnName = "id", nullable = false)
@@ -72,20 +67,12 @@ privileged aspect HeroModel_Roo_DbManaged {
         this.heroTraits = heroTraits;
     }
     
-    public Attribute HeroModel.getAttributes() {
-        return attributes;
+    public HeroSpecialization HeroModel.getHeroSpecialization() {
+        return heroSpecialization;
     }
     
-    public void HeroModel.setAttributes(Attribute attributes) {
-        this.attributes = attributes;
-    }
-    
-    public HeroType HeroModel.getHeroType() {
-        return heroType;
-    }
-    
-    public void HeroModel.setHeroType(HeroType heroType) {
-        this.heroType = heroType;
+    public void HeroModel.setHeroSpecialization(HeroSpecialization heroSpecialization) {
+        this.heroSpecialization = heroSpecialization;
     }
     
     public QualityGrade HeroModel.getQualityGrade() {

@@ -9,24 +9,24 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import org.shovelgame.game.domain.model.HeroType;
+import org.shovelgame.game.domain.model.MinionAttribute;
 
-privileged aspect HeroType_Roo_Jpa_Entity {
+privileged aspect MinionAttribute_Roo_Jpa_Entity {
     
-    declare @type: HeroType: @Entity;
+    declare @type: MinionAttribute: @Entity;
     
-    declare @type: HeroType: @Table(schema = "model", name = "hero_type");
+    declare @type: MinionAttribute: @Table(schema = "model", name = "minion_attribute");
     
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
-    private Long HeroType.id;
+    private Long MinionAttribute.id;
     
-    public Long HeroType.getId() {
+    public Long MinionAttribute.getId() {
         return this.id;
     }
     
-    public void HeroType.setId(Long id) {
+    public void MinionAttribute.setId(Long id) {
         this.id = id;
     }
     

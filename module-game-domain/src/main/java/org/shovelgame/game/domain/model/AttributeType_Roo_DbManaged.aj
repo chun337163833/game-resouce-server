@@ -6,10 +6,11 @@ package org.shovelgame.game.domain.model;
 import java.util.Set;
 import javax.persistence.OneToMany;
 import org.shovelgame.game.domain.i18n.AttributeTypeDescription;
-import org.shovelgame.game.domain.model.Attribute;
 import org.shovelgame.game.domain.model.AttributeType;
 import org.shovelgame.game.domain.model.EnchantmentType;
+import org.shovelgame.game.domain.model.HeroAttribute;
 import org.shovelgame.game.domain.model.ItemModel;
+import org.shovelgame.game.domain.model.MinionAttribute;
 import org.shovelgame.game.domain.model.Skill;
 import org.shovelgame.game.domain.model.Trait;
 
@@ -18,14 +19,17 @@ privileged aspect AttributeType_Roo_DbManaged {
     @OneToMany(mappedBy = "attributeType")
     private Set<AttributeTypeDescription> AttributeType.attributeTypeDescriptions;
     
-    @OneToMany(mappedBy = "type")
-    private Set<Attribute> AttributeType.attributes;
-    
     @OneToMany(mappedBy = "attributeType")
     private Set<EnchantmentType> AttributeType.enchantmentTypes;
     
+    @OneToMany(mappedBy = "type")
+    private Set<HeroAttribute> AttributeType.heroAttributes;
+    
     @OneToMany(mappedBy = "attributeType")
     private Set<ItemModel> AttributeType.itemModels;
+    
+    @OneToMany(mappedBy = "type")
+    private Set<MinionAttribute> AttributeType.minionAttributes;
     
     @OneToMany(mappedBy = "attributeType")
     private Set<Skill> AttributeType.skills;
@@ -41,14 +45,6 @@ privileged aspect AttributeType_Roo_DbManaged {
         this.attributeTypeDescriptions = attributeTypeDescriptions;
     }
     
-    public Set<Attribute> AttributeType.getAttributes() {
-        return attributes;
-    }
-    
-    public void AttributeType.setAttributes(Set<Attribute> attributes) {
-        this.attributes = attributes;
-    }
-    
     public Set<EnchantmentType> AttributeType.getEnchantmentTypes() {
         return enchantmentTypes;
     }
@@ -57,12 +53,28 @@ privileged aspect AttributeType_Roo_DbManaged {
         this.enchantmentTypes = enchantmentTypes;
     }
     
+    public Set<HeroAttribute> AttributeType.getHeroAttributes() {
+        return heroAttributes;
+    }
+    
+    public void AttributeType.setHeroAttributes(Set<HeroAttribute> heroAttributes) {
+        this.heroAttributes = heroAttributes;
+    }
+    
     public Set<ItemModel> AttributeType.getItemModels() {
         return itemModels;
     }
     
     public void AttributeType.setItemModels(Set<ItemModel> itemModels) {
         this.itemModels = itemModels;
+    }
+    
+    public Set<MinionAttribute> AttributeType.getMinionAttributes() {
+        return minionAttributes;
+    }
+    
+    public void AttributeType.setMinionAttributes(Set<MinionAttribute> minionAttributes) {
+        this.minionAttributes = minionAttributes;
     }
     
     public Set<Skill> AttributeType.getSkills() {

@@ -4,11 +4,9 @@
 package org.shovelgame.game.domain.model;
 
 import java.util.Set;
-import javax.persistence.Column;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.validation.constraints.NotNull;
 import org.shovelgame.game.domain.i18n.SpecializationDescription;
 import org.shovelgame.game.domain.model.SeekerModel;
 import org.shovelgame.game.domain.model.SeekerSpecialization;
@@ -21,10 +19,6 @@ privileged aspect SeekerSpecialization_Roo_DbManaged {
     @ManyToOne
     @JoinColumn(name = "seeker_model", referencedColumnName = "id", nullable = false)
     private SeekerModel SeekerSpecialization.seekerModel;
-    
-    @Column(name = "type", length = 10)
-    @NotNull
-    private String SeekerSpecialization.type;
     
     public Set<SpecializationDescription> SeekerSpecialization.getSpecializationDescriptions() {
         return specializationDescriptions;
@@ -40,14 +34,6 @@ privileged aspect SeekerSpecialization_Roo_DbManaged {
     
     public void SeekerSpecialization.setSeekerModel(SeekerModel seekerModel) {
         this.seekerModel = seekerModel;
-    }
-    
-    public String SeekerSpecialization.getType() {
-        return type;
-    }
-    
-    public void SeekerSpecialization.setType(String type) {
-        this.type = type;
     }
     
 }

@@ -6,6 +6,7 @@ package org.shovelgame.game.domain.model;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import org.shovelgame.game.domain.enumaration.AttributeManagedType;
 import org.shovelgame.game.domain.model.AttributeType;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -14,7 +15,7 @@ privileged aspect AttributeType_Roo_Jpa_ActiveRecord {
     @PersistenceContext
     transient EntityManager AttributeType.entityManager;
     
-    public static final List<String> AttributeType.fieldNames4OrderClauseFilter = java.util.Arrays.asList("");
+    public static final List<String> AttributeType.fieldNames4OrderClauseFilter = java.util.Arrays.asList("id");
     
     public static final EntityManager AttributeType.entityManager() {
         EntityManager em = new AttributeType().entityManager;
@@ -41,8 +42,8 @@ privileged aspect AttributeType_Roo_Jpa_ActiveRecord {
         return entityManager().createQuery(jpaQuery, AttributeType.class).getResultList();
     }
     
-    public static AttributeType AttributeType.findAttributeType(String id) {
-        if (id == null || id.length() == 0) return null;
+    public static AttributeType AttributeType.findAttributeType(AttributeManagedType id) {
+        if (id == null) return null;
         return entityManager().find(AttributeType.class, id);
     }
     

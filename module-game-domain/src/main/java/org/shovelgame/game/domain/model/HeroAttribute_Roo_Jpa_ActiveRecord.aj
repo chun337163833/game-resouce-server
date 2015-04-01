@@ -6,94 +6,94 @@ package org.shovelgame.game.domain.model;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import org.shovelgame.game.domain.model.Attribute;
+import org.shovelgame.game.domain.model.HeroAttribute;
 import org.springframework.transaction.annotation.Transactional;
 
-privileged aspect Attribute_Roo_Jpa_ActiveRecord {
+privileged aspect HeroAttribute_Roo_Jpa_ActiveRecord {
     
     @PersistenceContext
-    transient EntityManager Attribute.entityManager;
+    transient EntityManager HeroAttribute.entityManager;
     
-    public static final List<String> Attribute.fieldNames4OrderClauseFilter = java.util.Arrays.asList("");
+    public static final List<String> HeroAttribute.fieldNames4OrderClauseFilter = java.util.Arrays.asList("");
     
-    public static final EntityManager Attribute.entityManager() {
-        EntityManager em = new Attribute().entityManager;
+    public static final EntityManager HeroAttribute.entityManager() {
+        EntityManager em = new HeroAttribute().entityManager;
         if (em == null) throw new IllegalStateException("Entity manager has not been injected (is the Spring Aspects JAR configured as an AJC/AJDT aspects library?)");
         return em;
     }
     
-    public static long Attribute.countAttributes() {
-        return entityManager().createQuery("SELECT COUNT(o) FROM Attribute o", Long.class).getSingleResult();
+    public static long HeroAttribute.countHeroAttributes() {
+        return entityManager().createQuery("SELECT COUNT(o) FROM HeroAttribute o", Long.class).getSingleResult();
     }
     
-    public static List<Attribute> Attribute.findAllAttributes() {
-        return entityManager().createQuery("SELECT o FROM Attribute o", Attribute.class).getResultList();
+    public static List<HeroAttribute> HeroAttribute.findAllHeroAttributes() {
+        return entityManager().createQuery("SELECT o FROM HeroAttribute o", HeroAttribute.class).getResultList();
     }
     
-    public static List<Attribute> Attribute.findAllAttributes(String sortFieldName, String sortOrder) {
-        String jpaQuery = "SELECT o FROM Attribute o";
+    public static List<HeroAttribute> HeroAttribute.findAllHeroAttributes(String sortFieldName, String sortOrder) {
+        String jpaQuery = "SELECT o FROM HeroAttribute o";
         if (fieldNames4OrderClauseFilter.contains(sortFieldName)) {
             jpaQuery = jpaQuery + " ORDER BY " + sortFieldName;
             if ("ASC".equalsIgnoreCase(sortOrder) || "DESC".equalsIgnoreCase(sortOrder)) {
                 jpaQuery = jpaQuery + " " + sortOrder;
             }
         }
-        return entityManager().createQuery(jpaQuery, Attribute.class).getResultList();
+        return entityManager().createQuery(jpaQuery, HeroAttribute.class).getResultList();
     }
     
-    public static Attribute Attribute.findAttribute(Long id) {
+    public static HeroAttribute HeroAttribute.findHeroAttribute(Long id) {
         if (id == null) return null;
-        return entityManager().find(Attribute.class, id);
+        return entityManager().find(HeroAttribute.class, id);
     }
     
-    public static List<Attribute> Attribute.findAttributeEntries(int firstResult, int maxResults) {
-        return entityManager().createQuery("SELECT o FROM Attribute o", Attribute.class).setFirstResult(firstResult).setMaxResults(maxResults).getResultList();
+    public static List<HeroAttribute> HeroAttribute.findHeroAttributeEntries(int firstResult, int maxResults) {
+        return entityManager().createQuery("SELECT o FROM HeroAttribute o", HeroAttribute.class).setFirstResult(firstResult).setMaxResults(maxResults).getResultList();
     }
     
-    public static List<Attribute> Attribute.findAttributeEntries(int firstResult, int maxResults, String sortFieldName, String sortOrder) {
-        String jpaQuery = "SELECT o FROM Attribute o";
+    public static List<HeroAttribute> HeroAttribute.findHeroAttributeEntries(int firstResult, int maxResults, String sortFieldName, String sortOrder) {
+        String jpaQuery = "SELECT o FROM HeroAttribute o";
         if (fieldNames4OrderClauseFilter.contains(sortFieldName)) {
             jpaQuery = jpaQuery + " ORDER BY " + sortFieldName;
             if ("ASC".equalsIgnoreCase(sortOrder) || "DESC".equalsIgnoreCase(sortOrder)) {
                 jpaQuery = jpaQuery + " " + sortOrder;
             }
         }
-        return entityManager().createQuery(jpaQuery, Attribute.class).setFirstResult(firstResult).setMaxResults(maxResults).getResultList();
+        return entityManager().createQuery(jpaQuery, HeroAttribute.class).setFirstResult(firstResult).setMaxResults(maxResults).getResultList();
     }
     
     @Transactional
-    public void Attribute.persist() {
+    public void HeroAttribute.persist() {
         if (this.entityManager == null) this.entityManager = entityManager();
         this.entityManager.persist(this);
     }
     
     @Transactional
-    public void Attribute.remove() {
+    public void HeroAttribute.remove() {
         if (this.entityManager == null) this.entityManager = entityManager();
         if (this.entityManager.contains(this)) {
             this.entityManager.remove(this);
         } else {
-            Attribute attached = Attribute.findAttribute(this.id);
+            HeroAttribute attached = HeroAttribute.findHeroAttribute(this.id);
             this.entityManager.remove(attached);
         }
     }
     
     @Transactional
-    public void Attribute.flush() {
+    public void HeroAttribute.flush() {
         if (this.entityManager == null) this.entityManager = entityManager();
         this.entityManager.flush();
     }
     
     @Transactional
-    public void Attribute.clear() {
+    public void HeroAttribute.clear() {
         if (this.entityManager == null) this.entityManager = entityManager();
         this.entityManager.clear();
     }
     
     @Transactional
-    public Attribute Attribute.merge() {
+    public HeroAttribute HeroAttribute.merge() {
         if (this.entityManager == null) this.entityManager = entityManager();
-        Attribute merged = this.entityManager.merge(this);
+        HeroAttribute merged = this.entityManager.merge(this);
         this.entityManager.flush();
         return merged;
     }

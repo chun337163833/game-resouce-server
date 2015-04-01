@@ -14,7 +14,7 @@ privileged aspect HeroModel_Roo_Jpa_ActiveRecord {
     @PersistenceContext
     transient EntityManager HeroModel.entityManager;
     
-    public static final List<String> HeroModel.fieldNames4OrderClauseFilter = java.util.Arrays.asList("");
+    public static final List<String> HeroModel.fieldNames4OrderClauseFilter = java.util.Arrays.asList("heroAttributes");
     
     public static final EntityManager HeroModel.entityManager() {
         EntityManager em = new HeroModel().entityManager;

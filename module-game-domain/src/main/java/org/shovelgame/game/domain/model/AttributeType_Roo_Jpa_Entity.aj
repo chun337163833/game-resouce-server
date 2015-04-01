@@ -3,11 +3,7 @@
 
 package org.shovelgame.game.domain.model;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.Table;
 import org.shovelgame.game.domain.model.AttributeType;
 
@@ -16,18 +12,5 @@ privileged aspect AttributeType_Roo_Jpa_Entity {
     declare @type: AttributeType: @Entity;
     
     declare @type: AttributeType: @Table(schema = "model", name = "attribute_type");
-    
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id", length = 50)
-    private String AttributeType.id;
-    
-    public String AttributeType.getId() {
-        return this.id;
-    }
-    
-    public void AttributeType.setId(String id) {
-        this.id = id;
-    }
     
 }

@@ -3,9 +3,11 @@
 
 package org.shovelgame.game.domain.data;
 
+import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
 import org.shovelgame.game.domain.data.Minion;
 import org.shovelgame.game.domain.data.Team;
@@ -13,9 +15,14 @@ import org.shovelgame.game.domain.model.MinionModel;
 
 privileged aspect Minion_Roo_DbManaged {
     
-    @ManyToOne
-    @JoinColumn(name = "team", referencedColumnName = "id")
-    private Team Minion.team;
+    @OneToMany(mappedBy = "minionTop")
+    private Set<Team> Minion.teams;
+    
+    @OneToMany(mappedBy = "minionMid")
+    private Set<Team> Minion.teams1;
+    
+    @OneToMany(mappedBy = "minionBot")
+    private Set<Team> Minion.teams2;
     
     @ManyToOne
     @JoinColumn(name = "minion_model", referencedColumnName = "id", nullable = false)
@@ -25,19 +32,34 @@ privileged aspect Minion_Roo_DbManaged {
     private Long Minion.owner;
     
     @Column(name = "position", length = 50)
-    @NotNull
     private String Minion.position;
     
     @Column(name = "level")
     @NotNull
     private Integer Minion.level;
     
-    public Team Minion.getTeam() {
-        return team;
+    public Set<Team> Minion.getTeams() {
+        return teams;
     }
     
-    public void Minion.setTeam(Team team) {
-        this.team = team;
+    public void Minion.setTeams(Set<Team> teams) {
+        this.teams = teams;
+    }
+    
+    public Set<Team> Minion.getTeams1() {
+        return teams1;
+    }
+    
+    public void Minion.setTeams1(Set<Team> teams1) {
+        this.teams1 = teams1;
+    }
+    
+    public Set<Team> Minion.getTeams2() {
+        return teams2;
+    }
+    
+    public void Minion.setTeams2(Set<Team> teams2) {
+        this.teams2 = teams2;
     }
     
     public MinionModel Minion.getMinionModel() {

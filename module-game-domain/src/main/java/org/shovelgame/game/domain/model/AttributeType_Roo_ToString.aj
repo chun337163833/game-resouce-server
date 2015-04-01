@@ -10,7 +10,7 @@ import org.shovelgame.game.domain.model.AttributeType;
 privileged aspect AttributeType_Roo_ToString {
     
     public String AttributeType.toString() {
-        return new ReflectionToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE).setExcludeFieldNames("attributeTypeDescriptions", "attributes", "enchantmentTypes", "itemModels", "skills", "traits").toString();
+        return new ReflectionToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE).setExcludeFieldNames("attributeTypeDescriptions", "attributes", "enchantmentTypes", "itemModels", "skills", "traits", "heroAttributes", "minionAttributes").toString();
     }
     
 }

@@ -43,10 +43,6 @@ privileged aspect ItemModel_Roo_DbManaged {
     @Column(name = "max_enchant")
     private Integer ItemModel.maxEnchant;
     
-    @Column(name = "type", length = 10)
-    @NotNull
-    private String ItemModel.type;
-    
     @Column(name = "icon_name", length = 50)
     @NotNull
     private String ItemModel.iconName;
@@ -105,14 +101,6 @@ privileged aspect ItemModel_Roo_DbManaged {
     
     public void ItemModel.setMaxEnchant(Integer maxEnchant) {
         this.maxEnchant = maxEnchant;
-    }
-    
-    public String ItemModel.getType() {
-        return type;
-    }
-    
-    public void ItemModel.setType(String type) {
-        this.type = type;
     }
     
     public String ItemModel.getIconName() {

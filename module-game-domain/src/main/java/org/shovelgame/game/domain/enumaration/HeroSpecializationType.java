@@ -1,6 +1,6 @@
 package org.shovelgame.game.domain.enumaration;
 
-public enum HeroTypeCode {
+public enum HeroSpecializationType {
 
 	TANK, DAMAGE, HEAL
 	

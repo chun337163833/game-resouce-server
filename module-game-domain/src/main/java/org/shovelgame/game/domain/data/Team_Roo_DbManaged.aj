@@ -5,8 +5,9 @@ package org.shovelgame.game.domain.data;
 
 import java.util.Set;
 import javax.persistence.Column;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.validation.constraints.NotNull;
 import org.shovelgame.game.domain.data.Hero;
 import org.shovelgame.game.domain.data.Item;
 import org.shovelgame.game.domain.data.Minion;
@@ -16,31 +17,29 @@ import org.shovelgame.game.domain.model.Mission;
 privileged aspect Team_Roo_DbManaged {
     
     @OneToMany(mappedBy = "team")
-    private Set<Hero> Team.heroes;
-    
-    @OneToMany(mappedBy = "team")
     private Set<Item> Team.items;
-    
-    @OneToMany(mappedBy = "team")
-    private Set<Minion> Team.minions;
     
     @OneToMany(mappedBy = "team")
     private Set<Mission> Team.missions;
     
+    @ManyToOne
+    @JoinColumn(name = "hero", referencedColumnName = "id", nullable = false)
+    private Hero Team.hero;
+    
+    @ManyToOne
+    @JoinColumn(name = "minion_top", referencedColumnName = "id", nullable = false)
+    private Minion Team.minionTop;
+    
+    @ManyToOne
+    @JoinColumn(name = "minion_mid", referencedColumnName = "id", nullable = false)
+    private Minion Team.minionMid;
+    
+    @ManyToOne
+    @JoinColumn(name = "minion_bot", referencedColumnName = "id", nullable = false)
+    private Minion Team.minionBot;
+    
     @Column(name = "owner")
     private Long Team.owner;
-    
-    @Column(name = "hero")
-    @NotNull
-    private Long Team.hero;
-    
-    public Set<Hero> Team.getHeroes() {
-        return heroes;
-    }
-    
-    public void Team.setHeroes(Set<Hero> heroes) {
-        this.heroes = heroes;
-    }
     
     public Set<Item> Team.getItems() {
         return items;
@@ -48,14 +47,6 @@ privileged aspect Team_Roo_DbManaged {
     
     public void Team.setItems(Set<Item> items) {
         this.items = items;
-    }
-    
-    public Set<Minion> Team.getMinions() {
-        return minions;
-    }
-    
-    public void Team.setMinions(Set<Minion> minions) {
-        this.minions = minions;
     }
     
     public Set<Mission> Team.getMissions() {
@@ -66,20 +57,44 @@ privileged aspect Team_Roo_DbManaged {
         this.missions = missions;
     }
     
+    public Hero Team.getHero() {
+        return hero;
+    }
+    
+    public void Team.setHero(Hero hero) {
+        this.hero = hero;
+    }
+    
+    public Minion Team.getMinionTop() {
+        return minionTop;
+    }
+    
+    public void Team.setMinionTop(Minion minionTop) {
+        this.minionTop = minionTop;
+    }
+    
+    public Minion Team.getMinionMid() {
+        return minionMid;
+    }
+    
+    public void Team.setMinionMid(Minion minionMid) {
+        this.minionMid = minionMid;
+    }
+    
+    public Minion Team.getMinionBot() {
+        return minionBot;
+    }
+    
+    public void Team.setMinionBot(Minion minionBot) {
+        this.minionBot = minionBot;
+    }
+    
     public Long Team.getOwner() {
         return owner;
     }
     
     public void Team.setOwner(Long owner) {
         this.owner = owner;
-    }
-    
-    public Long Team.getHero() {
-        return hero;
-    }
-    
-    public void Team.setHero(Long hero) {
-        this.hero = hero;
     }
     
 }

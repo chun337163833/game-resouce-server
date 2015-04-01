@@ -3,11 +3,11 @@
 
 package org.shovelgame.game.domain.model;
 
-import org.shovelgame.game.domain.model.HeroType;
+import org.shovelgame.game.domain.model.MinionAttribute;
 import org.springframework.beans.factory.annotation.Configurable;
 
-privileged aspect HeroType_Roo_Configurable {
+privileged aspect MinionAttribute_Roo_Configurable {
     
-    declare @type: HeroType: @Configurable;
+    declare @type: MinionAttribute: @Configurable;
     
 }

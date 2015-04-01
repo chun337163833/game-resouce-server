@@ -14,7 +14,7 @@ privileged aspect TraitTarget_Roo_Jpa_ActiveRecord {
     @PersistenceContext
     transient EntityManager TraitTarget.entityManager;
     
-    public static final List<String> TraitTarget.fieldNames4OrderClauseFilter = java.util.Arrays.asList("");
+    public static final List<String> TraitTarget.fieldNames4OrderClauseFilter = java.util.Arrays.asList("position");
     
     public static final EntityManager TraitTarget.entityManager() {
         EntityManager em = new TraitTarget().entityManager;

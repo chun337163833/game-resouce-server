@@ -6,6 +6,7 @@ package org.shovelgame.game.domain.model;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import org.shovelgame.game.domain.enumaration.Grade;
 import org.shovelgame.game.domain.model.QualityGrade;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -14,7 +15,7 @@ privileged aspect QualityGrade_Roo_Jpa_ActiveRecord {
     @PersistenceContext
     transient EntityManager QualityGrade.entityManager;
     
-    public static final List<String> QualityGrade.fieldNames4OrderClauseFilter = java.util.Arrays.asList("");
+    public static final List<String> QualityGrade.fieldNames4OrderClauseFilter = java.util.Arrays.asList("id");
     
     public static final EntityManager QualityGrade.entityManager() {
         EntityManager em = new QualityGrade().entityManager;
@@ -41,7 +42,7 @@ privileged aspect QualityGrade_Roo_Jpa_ActiveRecord {
         return entityManager().createQuery(jpaQuery, QualityGrade.class).getResultList();
     }
     
-    public static QualityGrade QualityGrade.findQualityGrade(Character id) {
+    public static QualityGrade QualityGrade.findQualityGrade(Grade id) {
         if (id == null) return null;
         return entityManager().find(QualityGrade.class, id);
     }

@@ -3,9 +3,11 @@
 
 package org.shovelgame.game.domain.data;
 
+import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
 import org.shovelgame.game.domain.data.Hero;
 import org.shovelgame.game.domain.data.Team;
@@ -13,9 +15,8 @@ import org.shovelgame.game.domain.model.HeroModel;
 
 privileged aspect Hero_Roo_DbManaged {
     
-    @ManyToOne
-    @JoinColumn(name = "team", referencedColumnName = "id")
-    private Team Hero.team;
+    @OneToMany(mappedBy = "hero")
+    private Set<Team> Hero.teams;
     
     @ManyToOne
     @JoinColumn(name = "hero_model", referencedColumnName = "id", nullable = false)
@@ -28,12 +29,12 @@ privileged aspect Hero_Roo_DbManaged {
     @NotNull
     private Integer Hero.level;
     
-    public Team Hero.getTeam() {
-        return team;
+    public Set<Team> Hero.getTeams() {
+        return teams;
     }
     
-    public void Hero.setTeam(Team team) {
-        this.team = team;
+    public void Hero.setTeams(Set<Team> teams) {
+        this.teams = teams;
     }
     
     public HeroModel Hero.getHeroModel() {

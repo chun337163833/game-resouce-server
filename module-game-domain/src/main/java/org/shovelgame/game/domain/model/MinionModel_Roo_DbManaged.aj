@@ -10,7 +10,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
 import org.shovelgame.game.domain.data.Minion;
-import org.shovelgame.game.domain.model.Attribute;
 import org.shovelgame.game.domain.model.MinionModel;
 import org.shovelgame.game.domain.model.MinionSkill;
 import org.shovelgame.game.domain.model.MinionTrait;
@@ -26,10 +25,6 @@ privileged aspect MinionModel_Roo_DbManaged {
     
     @OneToMany(mappedBy = "minionModel")
     private Set<MinionTrait> MinionModel.minionTraits;
-    
-    @ManyToOne
-    @JoinColumn(name = "attributes", referencedColumnName = "id", nullable = false)
-    private Attribute MinionModel.attributes;
     
     @ManyToOne
     @JoinColumn(name = "quality_grade", referencedColumnName = "id", nullable = false)
@@ -65,14 +60,6 @@ privileged aspect MinionModel_Roo_DbManaged {
     
     public void MinionModel.setMinionTraits(Set<MinionTrait> minionTraits) {
         this.minionTraits = minionTraits;
-    }
-    
-    public Attribute MinionModel.getAttributes() {
-        return attributes;
-    }
-    
-    public void MinionModel.setAttributes(Attribute attributes) {
-        this.attributes = attributes;
     }
     
     public QualityGrade MinionModel.getQualityGrade() {

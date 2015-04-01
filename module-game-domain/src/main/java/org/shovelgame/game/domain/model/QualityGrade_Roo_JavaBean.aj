@@ -3,14 +3,17 @@
 
 package org.shovelgame.game.domain.model;
 
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import org.shovelgame.game.domain.enumaration.Grade;
 import org.shovelgame.game.domain.model.QualityGrade;
 
-privileged aspect QualityGrade_Roo_Jpa_Entity {
+privileged aspect QualityGrade_Roo_JavaBean {
     
-    declare @type: QualityGrade: @Entity;
+    public Grade QualityGrade.getId() {
+        return this.id;
+    }
     
-    declare @type: QualityGrade: @Table(schema = "model", name = "quality_grade");
+    public void QualityGrade.setId(Grade id) {
+        this.id = id;
+    }
     
 }

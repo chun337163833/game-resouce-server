@@ -1,5 +1,3 @@
-DROP TABLE IF EXISTS model.attribute CASCADE;
-DROP SEQUENCE IF EXISTS model.attribute_id_seq;
 DROP TABLE IF EXISTS model.attribute_type CASCADE;
 DROP TABLE IF EXISTS i18n.attribute_type_description CASCADE;
 DROP SEQUENCE IF EXISTS i18n.attribute_type_description_id_seq;
@@ -9,12 +7,14 @@ DROP TABLE IF EXISTS i18n.enchantment_type_description CASCADE;
 DROP SEQUENCE IF EXISTS i18n.enchantment_type_description_id_seq;
 DROP TABLE IF EXISTS data.hero CASCADE;
 DROP SEQUENCE IF EXISTS data.hero_id_seq;
+DROP TABLE IF EXISTS model.hero_attribute CASCADE;
+DROP SEQUENCE IF EXISTS model.hero_attribute_id_seq;
 DROP TABLE IF EXISTS model.hero_model CASCADE;
 DROP SEQUENCE IF EXISTS model.hero_model_id_seq;
 DROP TABLE IF EXISTS model.hero_skill CASCADE;
+DROP TABLE IF EXISTS model.hero_specialization CASCADE;
+DROP SEQUENCE IF EXISTS model.hero_specialization_id_seq;
 DROP TABLE IF EXISTS model.hero_trait CASCADE;
-DROP TABLE IF EXISTS model.hero_type CASCADE;
-DROP SEQUENCE IF EXISTS model.hero_type_id_seq;
 DROP TABLE IF EXISTS i18n.hero_type_description CASCADE;
 DROP SEQUENCE IF EXISTS i18n.hero_type_description_id_seq;
 DROP TABLE IF EXISTS data.item CASCADE;
@@ -28,6 +28,8 @@ DROP SEQUENCE IF EXISTS i18n.item_model_description_id_seq;
 DROP TABLE IF EXISTS i18n.language CASCADE;
 DROP TABLE IF EXISTS data.minion CASCADE;
 DROP SEQUENCE IF EXISTS data.minion_id_seq;
+DROP TABLE IF EXISTS model.minion_attribute CASCADE;
+DROP SEQUENCE IF EXISTS model.minion_attribute_id_seq;
 DROP TABLE IF EXISTS model.minion_model CASCADE;
 DROP SEQUENCE IF EXISTS model.minion_model_id_seq;
 DROP TABLE IF EXISTS model.minion_skill CASCADE;
@@ -50,20 +52,13 @@ DROP SEQUENCE IF EXISTS i18n.skill_description_id_seq;
 DROP TABLE IF EXISTS i18n.specialization_description CASCADE;
 DROP SEQUENCE IF EXISTS i18n.specialization_description_id_seq;
 DROP TABLE IF EXISTS data.team CASCADE;
+DROP SEQUENCE IF EXISTS data.team_id_seq;
 DROP TABLE IF EXISTS model.trait CASCADE;
 DROP SEQUENCE IF EXISTS model.trait_id_seq;
 DROP TABLE IF EXISTS i18n.trait_description CASCADE;
 DROP SEQUENCE IF EXISTS i18n.trait_description_id_seq;
 DROP TABLE IF EXISTS model.trait_target CASCADE;
 DROP SEQUENCE IF EXISTS model.trait_target_id_seq;
-
-CREATE SEQUENCE model.attribute_id_seq INCREMENT 1 START 1;
-
-CREATE TABLE model.attribute ( 
-	id bigint DEFAULT nextval(('model.attribute_id_seq'::text)::regclass) NOT NULL,
-	type varchar(50) NOT NULL,
-	value decimal(10,3) NOT NULL
-);
 
 CREATE TABLE model.attribute_type ( 
 	id varchar(50) NOT NULL
@@ -100,19 +95,26 @@ CREATE SEQUENCE data.hero_id_seq INCREMENT 1 START 1;
 CREATE TABLE data.hero ( 
 	id bigint DEFAULT nextval(('data.hero_id_seq'::text)::regclass) NOT NULL,
 	hero_model bigint NOT NULL,
-	team bigint,
 	owner bigint,
 	level integer DEFAULT 1 NOT NULL
+);
+
+CREATE SEQUENCE model.hero_attribute_id_seq INCREMENT 1 START 1;
+
+CREATE TABLE model.hero_attribute ( 
+	id bigint DEFAULT nextval(('model.hero_attribute_id_seq'::text)::regclass) NOT NULL,
+	hero_model bigint NOT NULL,
+	type varchar(50) NOT NULL,
+	value decimal(10,3) NOT NULL
 );
 
 CREATE SEQUENCE model.hero_model_id_seq INCREMENT 1 START 1;
 
 CREATE TABLE model.hero_model ( 
 	id bigint DEFAULT nextval(('model.hero_model_id_seq'::text)::regclass) NOT NULL,
-	name varchar(50) NOT NULL,
 	quality_grade char(1) NOT NULL,
-	attributes bigint NOT NULL,
-	hero_type bigint NOT NULL,
+	name varchar(50) NOT NULL,
+	hero_specialization bigint NOT NULL,
 	image_bundle_name varchar(50) NOT NULL
 );
 
@@ -123,18 +125,18 @@ CREATE TABLE model.hero_skill (
 	override_power decimal(10,3) DEFAULT 0
 );
 
+CREATE SEQUENCE model.hero_specialization_id_seq INCREMENT 1 START 1;
+
+CREATE TABLE model.hero_specialization ( 
+	id bigint DEFAULT nextval(('model.hero_specialization_id_seq'::text)::regclass) NOT NULL,
+	type varchar(50) NOT NULL
+);
+
 CREATE TABLE model.hero_trait ( 
 	hero_model bigint NOT NULL,
 	trait bigint NOT NULL,
 	required_level integer DEFAULT 1,
 	override_power decimal(10,3)
-);
-
-CREATE SEQUENCE model.hero_type_id_seq INCREMENT 1 START 1;
-
-CREATE TABLE model.hero_type ( 
-	id bigint DEFAULT nextval(('model.hero_type_id_seq'::text)::regclass) NOT NULL,
-	code varchar(50) NOT NULL
 );
 
 CREATE SEQUENCE i18n.hero_type_description_id_seq INCREMENT 1 START 1;
@@ -196,19 +198,26 @@ CREATE SEQUENCE data.minion_id_seq INCREMENT 1 START 1;
 CREATE TABLE data.minion ( 
 	id bigint DEFAULT nextval(('data.minion_id_seq'::text)::regclass) NOT NULL,
 	minion_model bigint NOT NULL,
-	team bigint,
 	owner bigint,
-	position varchar(50) NOT NULL,
+	position varchar(50),
 	level integer DEFAULT 1 NOT NULL
+);
+
+CREATE SEQUENCE model.minion_attribute_id_seq INCREMENT 1 START 1;
+
+CREATE TABLE model.minion_attribute ( 
+	id bigint DEFAULT nextval(('model.minion_attribute_id_seq'::text)::regclass) NOT NULL,
+	minion_model bigint NOT NULL,
+	type varchar(50) NOT NULL,
+	value decimal(10,3) NOT NULL
 );
 
 CREATE SEQUENCE model.minion_model_id_seq INCREMENT 1 START 1;
 
 CREATE TABLE model.minion_model ( 
 	id bigint DEFAULT nextval(('model.minion_model_id_seq'::text)::regclass) NOT NULL,
-	name varchar(50) NOT NULL,
 	quality_grade char(1) NOT NULL,
-	attributes bigint NOT NULL,
+	name varchar(50) NOT NULL,
 	image_bundle_name varchar(50) NOT NULL
 );
 
@@ -299,10 +308,15 @@ CREATE TABLE i18n.specialization_description (
 	value text NOT NULL
 );
 
+CREATE SEQUENCE data.team_id_seq INCREMENT 1 START 1;
+
 CREATE TABLE data.team ( 
-	id bigint NOT NULL,
-	owner bigint,
-	hero bigint NOT NULL
+	id bigint DEFAULT nextval(('data.team_id_seq'::text)::regclass) NOT NULL,
+	hero bigint NOT NULL,
+	minion_top bigint NOT NULL,
+	minion_mid bigint NOT NULL,
+	minion_bot bigint NOT NULL,
+	owner bigint
 );
 
 CREATE SEQUENCE model.trait_id_seq INCREMENT 1 START 1;
@@ -334,8 +348,6 @@ CREATE TABLE model.trait_target (
 );
 
 
-CREATE INDEX IXFK_attributes_attribute_type
-	ON model.attribute (type);
 CREATE INDEX IXFK_attribute_type_description_attribute_type
 	ON i18n.attribute_type_description (attribute_type);
 CREATE INDEX IXFK_attribute_type_description_language
@@ -350,22 +362,22 @@ CREATE INDEX IXFK_enchantment_type_description_enchantment_type
 	ON i18n.enchantment_type_description (enchantment_type);
 CREATE INDEX IXFK_hero_hero_model
 	ON data.hero (hero_model);
-CREATE INDEX IXFK_hero_team
-	ON data.hero (team);
-CREATE INDEX IXFK_hero_model_attributes
-	ON model.hero_model (attributes);
+CREATE INDEX IXFK_hero_attribute_attribute_type
+	ON model.hero_attribute (type);
+CREATE INDEX IXFK_hero_attribute_hero_model
+	ON model.hero_attribute (hero_model);
 CREATE INDEX IXFK_hero_model_hero_type
-	ON model.hero_model (hero_type);
+	ON model.hero_model (hero_specialization);
 CREATE INDEX IXFK_hero_skill_hero_model
 	ON model.hero_skill (hero_model);
 CREATE INDEX IXFK_hero_skill_skill_model
 	ON model.hero_skill (skill);
+ALTER TABLE model.hero_specialization
+	ADD CONSTRAINT UQ_hero_type_code UNIQUE (type);
 CREATE INDEX IXFK_hero_trait_trait_model
 	ON model.hero_trait (trait);
 CREATE INDEX IXFK_hero_trait_hero_model
 	ON model.hero_trait (hero_model);
-ALTER TABLE model.hero_type
-	ADD CONSTRAINT UQ_hero_type_code UNIQUE (code);
 CREATE INDEX IXFK_hero_type_description_hero_type
 	ON i18n.hero_type_description (hero_type);
 CREATE INDEX IXFK_hero_type_description_language
@@ -388,10 +400,10 @@ CREATE INDEX IXFK_item_model_description_item_model
 	ON i18n.item_model_description (item_model);
 CREATE INDEX IXFK_minion_minion_model
 	ON data.minion (minion_model);
-CREATE INDEX IXFK_minion_team
-	ON data.minion (team);
-CREATE INDEX IXFK_minion_model_attributes
-	ON model.minion_model (attributes);
+CREATE INDEX IXFK_minion_attribute_attribute_type
+	ON model.minion_attribute (type);
+CREATE INDEX IXFK_minion_attribute_minion_model
+	ON model.minion_attribute (minion_model);
 CREATE INDEX IXFK_minion_model_grade
 	ON model.minion_model (quality_grade);
 CREATE INDEX IXFK_minion_skill_minion_model
@@ -426,6 +438,14 @@ CREATE INDEX IXFK_specialization_type_desc_specialization_type
 	ON i18n.specialization_description (seeker_specialization);
 CREATE INDEX IXFK_specialization_type_desc_l_language
 	ON i18n.specialization_description (lang);
+CREATE INDEX IXFK_team_hero
+	ON data.team (hero);
+CREATE INDEX IXFK_team_minion
+	ON data.team (minion_top);
+CREATE INDEX IXFK_team_minion_02
+	ON data.team (minion_mid);
+CREATE INDEX IXFK_team_minion_03
+	ON data.team (minion_bot);
 CREATE INDEX IXFK_trait_model_attribute_type
 	ON model.trait (affected_attribute_type);
 CREATE INDEX IXFK_trait_model_description_trait_model
@@ -434,10 +454,6 @@ CREATE INDEX IXFK_trait_model_description_language
 	ON i18n.trait_description (lang);
 CREATE INDEX IXFK_trait_target_trait
 	ON model.trait_target (trait);
-ALTER TABLE model.attribute ADD CONSTRAINT PK_attributes 
-	PRIMARY KEY (id);
-
-
 ALTER TABLE model.attribute_type ADD CONSTRAINT PK_attribute_type 
 	PRIMARY KEY (id);
 
@@ -458,11 +474,15 @@ ALTER TABLE data.hero ADD CONSTRAINT PK_hero
 	PRIMARY KEY (id);
 
 
+ALTER TABLE model.hero_attribute ADD CONSTRAINT PK_hero_attribute 
+	PRIMARY KEY (id);
+
+
 ALTER TABLE model.hero_model ADD CONSTRAINT PK_hero_model 
 	PRIMARY KEY (id);
 
 
-ALTER TABLE model.hero_type ADD CONSTRAINT PK_hero_type 
+ALTER TABLE model.hero_specialization ADD CONSTRAINT PK_hero_type 
 	PRIMARY KEY (id);
 
 
@@ -491,6 +511,10 @@ ALTER TABLE i18n.language ADD CONSTRAINT PK_m_language
 
 
 ALTER TABLE data.minion ADD CONSTRAINT PK_minion 
+	PRIMARY KEY (id);
+
+
+ALTER TABLE model.minion_attribute ADD CONSTRAINT PK_minion_attribute 
 	PRIMARY KEY (id);
 
 
@@ -552,9 +576,6 @@ ALTER TABLE model.trait_target ADD CONSTRAINT PK_trait_target
 
 
 
-ALTER TABLE model.attribute ADD CONSTRAINT FK_attributes_attribute_type 
-	FOREIGN KEY (type) REFERENCES model.attribute_type (id);
-
 ALTER TABLE i18n.attribute_type_description ADD CONSTRAINT FK_attribute_type_description_attribute_type 
 	FOREIGN KEY (attribute_type) REFERENCES model.attribute_type (id);
 
@@ -576,17 +597,17 @@ ALTER TABLE i18n.enchantment_type_description ADD CONSTRAINT FK_enchantment_type
 ALTER TABLE data.hero ADD CONSTRAINT FK_hero_hero_model 
 	FOREIGN KEY (hero_model) REFERENCES model.hero_model (id);
 
-ALTER TABLE data.hero ADD CONSTRAINT FK_hero_team 
-	FOREIGN KEY (team) REFERENCES data.team (id);
+ALTER TABLE model.hero_attribute ADD CONSTRAINT FK_hero_attribute_attribute_type 
+	FOREIGN KEY (type) REFERENCES model.attribute_type (id);
+
+ALTER TABLE model.hero_attribute ADD CONSTRAINT FK_hero_attribute_hero_model 
+	FOREIGN KEY (hero_model) REFERENCES model.hero_model (id);
 
 ALTER TABLE model.hero_model ADD CONSTRAINT FK_hero_model_grade 
 	FOREIGN KEY (quality_grade) REFERENCES model.quality_grade (id);
 
-ALTER TABLE model.hero_model ADD CONSTRAINT FK_hero_model_attributes 
-	FOREIGN KEY (attributes) REFERENCES model.attribute (id);
-
 ALTER TABLE model.hero_model ADD CONSTRAINT FK_hero_model_hero_type 
-	FOREIGN KEY (hero_type) REFERENCES model.hero_type (id);
+	FOREIGN KEY (hero_specialization) REFERENCES model.hero_specialization (id);
 
 ALTER TABLE model.hero_skill ADD CONSTRAINT FK_hero_skill_hero_model 
 	FOREIGN KEY (hero_model) REFERENCES model.hero_model (id);
@@ -601,7 +622,7 @@ ALTER TABLE model.hero_trait ADD CONSTRAINT FK_hero_trait_hero_model
 	FOREIGN KEY (hero_model) REFERENCES model.hero_model (id);
 
 ALTER TABLE i18n.hero_type_description ADD CONSTRAINT FK_hero_type_description_hero_type 
-	FOREIGN KEY (hero_type) REFERENCES model.hero_type (id);
+	FOREIGN KEY (hero_type) REFERENCES model.hero_specialization (id);
 
 ALTER TABLE i18n.hero_type_description ADD CONSTRAINT FK_hero_type_description_language 
 	FOREIGN KEY (lang) REFERENCES i18n.language (id);
@@ -633,11 +654,11 @@ ALTER TABLE i18n.item_model_description ADD CONSTRAINT FK_item_model_description
 ALTER TABLE data.minion ADD CONSTRAINT FK_minion_minion_model 
 	FOREIGN KEY (minion_model) REFERENCES model.minion_model (id);
 
-ALTER TABLE data.minion ADD CONSTRAINT FK_minion_team 
-	FOREIGN KEY (team) REFERENCES data.team (id);
+ALTER TABLE model.minion_attribute ADD CONSTRAINT FK_minion_attribute_attribute_type 
+	FOREIGN KEY (type) REFERENCES model.attribute_type (id);
 
-ALTER TABLE model.minion_model ADD CONSTRAINT FK_minion_model_attributes 
-	FOREIGN KEY (attributes) REFERENCES model.attribute (id);
+ALTER TABLE model.minion_attribute ADD CONSTRAINT FK_minion_attribute_minion_model 
+	FOREIGN KEY (minion_model) REFERENCES model.minion_model (id);
 
 ALTER TABLE model.minion_model ADD CONSTRAINT FK_minion_model_grade 
 	FOREIGN KEY (quality_grade) REFERENCES model.quality_grade (id);
@@ -686,6 +707,18 @@ ALTER TABLE i18n.specialization_description ADD CONSTRAINT FK_specialization_typ
 
 ALTER TABLE i18n.specialization_description ADD CONSTRAINT FK_specialization_desc_seeker_specialization 
 	FOREIGN KEY (seeker_specialization) REFERENCES model.seeker_specialization (id);
+
+ALTER TABLE data.team ADD CONSTRAINT FK_team_hero 
+	FOREIGN KEY (hero) REFERENCES data.hero (id);
+
+ALTER TABLE data.team ADD CONSTRAINT FK_team_minion 
+	FOREIGN KEY (minion_top) REFERENCES data.minion (id);
+
+ALTER TABLE data.team ADD CONSTRAINT FK_team_minion_02 
+	FOREIGN KEY (minion_mid) REFERENCES data.minion (id);
+
+ALTER TABLE data.team ADD CONSTRAINT FK_team_minion_03 
+	FOREIGN KEY (minion_bot) REFERENCES data.minion (id);
 
 ALTER TABLE model.trait ADD CONSTRAINT FK_trait_model_attribute_type 
 	FOREIGN KEY (affected_attribute_type) REFERENCES model.attribute_type (id);

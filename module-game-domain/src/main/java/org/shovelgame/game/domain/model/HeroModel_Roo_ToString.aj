@@ -10,7 +10,7 @@ import org.shovelgame.game.domain.model.HeroModel;
 privileged aspect HeroModel_Roo_ToString {
     
     public String HeroModel.toString() {
-        return new ReflectionToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE).setExcludeFieldNames("heroes", "heroSkills", "heroTraits", "attributes", "heroType", "qualityGrade").toString();
+        return new ReflectionToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE).setExcludeFieldNames("heroes", "heroSkills", "heroTraits", "attributes", "heroType", "qualityGrade", "heroSpecialization", "heroAttributes").toString();
     }
     
 }
