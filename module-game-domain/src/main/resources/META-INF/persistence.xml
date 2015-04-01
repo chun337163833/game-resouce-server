@@ -39,6 +39,6 @@
 		<class>org.shovelgame.game.domain.model.Skill</class>
 		<class>org.shovelgame.game.domain.model.Trait</class>
 		<class>org.shovelgame.game.domain.model.TraitTarget</class>
-		<!-- <exclude-unlisted-classes>true</exclude-unlisted-classes> -->
+		<exclude-unlisted-classes>true</exclude-unlisted-classes>
 	</persistence-unit>
 </persistence>
