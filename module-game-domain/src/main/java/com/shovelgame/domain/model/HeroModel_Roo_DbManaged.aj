@@ -5,14 +5,24 @@ package com.shovelgame.domain.model;
 
 import com.shovelgame.domain.model.Attribute;
 import com.shovelgame.domain.model.HeroModel;
+import com.shovelgame.domain.model.HeroSkill;
+import com.shovelgame.domain.model.HeroTrait;
 import com.shovelgame.domain.model.HeroType;
 import com.shovelgame.domain.model.QualityGrade;
+import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
 
 privileged aspect HeroModel_Roo_DbManaged {
+    
+    @OneToMany(mappedBy = "heroModel")
+    private Set<HeroSkill> HeroModel.heroSkills;
+    
+    @OneToMany(mappedBy = "heroModel")
+    private Set<HeroTrait> HeroModel.heroTraits;
     
     @ManyToOne
     @JoinColumn(name = "attributes", referencedColumnName = "id", nullable = false)
@@ -29,6 +39,26 @@ privileged aspect HeroModel_Roo_DbManaged {
     @Column(name = "name", length = 50)
     @NotNull
     private String HeroModel.name;
+    
+    @Column(name = "image_bundle_name", length = 50)
+    @NotNull
+    private String HeroModel.imageBundleName;
+    
+    public Set<HeroSkill> HeroModel.getHeroSkills() {
+        return heroSkills;
+    }
+    
+    public void HeroModel.setHeroSkills(Set<HeroSkill> heroSkills) {
+        this.heroSkills = heroSkills;
+    }
+    
+    public Set<HeroTrait> HeroModel.getHeroTraits() {
+        return heroTraits;
+    }
+    
+    public void HeroModel.setHeroTraits(Set<HeroTrait> heroTraits) {
+        this.heroTraits = heroTraits;
+    }
     
     public Attribute HeroModel.getAttributes() {
         return attributes;
@@ -60,6 +90,14 @@ privileged aspect HeroModel_Roo_DbManaged {
     
     public void HeroModel.setName(String name) {
         this.name = name;
+    }
+    
+    public String HeroModel.getImageBundleName() {
+        return imageBundleName;
+    }
+    
+    public void HeroModel.setImageBundleName(String imageBundleName) {
+        this.imageBundleName = imageBundleName;
     }
     
 }

@@ -4,6 +4,7 @@
 package com.shovelgame.domain.model;
 
 import com.shovelgame.domain.model.HeroModel;
+import com.shovelgame.domain.model.ItemModel;
 import com.shovelgame.domain.model.MinionModel;
 import com.shovelgame.domain.model.QualityGrade;
 import com.shovelgame.domain.model.SeekerModel;
@@ -14,6 +15,9 @@ privileged aspect QualityGrade_Roo_DbManaged {
     
     @OneToMany(mappedBy = "qualityGrade")
     private Set<HeroModel> QualityGrade.heroModels;
+    
+    @OneToMany(mappedBy = "qualityGrade")
+    private Set<ItemModel> QualityGrade.itemModels;
     
     @OneToMany(mappedBy = "qualityGrade")
     private Set<MinionModel> QualityGrade.minionModels;
@@ -27,6 +31,14 @@ privileged aspect QualityGrade_Roo_DbManaged {
     
     public void QualityGrade.setHeroModels(Set<HeroModel> heroModels) {
         this.heroModels = heroModels;
+    }
+    
+    public Set<ItemModel> QualityGrade.getItemModels() {
+        return itemModels;
+    }
+    
+    public void QualityGrade.setItemModels(Set<ItemModel> itemModels) {
+        this.itemModels = itemModels;
     }
     
     public Set<MinionModel> QualityGrade.getMinionModels() {

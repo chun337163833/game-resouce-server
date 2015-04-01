@@ -16,6 +16,12 @@
 	
 	<dependencies>
 		<dependency>
+	        <groupId>net.sf.flexjson</groupId>
+	        <artifactId>flexjson</artifactId>
+	        <version>3.2</version>
+	        <!-- roo was defaulting to 2.1 -->
+	    </dependency>
+		<dependency>
 			<groupId>org.shovelgame</groupId>
 			<artifactId>abstract-domain</artifactId>
 			<version>${project.version}</version>

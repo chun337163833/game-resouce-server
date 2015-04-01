@@ -11,7 +11,7 @@ import com.shovelgame.enumaration.Grade;
 @RooJavaBean
 @RooJpaActiveRecord(versionField = "", table = "quality_grade", schema = "model")
 @RooDbManaged(automaticallyDelete = true)
-@RooToString(excludeFields = { "heroModels", "minionModels", "seekerModels" })
+@RooToString(excludeFields = { "heroModels", "minionModels", "seekerModels", "itemModels" })
 public class QualityGrade {
 
     @Id

@@ -10,7 +10,7 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 privileged aspect QualityGrade_Roo_ToString {
     
     public String QualityGrade.toString() {
-        return new ReflectionToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE).setExcludeFieldNames("heroModels", "minionModels", "seekerModels").toString();
+        return new ReflectionToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE).setExcludeFieldNames("heroModels", "minionModels", "seekerModels", "itemModels").toString();
     }
     
 }

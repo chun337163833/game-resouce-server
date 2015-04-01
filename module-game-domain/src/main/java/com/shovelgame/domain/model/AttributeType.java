@@ -10,7 +10,7 @@ import com.shovelgame.enumaration.AttributeManagedType;
 @RooJavaBean
 @RooJpaActiveRecord(versionField = "", table = "attribute_type", schema = "model")
 @RooDbManaged(automaticallyDelete = true)
-@RooToString(excludeFields = { "attributeTypeDescriptions", "attributeses", "enchantmentTypes", "attributes", "itemModels" })
+@RooToString(excludeFields = { "attributeTypeDescriptions", "attributeses", "enchantmentTypes", "attributes", "itemModels", "skillModels", "traitModels" })
 public class AttributeType {
 
     @Id

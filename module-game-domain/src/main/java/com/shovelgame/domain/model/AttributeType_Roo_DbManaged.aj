@@ -8,6 +8,8 @@ import com.shovelgame.domain.model.Attribute;
 import com.shovelgame.domain.model.AttributeType;
 import com.shovelgame.domain.model.EnchantmentType;
 import com.shovelgame.domain.model.ItemModel;
+import com.shovelgame.domain.model.SkillModel;
+import com.shovelgame.domain.model.TraitModel;
 import java.util.Set;
 import javax.persistence.OneToMany;
 
@@ -24,6 +26,12 @@ privileged aspect AttributeType_Roo_DbManaged {
     
     @OneToMany(mappedBy = "attributeType")
     private Set<ItemModel> AttributeType.itemModels;
+    
+    @OneToMany(mappedBy = "attributeType")
+    private Set<SkillModel> AttributeType.skillModels;
+    
+    @OneToMany(mappedBy = "attributeType")
+    private Set<TraitModel> AttributeType.traitModels;
     
     public Set<AttributeTypeDescription> AttributeType.getAttributeTypeDescriptions() {
         return attributeTypeDescriptions;
@@ -55,6 +63,22 @@ privileged aspect AttributeType_Roo_DbManaged {
     
     public void AttributeType.setItemModels(Set<ItemModel> itemModels) {
         this.itemModels = itemModels;
+    }
+    
+    public Set<SkillModel> AttributeType.getSkillModels() {
+        return skillModels;
+    }
+    
+    public void AttributeType.setSkillModels(Set<SkillModel> skillModels) {
+        this.skillModels = skillModels;
+    }
+    
+    public Set<TraitModel> AttributeType.getTraitModels() {
+        return traitModels;
+    }
+    
+    public void AttributeType.setTraitModels(Set<TraitModel> traitModels) {
+        this.traitModels = traitModels;
     }
     
 }

@@ -5,13 +5,23 @@ package com.shovelgame.domain.model;
 
 import com.shovelgame.domain.model.Attribute;
 import com.shovelgame.domain.model.MinionModel;
+import com.shovelgame.domain.model.MinionSkill;
+import com.shovelgame.domain.model.MinionTrait;
 import com.shovelgame.domain.model.QualityGrade;
+import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
 
 privileged aspect MinionModel_Roo_DbManaged {
+    
+    @OneToMany(mappedBy = "minionModel")
+    private Set<MinionSkill> MinionModel.minionSkills;
+    
+    @OneToMany(mappedBy = "minionModel")
+    private Set<MinionTrait> MinionModel.minionTraits;
     
     @ManyToOne
     @JoinColumn(name = "attributes", referencedColumnName = "id", nullable = false)
@@ -24,6 +34,26 @@ privileged aspect MinionModel_Roo_DbManaged {
     @Column(name = "name", length = 50)
     @NotNull
     private String MinionModel.name;
+    
+    @Column(name = "image_bundle_name", length = 50)
+    @NotNull
+    private String MinionModel.imageBundleName;
+    
+    public Set<MinionSkill> MinionModel.getMinionSkills() {
+        return minionSkills;
+    }
+    
+    public void MinionModel.setMinionSkills(Set<MinionSkill> minionSkills) {
+        this.minionSkills = minionSkills;
+    }
+    
+    public Set<MinionTrait> MinionModel.getMinionTraits() {
+        return minionTraits;
+    }
+    
+    public void MinionModel.setMinionTraits(Set<MinionTrait> minionTraits) {
+        this.minionTraits = minionTraits;
+    }
     
     public Attribute MinionModel.getAttributes() {
         return attributes;
@@ -47,6 +77,14 @@ privileged aspect MinionModel_Roo_DbManaged {
     
     public void MinionModel.setName(String name) {
         this.name = name;
+    }
+    
+    public String MinionModel.getImageBundleName() {
+        return imageBundleName;
+    }
+    
+    public void MinionModel.setImageBundleName(String imageBundleName) {
+        this.imageBundleName = imageBundleName;
     }
     
 }

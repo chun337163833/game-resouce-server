@@ -7,8 +7,8 @@ import com.shovelgame.domain.i18n.EnchantmentTypeDescription;
 import com.shovelgame.domain.model.AttributeType;
 import com.shovelgame.domain.model.EnchantmentType;
 import com.shovelgame.domain.model.ItemEnchantment;
+import com.shovelgame.domain.model.SkillModel;
 import java.util.Set;
-import javax.persistence.Column;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
@@ -25,8 +25,9 @@ privileged aspect EnchantmentType_Roo_DbManaged {
     @JoinColumn(name = "attribute_type", referencedColumnName = "id")
     private AttributeType EnchantmentType.attributeType;
     
-    @Column(name = "skill")
-    private Long EnchantmentType.skill;
+    @ManyToOne
+    @JoinColumn(name = "skill_model", referencedColumnName = "id")
+    private SkillModel EnchantmentType.skillModel;
     
     public Set<EnchantmentTypeDescription> EnchantmentType.getEnchantmentTypeDescriptions() {
         return enchantmentTypeDescriptions;
@@ -52,12 +53,12 @@ privileged aspect EnchantmentType_Roo_DbManaged {
         this.attributeType = attributeType;
     }
     
-    public Long EnchantmentType.getSkill() {
-        return skill;
+    public SkillModel EnchantmentType.getSkillModel() {
+        return skillModel;
     }
     
-    public void EnchantmentType.setSkill(Long skill) {
-        this.skill = skill;
+    public void EnchantmentType.setSkillModel(SkillModel skillModel) {
+        this.skillModel = skillModel;
     }
     
 }

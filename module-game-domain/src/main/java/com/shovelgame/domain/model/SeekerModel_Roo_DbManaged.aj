@@ -30,6 +30,10 @@ privileged aspect SeekerModel_Roo_DbManaged {
     @NotNull
     private Integer SeekerModel.price;
     
+    @Column(name = "image_bundle_name", length = 50)
+    @NotNull
+    private String SeekerModel.imageBundleName;
+    
     public Set<SeekerSpecialization> SeekerModel.getSeekerSpecializations() {
         return seekerSpecializations;
     }
@@ -60,6 +64,14 @@ privileged aspect SeekerModel_Roo_DbManaged {
     
     public void SeekerModel.setPrice(Integer price) {
         this.price = price;
+    }
+    
+    public String SeekerModel.getImageBundleName() {
+        return imageBundleName;
+    }
+    
+    public void SeekerModel.setImageBundleName(String imageBundleName) {
+        this.imageBundleName = imageBundleName;
     }
     
 }

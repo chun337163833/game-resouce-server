@@ -10,7 +10,7 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 privileged aspect AttributeType_Roo_ToString {
     
     public String AttributeType.toString() {
-        return new ReflectionToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE).setExcludeFieldNames("attributeTypeDescriptions", "attributeses", "enchantmentTypes", "attributes", "itemModels").toString();
+        return new ReflectionToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE).setExcludeFieldNames("attributeTypeDescriptions", "attributeses", "enchantmentTypes", "attributes", "itemModels", "skillModels", "traitModels").toString();
     }
     
 }

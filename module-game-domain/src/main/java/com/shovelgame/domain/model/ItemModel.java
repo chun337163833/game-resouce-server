@@ -11,7 +11,7 @@ import com.shovelgame.enumaration.ItemType;
 @RooJavaBean
 @RooJpaActiveRecord(versionField = "", table = "item_model", schema = "model")
 @RooDbManaged(automaticallyDelete = true)
-@RooToString(excludeFields = { "itemModelDescriptions", "itemEnchantments", "attributeType" })
+@RooToString(excludeFields = { "itemModelDescriptions", "itemEnchantments", "attributeType", "qualityGrade" })
 public class ItemModel {
 
     @Column(name = "type", length = 10)

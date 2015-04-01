@@ -10,7 +10,7 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 privileged aspect Language_Roo_ToString {
     
     public String Language.toString() {
-        return new ReflectionToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE).setExcludeFieldNames("heroTypeDescriptions", "specializationDescs", "attributeTypeDescriptions", "enchantmentTypeDescriptions", "itemModelDescriptions", "specializationDescriptions").toString();
+        return new ReflectionToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE).setExcludeFieldNames("heroTypeDescriptions", "specializationDescs", "attributeTypeDescriptions", "enchantmentTypeDescriptions", "itemModelDescriptions", "specializationDescriptions", "skillModelDescirptions", "traitModelDescriptions").toString();
     }
     
 }

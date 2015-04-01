@@ -7,6 +7,6 @@ import org.springframework.roo.addon.tostring.RooToString;
 @RooJavaBean
 @RooJpaActiveRecord(versionField = "", table = "enchantment_type", schema = "model")
 @RooDbManaged(automaticallyDelete = true)
-@RooToString(excludeFields = { "enchantmentTypeDescriptions", "enchantmentModels", "attributeType", "itemEnchantments" })
+@RooToString(excludeFields = { "enchantmentTypeDescriptions", "enchantmentModels", "attributeType", "itemEnchantments", "skillModel" })
 public class EnchantmentType {
 }

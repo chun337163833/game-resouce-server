@@ -10,7 +10,7 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 privileged aspect EnchantmentType_Roo_ToString {
     
     public String EnchantmentType.toString() {
-        return new ReflectionToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE).setExcludeFieldNames("enchantmentTypeDescriptions", "enchantmentModels", "attributeType", "itemEnchantments").toString();
+        return new ReflectionToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE).setExcludeFieldNames("enchantmentTypeDescriptions", "enchantmentModels", "attributeType", "itemEnchantments", "skillModel").toString();
     }
     
 }

@@ -8,7 +8,9 @@ import com.shovelgame.domain.i18n.EnchantmentTypeDescription;
 import com.shovelgame.domain.i18n.HeroTypeDescription;
 import com.shovelgame.domain.i18n.ItemModelDescription;
 import com.shovelgame.domain.i18n.Language;
+import com.shovelgame.domain.i18n.SkillModelDescirption;
 import com.shovelgame.domain.i18n.SpecializationDescription;
+import com.shovelgame.domain.i18n.TraitModelDescription;
 import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.OneToMany;
@@ -29,7 +31,13 @@ privileged aspect Language_Roo_DbManaged {
     private Set<ItemModelDescription> Language.itemModelDescriptions;
     
     @OneToMany(mappedBy = "lang")
+    private Set<SkillModelDescirption> Language.skillModelDescirptions;
+    
+    @OneToMany(mappedBy = "lang")
     private Set<SpecializationDescription> Language.specializationDescriptions;
+    
+    @OneToMany(mappedBy = "lang")
+    private Set<TraitModelDescription> Language.traitModelDescriptions;
     
     @Column(name = "description", length = 50)
     @NotNull
@@ -67,12 +75,28 @@ privileged aspect Language_Roo_DbManaged {
         this.itemModelDescriptions = itemModelDescriptions;
     }
     
+    public Set<SkillModelDescirption> Language.getSkillModelDescirptions() {
+        return skillModelDescirptions;
+    }
+    
+    public void Language.setSkillModelDescirptions(Set<SkillModelDescirption> skillModelDescirptions) {
+        this.skillModelDescirptions = skillModelDescirptions;
+    }
+    
     public Set<SpecializationDescription> Language.getSpecializationDescriptions() {
         return specializationDescriptions;
     }
     
     public void Language.setSpecializationDescriptions(Set<SpecializationDescription> specializationDescriptions) {
         this.specializationDescriptions = specializationDescriptions;
+    }
+    
+    public Set<TraitModelDescription> Language.getTraitModelDescriptions() {
+        return traitModelDescriptions;
+    }
+    
+    public void Language.setTraitModelDescriptions(Set<TraitModelDescription> traitModelDescriptions) {
+        this.traitModelDescriptions = traitModelDescriptions;
     }
     
     public String Language.getDescription() {

@@ -7,6 +7,7 @@ import com.shovelgame.domain.i18n.ItemModelDescription;
 import com.shovelgame.domain.model.AttributeType;
 import com.shovelgame.domain.model.ItemEnchantment;
 import com.shovelgame.domain.model.ItemModel;
+import com.shovelgame.domain.model.QualityGrade;
 import java.math.BigDecimal;
 import java.util.Set;
 import javax.persistence.Column;
@@ -27,12 +28,20 @@ privileged aspect ItemModel_Roo_DbManaged {
     @JoinColumn(name = "attribute_type", referencedColumnName = "id", nullable = false)
     private AttributeType ItemModel.attributeType;
     
+    @ManyToOne
+    @JoinColumn(name = "quality_grade", referencedColumnName = "id", nullable = false)
+    private QualityGrade ItemModel.qualityGrade;
+    
     @Column(name = "value", precision = 10, scale = 5)
     @NotNull
     private BigDecimal ItemModel.value;
     
     @Column(name = "max_enchant")
     private Integer ItemModel.maxEnchant;
+    
+    @Column(name = "icon_name", length = 50)
+    @NotNull
+    private String ItemModel.iconName;
     
     public Set<ItemModelDescription> ItemModel.getItemModelDescriptions() {
         return itemModelDescriptions;
@@ -58,6 +67,14 @@ privileged aspect ItemModel_Roo_DbManaged {
         this.attributeType = attributeType;
     }
     
+    public QualityGrade ItemModel.getQualityGrade() {
+        return qualityGrade;
+    }
+    
+    public void ItemModel.setQualityGrade(QualityGrade qualityGrade) {
+        this.qualityGrade = qualityGrade;
+    }
+    
     public BigDecimal ItemModel.getValue() {
         return value;
     }
@@ -72,6 +89,14 @@ privileged aspect ItemModel_Roo_DbManaged {
     
     public void ItemModel.setMaxEnchant(Integer maxEnchant) {
         this.maxEnchant = maxEnchant;
+    }
+    
+    public String ItemModel.getIconName() {
+        return iconName;
+    }
+    
+    public void ItemModel.setIconName(String iconName) {
+        this.iconName = iconName;
     }
     
 }
