@@ -38,7 +38,7 @@ public class MenuFactory {
 			throw new MenuException("Scan package cannot be null.");
 		}
 		this.tempGroups = new HashMap<>();
-		List<Class<?>> classesForScan = ReflectionUtils.findClasses(this.scanPackage, Menu.class);
+		List<Class<?>> classesForScan = ReflectionUtils.findClasses(Menu.class, this.scanPackage);
 		this.sort(classesForScan);
 		for(Class<?> cls: classesForScan) {
 			MenuItem item = this.createItem(cls);

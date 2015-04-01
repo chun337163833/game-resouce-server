@@ -1,11 +1,13 @@
 package org.shovelgame.domain.test;
 
 
-import com.shovelgame.domain.model.Attribute;
-import com.shovelgame.domain.model.HeroModel;
-import com.shovelgame.domain.model.ItemEnchantment;
-import com.shovelgame.domain.model.ItemModel;
-import com.shovelgame.domain.model.MinionTraitPK;
+import java.util.List;
+
+import org.shovelgame.game.domain.model.Attribute;
+import org.shovelgame.game.domain.model.HeroModel;
+import org.shovelgame.game.domain.model.ItemEnchantment;
+import org.shovelgame.game.domain.model.ItemModel;
+import org.shovelgame.utils.ReflectionUtils;
 
 public class TestDomainStability {
 
@@ -14,5 +16,9 @@ public class TestDomainStability {
 		ItemEnchantment enc = new ItemEnchantment();
 		Attribute att = new Attribute();
 		HeroModel model = new HeroModel();
+//		new Mission().getTeam().getMinionBot().get
 	}
+	
+	
+	
 }
