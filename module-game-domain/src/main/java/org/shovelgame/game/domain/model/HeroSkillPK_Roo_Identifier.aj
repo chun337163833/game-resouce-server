@@ -3,7 +3,6 @@
 
 package org.shovelgame.game.domain.model;
 
-import java.math.BigDecimal;
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import org.shovelgame.game.domain.model.HeroSkillPK;
@@ -18,18 +17,10 @@ privileged aspect HeroSkillPK_Roo_Identifier {
     @Column(name = "skill", nullable = false)
     private Long HeroSkillPK.skill;
     
-    @Column(name = "required_level", nullable = false)
-    private Integer HeroSkillPK.requiredLevel;
-    
-    @Column(name = "override_power", nullable = false, precision = 10, scale = 3)
-    private BigDecimal HeroSkillPK.overridePower;
-    
-    public HeroSkillPK.new(Long heroModel, Long skill, Integer requiredLevel, BigDecimal overridePower) {
+    public HeroSkillPK.new(Long heroModel, Long skill) {
         super();
         this.heroModel = heroModel;
         this.skill = skill;
-        this.requiredLevel = requiredLevel;
-        this.overridePower = overridePower;
     }
 
     private HeroSkillPK.new() {
@@ -42,14 +33,6 @@ privileged aspect HeroSkillPK_Roo_Identifier {
     
     public Long HeroSkillPK.getSkill() {
         return skill;
-    }
-    
-    public Integer HeroSkillPK.getRequiredLevel() {
-        return requiredLevel;
-    }
-    
-    public BigDecimal HeroSkillPK.getOverridePower() {
-        return overridePower;
     }
     
 }

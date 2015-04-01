@@ -11,6 +11,7 @@
 	<http pattern="/web/error/**" security="none"/>
 	
 	<http pattern="/web/**" auto-config="true">
+		<intercept-url pattern="/web/test/**" access="ROLE_ANONYMOUS" />
 		<intercept-url pattern="/web/login-form" access="ROLE_ANONYMOUS" />
 		<intercept-url pattern="/web/login-failed" access="ROLE_ANONYMOUS" />
 		<intercept-url pattern="/web/test/send" access="ROLE_ANONYMOUS" />

@@ -8,6 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import org.shovelgame.game.domain.data.Hero;
 
@@ -18,7 +19,8 @@ privileged aspect Hero_Roo_Jpa_Entity {
     declare @type: Hero: @Table(schema = "data", name = "hero");
     
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @SequenceGenerator(name = "heroGen", sequenceName = "data.hero_id_seq")
+    @GeneratedValue(strategy = GenerationType.AUTO, generator = "heroGen")
     @Column(name = "id")
     private Long Hero.id;
     

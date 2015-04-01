@@ -8,6 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import org.shovelgame.game.domain.model.MinionAttribute;
 
@@ -18,7 +19,8 @@ privileged aspect MinionAttribute_Roo_Jpa_Entity {
     declare @type: MinionAttribute: @Table(schema = "model", name = "minion_attribute");
     
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @SequenceGenerator(name = "minionAttributeGen", sequenceName = "model.minion_attribute_id_seq")
+    @GeneratedValue(strategy = GenerationType.AUTO, generator = "minionAttributeGen")
     @Column(name = "id")
     private Long MinionAttribute.id;
     

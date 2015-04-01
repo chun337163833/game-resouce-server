@@ -9,9 +9,9 @@ import org.springframework.roo.addon.jpa.activerecord.RooJpaActiveRecord;
 import org.springframework.roo.addon.tostring.RooToString;
 
 @RooJavaBean
-@RooJpaActiveRecord(versionField = "", table = "trait_target", schema = "model")
 @RooDbManaged(automaticallyDelete = true)
 @RooToString(excludeFields = { "trait" })
+@RooJpaActiveRecord(versionField = "", table = "trait_target", schema = "model", sequenceName = "model.trait_target_id_seq")
 public class TraitTarget {
 
     @Column(name = "position", length = 50)

@@ -8,6 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import org.shovelgame.game.domain.model.SeekerSpecialization;
 
@@ -18,7 +19,8 @@ privileged aspect SeekerSpecialization_Roo_Jpa_Entity {
     declare @type: SeekerSpecialization: @Table(schema = "model", name = "seeker_specialization");
     
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @SequenceGenerator(name = "seekerSpecializationGen", sequenceName = "model.seeker_specialization_id_seq")
+    @GeneratedValue(strategy = GenerationType.AUTO, generator = "seekerSpecializationGen")
     @Column(name = "id")
     private Long SeekerSpecialization.id;
     

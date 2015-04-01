@@ -8,6 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import org.shovelgame.game.domain.model.EnchantmentType;
 
@@ -18,7 +19,8 @@ privileged aspect EnchantmentType_Roo_Jpa_Entity {
     declare @type: EnchantmentType: @Table(schema = "model", name = "enchantment_type");
     
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @SequenceGenerator(name = "enchantmentTypeGen", sequenceName = "model.enchantment_type_id_seq")
+    @GeneratedValue(strategy = GenerationType.AUTO, generator = "enchantmentTypeGen")
     @Column(name = "id")
     private Long EnchantmentType.id;
     

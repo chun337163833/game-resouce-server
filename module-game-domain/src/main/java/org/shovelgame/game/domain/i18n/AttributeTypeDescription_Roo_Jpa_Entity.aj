@@ -8,6 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import org.shovelgame.game.domain.i18n.AttributeTypeDescription;
 
@@ -18,7 +19,8 @@ privileged aspect AttributeTypeDescription_Roo_Jpa_Entity {
     declare @type: AttributeTypeDescription: @Table(schema = "i18n", name = "attribute_type_description");
     
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @SequenceGenerator(name = "attributeTypeDescriptionGen", sequenceName = "i18n.attribute_type_description_id_seq")
+    @GeneratedValue(strategy = GenerationType.AUTO, generator = "attributeTypeDescriptionGen")
     @Column(name = "id")
     private Long AttributeTypeDescription.id;
     

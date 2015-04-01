@@ -1,19 +1,20 @@
 package org.shovelgame.web.spring.controller.web;
 
-import org.shovelgame.game.domain.model.HeroModel;
+import org.shovelgame.game.domain.enumaration.TraitAlgorithm;
+import org.shovelgame.game.domain.model.Trait;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("/domain/")
+@RequestMapping("/test/")
 public class TestDomainModel {
 
-	@RequestMapping("hero")
+	@RequestMapping("domain")
 	public String hero() {
-		HeroModel model = new HeroModel();
-		model.persist();
-//		new Teams().getMinion();
-//		Team
+		Trait trait = new Trait();
+		trait.setAlg(TraitAlgorithm.DECREASE);
+		trait.setIconName("supr");
+		trait.persist();
 		return "index";
 	}
 

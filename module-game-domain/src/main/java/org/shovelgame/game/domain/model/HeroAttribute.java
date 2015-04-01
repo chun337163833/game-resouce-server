@@ -6,8 +6,8 @@ import org.springframework.roo.addon.jpa.activerecord.RooJpaActiveRecord;
 import org.springframework.roo.addon.tostring.RooToString;
 
 @RooJavaBean
-@RooJpaActiveRecord(versionField = "", table = "hero_attribute", schema = "model")
 @RooDbManaged(automaticallyDelete = true)
 @RooToString(excludeFields = { "type", "heroModel" })
+@RooJpaActiveRecord(versionField = "", table = "hero_attribute", schema = "model", sequenceName = "model.hero_attribute_id_seq")
 public class HeroAttribute implements Attribute {
 }

@@ -14,7 +14,7 @@ privileged aspect Language_Roo_Jpa_ActiveRecord {
     @PersistenceContext
     transient EntityManager Language.entityManager;
     
-    public static final List<String> Language.fieldNames4OrderClauseFilter = java.util.Arrays.asList("");
+    public static final List<String> Language.fieldNames4OrderClauseFilter = java.util.Arrays.asList("id");
     
     public static final EntityManager Language.entityManager() {
         EntityManager em = new Language().entityManager;

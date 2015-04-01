@@ -18,7 +18,6 @@
 		<class>org.shovelgame.game.domain.i18n.SkillDescription</class>
 		<class>org.shovelgame.game.domain.i18n.SpecializationDescription</class>
 		<class>org.shovelgame.game.domain.i18n.TraitDescription</class>
-		<class>org.shovelgame.game.domain.model.Attribute</class>
 		<class>org.shovelgame.game.domain.model.AttributeType</class>
 		<class>org.shovelgame.game.domain.model.EnchantmentType</class>
 		<class>org.shovelgame.game.domain.model.HeroAttribute</class>
@@ -26,7 +25,6 @@
 		<class>org.shovelgame.game.domain.model.HeroSkill</class>
 		<class>org.shovelgame.game.domain.model.HeroSpecialization</class>
 		<class>org.shovelgame.game.domain.model.HeroTrait</class>
-		<class>org.shovelgame.game.domain.model.HeroType</class>
 		<class>org.shovelgame.game.domain.model.ItemEnchantment</class>
 		<class>org.shovelgame.game.domain.model.ItemModel</class>
 		<class>org.shovelgame.game.domain.model.MinionAttribute</class>

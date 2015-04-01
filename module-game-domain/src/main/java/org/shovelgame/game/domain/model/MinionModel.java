@@ -8,9 +8,9 @@ import org.springframework.roo.addon.jpa.activerecord.RooJpaActiveRecord;
 import org.springframework.roo.addon.tostring.RooToString;
 
 @RooJavaBean
-@RooJpaActiveRecord(versionField = "", table = "minion_model", schema = "model")
 @RooDbManaged(automaticallyDelete = true)
 @RooToString(excludeFields = { "minions", "minionSkills", "minionTraits", "attributes", "qualityGrade", "minionAttributes" })
+@RooJpaActiveRecord(versionField = "", table = "minion_model", schema = "model", sequenceName = "model.minion_model_id_seq")
 public class MinionModel {
 
     @OneToMany(mappedBy = "minionModel", targetEntity = MinionAttribute.class)

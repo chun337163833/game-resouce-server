@@ -3,7 +3,6 @@
 
 package org.shovelgame.game.domain.model;
 
-import java.math.BigDecimal;
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import org.shovelgame.game.domain.model.HeroTraitPK;
@@ -18,18 +17,10 @@ privileged aspect HeroTraitPK_Roo_Identifier {
     @Column(name = "trait", nullable = false)
     private Long HeroTraitPK.trait;
     
-    @Column(name = "required_level", nullable = false)
-    private Integer HeroTraitPK.requiredLevel;
-    
-    @Column(name = "override_power", nullable = false, precision = 10, scale = 3)
-    private BigDecimal HeroTraitPK.overridePower;
-    
-    public HeroTraitPK.new(Long heroModel, Long trait, Integer requiredLevel, BigDecimal overridePower) {
+    public HeroTraitPK.new(Long heroModel, Long trait) {
         super();
         this.heroModel = heroModel;
         this.trait = trait;
-        this.requiredLevel = requiredLevel;
-        this.overridePower = overridePower;
     }
 
     private HeroTraitPK.new() {
@@ -42,14 +33,6 @@ privileged aspect HeroTraitPK_Roo_Identifier {
     
     public Long HeroTraitPK.getTrait() {
         return trait;
-    }
-    
-    public Integer HeroTraitPK.getRequiredLevel() {
-        return requiredLevel;
-    }
-    
-    public BigDecimal HeroTraitPK.getOverridePower() {
-        return overridePower;
     }
     
 }

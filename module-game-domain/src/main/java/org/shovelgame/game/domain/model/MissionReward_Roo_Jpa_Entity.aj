@@ -8,6 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import org.shovelgame.game.domain.model.MissionReward;
 
@@ -18,7 +19,8 @@ privileged aspect MissionReward_Roo_Jpa_Entity {
     declare @type: MissionReward: @Table(schema = "model", name = "mission_reward");
     
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @SequenceGenerator(name = "missionRewardGen", sequenceName = "model.mission_reward_id_seq")
+    @GeneratedValue(strategy = GenerationType.AUTO, generator = "missionRewardGen")
     @Column(name = "id")
     private Long MissionReward.id;
     

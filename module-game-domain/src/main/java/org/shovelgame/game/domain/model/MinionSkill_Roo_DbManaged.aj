@@ -3,8 +3,11 @@
 
 package org.shovelgame.game.domain.model;
 
+import java.math.BigDecimal;
+import javax.persistence.Column;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.validation.constraints.NotNull;
 import org.shovelgame.game.domain.model.MinionModel;
 import org.shovelgame.game.domain.model.MinionSkill;
 import org.shovelgame.game.domain.model.Skill;
@@ -18,6 +21,13 @@ privileged aspect MinionSkill_Roo_DbManaged {
     @ManyToOne
     @JoinColumn(name = "skill", referencedColumnName = "id", nullable = false, insertable = false, updatable = false)
     private Skill MinionSkill.skill;
+    
+    @Column(name = "required_level")
+    @NotNull
+    private Integer MinionSkill.requiredLevel;
+    
+    @Column(name = "override_power", precision = 10, scale = 3)
+    private BigDecimal MinionSkill.overridePower;
     
     public MinionModel MinionSkill.getMinionModel() {
         return minionModel;
@@ -33,6 +43,22 @@ privileged aspect MinionSkill_Roo_DbManaged {
     
     public void MinionSkill.setSkill(Skill skill) {
         this.skill = skill;
+    }
+    
+    public Integer MinionSkill.getRequiredLevel() {
+        return requiredLevel;
+    }
+    
+    public void MinionSkill.setRequiredLevel(Integer requiredLevel) {
+        this.requiredLevel = requiredLevel;
+    }
+    
+    public BigDecimal MinionSkill.getOverridePower() {
+        return overridePower;
+    }
+    
+    public void MinionSkill.setOverridePower(BigDecimal overridePower) {
+        this.overridePower = overridePower;
     }
     
 }
