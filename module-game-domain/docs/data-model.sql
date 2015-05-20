@@ -40,6 +40,8 @@ DROP TABLE IF EXISTS i18n.mission_description CASCADE;
 DROP SEQUENCE IF EXISTS i18n.mission_description_id_seq;
 DROP TABLE IF EXISTS model.mission_reward CASCADE;
 DROP SEQUENCE IF EXISTS model.mission_reward_id_seq;
+DROP TABLE IF EXISTS data.player CASCADE;
+DROP SEQUENCE IF EXISTS data.player_id_seq;
 DROP TABLE IF EXISTS model.quality_grade CASCADE;
 DROP TABLE IF EXISTS model.seeker_model CASCADE;
 DROP SEQUENCE IF EXISTS model.seeker_model_id_seq;
@@ -258,6 +260,12 @@ CREATE TABLE model.mission_reward (
 	mission bigint NOT NULL
 );
 
+CREATE SEQUENCE data.player_id_seq INCREMENT 1 START 1;
+
+CREATE TABLE data.player ( 
+	id bigint DEFAULT nextval(('data.player_id_seq'::text)::regclass) NOT NULL
+);
+
 CREATE TABLE model.quality_grade ( 
 	id char(1) NOT NULL
 );
@@ -362,6 +370,8 @@ CREATE INDEX IXFK_enchantment_type_description_enchantment_type
 	ON i18n.enchantment_type_description (enchantment_type);
 CREATE INDEX IXFK_hero_hero_model
 	ON data.hero (hero_model);
+CREATE INDEX IXFK_hero_player
+	ON data.hero (owner);
 CREATE INDEX IXFK_hero_attribute_attribute_type
 	ON model.hero_attribute (type);
 CREATE INDEX IXFK_hero_attribute_hero_model
@@ -386,6 +396,8 @@ CREATE INDEX IXFK_item_item_model
 	ON data.item (item_model);
 CREATE INDEX IXFK_item_team
 	ON data.item (team);
+CREATE INDEX IXFK_item_player
+	ON data.item (owner);
 CREATE INDEX IXFK_enchantment_model_enchantment_type
 	ON model.item_enchantment (enchantment_type);
 CREATE INDEX IXFK_item_enchantment_item_model
@@ -400,6 +412,8 @@ CREATE INDEX IXFK_item_model_description_item_model
 	ON i18n.item_model_description (item_model);
 CREATE INDEX IXFK_minion_minion_model
 	ON data.minion (minion_model);
+CREATE INDEX IXFK_minion_player
+	ON data.minion (owner);
 CREATE INDEX IXFK_minion_attribute_attribute_type
 	ON model.minion_attribute (type);
 CREATE INDEX IXFK_minion_attribute_minion_model
@@ -446,6 +460,8 @@ CREATE INDEX IXFK_team_minion_02
 	ON data.team (minion_mid);
 CREATE INDEX IXFK_team_minion_03
 	ON data.team (minion_bot);
+CREATE INDEX IXFK_team_player
+	ON data.team (owner);
 CREATE INDEX IXFK_trait_model_attribute_type
 	ON model.trait (affected_attribute_type);
 CREATE INDEX IXFK_trait_model_description_trait_model
@@ -482,8 +498,16 @@ ALTER TABLE model.hero_model ADD CONSTRAINT PK_hero_model
 	PRIMARY KEY (id);
 
 
+ALTER TABLE model.hero_skill ADD CONSTRAINT PK_hero_skill 
+	PRIMARY KEY (hero_model, skill);
+
+
 ALTER TABLE model.hero_specialization ADD CONSTRAINT PK_hero_type 
 	PRIMARY KEY (id);
+
+
+ALTER TABLE model.hero_trait ADD CONSTRAINT PK_hero_trait 
+	PRIMARY KEY (hero_model, trait);
 
 
 ALTER TABLE i18n.hero_type_description ADD CONSTRAINT PK_hero_type_description 
@@ -522,6 +546,14 @@ ALTER TABLE model.minion_model ADD CONSTRAINT PK_minion_model
 	PRIMARY KEY (id);
 
 
+ALTER TABLE model.minion_skill ADD CONSTRAINT PK_minion_skill 
+	PRIMARY KEY (minion_model, skill);
+
+
+ALTER TABLE model.minion_trait ADD CONSTRAINT PK_minion_trait 
+	PRIMARY KEY (minion_model, trait);
+
+
 ALTER TABLE model.mission ADD CONSTRAINT PK_mission 
 	PRIMARY KEY (id);
 
@@ -531,6 +563,10 @@ ALTER TABLE i18n.mission_description ADD CONSTRAINT PK_mission_description
 
 
 ALTER TABLE model.mission_reward ADD CONSTRAINT PK_mission_reward 
+	PRIMARY KEY (id);
+
+
+ALTER TABLE data.player ADD CONSTRAINT PK_player 
 	PRIMARY KEY (id);
 
 
@@ -597,6 +633,9 @@ ALTER TABLE i18n.enchantment_type_description ADD CONSTRAINT FK_enchantment_type
 ALTER TABLE data.hero ADD CONSTRAINT FK_hero_hero_model 
 	FOREIGN KEY (hero_model) REFERENCES model.hero_model (id);
 
+ALTER TABLE data.hero ADD CONSTRAINT FK_hero_player 
+	FOREIGN KEY (owner) REFERENCES data.player (id);
+
 ALTER TABLE model.hero_attribute ADD CONSTRAINT FK_hero_attribute_attribute_type 
 	FOREIGN KEY (type) REFERENCES model.attribute_type (id);
 
@@ -633,6 +672,9 @@ ALTER TABLE data.item ADD CONSTRAINT FK_item_item_model
 ALTER TABLE data.item ADD CONSTRAINT FK_item_team 
 	FOREIGN KEY (team) REFERENCES data.team (id);
 
+ALTER TABLE data.item ADD CONSTRAINT FK_item_player 
+	FOREIGN KEY (owner) REFERENCES data.player (id);
+
 ALTER TABLE model.item_enchantment ADD CONSTRAINT FK_enchantment_model_enchantment_type 
 	FOREIGN KEY (enchantment_type) REFERENCES model.enchantment_type (id);
 
@@ -653,6 +695,9 @@ ALTER TABLE i18n.item_model_description ADD CONSTRAINT FK_item_model_description
 
 ALTER TABLE data.minion ADD CONSTRAINT FK_minion_minion_model 
 	FOREIGN KEY (minion_model) REFERENCES model.minion_model (id);
+
+ALTER TABLE data.minion ADD CONSTRAINT FK_minion_player 
+	FOREIGN KEY (owner) REFERENCES data.player (id);
 
 ALTER TABLE model.minion_attribute ADD CONSTRAINT FK_minion_attribute_attribute_type 
 	FOREIGN KEY (type) REFERENCES model.attribute_type (id);
@@ -719,6 +764,9 @@ ALTER TABLE data.team ADD CONSTRAINT FK_team_minion_02
 
 ALTER TABLE data.team ADD CONSTRAINT FK_team_minion_03 
 	FOREIGN KEY (minion_bot) REFERENCES data.minion (id);
+
+ALTER TABLE data.team ADD CONSTRAINT FK_team_player 
+	FOREIGN KEY (owner) REFERENCES data.player (id);
 
 ALTER TABLE model.trait ADD CONSTRAINT FK_trait_model_attribute_type 
 	FOREIGN KEY (affected_attribute_type) REFERENCES model.attribute_type (id);

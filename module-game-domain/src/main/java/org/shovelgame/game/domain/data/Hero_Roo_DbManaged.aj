@@ -10,6 +10,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
 import org.shovelgame.game.domain.data.Hero;
+import org.shovelgame.game.domain.data.Player;
 import org.shovelgame.game.domain.data.Team;
 import org.shovelgame.game.domain.model.HeroModel;
 
@@ -19,11 +20,12 @@ privileged aspect Hero_Roo_DbManaged {
     private Set<Team> Hero.teams;
     
     @ManyToOne
+    @JoinColumn(name = "owner", referencedColumnName = "id")
+    private Player Hero.owner;
+    
+    @ManyToOne
     @JoinColumn(name = "hero_model", referencedColumnName = "id", nullable = false)
     private HeroModel Hero.heroModel;
-    
-    @Column(name = "owner")
-    private Long Hero.owner;
     
     @Column(name = "level")
     @NotNull
@@ -37,20 +39,20 @@ privileged aspect Hero_Roo_DbManaged {
         this.teams = teams;
     }
     
+    public Player Hero.getOwner() {
+        return owner;
+    }
+    
+    public void Hero.setOwner(Player owner) {
+        this.owner = owner;
+    }
+    
     public HeroModel Hero.getHeroModel() {
         return heroModel;
     }
     
     public void Hero.setHeroModel(HeroModel heroModel) {
         this.heroModel = heroModel;
-    }
-    
-    public Long Hero.getOwner() {
-        return owner;
-    }
-    
-    public void Hero.setOwner(Long owner) {
-        this.owner = owner;
     }
     
     public Integer Hero.getLevel() {

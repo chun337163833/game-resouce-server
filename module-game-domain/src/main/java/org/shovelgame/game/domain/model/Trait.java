@@ -3,7 +3,6 @@ import javax.persistence.Column;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.validation.constraints.NotNull;
-
 import org.shovelgame.game.domain.enumeration.SkillAlgorithm;
 import org.shovelgame.game.domain.enumeration.TraitAlgorithm;
 import org.springframework.roo.addon.dbre.RooDbManaged;

@@ -4,13 +4,13 @@
 package org.shovelgame.game.domain.data;
 
 import java.util.Set;
-import javax.persistence.Column;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import org.shovelgame.game.domain.data.Hero;
 import org.shovelgame.game.domain.data.Item;
 import org.shovelgame.game.domain.data.Minion;
+import org.shovelgame.game.domain.data.Player;
 import org.shovelgame.game.domain.data.Team;
 import org.shovelgame.game.domain.model.Mission;
 
@@ -38,8 +38,9 @@ privileged aspect Team_Roo_DbManaged {
     @JoinColumn(name = "minion_bot", referencedColumnName = "id", nullable = false)
     private Minion Team.minionBot;
     
-    @Column(name = "owner")
-    private Long Team.owner;
+    @ManyToOne
+    @JoinColumn(name = "owner", referencedColumnName = "id")
+    private Player Team.owner;
     
     public Set<Item> Team.getItems() {
         return items;
@@ -89,11 +90,11 @@ privileged aspect Team_Roo_DbManaged {
         this.minionBot = minionBot;
     }
     
-    public Long Team.getOwner() {
+    public Player Team.getOwner() {
         return owner;
     }
     
-    public void Team.setOwner(Long owner) {
+    public void Team.setOwner(Player owner) {
         this.owner = owner;
     }
     

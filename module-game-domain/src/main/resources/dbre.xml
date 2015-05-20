@@ -6,28 +6,36 @@
     <option key="service" value="false"/>
     <option key="includeNonPortableAttributes" value="false"/>
     <option key="disableVersionFields" value="false"/>
-    <option key="disableGeneratedIdentifiers" value="true"/>
+    <option key="disableGeneratedIdentifiers" value="false"/>
     <option key="testAutomatically" value="false"/>
     <table alias="data" name="hero">
         <column name="id" primaryKey="true" required="true" scale="0" size="19" type="-5,bigserial"/>
         <column name="hero_model" primaryKey="false" required="true" scale="0" size="19" type="-5,int8"/>
         <column name="owner" primaryKey="false" required="false" scale="0" size="19" type="-5,int8"/>
         <column name="level" primaryKey="false" required="true" scale="0" size="10" type="4,int4"/>
-        <foreign-key foreignTable="hero_model" name="FK_hero_hero_model" onDelete="none" onUpdate="none">
+        <foreign-key foreignTable="player" name="fk_hero_player" onDelete="none" onUpdate="none">
+            <option key="foreignSchemaName" value="data"/>
+            <option key="exported" value="false"/>
+            <reference foreign="id" local="owner"/>
+        </foreign-key>
+        <foreign-key foreignTable="hero_model" name="fk_hero_hero_model" onDelete="none" onUpdate="none">
             <option key="foreignSchemaName" value="model"/>
             <option key="exported" value="false"/>
             <reference foreign="id" local="hero_model"/>
         </foreign-key>
-        <foreign-key foreignTable="team" name="FK_team_hero" onDelete="none" onUpdate="none">
+        <foreign-key foreignTable="team" name="fk_team_hero" onDelete="none" onUpdate="none">
             <option key="foreignSchemaName" value="data"/>
             <option key="exported" value="true"/>
             <reference foreign="hero" local="id"/>
         </foreign-key>
-        <unique name="PK_hero">
+        <unique name="pk_hero">
             <unique-column name="id"/>
         </unique>
-        <index name="IXFK_hero_hero_model">
+        <index name="ixfk_hero_hero_model">
             <index-column name="hero_model"/>
+        </index>
+        <index name="ixfk_hero_player">
+            <index-column name="owner"/>
         </index>
     </table>
     <table alias="data" name="item">
@@ -36,23 +44,31 @@
         <column name="team" primaryKey="false" required="false" scale="0" size="19" type="-5,int8"/>
         <column name="owner" primaryKey="false" required="false" scale="0" size="19" type="-5,int8"/>
         <column name="enchant" primaryKey="false" required="false" scale="0" size="10" type="4,int4"/>
-        <foreign-key foreignTable="team" name="FK_item_team" onDelete="none" onUpdate="none">
+        <foreign-key foreignTable="player" name="fk_item_player" onDelete="none" onUpdate="none">
+            <option key="foreignSchemaName" value="data"/>
+            <option key="exported" value="false"/>
+            <reference foreign="id" local="owner"/>
+        </foreign-key>
+        <foreign-key foreignTable="team" name="fk_item_team" onDelete="none" onUpdate="none">
             <option key="foreignSchemaName" value="data"/>
             <option key="exported" value="false"/>
             <reference foreign="id" local="team"/>
         </foreign-key>
-        <foreign-key foreignTable="item_model" name="FK_item_item_model" onDelete="none" onUpdate="none">
+        <foreign-key foreignTable="item_model" name="fk_item_item_model" onDelete="none" onUpdate="none">
             <option key="foreignSchemaName" value="model"/>
             <option key="exported" value="false"/>
             <reference foreign="id" local="item_model"/>
         </foreign-key>
-        <unique name="PK_item">
+        <unique name="pk_item">
             <unique-column name="id"/>
         </unique>
-        <index name="IXFK_item_item_model">
+        <index name="ixfk_item_item_model">
             <index-column name="item_model"/>
         </index>
-        <index name="IXFK_item_team">
+        <index name="ixfk_item_player">
+            <index-column name="owner"/>
+        </index>
+        <index name="ixfk_item_team">
             <index-column name="team"/>
         </index>
     </table>
@@ -62,32 +78,66 @@
         <column name="owner" primaryKey="false" required="false" scale="0" size="19" type="-5,int8"/>
         <column name="position" primaryKey="false" required="false" scale="0" size="50" type="12,varchar"/>
         <column name="level" primaryKey="false" required="true" scale="0" size="10" type="4,int4"/>
-        <foreign-key foreignTable="minion_model" name="FK_minion_minion_model" onDelete="none" onUpdate="none">
+        <foreign-key foreignTable="player" name="fk_minion_player" onDelete="none" onUpdate="none">
+            <option key="foreignSchemaName" value="data"/>
+            <option key="exported" value="false"/>
+            <reference foreign="id" local="owner"/>
+        </foreign-key>
+        <foreign-key foreignTable="minion_model" name="fk_minion_minion_model" onDelete="none" onUpdate="none">
             <option key="foreignSchemaName" value="model"/>
             <option key="exported" value="false"/>
             <reference foreign="id" local="minion_model"/>
         </foreign-key>
-        <foreign-key foreignTable="team" name="FK_team_minion" onDelete="none" onUpdate="none">
+        <foreign-key foreignTable="team" name="fk_team_minion" onDelete="none" onUpdate="none">
             <option key="foreignSchemaName" value="data"/>
             <option key="exported" value="true"/>
             <reference foreign="minion_top" local="id"/>
         </foreign-key>
-        <foreign-key foreignTable="team" name="FK_team_minion_02" onDelete="none" onUpdate="none">
+        <foreign-key foreignTable="team" name="fk_team_minion_02" onDelete="none" onUpdate="none">
             <option key="foreignSchemaName" value="data"/>
             <option key="exported" value="true"/>
             <reference foreign="minion_mid" local="id"/>
         </foreign-key>
-        <foreign-key foreignTable="team" name="FK_team_minion_03" onDelete="none" onUpdate="none">
+        <foreign-key foreignTable="team" name="fk_team_minion_03" onDelete="none" onUpdate="none">
             <option key="foreignSchemaName" value="data"/>
             <option key="exported" value="true"/>
             <reference foreign="minion_bot" local="id"/>
         </foreign-key>
-        <unique name="PK_minion">
+        <unique name="pk_minion">
             <unique-column name="id"/>
         </unique>
-        <index name="IXFK_minion_minion_model">
+        <index name="ixfk_minion_minion_model">
             <index-column name="minion_model"/>
         </index>
+        <index name="ixfk_minion_player">
+            <index-column name="owner"/>
+        </index>
+    </table>
+    <table alias="data" name="player">
+        <column name="id" primaryKey="true" required="true" scale="0" size="19" type="-5,bigserial"/>
+        <foreign-key foreignTable="hero" name="fk_hero_player" onDelete="none" onUpdate="none">
+            <option key="foreignSchemaName" value="data"/>
+            <option key="exported" value="true"/>
+            <reference foreign="owner" local="id"/>
+        </foreign-key>
+        <foreign-key foreignTable="item" name="fk_item_player" onDelete="none" onUpdate="none">
+            <option key="foreignSchemaName" value="data"/>
+            <option key="exported" value="true"/>
+            <reference foreign="owner" local="id"/>
+        </foreign-key>
+        <foreign-key foreignTable="minion" name="fk_minion_player" onDelete="none" onUpdate="none">
+            <option key="foreignSchemaName" value="data"/>
+            <option key="exported" value="true"/>
+            <reference foreign="owner" local="id"/>
+        </foreign-key>
+        <foreign-key foreignTable="team" name="fk_team_player" onDelete="none" onUpdate="none">
+            <option key="foreignSchemaName" value="data"/>
+            <option key="exported" value="true"/>
+            <reference foreign="owner" local="id"/>
+        </foreign-key>
+        <unique name="pk_player">
+            <unique-column name="id"/>
+        </unique>
     </table>
     <table alias="data" name="team">
         <column name="id" primaryKey="true" required="true" scale="0" size="19" type="-5,bigserial"/>
@@ -96,90 +146,98 @@
         <column name="minion_mid" primaryKey="false" required="true" scale="0" size="19" type="-5,int8"/>
         <column name="minion_bot" primaryKey="false" required="true" scale="0" size="19" type="-5,int8"/>
         <column name="owner" primaryKey="false" required="false" scale="0" size="19" type="-5,int8"/>
-        <foreign-key foreignTable="hero" name="FK_team_hero" onDelete="none" onUpdate="none">
+        <foreign-key foreignTable="hero" name="fk_team_hero" onDelete="none" onUpdate="none">
             <option key="foreignSchemaName" value="data"/>
             <option key="exported" value="false"/>
             <reference foreign="id" local="hero"/>
         </foreign-key>
-        <foreign-key foreignTable="minion" name="FK_team_minion" onDelete="none" onUpdate="none">
+        <foreign-key foreignTable="minion" name="fk_team_minion" onDelete="none" onUpdate="none">
             <option key="foreignSchemaName" value="data"/>
             <option key="exported" value="false"/>
             <reference foreign="id" local="minion_top"/>
         </foreign-key>
-        <foreign-key foreignTable="minion" name="FK_team_minion_02" onDelete="none" onUpdate="none">
+        <foreign-key foreignTable="minion" name="fk_team_minion_02" onDelete="none" onUpdate="none">
             <option key="foreignSchemaName" value="data"/>
             <option key="exported" value="false"/>
             <reference foreign="id" local="minion_mid"/>
         </foreign-key>
-        <foreign-key foreignTable="minion" name="FK_team_minion_03" onDelete="none" onUpdate="none">
+        <foreign-key foreignTable="minion" name="fk_team_minion_03" onDelete="none" onUpdate="none">
             <option key="foreignSchemaName" value="data"/>
             <option key="exported" value="false"/>
             <reference foreign="id" local="minion_bot"/>
         </foreign-key>
-        <foreign-key foreignTable="item" name="FK_item_team" onDelete="none" onUpdate="none">
+        <foreign-key foreignTable="player" name="fk_team_player" onDelete="none" onUpdate="none">
+            <option key="foreignSchemaName" value="data"/>
+            <option key="exported" value="false"/>
+            <reference foreign="id" local="owner"/>
+        </foreign-key>
+        <foreign-key foreignTable="item" name="fk_item_team" onDelete="none" onUpdate="none">
             <option key="foreignSchemaName" value="data"/>
             <option key="exported" value="true"/>
             <reference foreign="team" local="id"/>
         </foreign-key>
-        <foreign-key foreignTable="mission" name="FK_mission_team" onDelete="none" onUpdate="none">
+        <foreign-key foreignTable="mission" name="fk_mission_team" onDelete="none" onUpdate="none">
             <option key="foreignSchemaName" value="model"/>
             <option key="exported" value="true"/>
             <reference foreign="team" local="id"/>
         </foreign-key>
-        <unique name="PK_team">
+        <unique name="pk_team">
             <unique-column name="id"/>
         </unique>
-        <index name="IXFK_team_hero">
+        <index name="ixfk_team_hero">
             <index-column name="hero"/>
         </index>
-        <index name="IXFK_team_minion">
+        <index name="ixfk_team_minion">
             <index-column name="minion_top"/>
         </index>
-        <index name="IXFK_team_minion_02">
+        <index name="ixfk_team_minion_02">
             <index-column name="minion_mid"/>
         </index>
-        <index name="IXFK_team_minion_03">
+        <index name="ixfk_team_minion_03">
             <index-column name="minion_bot"/>
+        </index>
+        <index name="ixfk_team_player">
+            <index-column name="owner"/>
         </index>
     </table>
     <table alias="model" name="attribute_type">
         <column name="id" primaryKey="true" required="true" scale="0" size="50" type="12,varchar"/>
-        <foreign-key foreignTable="attribute_type_description" name="FK_attribute_type_description_attribute_type" onDelete="none" onUpdate="none">
+        <foreign-key foreignTable="attribute_type_description" name="fk_attribute_type_description_attribute_type" onDelete="none" onUpdate="none">
             <option key="foreignSchemaName" value="i18n"/>
             <option key="exported" value="true"/>
             <reference foreign="attribute_type" local="id"/>
         </foreign-key>
-        <foreign-key foreignTable="enchantment_type" name="FK_enchantment_type_attribute_type" onDelete="none" onUpdate="none">
+        <foreign-key foreignTable="enchantment_type" name="fk_enchantment_type_attribute_type" onDelete="none" onUpdate="none">
             <option key="foreignSchemaName" value="model"/>
             <option key="exported" value="true"/>
             <reference foreign="attribute_type" local="id"/>
         </foreign-key>
-        <foreign-key foreignTable="hero_attribute" name="FK_hero_attribute_attribute_type" onDelete="none" onUpdate="none">
+        <foreign-key foreignTable="hero_attribute" name="fk_hero_attribute_attribute_type" onDelete="none" onUpdate="none">
             <option key="foreignSchemaName" value="model"/>
             <option key="exported" value="true"/>
             <reference foreign="type" local="id"/>
         </foreign-key>
-        <foreign-key foreignTable="item_model" name="FK_item_model_attribute_type" onDelete="none" onUpdate="none">
+        <foreign-key foreignTable="item_model" name="fk_item_model_attribute_type" onDelete="none" onUpdate="none">
             <option key="foreignSchemaName" value="model"/>
             <option key="exported" value="true"/>
             <reference foreign="attribute_type" local="id"/>
         </foreign-key>
-        <foreign-key foreignTable="minion_attribute" name="FK_minion_attribute_attribute_type" onDelete="none" onUpdate="none">
+        <foreign-key foreignTable="minion_attribute" name="fk_minion_attribute_attribute_type" onDelete="none" onUpdate="none">
             <option key="foreignSchemaName" value="model"/>
             <option key="exported" value="true"/>
             <reference foreign="type" local="id"/>
         </foreign-key>
-        <foreign-key foreignTable="skill" name="FK_skill_model_attribute_type" onDelete="none" onUpdate="none">
+        <foreign-key foreignTable="skill" name="fk_skill_model_attribute_type" onDelete="none" onUpdate="none">
             <option key="foreignSchemaName" value="model"/>
             <option key="exported" value="true"/>
             <reference foreign="attribute_type" local="id"/>
         </foreign-key>
-        <foreign-key foreignTable="trait" name="FK_trait_model_attribute_type" onDelete="none" onUpdate="none">
+        <foreign-key foreignTable="trait" name="fk_trait_model_attribute_type" onDelete="none" onUpdate="none">
             <option key="foreignSchemaName" value="model"/>
             <option key="exported" value="true"/>
             <reference foreign="affected_attribute_type" local="id"/>
         </foreign-key>
-        <unique name="PK_attribute_type">
+        <unique name="pk_attribute_type">
             <unique-column name="id"/>
         </unique>
     </table>
@@ -187,33 +245,33 @@
         <column name="id" primaryKey="true" required="true" scale="0" size="19" type="-5,bigserial"/>
         <column name="attribute_type" primaryKey="false" required="false" scale="0" size="50" type="12,varchar"/>
         <column name="skill_model" primaryKey="false" required="false" scale="0" size="19" type="-5,int8"/>
-        <foreign-key foreignTable="attribute_type" name="FK_enchantment_type_attribute_type" onDelete="none" onUpdate="none">
+        <foreign-key foreignTable="attribute_type" name="fk_enchantment_type_attribute_type" onDelete="none" onUpdate="none">
             <option key="foreignSchemaName" value="model"/>
             <option key="exported" value="false"/>
             <reference foreign="id" local="attribute_type"/>
         </foreign-key>
-        <foreign-key foreignTable="skill" name="FK_enchantment_type_skill_model_02" onDelete="none" onUpdate="none">
+        <foreign-key foreignTable="skill" name="fk_enchantment_type_skill_model_02" onDelete="none" onUpdate="none">
             <option key="foreignSchemaName" value="model"/>
             <option key="exported" value="false"/>
             <reference foreign="id" local="skill_model"/>
         </foreign-key>
-        <foreign-key foreignTable="enchantment_type_description" name="FK_enchantment_type_description_enchantment_type" onDelete="none" onUpdate="none">
+        <foreign-key foreignTable="enchantment_type_description" name="fk_enchantment_type_description_enchantment_type" onDelete="none" onUpdate="none">
             <option key="foreignSchemaName" value="i18n"/>
             <option key="exported" value="true"/>
             <reference foreign="enchantment_type" local="id"/>
         </foreign-key>
-        <foreign-key foreignTable="item_enchantment" name="FK_enchantment_model_enchantment_type" onDelete="none" onUpdate="none">
+        <foreign-key foreignTable="item_enchantment" name="fk_enchantment_model_enchantment_type" onDelete="none" onUpdate="none">
             <option key="foreignSchemaName" value="model"/>
             <option key="exported" value="true"/>
             <reference foreign="enchantment_type" local="id"/>
         </foreign-key>
-        <unique name="PK_enchantment_type">
+        <unique name="pk_enchantment_type">
             <unique-column name="id"/>
         </unique>
-        <index name="IXFK_enchantment_type_attribute_type">
+        <index name="ixfk_enchantment_type_attribute_type">
             <index-column name="attribute_type"/>
         </index>
-        <index name="IXFK_enchantment_type_skill_model">
+        <index name="ixfk_enchantment_type_skill_model">
             <index-column name="skill_model"/>
         </index>
     </table>
@@ -222,23 +280,23 @@
         <column name="hero_model" primaryKey="false" required="true" scale="0" size="19" type="-5,int8"/>
         <column name="type" primaryKey="false" required="true" scale="0" size="50" type="12,varchar"/>
         <column name="value" primaryKey="false" required="true" scale="3" size="10" type="2,numeric"/>
-        <foreign-key foreignTable="attribute_type" name="FK_hero_attribute_attribute_type" onDelete="none" onUpdate="none">
+        <foreign-key foreignTable="attribute_type" name="fk_hero_attribute_attribute_type" onDelete="none" onUpdate="none">
             <option key="foreignSchemaName" value="model"/>
             <option key="exported" value="false"/>
             <reference foreign="id" local="type"/>
         </foreign-key>
-        <foreign-key foreignTable="hero_model" name="FK_hero_attribute_hero_model" onDelete="none" onUpdate="none">
+        <foreign-key foreignTable="hero_model" name="fk_hero_attribute_hero_model" onDelete="none" onUpdate="none">
             <option key="foreignSchemaName" value="model"/>
             <option key="exported" value="false"/>
             <reference foreign="id" local="hero_model"/>
         </foreign-key>
-        <unique name="PK_hero_attribute">
+        <unique name="pk_hero_attribute">
             <unique-column name="id"/>
         </unique>
-        <index name="IXFK_hero_attribute_attribute_type">
+        <index name="ixfk_hero_attribute_attribute_type">
             <index-column name="type"/>
         </index>
-        <index name="IXFK_hero_attribute_hero_model">
+        <index name="ixfk_hero_attribute_hero_model">
             <index-column name="hero_model"/>
         </index>
     </table>
@@ -248,40 +306,40 @@
         <column name="name" primaryKey="false" required="true" scale="0" size="50" type="12,varchar"/>
         <column name="hero_specialization" primaryKey="false" required="true" scale="0" size="19" type="-5,int8"/>
         <column name="image_bundle_name" primaryKey="false" required="true" scale="0" size="50" type="12,varchar"/>
-        <foreign-key foreignTable="hero_specialization" name="FK_hero_model_hero_type" onDelete="none" onUpdate="none">
+        <foreign-key foreignTable="hero_specialization" name="fk_hero_model_hero_type" onDelete="none" onUpdate="none">
             <option key="foreignSchemaName" value="model"/>
             <option key="exported" value="false"/>
             <reference foreign="id" local="hero_specialization"/>
         </foreign-key>
-        <foreign-key foreignTable="quality_grade" name="FK_hero_model_grade" onDelete="none" onUpdate="none">
+        <foreign-key foreignTable="quality_grade" name="fk_hero_model_grade" onDelete="none" onUpdate="none">
             <option key="foreignSchemaName" value="model"/>
             <option key="exported" value="false"/>
             <reference foreign="id" local="quality_grade"/>
         </foreign-key>
-        <foreign-key foreignTable="hero" name="FK_hero_hero_model" onDelete="none" onUpdate="none">
+        <foreign-key foreignTable="hero" name="fk_hero_hero_model" onDelete="none" onUpdate="none">
             <option key="foreignSchemaName" value="data"/>
             <option key="exported" value="true"/>
             <reference foreign="hero_model" local="id"/>
         </foreign-key>
-        <foreign-key foreignTable="hero_attribute" name="FK_hero_attribute_hero_model" onDelete="none" onUpdate="none">
+        <foreign-key foreignTable="hero_attribute" name="fk_hero_attribute_hero_model" onDelete="none" onUpdate="none">
             <option key="foreignSchemaName" value="model"/>
             <option key="exported" value="true"/>
             <reference foreign="hero_model" local="id"/>
         </foreign-key>
-        <foreign-key foreignTable="hero_skill" name="FK_hero_skill_hero_model" onDelete="none" onUpdate="none">
+        <foreign-key foreignTable="hero_skill" name="fk_hero_skill_hero_model" onDelete="none" onUpdate="none">
             <option key="foreignSchemaName" value="model"/>
             <option key="exported" value="true"/>
             <reference foreign="hero_model" local="id"/>
         </foreign-key>
-        <foreign-key foreignTable="hero_trait" name="FK_hero_trait_hero_model" onDelete="none" onUpdate="none">
+        <foreign-key foreignTable="hero_trait" name="fk_hero_trait_hero_model" onDelete="none" onUpdate="none">
             <option key="foreignSchemaName" value="model"/>
             <option key="exported" value="true"/>
             <reference foreign="hero_model" local="id"/>
         </foreign-key>
-        <unique name="PK_hero_model">
+        <unique name="pk_hero_model">
             <unique-column name="id"/>
         </unique>
-        <index name="IXFK_hero_model_hero_type">
+        <index name="ixfk_hero_model_hero_type">
             <index-column name="hero_specialization"/>
         </index>
     </table>
@@ -290,44 +348,44 @@
         <column name="skill" primaryKey="true" required="true" scale="0" size="19" type="-5,int8"/>
         <column name="required_level" primaryKey="false" required="true" scale="0" size="10" type="4,int4"/>
         <column name="override_power" primaryKey="false" required="false" scale="3" size="10" type="2,numeric"/>
-        <foreign-key foreignTable="hero_model" name="FK_hero_skill_hero_model" onDelete="none" onUpdate="none">
+        <foreign-key foreignTable="hero_model" name="fk_hero_skill_hero_model" onDelete="none" onUpdate="none">
             <option key="foreignSchemaName" value="model"/>
             <option key="exported" value="false"/>
             <reference foreign="id" local="hero_model"/>
         </foreign-key>
-        <foreign-key foreignTable="skill" name="FK_hero_skill_skill_model" onDelete="none" onUpdate="none">
+        <foreign-key foreignTable="skill" name="fk_hero_skill_skill_model" onDelete="none" onUpdate="none">
             <option key="foreignSchemaName" value="model"/>
             <option key="exported" value="false"/>
             <reference foreign="id" local="skill"/>
         </foreign-key>
-        <unique name="PK_hero_skill">
+        <unique name="pk_hero_skill">
             <unique-column name="hero_model"/>
             <unique-column name="skill"/>
         </unique>
-        <index name="IXFK_hero_skill_hero_model">
+        <index name="ixfk_hero_skill_hero_model">
             <index-column name="hero_model"/>
         </index>
-        <index name="IXFK_hero_skill_skill_model">
+        <index name="ixfk_hero_skill_skill_model">
             <index-column name="skill"/>
         </index>
     </table>
     <table alias="model" name="hero_specialization">
         <column name="id" primaryKey="true" required="true" scale="0" size="19" type="-5,bigserial"/>
         <column name="type" primaryKey="false" required="true" scale="0" size="50" type="12,varchar"/>
-        <foreign-key foreignTable="hero_type_description" name="FK_hero_type_description_hero_type" onDelete="none" onUpdate="none">
+        <foreign-key foreignTable="hero_type_description" name="fk_hero_type_description_hero_type" onDelete="none" onUpdate="none">
             <option key="foreignSchemaName" value="i18n"/>
             <option key="exported" value="true"/>
             <reference foreign="hero_type" local="id"/>
         </foreign-key>
-        <foreign-key foreignTable="hero_model" name="FK_hero_model_hero_type" onDelete="none" onUpdate="none">
+        <foreign-key foreignTable="hero_model" name="fk_hero_model_hero_type" onDelete="none" onUpdate="none">
             <option key="foreignSchemaName" value="model"/>
             <option key="exported" value="true"/>
             <reference foreign="hero_specialization" local="id"/>
         </foreign-key>
-        <unique name="PK_hero_type">
+        <unique name="pk_hero_type">
             <unique-column name="id"/>
         </unique>
-        <unique name="UQ_hero_type_code">
+        <unique name="uq_hero_type_code">
             <unique-column name="type"/>
         </unique>
     </table>
@@ -336,24 +394,24 @@
         <column name="trait" primaryKey="true" required="true" scale="0" size="19" type="-5,int8"/>
         <column name="required_level" primaryKey="false" required="false" scale="0" size="10" type="4,int4"/>
         <column name="override_power" primaryKey="false" required="false" scale="3" size="10" type="2,numeric"/>
-        <foreign-key foreignTable="hero_model" name="FK_hero_trait_hero_model" onDelete="none" onUpdate="none">
+        <foreign-key foreignTable="hero_model" name="fk_hero_trait_hero_model" onDelete="none" onUpdate="none">
             <option key="foreignSchemaName" value="model"/>
             <option key="exported" value="false"/>
             <reference foreign="id" local="hero_model"/>
         </foreign-key>
-        <foreign-key foreignTable="trait" name="FK_hero_trait_trait_model" onDelete="none" onUpdate="none">
+        <foreign-key foreignTable="trait" name="fk_hero_trait_trait_model" onDelete="none" onUpdate="none">
             <option key="foreignSchemaName" value="model"/>
             <option key="exported" value="false"/>
             <reference foreign="id" local="trait"/>
         </foreign-key>
-        <unique name="PK_hero_trait">
+        <unique name="pk_hero_trait">
             <unique-column name="hero_model"/>
             <unique-column name="trait"/>
         </unique>
-        <index name="IXFK_hero_trait_hero_model">
+        <index name="ixfk_hero_trait_hero_model">
             <index-column name="hero_model"/>
         </index>
-        <index name="IXFK_hero_trait_trait_model">
+        <index name="ixfk_hero_trait_trait_model">
             <index-column name="trait"/>
         </index>
     </table>
@@ -362,23 +420,23 @@
         <column name="item_model" primaryKey="false" required="true" scale="0" size="19" type="-5,int8"/>
         <column name="enchantment_type" primaryKey="false" required="true" scale="0" size="19" type="-5,int8"/>
         <column name="base_value" primaryKey="false" required="true" scale="3" size="10" type="2,numeric"/>
-        <foreign-key foreignTable="enchantment_type" name="FK_enchantment_model_enchantment_type" onDelete="none" onUpdate="none">
+        <foreign-key foreignTable="enchantment_type" name="fk_enchantment_model_enchantment_type" onDelete="none" onUpdate="none">
             <option key="foreignSchemaName" value="model"/>
             <option key="exported" value="false"/>
             <reference foreign="id" local="enchantment_type"/>
         </foreign-key>
-        <foreign-key foreignTable="item_model" name="FK_item_enchantment_item_model" onDelete="none" onUpdate="none">
+        <foreign-key foreignTable="item_model" name="fk_item_enchantment_item_model" onDelete="none" onUpdate="none">
             <option key="foreignSchemaName" value="model"/>
             <option key="exported" value="false"/>
             <reference foreign="id" local="item_model"/>
         </foreign-key>
-        <unique name="PK_enchantment_model">
+        <unique name="pk_enchantment_model">
             <unique-column name="id"/>
         </unique>
-        <index name="IXFK_enchantment_model_enchantment_type">
+        <index name="ixfk_enchantment_model_enchantment_type">
             <index-column name="enchantment_type"/>
         </index>
-        <index name="IXFK_item_enchantment_item_model">
+        <index name="ixfk_item_enchantment_item_model">
             <index-column name="item_model"/>
         </index>
     </table>
@@ -390,38 +448,38 @@
         <column name="max_enchant" primaryKey="false" required="false" scale="0" size="10" type="4,int4"/>
         <column name="type" primaryKey="false" required="true" scale="0" size="10" type="12,varchar"/>
         <column name="icon_name" primaryKey="false" required="true" scale="0" size="50" type="12,varchar"/>
-        <foreign-key foreignTable="attribute_type" name="FK_item_model_attribute_type" onDelete="none" onUpdate="none">
+        <foreign-key foreignTable="attribute_type" name="fk_item_model_attribute_type" onDelete="none" onUpdate="none">
             <option key="foreignSchemaName" value="model"/>
             <option key="exported" value="false"/>
             <reference foreign="id" local="attribute_type"/>
         </foreign-key>
-        <foreign-key foreignTable="quality_grade" name="FK_item_model_quality_grade" onDelete="none" onUpdate="none">
+        <foreign-key foreignTable="quality_grade" name="fk_item_model_quality_grade" onDelete="none" onUpdate="none">
             <option key="foreignSchemaName" value="model"/>
             <option key="exported" value="false"/>
             <reference foreign="id" local="quality_grade"/>
         </foreign-key>
-        <foreign-key foreignTable="item" name="FK_item_item_model" onDelete="none" onUpdate="none">
+        <foreign-key foreignTable="item" name="fk_item_item_model" onDelete="none" onUpdate="none">
             <option key="foreignSchemaName" value="data"/>
             <option key="exported" value="true"/>
             <reference foreign="item_model" local="id"/>
         </foreign-key>
-        <foreign-key foreignTable="item_model_description" name="FK_item_model_description_item_model" onDelete="none" onUpdate="none">
+        <foreign-key foreignTable="item_model_description" name="fk_item_model_description_item_model" onDelete="none" onUpdate="none">
             <option key="foreignSchemaName" value="i18n"/>
             <option key="exported" value="true"/>
             <reference foreign="item_model" local="id"/>
         </foreign-key>
-        <foreign-key foreignTable="item_enchantment" name="FK_item_enchantment_item_model" onDelete="none" onUpdate="none">
+        <foreign-key foreignTable="item_enchantment" name="fk_item_enchantment_item_model" onDelete="none" onUpdate="none">
             <option key="foreignSchemaName" value="model"/>
             <option key="exported" value="true"/>
             <reference foreign="item_model" local="id"/>
         </foreign-key>
-        <unique name="PK_item_model">
+        <unique name="pk_item_model">
             <unique-column name="id"/>
         </unique>
-        <index name="IXFK_item_model_attribute_type">
+        <index name="ixfk_item_model_attribute_type">
             <index-column name="attribute_type"/>
         </index>
-        <index name="IXFK_item_model_quality_grade">
+        <index name="ixfk_item_model_quality_grade">
             <index-column name="quality_grade"/>
         </index>
     </table>
@@ -430,23 +488,23 @@
         <column name="minion_model" primaryKey="false" required="true" scale="0" size="19" type="-5,int8"/>
         <column name="type" primaryKey="false" required="true" scale="0" size="50" type="12,varchar"/>
         <column name="value" primaryKey="false" required="true" scale="3" size="10" type="2,numeric"/>
-        <foreign-key foreignTable="attribute_type" name="FK_minion_attribute_attribute_type" onDelete="none" onUpdate="none">
+        <foreign-key foreignTable="attribute_type" name="fk_minion_attribute_attribute_type" onDelete="none" onUpdate="none">
             <option key="foreignSchemaName" value="model"/>
             <option key="exported" value="false"/>
             <reference foreign="id" local="type"/>
         </foreign-key>
-        <foreign-key foreignTable="minion_model" name="FK_minion_attribute_minion_model" onDelete="none" onUpdate="none">
+        <foreign-key foreignTable="minion_model" name="fk_minion_attribute_minion_model" onDelete="none" onUpdate="none">
             <option key="foreignSchemaName" value="model"/>
             <option key="exported" value="false"/>
             <reference foreign="id" local="minion_model"/>
         </foreign-key>
-        <unique name="PK_minion_attribute">
+        <unique name="pk_minion_attribute">
             <unique-column name="id"/>
         </unique>
-        <index name="IXFK_minion_attribute_attribute_type">
+        <index name="ixfk_minion_attribute_attribute_type">
             <index-column name="type"/>
         </index>
-        <index name="IXFK_minion_attribute_minion_model">
+        <index name="ixfk_minion_attribute_minion_model">
             <index-column name="minion_model"/>
         </index>
     </table>
@@ -455,35 +513,35 @@
         <column name="quality_grade" primaryKey="false" required="true" scale="0" size="1" type="1,bpchar"/>
         <column name="name" primaryKey="false" required="true" scale="0" size="50" type="12,varchar"/>
         <column name="image_bundle_name" primaryKey="false" required="true" scale="0" size="50" type="12,varchar"/>
-        <foreign-key foreignTable="quality_grade" name="FK_minion_model_grade" onDelete="none" onUpdate="none">
+        <foreign-key foreignTable="quality_grade" name="fk_minion_model_grade" onDelete="none" onUpdate="none">
             <option key="foreignSchemaName" value="model"/>
             <option key="exported" value="false"/>
             <reference foreign="id" local="quality_grade"/>
         </foreign-key>
-        <foreign-key foreignTable="minion" name="FK_minion_minion_model" onDelete="none" onUpdate="none">
+        <foreign-key foreignTable="minion" name="fk_minion_minion_model" onDelete="none" onUpdate="none">
             <option key="foreignSchemaName" value="data"/>
             <option key="exported" value="true"/>
             <reference foreign="minion_model" local="id"/>
         </foreign-key>
-        <foreign-key foreignTable="minion_attribute" name="FK_minion_attribute_minion_model" onDelete="none" onUpdate="none">
+        <foreign-key foreignTable="minion_attribute" name="fk_minion_attribute_minion_model" onDelete="none" onUpdate="none">
             <option key="foreignSchemaName" value="model"/>
             <option key="exported" value="true"/>
             <reference foreign="minion_model" local="id"/>
         </foreign-key>
-        <foreign-key foreignTable="minion_skill" name="FK_minion_skill_minion_model" onDelete="none" onUpdate="none">
+        <foreign-key foreignTable="minion_skill" name="fk_minion_skill_minion_model" onDelete="none" onUpdate="none">
             <option key="foreignSchemaName" value="model"/>
             <option key="exported" value="true"/>
             <reference foreign="minion_model" local="id"/>
         </foreign-key>
-        <foreign-key foreignTable="minion_trait" name="FK_minion_trait_minion_model" onDelete="none" onUpdate="none">
+        <foreign-key foreignTable="minion_trait" name="fk_minion_trait_minion_model" onDelete="none" onUpdate="none">
             <option key="foreignSchemaName" value="model"/>
             <option key="exported" value="true"/>
             <reference foreign="minion_model" local="id"/>
         </foreign-key>
-        <unique name="PK_minion_model">
+        <unique name="pk_minion_model">
             <unique-column name="id"/>
         </unique>
-        <index name="IXFK_minion_model_grade">
+        <index name="ixfk_minion_model_grade">
             <index-column name="quality_grade"/>
         </index>
     </table>
@@ -492,24 +550,24 @@
         <column name="skill" primaryKey="true" required="true" scale="0" size="19" type="-5,int8"/>
         <column name="required_level" primaryKey="false" required="true" scale="0" size="10" type="4,int4"/>
         <column name="override_power" primaryKey="false" required="false" scale="3" size="10" type="2,numeric"/>
-        <foreign-key foreignTable="minion_model" name="FK_minion_skill_minion_model" onDelete="none" onUpdate="none">
+        <foreign-key foreignTable="minion_model" name="fk_minion_skill_minion_model" onDelete="none" onUpdate="none">
             <option key="foreignSchemaName" value="model"/>
             <option key="exported" value="false"/>
             <reference foreign="id" local="minion_model"/>
         </foreign-key>
-        <foreign-key foreignTable="skill" name="FK_minion_skill_skill_model" onDelete="none" onUpdate="none">
+        <foreign-key foreignTable="skill" name="fk_minion_skill_skill_model" onDelete="none" onUpdate="none">
             <option key="foreignSchemaName" value="model"/>
             <option key="exported" value="false"/>
             <reference foreign="id" local="skill"/>
         </foreign-key>
-        <unique name="PK_minion_skill">
+        <unique name="pk_minion_skill">
             <unique-column name="minion_model"/>
             <unique-column name="skill"/>
         </unique>
-        <index name="IXFK_minion_skill_minion_model">
+        <index name="ixfk_minion_skill_minion_model">
             <index-column name="minion_model"/>
         </index>
-        <index name="IXFK_minion_skill_skill_model">
+        <index name="ixfk_minion_skill_skill_model">
             <index-column name="skill"/>
         </index>
     </table>
@@ -518,90 +576,90 @@
         <column name="trait" primaryKey="true" required="true" scale="0" size="19" type="-5,int8"/>
         <column name="required_level" primaryKey="false" required="false" scale="0" size="10" type="4,int4"/>
         <column name="override_power" primaryKey="false" required="false" scale="3" size="10" type="2,numeric"/>
-        <foreign-key foreignTable="minion_model" name="FK_minion_trait_minion_model" onDelete="none" onUpdate="none">
+        <foreign-key foreignTable="minion_model" name="fk_minion_trait_minion_model" onDelete="none" onUpdate="none">
             <option key="foreignSchemaName" value="model"/>
             <option key="exported" value="false"/>
             <reference foreign="id" local="minion_model"/>
         </foreign-key>
-        <foreign-key foreignTable="trait" name="FK_minion_trait_trait_model" onDelete="none" onUpdate="none">
+        <foreign-key foreignTable="trait" name="fk_minion_trait_trait_model" onDelete="none" onUpdate="none">
             <option key="foreignSchemaName" value="model"/>
             <option key="exported" value="false"/>
             <reference foreign="id" local="trait"/>
         </foreign-key>
-        <unique name="PK_minion_trait">
+        <unique name="pk_minion_trait">
             <unique-column name="minion_model"/>
             <unique-column name="trait"/>
         </unique>
-        <index name="IXFK_minion_trait_minion_model">
+        <index name="ixfk_minion_trait_minion_model">
             <index-column name="minion_model"/>
         </index>
-        <index name="IXFK_minion_trait_trait_model">
+        <index name="ixfk_minion_trait_trait_model">
             <index-column name="trait"/>
         </index>
     </table>
     <table alias="model" name="mission">
         <column name="id" primaryKey="true" required="true" scale="0" size="19" type="-5,bigserial"/>
         <column name="team" primaryKey="false" required="false" scale="0" size="19" type="-5,int8"/>
-        <foreign-key foreignTable="team" name="FK_mission_team" onDelete="none" onUpdate="none">
+        <foreign-key foreignTable="team" name="fk_mission_team" onDelete="none" onUpdate="none">
             <option key="foreignSchemaName" value="data"/>
             <option key="exported" value="false"/>
             <reference foreign="id" local="team"/>
         </foreign-key>
-        <foreign-key foreignTable="mission_description" name="FK_mission_description_mission" onDelete="none" onUpdate="none">
+        <foreign-key foreignTable="mission_description" name="fk_mission_description_mission" onDelete="none" onUpdate="none">
             <option key="foreignSchemaName" value="i18n"/>
             <option key="exported" value="true"/>
             <reference foreign="mission" local="id"/>
         </foreign-key>
-        <foreign-key foreignTable="mission_reward" name="FK_mission_reward_mission" onDelete="none" onUpdate="none">
+        <foreign-key foreignTable="mission_reward" name="fk_mission_reward_mission" onDelete="none" onUpdate="none">
             <option key="foreignSchemaName" value="model"/>
             <option key="exported" value="true"/>
             <reference foreign="mission" local="id"/>
         </foreign-key>
-        <unique name="PK_mission">
+        <unique name="pk_mission">
             <unique-column name="id"/>
         </unique>
-        <index name="IXFK_mission_team">
+        <index name="ixfk_mission_team">
             <index-column name="team"/>
         </index>
     </table>
     <table alias="model" name="mission_reward">
         <column name="id" primaryKey="true" required="true" scale="0" size="19" type="-5,bigserial"/>
         <column name="mission" primaryKey="false" required="true" scale="0" size="19" type="-5,int8"/>
-        <foreign-key foreignTable="mission" name="FK_mission_reward_mission" onDelete="none" onUpdate="none">
+        <foreign-key foreignTable="mission" name="fk_mission_reward_mission" onDelete="none" onUpdate="none">
             <option key="foreignSchemaName" value="model"/>
             <option key="exported" value="false"/>
             <reference foreign="id" local="mission"/>
         </foreign-key>
-        <unique name="PK_mission_reward">
+        <unique name="pk_mission_reward">
             <unique-column name="id"/>
         </unique>
-        <index name="IXFK_mission_reward_mission">
+        <index name="ixfk_mission_reward_mission">
             <index-column name="mission"/>
         </index>
     </table>
     <table alias="model" name="quality_grade">
         <column name="id" primaryKey="true" required="true" scale="0" size="1" type="1,bpchar"/>
-        <foreign-key foreignTable="hero_model" name="FK_hero_model_grade" onDelete="none" onUpdate="none">
+        <foreign-key foreignTable="hero_model" name="fk_hero_model_grade" onDelete="none" onUpdate="none">
             <option key="foreignSchemaName" value="model"/>
             <option key="exported" value="true"/>
             <reference foreign="quality_grade" local="id"/>
         </foreign-key>
-        <foreign-key foreignTable="item_model" name="FK_item_model_quality_grade" onDelete="none" onUpdate="none">
+        <foreign-key foreignTable="item_model" name="fk_item_model_quality_grade" onDelete="none" onUpdate="none">
             <option key="foreignSchemaName" value="model"/>
             <option key="exported" value="true"/>
             <reference foreign="quality_grade" local="id"/>
         </foreign-key>
-        <foreign-key foreignTable="minion_model" name="FK_minion_model_grade" onDelete="none" onUpdate="none">
+        <foreign-key foreignTable="minion_model" name="fk_minion_model_grade" onDelete="none" onUpdate="none">
             <option key="foreignSchemaName" value="model"/>
             <option key="exported" value="true"/>
             <reference foreign="quality_grade" local="id"/>
         </foreign-key>
-        <foreign-key foreignTable="seeker_model" name="FK_seeker_model_grade" onDelete="none" onUpdate="none">
+        <foreign-key foreignTable="seeker_model" name="fk_seeker_model_grade" onDelete="none" onUpdate="none">
             <option key="foreignSchemaName" value="model"/>
             <option key="exported" value="true"/>
             <reference foreign="quality_grade" local="id"/>
         </foreign-key>
-        <unique name="PK_grade">
+        <unique name="pk_grade">
             <unique-column name="id"/>
         </unique>
     </table>
@@ -611,20 +669,20 @@
         <column name="price" primaryKey="false" required="true" scale="0" size="10" type="4,int4"/>
         <column name="quality_grade" primaryKey="false" required="true" scale="0" size="1" type="1,bpchar"/>
         <column name="image_bundle_name" primaryKey="false" required="true" scale="0" size="50" type="12,varchar"/>
-        <foreign-key foreignTable="quality_grade" name="FK_seeker_model_grade" onDelete="none" onUpdate="none">
+        <foreign-key foreignTable="quality_grade" name="fk_seeker_model_grade" onDelete="none" onUpdate="none">
             <option key="foreignSchemaName" value="model"/>
             <option key="exported" value="false"/>
             <reference foreign="id" local="quality_grade"/>
         </foreign-key>
-        <foreign-key foreignTable="seeker_specialization" name="FK_seeker_specialization_seeker_model" onDelete="none" onUpdate="none">
+        <foreign-key foreignTable="seeker_specialization" name="fk_seeker_specialization_seeker_model" onDelete="none" onUpdate="none">
             <option key="foreignSchemaName" value="model"/>
             <option key="exported" value="true"/>
             <reference foreign="seeker_model" local="id"/>
         </foreign-key>
-        <unique name="PK_seeker_model">
+        <unique name="pk_seeker_model">
             <unique-column name="id"/>
         </unique>
-        <index name="IXFK_seeker_model_grade">
+        <index name="ixfk_seeker_model_grade">
             <index-column name="quality_grade"/>
         </index>
     </table>
@@ -632,23 +690,23 @@
         <column name="id" primaryKey="true" required="true" scale="0" size="19" type="-5,bigserial"/>
         <column name="seeker_model" primaryKey="false" required="true" scale="0" size="19" type="-5,int8"/>
         <column name="type" primaryKey="false" required="true" scale="0" size="10" type="12,varchar"/>
-        <foreign-key foreignTable="seeker_model" name="FK_seeker_specialization_seeker_model" onDelete="none" onUpdate="none">
+        <foreign-key foreignTable="seeker_model" name="fk_seeker_specialization_seeker_model" onDelete="none" onUpdate="none">
             <option key="foreignSchemaName" value="model"/>
             <option key="exported" value="false"/>
             <reference foreign="id" local="seeker_model"/>
         </foreign-key>
-        <foreign-key foreignTable="specialization_description" name="FK_specialization_desc_seeker_specialization" onDelete="none" onUpdate="none">
+        <foreign-key foreignTable="specialization_description" name="fk_specialization_desc_seeker_specialization" onDelete="none" onUpdate="none">
             <option key="foreignSchemaName" value="i18n"/>
             <option key="exported" value="true"/>
             <reference foreign="seeker_specialization" local="id"/>
         </foreign-key>
-        <unique name="PK_seeker_specialization">
+        <unique name="pk_seeker_specialization">
             <unique-column name="id"/>
         </unique>
-        <index name="IXFK_seeker_specialization_seeker_model">
+        <index name="ixfk_seeker_specialization_seeker_model">
             <index-column name="seeker_model"/>
         </index>
-        <index name="IXFK_seeker_specialization_specialization_type">
+        <index name="ixfk_seeker_specialization_specialization_type">
             <index-column name="type"/>
         </index>
     </table>
@@ -658,35 +716,35 @@
         <column name="attribute_type" primaryKey="false" required="false" scale="0" size="50" type="12,varchar"/>
         <column name="power" primaryKey="false" required="false" scale="3" size="10" type="2,numeric"/>
         <column name="icon_name" primaryKey="false" required="true" scale="0" size="50" type="12,varchar"/>
-        <foreign-key foreignTable="attribute_type" name="FK_skill_model_attribute_type" onDelete="none" onUpdate="none">
+        <foreign-key foreignTable="attribute_type" name="fk_skill_model_attribute_type" onDelete="none" onUpdate="none">
             <option key="foreignSchemaName" value="model"/>
             <option key="exported" value="false"/>
             <reference foreign="id" local="attribute_type"/>
         </foreign-key>
-        <foreign-key foreignTable="skill_description" name="FK_skill_model_descirption_skill_model" onDelete="none" onUpdate="none">
+        <foreign-key foreignTable="skill_description" name="fk_skill_model_descirption_skill_model" onDelete="none" onUpdate="none">
             <option key="foreignSchemaName" value="i18n"/>
             <option key="exported" value="true"/>
             <reference foreign="skill" local="id"/>
         </foreign-key>
-        <foreign-key foreignTable="enchantment_type" name="FK_enchantment_type_skill_model_02" onDelete="none" onUpdate="none">
+        <foreign-key foreignTable="enchantment_type" name="fk_enchantment_type_skill_model_02" onDelete="none" onUpdate="none">
             <option key="foreignSchemaName" value="model"/>
             <option key="exported" value="true"/>
             <reference foreign="skill_model" local="id"/>
         </foreign-key>
-        <foreign-key foreignTable="hero_skill" name="FK_hero_skill_skill_model" onDelete="none" onUpdate="none">
+        <foreign-key foreignTable="hero_skill" name="fk_hero_skill_skill_model" onDelete="none" onUpdate="none">
             <option key="foreignSchemaName" value="model"/>
             <option key="exported" value="true"/>
             <reference foreign="skill" local="id"/>
         </foreign-key>
-        <foreign-key foreignTable="minion_skill" name="FK_minion_skill_skill_model" onDelete="none" onUpdate="none">
+        <foreign-key foreignTable="minion_skill" name="fk_minion_skill_skill_model" onDelete="none" onUpdate="none">
             <option key="foreignSchemaName" value="model"/>
             <option key="exported" value="true"/>
             <reference foreign="skill" local="id"/>
         </foreign-key>
-        <unique name="PK_skill_model">
+        <unique name="pk_skill_model">
             <unique-column name="id"/>
         </unique>
-        <index name="IXFK_skill_model_attribute_type">
+        <index name="ixfk_skill_model_attribute_type">
             <index-column name="attribute_type"/>
         </index>
     </table>
@@ -697,35 +755,35 @@
         <column name="alg" primaryKey="false" required="true" scale="0" size="50" type="12,varchar"/>
         <column name="power" primaryKey="false" required="false" scale="0" size="10" type="2,numeric"/>
         <column name="icon_name" primaryKey="false" required="true" scale="0" size="50" type="12,varchar"/>
-        <foreign-key foreignTable="attribute_type" name="FK_trait_model_attribute_type" onDelete="none" onUpdate="none">
+        <foreign-key foreignTable="attribute_type" name="fk_trait_model_attribute_type" onDelete="none" onUpdate="none">
             <option key="foreignSchemaName" value="model"/>
             <option key="exported" value="false"/>
             <reference foreign="id" local="affected_attribute_type"/>
         </foreign-key>
-        <foreign-key foreignTable="trait_description" name="FK_trait_model_description_trait_model" onDelete="none" onUpdate="none">
+        <foreign-key foreignTable="trait_description" name="fk_trait_model_description_trait_model" onDelete="none" onUpdate="none">
             <option key="foreignSchemaName" value="i18n"/>
             <option key="exported" value="true"/>
             <reference foreign="trait" local="id"/>
         </foreign-key>
-        <foreign-key foreignTable="hero_trait" name="FK_hero_trait_trait_model" onDelete="none" onUpdate="none">
+        <foreign-key foreignTable="hero_trait" name="fk_hero_trait_trait_model" onDelete="none" onUpdate="none">
             <option key="foreignSchemaName" value="model"/>
             <option key="exported" value="true"/>
             <reference foreign="trait" local="id"/>
         </foreign-key>
-        <foreign-key foreignTable="minion_trait" name="FK_minion_trait_trait_model" onDelete="none" onUpdate="none">
+        <foreign-key foreignTable="minion_trait" name="fk_minion_trait_trait_model" onDelete="none" onUpdate="none">
             <option key="foreignSchemaName" value="model"/>
             <option key="exported" value="true"/>
             <reference foreign="trait" local="id"/>
         </foreign-key>
-        <foreign-key foreignTable="trait_target" name="FK_trait_target_trait" onDelete="none" onUpdate="none">
+        <foreign-key foreignTable="trait_target" name="fk_trait_target_trait" onDelete="none" onUpdate="none">
             <option key="foreignSchemaName" value="model"/>
             <option key="exported" value="true"/>
             <reference foreign="trait" local="id"/>
         </foreign-key>
-        <unique name="PK_trait_model">
+        <unique name="pk_trait_model">
             <unique-column name="id"/>
         </unique>
-        <index name="IXFK_trait_model_attribute_type">
+        <index name="ixfk_trait_model_attribute_type">
             <index-column name="affected_attribute_type"/>
         </index>
     </table>
@@ -733,15 +791,15 @@
         <column name="id" primaryKey="true" required="true" scale="0" size="19" type="-5,bigserial"/>
         <column name="trait" primaryKey="false" required="true" scale="0" size="19" type="-5,int8"/>
         <column name="position" primaryKey="false" required="true" scale="0" size="50" type="12,varchar"/>
-        <foreign-key foreignTable="trait" name="FK_trait_target_trait" onDelete="none" onUpdate="none">
+        <foreign-key foreignTable="trait" name="fk_trait_target_trait" onDelete="none" onUpdate="none">
             <option key="foreignSchemaName" value="model"/>
             <option key="exported" value="false"/>
             <reference foreign="id" local="trait"/>
         </foreign-key>
-        <unique name="PK_trait_target">
+        <unique name="pk_trait_target">
             <unique-column name="id"/>
         </unique>
-        <index name="IXFK_trait_target_trait">
+        <index name="ixfk_trait_target_trait">
             <index-column name="trait"/>
         </index>
     </table>
@@ -750,23 +808,23 @@
         <column name="attribute_type" primaryKey="false" required="true" scale="0" size="50" type="12,varchar"/>
         <column name="lang" primaryKey="false" required="true" scale="0" size="2" type="1,bpchar"/>
         <column name="value" primaryKey="false" required="true" scale="0" size="2147483647" type="12,text"/>
-        <foreign-key foreignTable="language" name="FK_attribute_type_description_language" onDelete="none" onUpdate="none">
+        <foreign-key foreignTable="language" name="fk_attribute_type_description_language" onDelete="none" onUpdate="none">
             <option key="foreignSchemaName" value="i18n"/>
             <option key="exported" value="false"/>
             <reference foreign="id" local="lang"/>
         </foreign-key>
-        <foreign-key foreignTable="attribute_type" name="FK_attribute_type_description_attribute_type" onDelete="none" onUpdate="none">
+        <foreign-key foreignTable="attribute_type" name="fk_attribute_type_description_attribute_type" onDelete="none" onUpdate="none">
             <option key="foreignSchemaName" value="model"/>
             <option key="exported" value="false"/>
             <reference foreign="id" local="attribute_type"/>
         </foreign-key>
-        <unique name="PK_attribute_type_description">
+        <unique name="pk_attribute_type_description">
             <unique-column name="id"/>
         </unique>
-        <index name="IXFK_attribute_type_description_attribute_type">
+        <index name="ixfk_attribute_type_description_attribute_type">
             <index-column name="attribute_type"/>
         </index>
-        <index name="IXFK_attribute_type_description_language">
+        <index name="ixfk_attribute_type_description_language">
             <index-column name="lang"/>
         </index>
     </table>
@@ -775,23 +833,23 @@
         <column name="enchantment_type" primaryKey="false" required="true" scale="0" size="19" type="-5,int8"/>
         <column name="lang" primaryKey="false" required="false" scale="0" size="2" type="1,bpchar"/>
         <column name="value" primaryKey="false" required="false" scale="0" size="2147483647" type="12,text"/>
-        <foreign-key foreignTable="language" name="FK_enchantment_type_description_language" onDelete="none" onUpdate="none">
+        <foreign-key foreignTable="language" name="fk_enchantment_type_description_language" onDelete="none" onUpdate="none">
             <option key="foreignSchemaName" value="i18n"/>
             <option key="exported" value="false"/>
             <reference foreign="id" local="lang"/>
         </foreign-key>
-        <foreign-key foreignTable="enchantment_type" name="FK_enchantment_type_description_enchantment_type" onDelete="none" onUpdate="none">
+        <foreign-key foreignTable="enchantment_type" name="fk_enchantment_type_description_enchantment_type" onDelete="none" onUpdate="none">
             <option key="foreignSchemaName" value="model"/>
             <option key="exported" value="false"/>
             <reference foreign="id" local="enchantment_type"/>
         </foreign-key>
-        <unique name="PK_enchantment_type_description">
+        <unique name="pk_enchantment_type_description">
             <unique-column name="id"/>
         </unique>
-        <index name="IXFK_enchantment_type_description_enchantment_type">
+        <index name="ixfk_enchantment_type_description_enchantment_type">
             <index-column name="enchantment_type"/>
         </index>
-        <index name="IXFK_enchantment_type_description_language">
+        <index name="ixfk_enchantment_type_description_language">
             <index-column name="lang"/>
         </index>
     </table>
@@ -800,23 +858,23 @@
         <column name="hero_type" primaryKey="false" required="true" scale="0" size="19" type="-5,int8"/>
         <column name="lang" primaryKey="false" required="true" scale="0" size="2" type="1,bpchar"/>
         <column name="value" primaryKey="false" required="true" scale="0" size="2147483647" type="12,text"/>
-        <foreign-key foreignTable="language" name="FK_hero_type_description_language" onDelete="none" onUpdate="none">
+        <foreign-key foreignTable="language" name="fk_hero_type_description_language" onDelete="none" onUpdate="none">
             <option key="foreignSchemaName" value="i18n"/>
             <option key="exported" value="false"/>
             <reference foreign="id" local="lang"/>
         </foreign-key>
-        <foreign-key foreignTable="hero_specialization" name="FK_hero_type_description_hero_type" onDelete="none" onUpdate="none">
+        <foreign-key foreignTable="hero_specialization" name="fk_hero_type_description_hero_type" onDelete="none" onUpdate="none">
             <option key="foreignSchemaName" value="model"/>
             <option key="exported" value="false"/>
             <reference foreign="id" local="hero_type"/>
         </foreign-key>
-        <unique name="PK_hero_type_description">
+        <unique name="pk_hero_type_description">
             <unique-column name="id"/>
         </unique>
-        <index name="IXFK_hero_type_description_hero_type">
+        <index name="ixfk_hero_type_description_hero_type">
             <index-column name="hero_type"/>
         </index>
-        <index name="IXFK_hero_type_description_language">
+        <index name="ixfk_hero_type_description_language">
             <index-column name="lang"/>
         </index>
     </table>
@@ -825,70 +883,70 @@
         <column name="item_model" primaryKey="false" required="true" scale="0" size="19" type="-5,int8"/>
         <column name="lang" primaryKey="false" required="false" scale="0" size="2" type="1,bpchar"/>
         <column name="value" primaryKey="false" required="true" scale="0" size="2147483647" type="12,text"/>
-        <foreign-key foreignTable="language" name="FK_item_model_description_language" onDelete="none" onUpdate="none">
+        <foreign-key foreignTable="language" name="fk_item_model_description_language" onDelete="none" onUpdate="none">
             <option key="foreignSchemaName" value="i18n"/>
             <option key="exported" value="false"/>
             <reference foreign="id" local="lang"/>
         </foreign-key>
-        <foreign-key foreignTable="item_model" name="FK_item_model_description_item_model" onDelete="none" onUpdate="none">
+        <foreign-key foreignTable="item_model" name="fk_item_model_description_item_model" onDelete="none" onUpdate="none">
             <option key="foreignSchemaName" value="model"/>
             <option key="exported" value="false"/>
             <reference foreign="id" local="item_model"/>
         </foreign-key>
-        <unique name="PK_item_model_description">
+        <unique name="pk_item_model_description">
             <unique-column name="id"/>
         </unique>
-        <index name="IXFK_item_model_description_item_model">
+        <index name="ixfk_item_model_description_item_model">
             <index-column name="item_model"/>
         </index>
-        <index name="IXFK_item_model_description_language">
+        <index name="ixfk_item_model_description_language">
             <index-column name="lang"/>
         </index>
     </table>
     <table alias="i18n" name="language">
         <column name="id" primaryKey="true" required="true" scale="0" size="2" type="1,bpchar"/>
         <column name="description" primaryKey="false" required="true" scale="0" size="50" type="12,varchar"/>
-        <foreign-key foreignTable="attribute_type_description" name="FK_attribute_type_description_language" onDelete="none" onUpdate="none">
+        <foreign-key foreignTable="attribute_type_description" name="fk_attribute_type_description_language" onDelete="none" onUpdate="none">
             <option key="foreignSchemaName" value="i18n"/>
             <option key="exported" value="true"/>
             <reference foreign="lang" local="id"/>
         </foreign-key>
-        <foreign-key foreignTable="enchantment_type_description" name="FK_enchantment_type_description_language" onDelete="none" onUpdate="none">
+        <foreign-key foreignTable="enchantment_type_description" name="fk_enchantment_type_description_language" onDelete="none" onUpdate="none">
             <option key="foreignSchemaName" value="i18n"/>
             <option key="exported" value="true"/>
             <reference foreign="lang" local="id"/>
         </foreign-key>
-        <foreign-key foreignTable="hero_type_description" name="FK_hero_type_description_language" onDelete="none" onUpdate="none">
+        <foreign-key foreignTable="hero_type_description" name="fk_hero_type_description_language" onDelete="none" onUpdate="none">
             <option key="foreignSchemaName" value="i18n"/>
             <option key="exported" value="true"/>
             <reference foreign="lang" local="id"/>
         </foreign-key>
-        <foreign-key foreignTable="item_model_description" name="FK_item_model_description_language" onDelete="none" onUpdate="none">
+        <foreign-key foreignTable="item_model_description" name="fk_item_model_description_language" onDelete="none" onUpdate="none">
             <option key="foreignSchemaName" value="i18n"/>
             <option key="exported" value="true"/>
             <reference foreign="lang" local="id"/>
         </foreign-key>
-        <foreign-key foreignTable="mission_description" name="FK_mission_description_language" onDelete="none" onUpdate="none">
+        <foreign-key foreignTable="mission_description" name="fk_mission_description_language" onDelete="none" onUpdate="none">
             <option key="foreignSchemaName" value="i18n"/>
             <option key="exported" value="true"/>
             <reference foreign="lang" local="id"/>
         </foreign-key>
-        <foreign-key foreignTable="skill_description" name="FK_skill_model_descirption_language" onDelete="none" onUpdate="none">
+        <foreign-key foreignTable="skill_description" name="fk_skill_model_descirption_language" onDelete="none" onUpdate="none">
             <option key="foreignSchemaName" value="i18n"/>
             <option key="exported" value="true"/>
             <reference foreign="lang" local="id"/>
         </foreign-key>
-        <foreign-key foreignTable="specialization_description" name="FK_specialization_type_desc_l_language" onDelete="none" onUpdate="none">
+        <foreign-key foreignTable="specialization_description" name="fk_specialization_type_desc_l_language" onDelete="none" onUpdate="none">
             <option key="foreignSchemaName" value="i18n"/>
             <option key="exported" value="true"/>
             <reference foreign="lang" local="id"/>
         </foreign-key>
-        <foreign-key foreignTable="trait_description" name="FK_trait_model_description_language" onDelete="none" onUpdate="none">
+        <foreign-key foreignTable="trait_description" name="fk_trait_model_description_language" onDelete="none" onUpdate="none">
             <option key="foreignSchemaName" value="i18n"/>
             <option key="exported" value="true"/>
             <reference foreign="lang" local="id"/>
         </foreign-key>
-        <unique name="PK_m_language">
+        <unique name="pk_m_language">
             <unique-column name="id"/>
         </unique>
     </table>
@@ -897,23 +955,23 @@
         <column name="mission" primaryKey="false" required="true" scale="0" size="19" type="-5,int8"/>
         <column name="lang" primaryKey="false" required="true" scale="0" size="2" type="1,bpchar"/>
         <column name="value" primaryKey="false" required="true" scale="0" size="2147483647" type="12,text"/>
-        <foreign-key foreignTable="language" name="FK_mission_description_language" onDelete="none" onUpdate="none">
+        <foreign-key foreignTable="language" name="fk_mission_description_language" onDelete="none" onUpdate="none">
             <option key="foreignSchemaName" value="i18n"/>
             <option key="exported" value="false"/>
             <reference foreign="id" local="lang"/>
         </foreign-key>
-        <foreign-key foreignTable="mission" name="FK_mission_description_mission" onDelete="none" onUpdate="none">
+        <foreign-key foreignTable="mission" name="fk_mission_description_mission" onDelete="none" onUpdate="none">
             <option key="foreignSchemaName" value="model"/>
             <option key="exported" value="false"/>
             <reference foreign="id" local="mission"/>
         </foreign-key>
-        <unique name="PK_mission_description">
+        <unique name="pk_mission_description">
             <unique-column name="id"/>
         </unique>
-        <index name="IXFK_mission_description_language">
+        <index name="ixfk_mission_description_language">
             <index-column name="lang"/>
         </index>
-        <index name="IXFK_mission_description_mission">
+        <index name="ixfk_mission_description_mission">
             <index-column name="mission"/>
         </index>
     </table>
@@ -922,23 +980,23 @@
         <column name="skill" primaryKey="false" required="true" scale="0" size="19" type="-5,int8"/>
         <column name="lang" primaryKey="false" required="true" scale="0" size="2" type="1,bpchar"/>
         <column name="value" primaryKey="false" required="true" scale="0" size="2147483647" type="12,text"/>
-        <foreign-key foreignTable="language" name="FK_skill_model_descirption_language" onDelete="none" onUpdate="none">
+        <foreign-key foreignTable="language" name="fk_skill_model_descirption_language" onDelete="none" onUpdate="none">
             <option key="foreignSchemaName" value="i18n"/>
             <option key="exported" value="false"/>
             <reference foreign="id" local="lang"/>
         </foreign-key>
-        <foreign-key foreignTable="skill" name="FK_skill_model_descirption_skill_model" onDelete="none" onUpdate="none">
+        <foreign-key foreignTable="skill" name="fk_skill_model_descirption_skill_model" onDelete="none" onUpdate="none">
             <option key="foreignSchemaName" value="model"/>
             <option key="exported" value="false"/>
             <reference foreign="id" local="skill"/>
         </foreign-key>
-        <unique name="PK_skill_model_descirption">
+        <unique name="pk_skill_model_descirption">
             <unique-column name="id"/>
         </unique>
-        <index name="IXFK_skill_model_descirption_language">
+        <index name="ixfk_skill_model_descirption_language">
             <index-column name="lang"/>
         </index>
-        <index name="IXFK_skill_model_descirption_skill_model">
+        <index name="ixfk_skill_model_descirption_skill_model">
             <index-column name="skill"/>
         </index>
     </table>
@@ -947,23 +1005,23 @@
         <column name="seeker_specialization" primaryKey="false" required="true" scale="0" size="19" type="-5,int8"/>
         <column name="lang" primaryKey="false" required="true" scale="0" size="2" type="1,bpchar"/>
         <column name="value" primaryKey="false" required="true" scale="0" size="2147483647" type="12,text"/>
-        <foreign-key foreignTable="language" name="FK_specialization_type_desc_l_language" onDelete="none" onUpdate="none">
+        <foreign-key foreignTable="language" name="fk_specialization_type_desc_l_language" onDelete="none" onUpdate="none">
             <option key="foreignSchemaName" value="i18n"/>
             <option key="exported" value="false"/>
             <reference foreign="id" local="lang"/>
         </foreign-key>
-        <foreign-key foreignTable="seeker_specialization" name="FK_specialization_desc_seeker_specialization" onDelete="none" onUpdate="none">
+        <foreign-key foreignTable="seeker_specialization" name="fk_specialization_desc_seeker_specialization" onDelete="none" onUpdate="none">
             <option key="foreignSchemaName" value="model"/>
             <option key="exported" value="false"/>
             <reference foreign="id" local="seeker_specialization"/>
         </foreign-key>
-        <unique name="PK_specialization_type_desc">
+        <unique name="pk_specialization_type_desc">
             <unique-column name="id"/>
         </unique>
-        <index name="IXFK_specialization_type_desc_l_language">
+        <index name="ixfk_specialization_type_desc_l_language">
             <index-column name="lang"/>
         </index>
-        <index name="IXFK_specialization_type_desc_specialization_type">
+        <index name="ixfk_specialization_type_desc_specialization_type">
             <index-column name="seeker_specialization"/>
         </index>
     </table>
@@ -972,23 +1030,23 @@
         <column name="trait" primaryKey="false" required="true" scale="0" size="19" type="-5,int8"/>
         <column name="lang" primaryKey="false" required="true" scale="0" size="2" type="1,bpchar"/>
         <column name="value" primaryKey="false" required="true" scale="0" size="2147483647" type="12,text"/>
-        <foreign-key foreignTable="language" name="FK_trait_model_description_language" onDelete="none" onUpdate="none">
+        <foreign-key foreignTable="language" name="fk_trait_model_description_language" onDelete="none" onUpdate="none">
             <option key="foreignSchemaName" value="i18n"/>
             <option key="exported" value="false"/>
             <reference foreign="id" local="lang"/>
         </foreign-key>
-        <foreign-key foreignTable="trait" name="FK_trait_model_description_trait_model" onDelete="none" onUpdate="none">
+        <foreign-key foreignTable="trait" name="fk_trait_model_description_trait_model" onDelete="none" onUpdate="none">
             <option key="foreignSchemaName" value="model"/>
             <option key="exported" value="false"/>
             <reference foreign="id" local="trait"/>
         </foreign-key>
-        <unique name="PK_trait_model_description">
+        <unique name="pk_trait_model_description">
             <unique-column name="id"/>
         </unique>
-        <index name="IXFK_trait_model_description_language">
+        <index name="ixfk_trait_model_description_language">
             <index-column name="lang"/>
         </index>
-        <index name="IXFK_trait_model_description_trait_model">
+        <index name="ixfk_trait_model_description_trait_model">
             <index-column name="trait"/>
         </index>
     </table>

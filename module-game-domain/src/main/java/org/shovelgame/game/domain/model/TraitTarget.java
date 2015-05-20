@@ -2,7 +2,6 @@ package org.shovelgame.game.domain.model;
 import javax.persistence.Column;
 import javax.persistence.Enumerated;
 import javax.validation.constraints.NotNull;
-
 import org.shovelgame.game.domain.enumeration.Position;
 import org.springframework.roo.addon.dbre.RooDbManaged;
 import org.springframework.roo.addon.javabean.RooJavaBean;

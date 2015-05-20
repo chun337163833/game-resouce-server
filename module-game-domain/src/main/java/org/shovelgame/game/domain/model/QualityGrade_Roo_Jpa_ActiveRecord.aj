@@ -4,10 +4,8 @@
 package org.shovelgame.game.domain.model;
 
 import java.util.List;
-
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-
 import org.shovelgame.game.domain.enumeration.Grade;
 import org.shovelgame.game.domain.model.QualityGrade;
 import org.springframework.transaction.annotation.Transactional;

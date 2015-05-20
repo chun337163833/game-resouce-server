@@ -10,6 +10,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
 import org.shovelgame.game.domain.data.Minion;
+import org.shovelgame.game.domain.data.Player;
 import org.shovelgame.game.domain.data.Team;
 import org.shovelgame.game.domain.model.MinionModel;
 
@@ -25,11 +26,12 @@ privileged aspect Minion_Roo_DbManaged {
     private Set<Team> Minion.teams2;
     
     @ManyToOne
+    @JoinColumn(name = "owner", referencedColumnName = "id")
+    private Player Minion.owner;
+    
+    @ManyToOne
     @JoinColumn(name = "minion_model", referencedColumnName = "id", nullable = false)
     private MinionModel Minion.minionModel;
-    
-    @Column(name = "owner")
-    private Long Minion.owner;
     
     @Column(name = "position", length = 50)
     private String Minion.position;
@@ -62,20 +64,20 @@ privileged aspect Minion_Roo_DbManaged {
         this.teams2 = teams2;
     }
     
+    public Player Minion.getOwner() {
+        return owner;
+    }
+    
+    public void Minion.setOwner(Player owner) {
+        this.owner = owner;
+    }
+    
     public MinionModel Minion.getMinionModel() {
         return minionModel;
     }
     
     public void Minion.setMinionModel(MinionModel minionModel) {
         this.minionModel = minionModel;
-    }
-    
-    public Long Minion.getOwner() {
-        return owner;
-    }
-    
-    public void Minion.setOwner(Long owner) {
-        this.owner = owner;
     }
     
     public String Minion.getPosition() {

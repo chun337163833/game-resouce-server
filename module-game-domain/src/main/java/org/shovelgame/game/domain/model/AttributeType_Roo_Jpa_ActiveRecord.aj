@@ -4,10 +4,8 @@
 package org.shovelgame.game.domain.model;
 
 import java.util.List;
-
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-
 import org.shovelgame.game.domain.enumeration.AttributeManagedType;
 import org.shovelgame.game.domain.model.AttributeType;
 import org.springframework.transaction.annotation.Transactional;

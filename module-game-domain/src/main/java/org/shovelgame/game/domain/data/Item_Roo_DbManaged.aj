@@ -7,10 +7,15 @@ import javax.persistence.Column;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import org.shovelgame.game.domain.data.Item;
+import org.shovelgame.game.domain.data.Player;
 import org.shovelgame.game.domain.data.Team;
 import org.shovelgame.game.domain.model.ItemModel;
 
 privileged aspect Item_Roo_DbManaged {
+    
+    @ManyToOne
+    @JoinColumn(name = "owner", referencedColumnName = "id")
+    private Player Item.owner;
     
     @ManyToOne
     @JoinColumn(name = "team", referencedColumnName = "id")
@@ -20,11 +25,16 @@ privileged aspect Item_Roo_DbManaged {
     @JoinColumn(name = "item_model", referencedColumnName = "id", nullable = false)
     private ItemModel Item.itemModel;
     
-    @Column(name = "owner")
-    private Long Item.owner;
-    
     @Column(name = "enchant")
     private Integer Item.enchant;
+    
+    public Player Item.getOwner() {
+        return owner;
+    }
+    
+    public void Item.setOwner(Player owner) {
+        this.owner = owner;
+    }
     
     public Team Item.getTeam() {
         return team;
@@ -40,14 +50,6 @@ privileged aspect Item_Roo_DbManaged {
     
     public void Item.setItemModel(ItemModel itemModel) {
         this.itemModel = itemModel;
-    }
-    
-    public Long Item.getOwner() {
-        return owner;
-    }
-    
-    public void Item.setOwner(Long owner) {
-        this.owner = owner;
     }
     
     public Integer Item.getEnchant() {

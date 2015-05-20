@@ -10,7 +10,7 @@ import org.shovelgame.game.domain.data.Item;
 privileged aspect Item_Roo_ToString {
     
     public String Item.toString() {
-        return new ReflectionToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE).setExcludeFieldNames("team", "itemModel").toString();
+        return new ReflectionToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE).setExcludeFieldNames("team", "itemModel", "owner").toString();
     }
     
 }

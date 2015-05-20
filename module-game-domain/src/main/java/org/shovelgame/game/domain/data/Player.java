@@ -1,12 +1,12 @@
-package org.shovelgame.game.domain.model;
+package org.shovelgame.game.domain.data;
 import org.springframework.roo.addon.dbre.RooDbManaged;
 import org.springframework.roo.addon.javabean.RooJavaBean;
 import org.springframework.roo.addon.jpa.activerecord.RooJpaActiveRecord;
 import org.springframework.roo.addon.tostring.RooToString;
 
 @RooJavaBean
+@RooJpaActiveRecord(versionField = "", table = "player", schema = "data")
 @RooDbManaged(automaticallyDelete = true)
-@RooToString(excludeFields = { "minionModel", "skill" })
-@RooJpaActiveRecord(identifierType = MinionSkillPK.class, versionField = "", table = "minion_skill", schema = "model")
-public class MinionSkill {
+@RooToString(excludeFields = { "items", "minions", "teams", "heroes" })
+public class Player {
 }
