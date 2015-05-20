@@ -1,7 +1,8 @@
 package org.shovelgame.web.spring.controller.web;
 
-import org.shovelgame.game.domain.enumaration.TraitAlgorithm;
+import org.shovelgame.game.domain.enumeration.TraitAlgorithm;
 import org.shovelgame.game.domain.model.Trait;
+import org.shovelgame.game.domain.model.TraitTarget;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 

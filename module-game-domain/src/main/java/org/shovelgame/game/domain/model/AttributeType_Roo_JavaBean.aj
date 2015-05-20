@@ -3,7 +3,7 @@
 
 package org.shovelgame.game.domain.model;
 
-import org.shovelgame.game.domain.enumaration.AttributeManagedType;
+import org.shovelgame.game.domain.enumeration.AttributeManagedType;
 import org.shovelgame.game.domain.model.AttributeType;
 
 privileged aspect AttributeType_Roo_JavaBean {

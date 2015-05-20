@@ -3,7 +3,8 @@ import javax.persistence.Column;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.validation.constraints.NotNull;
-import org.shovelgame.game.domain.enumaration.SeekerSpecializationType;
+
+import org.shovelgame.game.domain.enumeration.SeekerSpecializationType;
 import org.springframework.roo.addon.dbre.RooDbManaged;
 import org.springframework.roo.addon.javabean.RooJavaBean;
 import org.springframework.roo.addon.jpa.activerecord.RooJpaActiveRecord;

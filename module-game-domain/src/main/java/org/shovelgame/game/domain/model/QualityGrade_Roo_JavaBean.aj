@@ -3,7 +3,7 @@
 
 package org.shovelgame.game.domain.model;
 
-import org.shovelgame.game.domain.enumaration.Grade;
+import org.shovelgame.game.domain.enumeration.Grade;
 import org.shovelgame.game.domain.model.QualityGrade;
 
 privileged aspect QualityGrade_Roo_JavaBean {

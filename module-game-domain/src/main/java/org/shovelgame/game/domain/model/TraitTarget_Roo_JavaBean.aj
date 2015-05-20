@@ -3,7 +3,7 @@
 
 package org.shovelgame.game.domain.model;
 
-import org.shovelgame.game.domain.enumaration.Position;
+import org.shovelgame.game.domain.enumeration.Position;
 import org.shovelgame.game.domain.model.TraitTarget;
 
 privileged aspect TraitTarget_Roo_JavaBean {

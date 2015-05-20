@@ -1,4 +1,4 @@
-package org.shovelgame.game.domain.enumaration;
+package org.shovelgame.game.domain.enumeration;
 
 public enum AttributeManagedType {
 	

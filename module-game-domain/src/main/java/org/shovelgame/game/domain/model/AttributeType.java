@@ -3,7 +3,8 @@ import javax.persistence.Column;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.Id;
-import org.shovelgame.game.domain.enumaration.AttributeManagedType;
+
+import org.shovelgame.game.domain.enumeration.AttributeManagedType;
 import org.springframework.roo.addon.dbre.RooDbManaged;
 import org.springframework.roo.addon.javabean.RooJavaBean;
 import org.springframework.roo.addon.jpa.activerecord.RooJpaActiveRecord;

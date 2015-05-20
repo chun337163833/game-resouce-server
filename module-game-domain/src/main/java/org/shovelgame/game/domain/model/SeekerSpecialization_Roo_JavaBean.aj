@@ -3,7 +3,7 @@
 
 package org.shovelgame.game.domain.model;
 
-import org.shovelgame.game.domain.enumaration.SeekerSpecializationType;
+import org.shovelgame.game.domain.enumeration.SeekerSpecializationType;
 import org.shovelgame.game.domain.model.SeekerSpecialization;
 
 privileged aspect SeekerSpecialization_Roo_JavaBean {

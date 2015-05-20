@@ -3,7 +3,7 @@
 
 package org.shovelgame.game.domain.model;
 
-import org.shovelgame.game.domain.enumaration.HeroSpecializationType;
+import org.shovelgame.game.domain.enumeration.HeroSpecializationType;
 import org.shovelgame.game.domain.model.HeroSpecialization;
 
 privileged aspect HeroSpecialization_Roo_JavaBean {

@@ -3,8 +3,8 @@
 
 package org.shovelgame.game.domain.model;
 
-import org.shovelgame.game.domain.enumaration.SkillAlgorithm;
-import org.shovelgame.game.domain.enumaration.TraitAlgorithm;
+import org.shovelgame.game.domain.enumeration.SkillAlgorithm;
+import org.shovelgame.game.domain.enumeration.TraitAlgorithm;
 import org.shovelgame.game.domain.model.Trait;
 
 privileged aspect Trait_Roo_JavaBean {
