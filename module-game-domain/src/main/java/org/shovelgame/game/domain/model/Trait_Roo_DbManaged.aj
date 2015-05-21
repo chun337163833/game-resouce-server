@@ -12,7 +12,6 @@ import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
 import org.shovelgame.game.domain.i18n.TraitDescription;
 import org.shovelgame.game.domain.model.AttributeType;
-import org.shovelgame.game.domain.model.HeroTrait;
 import org.shovelgame.game.domain.model.MinionTrait;
 import org.shovelgame.game.domain.model.Trait;
 import org.shovelgame.game.domain.model.TraitTarget;
@@ -21,9 +20,6 @@ privileged aspect Trait_Roo_DbManaged {
     
     @OneToMany(mappedBy = "trait")
     private Set<TraitDescription> Trait.traitDescriptions;
-    
-    @OneToMany(mappedBy = "trait")
-    private Set<HeroTrait> Trait.heroTraits;
     
     @OneToMany(mappedBy = "trait")
     private Set<MinionTrait> Trait.minionTraits;
@@ -48,14 +44,6 @@ privileged aspect Trait_Roo_DbManaged {
     
     public void Trait.setTraitDescriptions(Set<TraitDescription> traitDescriptions) {
         this.traitDescriptions = traitDescriptions;
-    }
-    
-    public Set<HeroTrait> Trait.getHeroTraits() {
-        return heroTraits;
-    }
-    
-    public void Trait.setHeroTraits(Set<HeroTrait> heroTraits) {
-        this.heroTraits = heroTraits;
     }
     
     public Set<MinionTrait> Trait.getMinionTraits() {

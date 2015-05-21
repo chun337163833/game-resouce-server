@@ -13,7 +13,6 @@ import javax.validation.constraints.NotNull;
 import org.shovelgame.game.domain.i18n.SkillDescription;
 import org.shovelgame.game.domain.model.AttributeType;
 import org.shovelgame.game.domain.model.EnchantmentType;
-import org.shovelgame.game.domain.model.HeroSkill;
 import org.shovelgame.game.domain.model.MinionSkill;
 import org.shovelgame.game.domain.model.Skill;
 
@@ -24,9 +23,6 @@ privileged aspect Skill_Roo_DbManaged {
     
     @OneToMany(mappedBy = "skillModel")
     private Set<EnchantmentType> Skill.enchantmentTypes;
-    
-    @OneToMany(mappedBy = "skill")
-    private Set<HeroSkill> Skill.heroSkills;
     
     @OneToMany(mappedBy = "skill")
     private Set<MinionSkill> Skill.minionSkills;
@@ -63,14 +59,6 @@ privileged aspect Skill_Roo_DbManaged {
     
     public void Skill.setEnchantmentTypes(Set<EnchantmentType> enchantmentTypes) {
         this.enchantmentTypes = enchantmentTypes;
-    }
-    
-    public Set<HeroSkill> Skill.getHeroSkills() {
-        return heroSkills;
-    }
-    
-    public void Skill.setHeroSkills(Set<HeroSkill> heroSkills) {
-        this.heroSkills = heroSkills;
     }
     
     public Set<MinionSkill> Skill.getMinionSkills() {

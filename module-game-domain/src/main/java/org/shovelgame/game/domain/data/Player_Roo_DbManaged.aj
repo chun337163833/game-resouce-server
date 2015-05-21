@@ -5,16 +5,12 @@ package org.shovelgame.game.domain.data;
 
 import java.util.Set;
 import javax.persistence.OneToMany;
-import org.shovelgame.game.domain.data.Hero;
 import org.shovelgame.game.domain.data.Item;
 import org.shovelgame.game.domain.data.Minion;
 import org.shovelgame.game.domain.data.Player;
 import org.shovelgame.game.domain.data.Team;
 
 privileged aspect Player_Roo_DbManaged {
-    
-    @OneToMany(mappedBy = "owner")
-    private Set<Hero> Player.heroes;
     
     @OneToMany(mappedBy = "owner")
     private Set<Item> Player.items;
@@ -24,14 +20,6 @@ privileged aspect Player_Roo_DbManaged {
     
     @OneToMany(mappedBy = "owner")
     private Set<Team> Player.teams;
-    
-    public Set<Hero> Player.getHeroes() {
-        return heroes;
-    }
-    
-    public void Player.setHeroes(Set<Hero> heroes) {
-        this.heroes = heroes;
-    }
     
     public Set<Item> Player.getItems() {
         return items;

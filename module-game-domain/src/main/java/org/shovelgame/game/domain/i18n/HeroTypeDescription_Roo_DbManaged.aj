@@ -9,7 +9,6 @@ import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 import org.shovelgame.game.domain.i18n.HeroTypeDescription;
 import org.shovelgame.game.domain.i18n.Language;
-import org.shovelgame.game.domain.model.HeroSpecialization;
 
 privileged aspect HeroTypeDescription_Roo_DbManaged {
     
@@ -17,9 +16,9 @@ privileged aspect HeroTypeDescription_Roo_DbManaged {
     @JoinColumn(name = "lang", referencedColumnName = "id", nullable = false)
     private Language HeroTypeDescription.lang;
     
-    @ManyToOne
-    @JoinColumn(name = "hero_type", referencedColumnName = "id", nullable = false)
-    private HeroSpecialization HeroTypeDescription.heroType;
+    @Column(name = "hero_type")
+    @NotNull
+    private Long HeroTypeDescription.heroType;
     
     @Column(name = "value")
     @NotNull
@@ -33,11 +32,11 @@ privileged aspect HeroTypeDescription_Roo_DbManaged {
         this.lang = lang;
     }
     
-    public HeroSpecialization HeroTypeDescription.getHeroType() {
+    public Long HeroTypeDescription.getHeroType() {
         return heroType;
     }
     
-    public void HeroTypeDescription.setHeroType(HeroSpecialization heroType) {
+    public void HeroTypeDescription.setHeroType(Long heroType) {
         this.heroType = heroType;
     }
     

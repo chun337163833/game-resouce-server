@@ -25,6 +25,9 @@ privileged aspect Minion_Roo_DbManaged {
     @OneToMany(mappedBy = "minionBot")
     private Set<Team> Minion.teams2;
     
+    @OneToMany(mappedBy = "leader")
+    private Set<Team> Minion.teams3;
+    
     @ManyToOne
     @JoinColumn(name = "owner", referencedColumnName = "id")
     private Player Minion.owner;
@@ -62,6 +65,14 @@ privileged aspect Minion_Roo_DbManaged {
     
     public void Minion.setTeams2(Set<Team> teams2) {
         this.teams2 = teams2;
+    }
+    
+    public Set<Team> Minion.getTeams3() {
+        return teams3;
+    }
+    
+    public void Minion.setTeams3(Set<Team> teams3) {
+        this.teams3 = teams3;
     }
     
     public Player Minion.getOwner() {

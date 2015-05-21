@@ -10,15 +10,20 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
 import org.shovelgame.game.domain.data.Minion;
+import org.shovelgame.game.domain.model.MinionAttribute;
 import org.shovelgame.game.domain.model.MinionModel;
 import org.shovelgame.game.domain.model.MinionSkill;
 import org.shovelgame.game.domain.model.MinionTrait;
 import org.shovelgame.game.domain.model.QualityGrade;
+import org.shovelgame.game.domain.model.Specialization;
 
 privileged aspect MinionModel_Roo_DbManaged {
     
     @OneToMany(mappedBy = "minionModel")
     private Set<Minion> MinionModel.minions;
+    
+    @OneToMany(mappedBy = "minionModel")
+    private Set<MinionAttribute> MinionModel.minionAttributes;
     
     @OneToMany(mappedBy = "minionModel")
     private Set<MinionSkill> MinionModel.minionSkills;
@@ -29,6 +34,10 @@ privileged aspect MinionModel_Roo_DbManaged {
     @ManyToOne
     @JoinColumn(name = "quality_grade", referencedColumnName = "id", nullable = false)
     private QualityGrade MinionModel.qualityGrade;
+    
+    @ManyToOne
+    @JoinColumn(name = "specialization", referencedColumnName = "id", nullable = false)
+    private Specialization MinionModel.specialization;
     
     @Column(name = "name", length = 50)
     @NotNull
@@ -44,6 +53,14 @@ privileged aspect MinionModel_Roo_DbManaged {
     
     public void MinionModel.setMinions(Set<Minion> minions) {
         this.minions = minions;
+    }
+    
+    public Set<MinionAttribute> MinionModel.getMinionAttributes() {
+        return minionAttributes;
+    }
+    
+    public void MinionModel.setMinionAttributes(Set<MinionAttribute> minionAttributes) {
+        this.minionAttributes = minionAttributes;
     }
     
     public Set<MinionSkill> MinionModel.getMinionSkills() {
@@ -68,6 +85,14 @@ privileged aspect MinionModel_Roo_DbManaged {
     
     public void MinionModel.setQualityGrade(QualityGrade qualityGrade) {
         this.qualityGrade = qualityGrade;
+    }
+    
+    public Specialization MinionModel.getSpecialization() {
+        return specialization;
+    }
+    
+    public void MinionModel.setSpecialization(Specialization specialization) {
+        this.specialization = specialization;
     }
     
     public String MinionModel.getName() {

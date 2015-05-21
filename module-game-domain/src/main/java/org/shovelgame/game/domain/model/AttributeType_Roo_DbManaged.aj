@@ -8,7 +8,6 @@ import javax.persistence.OneToMany;
 import org.shovelgame.game.domain.i18n.AttributeTypeDescription;
 import org.shovelgame.game.domain.model.AttributeType;
 import org.shovelgame.game.domain.model.EnchantmentType;
-import org.shovelgame.game.domain.model.HeroAttribute;
 import org.shovelgame.game.domain.model.ItemModel;
 import org.shovelgame.game.domain.model.MinionAttribute;
 import org.shovelgame.game.domain.model.Skill;
@@ -21,9 +20,6 @@ privileged aspect AttributeType_Roo_DbManaged {
     
     @OneToMany(mappedBy = "attributeType")
     private Set<EnchantmentType> AttributeType.enchantmentTypes;
-    
-    @OneToMany(mappedBy = "type")
-    private Set<HeroAttribute> AttributeType.heroAttributes;
     
     @OneToMany(mappedBy = "attributeType")
     private Set<ItemModel> AttributeType.itemModels;
@@ -51,14 +47,6 @@ privileged aspect AttributeType_Roo_DbManaged {
     
     public void AttributeType.setEnchantmentTypes(Set<EnchantmentType> enchantmentTypes) {
         this.enchantmentTypes = enchantmentTypes;
-    }
-    
-    public Set<HeroAttribute> AttributeType.getHeroAttributes() {
-        return heroAttributes;
-    }
-    
-    public void AttributeType.setHeroAttributes(Set<HeroAttribute> heroAttributes) {
-        this.heroAttributes = heroAttributes;
     }
     
     public Set<ItemModel> AttributeType.getItemModels() {
