@@ -21,6 +21,7 @@
 	<modules>
 		<module>../abstract-parent</module>
 		<module>../module-game-domain</module>
+		<module>../game-engine</module>
 		<module>../module-game-web</module>
 		<module>../module-game-webservice</module>		
 		<module>../war-web</module>

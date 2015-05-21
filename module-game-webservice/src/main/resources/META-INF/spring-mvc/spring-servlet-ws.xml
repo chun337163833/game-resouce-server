@@ -14,6 +14,9 @@
         http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd">
     
     <import resource="classpath:META-INF/spring/property-files.xml" />
+    
+    <bean class="org.springframework.web.servlet.i18n.AcceptHeaderLocaleResolver" />
+    
 	<!-- browse module controllers -->
 	<context:component-scan base-package="org.shovelgame.atlant.web.spring.controller.ws" />
 	
@@ -21,11 +24,4 @@
 	<context:component-scan base-package="org.shovelgame.web.spring.ws.error.controller" />
 	
     <mvc:annotation-driven conversion-service="conversionService" validator="validatorFactory" />
-<!-- 		<mvc:message-converters> -->
-<!-- 			<bean id="jacksonHttpMessageConverter" -->
-<!--             class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter"> -->
-<!--             <property name="prettyPrint" value="${json.prettyPrint}" /> -->
-<!--         </bean> -->
-<!-- 		</mvc:message-converters> -->
-<!-- 	</mvc:annotation-driven> -->
 </beans>

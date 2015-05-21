@@ -714,8 +714,10 @@
         <column name="id" primaryKey="true" required="true" scale="0" size="19" type="-5,bigserial"/>
         <column name="alg" primaryKey="false" required="true" scale="0" size="50" type="12,varchar"/>
         <column name="attribute_type" primaryKey="false" required="false" scale="0" size="50" type="12,varchar"/>
-        <column name="power" primaryKey="false" required="false" scale="3" size="10" type="2,numeric"/>
         <column name="icon_name" primaryKey="false" required="true" scale="0" size="50" type="12,varchar"/>
+        <column name="power" primaryKey="false" required="false" scale="3" size="10" type="2,numeric"/>
+        <column name="cooldown" primaryKey="false" required="true" scale="0" size="10" type="4,int4"/>
+        <column name="ticks" primaryKey="false" required="false" scale="0" size="10" type="4,int4"/>
         <foreign-key foreignTable="attribute_type" name="fk_skill_model_attribute_type" onDelete="none" onUpdate="none">
             <option key="foreignSchemaName" value="model"/>
             <option key="exported" value="false"/>

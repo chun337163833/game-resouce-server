@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<artifactId>module-game-web</artifactId>
 	<packaging>jar</packaging>
-	<name>Web Module Game</name>
+	<name>Web application implementation</name>
 	<url>http://maven.apache.org</url>
 
 	<parent>

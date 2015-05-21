@@ -9,6 +9,7 @@
 		<class>org.shovelgame.game.domain.data.Item</class>
 		<class>org.shovelgame.game.domain.data.Minion</class>
 		<class>org.shovelgame.game.domain.data.Team</class>
+		<class>org.shovelgame.game.domain.data.Player</class>
 		<class>org.shovelgame.game.domain.i18n.AttributeTypeDescription</class>
 		<class>org.shovelgame.game.domain.i18n.EnchantmentTypeDescription</class>
 		<class>org.shovelgame.game.domain.i18n.HeroTypeDescription</class>

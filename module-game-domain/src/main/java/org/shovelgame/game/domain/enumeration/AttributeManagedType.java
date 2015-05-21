@@ -5,67 +5,67 @@ public enum AttributeManagedType {
 	/**
 	 * Total health of character. When health fall equal or under zero, character died.
 	 */
-	HEALTH, 
+	Health, 
 	
 	/**
 	 * Total mana of character which is used of most skills.
 	 */
-	MANA,
+	Mana,
 	
 	/**
-	 * Power of skills which are based on PHYSICAL_POWER
+	 * Power of skills which are based on PHYSICALPOWER
 	 */
-	PHYSICAL_POWER,
+	PhysicalPower,
 	
 	/**
-	 * Determine chance of critical strike for skills based on PHYSICAL_POWER
+	 * Determine chance of critical strike for skills based on PHYSICALPOWER
 	 */
-	PHYSICAL_CRIT_CHANCE,
+	PhysicalCritChance,
 	
 	/**
-	 * Decrease PHYSICAL_RESISTANCE of enemy before total damage is decreased.
+	 * Decrease PHYSICALRESISTANCE of enemy before total damage is decreased.
 	 */
-	PHYSICAL_PENETRATION,
+	PhysicalPenetration,
 	
 	/**
 	 * Decrease total calculated physical damage.
 	 */
-	PHYSICAL_RESISTANCE,
+	PhysicalResistance,
 	
 	/**
-	 * Decrease PHYSICAL_CRIT_CHANCE of enemy before is calculated.
+	 * Decrease PHYSICALCRITCHANCE of enemy before is calculated.
 	 */
-	PHYSICAL_CRIT_RESISTANCE,
+	PhysicalCritResistance,
 	
 	/**
-	 * Power of skills which are based on SPELL_POWER
+	 * Power of skills which are based on SPELLPOWER
 	 */
-	SPELL_POWER,
+	SpellPower,
 	
 	/**
-	 * Determine chance of critical strike for skills based on SPELL_POWER
+	 * Determine chance of critical strike for skills based on SPELLPOWER
 	 */
-	SPELL_CRIT_CHANCE,
+	SpellCritChance,
 	
 	/**
-	 * Decrease SPELL_RESISTANCE of enemy before total damage is decreased.
+	 * Decrease SPELLRESISTANCE of enemy before total damage is decreased.
 	 */
-	SPELL_PENETRATION,
+	SpellPenetration,
 	
 	/**
 	 * Decrease total calculated spell damage.
 	 */
-	SPELL_RESISTANCE,
+	SpellResistance,
 	
 	/**
-	 * Decrease SPELL_CRIT_CHANCE of enemy before is calculated.
+	 * Decrease SPELLCRITCHANCE of enemy before is calculated.
 	 */
-	SPELL_CRIT_RESISTANCE,
+	SpellCritResistance,
 	
 	/**
 	 * Increase total damage when strike is critical.
 	 */
-	CRITICAL_DAMAGE,
+	CriticalDamage,
 	
 	
 }

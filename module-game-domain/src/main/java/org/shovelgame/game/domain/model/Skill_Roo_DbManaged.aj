@@ -35,16 +35,19 @@ privileged aspect Skill_Roo_DbManaged {
     @JoinColumn(name = "attribute_type", referencedColumnName = "id")
     private AttributeType Skill.attributeType;
     
-    @Column(name = "alg", length = 50)
+    @Column(name = "icon_name", length = 50)
     @NotNull
-    private String Skill.alg;
+    private String Skill.iconName;
     
     @Column(name = "power", precision = 10, scale = 3)
     private BigDecimal Skill.power;
     
-    @Column(name = "icon_name", length = 50)
+    @Column(name = "cooldown")
     @NotNull
-    private String Skill.iconName;
+    private Integer Skill.cooldown;
+    
+    @Column(name = "ticks")
+    private Integer Skill.ticks;
     
     public Set<SkillDescription> Skill.getSkillDescriptions() {
         return skillDescriptions;
@@ -86,12 +89,12 @@ privileged aspect Skill_Roo_DbManaged {
         this.attributeType = attributeType;
     }
     
-    public String Skill.getAlg() {
-        return alg;
+    public String Skill.getIconName() {
+        return iconName;
     }
     
-    public void Skill.setAlg(String alg) {
-        this.alg = alg;
+    public void Skill.setIconName(String iconName) {
+        this.iconName = iconName;
     }
     
     public BigDecimal Skill.getPower() {
@@ -102,12 +105,20 @@ privileged aspect Skill_Roo_DbManaged {
         this.power = power;
     }
     
-    public String Skill.getIconName() {
-        return iconName;
+    public Integer Skill.getCooldown() {
+        return cooldown;
     }
     
-    public void Skill.setIconName(String iconName) {
-        this.iconName = iconName;
+    public void Skill.setCooldown(Integer cooldown) {
+        this.cooldown = cooldown;
+    }
+    
+    public Integer Skill.getTicks() {
+        return ticks;
+    }
+    
+    public void Skill.setTicks(Integer ticks) {
+        this.ticks = ticks;
     }
     
 }

@@ -10,15 +10,15 @@ import org.springframework.web.bind.annotation.RequestParam;
 @RequestMapping("/stomp")
 public class StompController {
 	
-	@Autowired
-	private StompService service;
-	
-	@RequestMapping
-	public String showView() {
-		return "test/stomp";
-	}
-	@RequestMapping("/send")
-	public void send(@RequestParam String message) {
-		this.service.sendTo(message);
-	}
+//	@Autowired
+//	private StompService service;
+//	
+//	@RequestMapping
+//	public String showView() {
+//		return "test/stomp";
+//	}
+//	@RequestMapping("/send")
+//	public void send(@RequestParam String message) {
+//		this.service.sendTo(message);
+//	}
 }

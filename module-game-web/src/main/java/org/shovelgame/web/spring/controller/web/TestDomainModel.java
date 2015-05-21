@@ -1,24 +1,25 @@
 package org.shovelgame.web.spring.controller.web;
 
-import org.shovelgame.game.domain.data.Hero;
-import org.shovelgame.game.domain.data.Player;
-import org.shovelgame.game.domain.enumeration.TraitAlgorithm;
-import org.shovelgame.game.domain.model.Trait;
+import java.util.List;
+
+import org.shovelgame.annotation.Logger;
+import org.shovelgame.game.domain.model.Skill;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 @RequestMapping("/test/")
+@Logger
 public class TestDomainModel {
 
 	@RequestMapping("domain")
 	public String hero() {
-		Trait trait = new Trait();
-		trait.setAlg(TraitAlgorithm.DECREASE);
-		trait.setIconName("supr");
-		trait.persist();
-		Hero hero = new Hero();
-		Player p = hero.getOwner();
+		try {
+			List<Skill> s = Skill.findAllSkills();
+			log.info(s.toString());
+		} catch (Exception e) {
+			log.error("", e);
+		}
 		return "index";
 	}
 
