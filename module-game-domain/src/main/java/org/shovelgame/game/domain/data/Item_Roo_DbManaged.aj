@@ -6,7 +6,6 @@ package org.shovelgame.game.domain.data;
 import javax.persistence.Column;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-
 import org.shovelgame.game.domain.data.Item;
 import org.shovelgame.game.domain.data.Player;
 import org.shovelgame.game.domain.data.Team;

@@ -34,6 +34,14 @@
 		<class>org.shovelgame.game.domain.model.Skill</class>
 		<class>org.shovelgame.game.domain.model.Trait</class>
 		<class>org.shovelgame.game.domain.model.TraitTarget</class>
+		
+		
+		<class>org.shovelgame.game.domain.model.reward.DiamondReward</class>
+		<class>org.shovelgame.game.domain.model.reward.GoldReward</class>
+		<class>org.shovelgame.game.domain.model.reward.ItemReward</class>
+		<class>org.shovelgame.game.domain.model.reward.MinionReward</class>
+		<class>org.shovelgame.game.domain.model.reward.SeekerReward</class>
+		
 		<exclude-unlisted-classes>true</exclude-unlisted-classes>
 	</persistence-unit>
 </persistence>

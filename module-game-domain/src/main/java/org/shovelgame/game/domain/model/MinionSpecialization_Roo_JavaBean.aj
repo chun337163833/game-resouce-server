@@ -3,16 +3,16 @@
 
 package org.shovelgame.game.domain.model;
 
-import org.shovelgame.game.domain.enumeration.SpecializationType;
+import org.shovelgame.game.domain.enumeration.MinionSpecializationType;
 import org.shovelgame.game.domain.model.MinionSpecialization;
 
 privileged aspect MinionSpecialization_Roo_JavaBean {
     
-    public SpecializationType MinionSpecialization.getType() {
+    public MinionSpecializationType MinionSpecialization.getType() {
         return this.type;
     }
     
-    public void MinionSpecialization.setType(SpecializationType type) {
+    public void MinionSpecialization.setType(MinionSpecializationType type) {
         this.type = type;
     }
     

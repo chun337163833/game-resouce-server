@@ -207,12 +207,12 @@ CREATE SEQUENCE model.mission_reward_id_seq INCREMENT 1 START 1;
 CREATE TABLE model.mission_reward ( 
 	id bigint DEFAULT nextval(('model.mission_reward_id_seq'::text)::regclass) NOT NULL,
 	dtype varchar(100) NOT NULL,
+	mission bigint NOT NULL,
 	minion bigint,
 	item bigint,
+	seeker bigint,
 	chance decimal(3,2),
-	mission bigint NOT NULL,
-	gold integer,
-	diamond integer
+	value integer
 );
 
 CREATE SEQUENCE data.player_id_seq INCREMENT 1 START 1;
@@ -368,6 +368,8 @@ CREATE INDEX IXFK_mission_description_language
 	ON i18n.mission_description (lang);
 CREATE INDEX IXFK_mission_description_mission
 	ON i18n.mission_description (mission);
+CREATE INDEX IXFK_mission_reward_seeker_model
+	ON model.mission_reward (seeker);
 CREATE INDEX IXFK_mission_reward_minion_model
 	ON model.mission_reward (minion);
 CREATE INDEX IXFK_mission_reward_item_model
@@ -613,6 +615,9 @@ ALTER TABLE i18n.mission_description ADD CONSTRAINT FK_mission_description_langu
 
 ALTER TABLE i18n.mission_description ADD CONSTRAINT FK_mission_description_mission 
 	FOREIGN KEY (mission) REFERENCES model.mission (id);
+
+ALTER TABLE model.mission_reward ADD CONSTRAINT FK_mission_reward_seeker_model 
+	FOREIGN KEY (seeker) REFERENCES model.seeker_model (id);
 
 ALTER TABLE model.mission_reward ADD CONSTRAINT FK_mission_reward_minion_model 
 	FOREIGN KEY (minion) REFERENCES model.minion_model (id);

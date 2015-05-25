@@ -3,7 +3,12 @@
 
 package org.shovelgame.game.domain.model;
 
+import java.math.BigDecimal;
+import java.util.Set;
 import org.shovelgame.game.domain.enumeration.ItemType;
+import org.shovelgame.game.domain.i18n.ItemModelDescription;
+import org.shovelgame.game.domain.model.AttributeType;
+import org.shovelgame.game.domain.model.ItemEnchantment;
 import org.shovelgame.game.domain.model.ItemModel;
 
 privileged aspect ItemModel_Roo_JavaBean {
@@ -14,6 +19,62 @@ privileged aspect ItemModel_Roo_JavaBean {
     
     public void ItemModel.setType(ItemType type) {
         this.type = type;
+    }
+    
+    public Set<ItemModelDescription> ItemModel.getItemModelDescriptions() {
+        return this.itemModelDescriptions;
+    }
+    
+    public void ItemModel.setItemModelDescriptions(Set<ItemModelDescription> itemModelDescriptions) {
+        this.itemModelDescriptions = itemModelDescriptions;
+    }
+    
+    public Set<ItemEnchantment> ItemModel.getItemEnchantments() {
+        return this.itemEnchantments;
+    }
+    
+    public void ItemModel.setItemEnchantments(Set<ItemEnchantment> itemEnchantments) {
+        this.itemEnchantments = itemEnchantments;
+    }
+    
+    public AttributeType ItemModel.getAttributeType() {
+        return this.attributeType;
+    }
+    
+    public void ItemModel.setAttributeType(AttributeType attributeType) {
+        this.attributeType = attributeType;
+    }
+    
+    public BigDecimal ItemModel.getValue() {
+        return this.value;
+    }
+    
+    public void ItemModel.setValue(BigDecimal value) {
+        this.value = value;
+    }
+    
+    public Integer ItemModel.getMaxEnchant() {
+        return this.maxEnchant;
+    }
+    
+    public void ItemModel.setMaxEnchant(Integer maxEnchant) {
+        this.maxEnchant = maxEnchant;
+    }
+    
+    public String ItemModel.getIconName() {
+        return this.iconName;
+    }
+    
+    public void ItemModel.setIconName(String iconName) {
+        this.iconName = iconName;
+    }
+    
+    public Integer ItemModel.getPrice() {
+        return this.price;
+    }
+    
+    public void ItemModel.setPrice(Integer price) {
+        this.price = price;
     }
     
 }

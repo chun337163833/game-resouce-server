@@ -4,6 +4,8 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+import javassist.Modifier;
+
 import javax.persistence.Table;
 
 import org.shovelgame.utils.ReflectionUtils;
@@ -20,6 +22,7 @@ public class Generator {
 			}
 		});
 		for(Class<?> cls: clss) {
+//			if(!Modifier.isAbstract(cls.getModifiers()))
 			System.out.println("<class>"+cls.getCanonicalName()+"</class>");
 		}
 	}

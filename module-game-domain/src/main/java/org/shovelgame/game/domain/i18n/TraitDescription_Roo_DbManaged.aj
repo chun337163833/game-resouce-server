@@ -7,7 +7,6 @@ import javax.persistence.Column;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
-
 import org.shovelgame.game.domain.i18n.Language;
 import org.shovelgame.game.domain.i18n.TraitDescription;
 import org.shovelgame.game.domain.model.Trait;

@@ -1,21 +1,18 @@
 package org.shovelgame.game.domain.model.reward;
 
+import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 
-import org.shovelgame.game.domain.model.MinionModel;
 import org.shovelgame.game.domain.model.MissionReward;
 import org.springframework.roo.addon.javabean.RooJavaBean;
 import org.springframework.roo.addon.jpa.activerecord.RooJpaActiveRecord;
 
 @RooJpaActiveRecord(versionField="")
 @RooJavaBean
-@DiscriminatorValue("Minion")
-public class MinionReward extends MissionReward {
+@DiscriminatorValue("Gold")
+public class GoldReward extends MissionReward {
 
-	@ManyToOne
-	@JoinColumn(name = "minion", referencedColumnName = "id")
-	private MinionModel minion;
-
+	@Column(name = "value")
+    private Integer golds;
+	
 }

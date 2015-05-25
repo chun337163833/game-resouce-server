@@ -478,12 +478,13 @@
     <table alias="model" name="mission_reward">
         <column name="id" primaryKey="true" required="true" scale="0" size="19" type="-5,bigserial"/>
         <column name="dtype" primaryKey="false" required="true" scale="0" size="100" type="12,varchar"/>
+        <column name="mission" primaryKey="false" required="true" scale="0" size="19" type="-5,int8"/>
         <column name="minion" primaryKey="false" required="false" scale="0" size="19" type="-5,int8"/>
         <column name="item" primaryKey="false" required="false" scale="0" size="19" type="-5,int8"/>
+        <column name="seeker" primaryKey="false" required="false" scale="0" size="19" type="-5,int8"/>
         <column name="chance" primaryKey="false" required="false" scale="2" size="3" type="2,numeric"/>
-        <column name="mission" primaryKey="false" required="true" scale="0" size="19" type="-5,int8"/>
-        <column name="gold" primaryKey="false" required="false" scale="0" size="10" type="4,int4"/>
-        <column name="diamond" primaryKey="false" required="false" scale="0" size="10" type="4,int4"/>
+        <column name="golds" primaryKey="false" required="false" scale="0" size="10" type="4,int4"/>
+        <column name="diamonds" primaryKey="false" required="false" scale="0" size="10" type="4,int4"/>
         <foreign-key foreignTable="item_model" name="fk_mission_reward_item_model" onDelete="none" onUpdate="none">
             <option key="foreignSchemaName" value="model"/>
             <option key="exported" value="false"/>
@@ -499,6 +500,11 @@
             <option key="exported" value="false"/>
             <reference foreign="id" local="mission"/>
         </foreign-key>
+        <foreign-key foreignTable="seeker_model" name="fk_mission_reward_seeker_model" onDelete="none" onUpdate="none">
+            <option key="foreignSchemaName" value="model"/>
+            <option key="exported" value="false"/>
+            <reference foreign="id" local="seeker"/>
+        </foreign-key>
         <unique name="pk_mission_reward">
             <unique-column name="id"/>
         </unique>
@@ -511,12 +517,20 @@
         <index name="ixfk_mission_reward_mission">
             <index-column name="mission"/>
         </index>
+        <index name="ixfk_mission_reward_seeker_model">
+            <index-column name="seeker"/>
+        </index>
     </table>
     <table alias="model" name="seeker_model">
         <column name="id" primaryKey="true" required="true" scale="0" size="19" type="-5,bigserial"/>
         <column name="name" primaryKey="false" required="true" scale="0" size="50" type="12,varchar"/>
         <column name="price" primaryKey="false" required="true" scale="0" size="10" type="4,int4"/>
         <column name="image_bundle_name" primaryKey="false" required="true" scale="0" size="50" type="12,varchar"/>
+        <foreign-key foreignTable="mission_reward" name="fk_mission_reward_seeker_model" onDelete="none" onUpdate="none">
+            <option key="foreignSchemaName" value="model"/>
+            <option key="exported" value="true"/>
+            <reference foreign="seeker" local="id"/>
+        </foreign-key>
         <foreign-key foreignTable="seeker_specialization" name="fk_seeker_specialization_seeker_model" onDelete="none" onUpdate="none">
             <option key="foreignSchemaName" value="model"/>
             <option key="exported" value="true"/>

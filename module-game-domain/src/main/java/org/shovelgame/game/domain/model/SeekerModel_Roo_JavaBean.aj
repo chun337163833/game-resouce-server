@@ -4,31 +4,13 @@
 package org.shovelgame.game.domain.model;
 
 import java.util.Set;
-import javax.persistence.Column;
-import javax.persistence.OneToMany;
-import javax.validation.constraints.NotNull;
 import org.shovelgame.game.domain.model.SeekerModel;
 import org.shovelgame.game.domain.model.SeekerSpecialization;
 
-privileged aspect SeekerModel_Roo_DbManaged {
-    
-    @OneToMany(mappedBy = "seekerModel")
-    private Set<SeekerSpecialization> SeekerModel.seekerSpecializations;
-    
-    @Column(name = "name", length = 50)
-    @NotNull
-    private String SeekerModel.name;
-    
-    @Column(name = "price")
-    @NotNull
-    private Integer SeekerModel.price;
-    
-    @Column(name = "image_bundle_name", length = 50)
-    @NotNull
-    private String SeekerModel.imageBundleName;
+privileged aspect SeekerModel_Roo_JavaBean {
     
     public Set<SeekerSpecialization> SeekerModel.getSeekerSpecializations() {
-        return seekerSpecializations;
+        return this.seekerSpecializations;
     }
     
     public void SeekerModel.setSeekerSpecializations(Set<SeekerSpecialization> seekerSpecializations) {
@@ -36,7 +18,7 @@ privileged aspect SeekerModel_Roo_DbManaged {
     }
     
     public String SeekerModel.getName() {
-        return name;
+        return this.name;
     }
     
     public void SeekerModel.setName(String name) {
@@ -44,7 +26,7 @@ privileged aspect SeekerModel_Roo_DbManaged {
     }
     
     public Integer SeekerModel.getPrice() {
-        return price;
+        return this.price;
     }
     
     public void SeekerModel.setPrice(Integer price) {
@@ -52,7 +34,7 @@ privileged aspect SeekerModel_Roo_DbManaged {
     }
     
     public String SeekerModel.getImageBundleName() {
-        return imageBundleName;
+        return this.imageBundleName;
     }
     
     public void SeekerModel.setImageBundleName(String imageBundleName) {

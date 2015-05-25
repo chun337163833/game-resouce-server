@@ -4,7 +4,6 @@
 package org.shovelgame.game.domain.model;
 
 import javax.persistence.Column;
-import javax.persistence.DiscriminatorColumn;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -22,8 +21,6 @@ privileged aspect MissionReward_Roo_Jpa_Entity {
     declare @type: MissionReward: @Table(schema = "model", name = "mission_reward");
     
     declare @type: MissionReward: @Inheritance(strategy = InheritanceType.SINGLE_TABLE);
-    
-    declare @type: MissionReward: @DiscriminatorColumn;
     
     @Id
     @SequenceGenerator(name = "missionRewardGen", sequenceName = "model.mission_reward_id_seq")

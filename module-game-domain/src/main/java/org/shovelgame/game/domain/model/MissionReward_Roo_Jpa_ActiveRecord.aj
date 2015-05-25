@@ -14,7 +14,7 @@ privileged aspect MissionReward_Roo_Jpa_ActiveRecord {
     @PersistenceContext
     transient EntityManager MissionReward.entityManager;
     
-    public static final List<String> MissionReward.fieldNames4OrderClauseFilter = java.util.Arrays.asList("");
+    public static final List<String> MissionReward.fieldNames4OrderClauseFilter = java.util.Arrays.asList("mission", "chance");
     
     public static final EntityManager MissionReward.entityManager() {
         EntityManager em = new MissionReward() {

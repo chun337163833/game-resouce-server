@@ -3,7 +3,7 @@ import javax.persistence.Column;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.validation.constraints.NotNull;
-import org.shovelgame.game.domain.enumeration.SpecializationType;
+import org.shovelgame.game.domain.enumeration.MinionSpecializationType;
 import org.springframework.roo.addon.dbre.RooDbManaged;
 import org.springframework.roo.addon.javabean.RooJavaBean;
 import org.springframework.roo.addon.jpa.activerecord.RooJpaActiveRecord;
@@ -18,5 +18,5 @@ public class MinionSpecialization {
     @Column(name = "type", length = 50, unique = true)
     @NotNull
     @Enumerated(EnumType.STRING)
-    private SpecializationType type;
+    private MinionSpecializationType type;
 }

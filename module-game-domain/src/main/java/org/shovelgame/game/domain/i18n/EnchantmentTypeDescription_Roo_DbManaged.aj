@@ -6,7 +6,6 @@ package org.shovelgame.game.domain.i18n;
 import javax.persistence.Column;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-
 import org.shovelgame.game.domain.i18n.EnchantmentTypeDescription;
 import org.shovelgame.game.domain.i18n.Language;
 import org.shovelgame.game.domain.model.EnchantmentType;
