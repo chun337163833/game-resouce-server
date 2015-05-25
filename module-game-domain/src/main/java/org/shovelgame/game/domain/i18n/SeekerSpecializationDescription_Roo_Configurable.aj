@@ -3,11 +3,11 @@
 
 package org.shovelgame.game.domain.i18n;
 
-import org.shovelgame.game.domain.i18n.SpecializationDescription;
+import org.shovelgame.game.domain.i18n.SeekerSpecializationDescription;
 import org.springframework.beans.factory.annotation.Configurable;
 
-privileged aspect SpecializationDescription_Roo_Configurable {
+privileged aspect SeekerSpecializationDescription_Roo_Configurable {
     
-    declare @type: SpecializationDescription: @Configurable;
+    declare @type: SeekerSpecializationDescription: @Configurable;
     
 }

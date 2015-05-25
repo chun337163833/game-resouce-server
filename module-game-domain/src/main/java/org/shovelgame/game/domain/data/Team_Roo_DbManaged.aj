@@ -22,6 +22,10 @@ privileged aspect Team_Roo_DbManaged {
     private Set<Mission> Team.missions;
     
     @ManyToOne
+    @JoinColumn(name = "leader", referencedColumnName = "id", nullable = false)
+    private Minion Team.leader;
+    
+    @ManyToOne
     @JoinColumn(name = "minion_top", referencedColumnName = "id", nullable = false)
     private Minion Team.minionTop;
     
@@ -32,10 +36,6 @@ privileged aspect Team_Roo_DbManaged {
     @ManyToOne
     @JoinColumn(name = "minion_bot", referencedColumnName = "id", nullable = false)
     private Minion Team.minionBot;
-    
-    @ManyToOne
-    @JoinColumn(name = "leader", referencedColumnName = "id", nullable = false)
-    private Minion Team.leader;
     
     @ManyToOne
     @JoinColumn(name = "owner", referencedColumnName = "id")
@@ -55,6 +55,14 @@ privileged aspect Team_Roo_DbManaged {
     
     public void Team.setMissions(Set<Mission> missions) {
         this.missions = missions;
+    }
+    
+    public Minion Team.getLeader() {
+        return leader;
+    }
+    
+    public void Team.setLeader(Minion leader) {
+        this.leader = leader;
     }
     
     public Minion Team.getMinionTop() {
@@ -79,14 +87,6 @@ privileged aspect Team_Roo_DbManaged {
     
     public void Team.setMinionBot(Minion minionBot) {
         this.minionBot = minionBot;
-    }
-    
-    public Minion Team.getLeader() {
-        return leader;
-    }
-    
-    public void Team.setLeader(Minion leader) {
-        this.leader = leader;
     }
     
     public Player Team.getOwner() {

@@ -16,16 +16,16 @@ import org.shovelgame.game.domain.model.MinionModel;
 
 privileged aspect Minion_Roo_DbManaged {
     
-    @OneToMany(mappedBy = "minionTop")
+    @OneToMany(mappedBy = "leader")
     private Set<Team> Minion.teams;
     
-    @OneToMany(mappedBy = "minionMid")
+    @OneToMany(mappedBy = "minionTop")
     private Set<Team> Minion.teams1;
     
-    @OneToMany(mappedBy = "minionBot")
+    @OneToMany(mappedBy = "minionMid")
     private Set<Team> Minion.teams2;
     
-    @OneToMany(mappedBy = "leader")
+    @OneToMany(mappedBy = "minionBot")
     private Set<Team> Minion.teams3;
     
     @ManyToOne

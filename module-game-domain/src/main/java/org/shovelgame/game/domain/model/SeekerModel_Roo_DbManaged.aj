@@ -5,11 +5,8 @@ package org.shovelgame.game.domain.model;
 
 import java.util.Set;
 import javax.persistence.Column;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
-import org.shovelgame.game.domain.model.QualityGrade;
 import org.shovelgame.game.domain.model.SeekerModel;
 import org.shovelgame.game.domain.model.SeekerSpecialization;
 
@@ -17,10 +14,6 @@ privileged aspect SeekerModel_Roo_DbManaged {
     
     @OneToMany(mappedBy = "seekerModel")
     private Set<SeekerSpecialization> SeekerModel.seekerSpecializations;
-    
-    @ManyToOne
-    @JoinColumn(name = "quality_grade", referencedColumnName = "id", nullable = false)
-    private QualityGrade SeekerModel.qualityGrade;
     
     @Column(name = "name", length = 50)
     @NotNull
@@ -40,14 +33,6 @@ privileged aspect SeekerModel_Roo_DbManaged {
     
     public void SeekerModel.setSeekerSpecializations(Set<SeekerSpecialization> seekerSpecializations) {
         this.seekerSpecializations = seekerSpecializations;
-    }
-    
-    public QualityGrade SeekerModel.getQualityGrade() {
-        return qualityGrade;
-    }
-    
-    public void SeekerModel.setQualityGrade(QualityGrade qualityGrade) {
-        this.qualityGrade = qualityGrade;
     }
     
     public String SeekerModel.getName() {

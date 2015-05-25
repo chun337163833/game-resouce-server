@@ -7,25 +7,25 @@ import java.util.Set;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import org.shovelgame.game.domain.i18n.SpecializationDescription;
+import org.shovelgame.game.domain.i18n.SeekerSpecializationDescription;
 import org.shovelgame.game.domain.model.SeekerModel;
 import org.shovelgame.game.domain.model.SeekerSpecialization;
 
 privileged aspect SeekerSpecialization_Roo_DbManaged {
     
     @OneToMany(mappedBy = "seekerSpecialization")
-    private Set<SpecializationDescription> SeekerSpecialization.specializationDescriptions;
+    private Set<SeekerSpecializationDescription> SeekerSpecialization.seekerSpecializationDescriptions;
     
     @ManyToOne
     @JoinColumn(name = "seeker_model", referencedColumnName = "id", nullable = false)
     private SeekerModel SeekerSpecialization.seekerModel;
     
-    public Set<SpecializationDescription> SeekerSpecialization.getSpecializationDescriptions() {
-        return specializationDescriptions;
+    public Set<SeekerSpecializationDescription> SeekerSpecialization.getSeekerSpecializationDescriptions() {
+        return seekerSpecializationDescriptions;
     }
     
-    public void SeekerSpecialization.setSpecializationDescriptions(Set<SpecializationDescription> specializationDescriptions) {
-        this.specializationDescriptions = specializationDescriptions;
+    public void SeekerSpecialization.setSeekerSpecializationDescriptions(Set<SeekerSpecializationDescription> seekerSpecializationDescriptions) {
+        this.seekerSpecializationDescriptions = seekerSpecializationDescriptions;
     }
     
     public SeekerModel SeekerSpecialization.getSeekerModel() {

@@ -9,7 +9,7 @@ import org.springframework.roo.addon.tostring.RooToString;
 @RooJavaBean
 @RooDbManaged(automaticallyDelete = true)
 @RooJpaActiveRecord(versionField = "", table = "language", schema = "i18n")
-@RooToString(excludeFields = { "attributeTypeDescriptions", "enchantmentTypeDescriptions", "heroTypeDescriptions", "itemModelDescriptions", "missionDescriptions", "skillDescriptions", "specializationDescriptions", "traitDescriptions", "minionSpecializationDescriptions" })
+@RooToString(excludeFields = { "attributeTypeDescriptions", "enchantmentTypeDescriptions", "heroTypeDescriptions", "itemModelDescriptions", "missionDescriptions", "skillDescriptions", "specializationDescriptions", "traitDescriptions", "minionSpecializationDescriptions", "seekerSpecializationDescriptions" })
 public class Language {
 
     @Id

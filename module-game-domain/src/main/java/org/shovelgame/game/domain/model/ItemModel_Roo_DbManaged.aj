@@ -15,7 +15,6 @@ import org.shovelgame.game.domain.i18n.ItemModelDescription;
 import org.shovelgame.game.domain.model.AttributeType;
 import org.shovelgame.game.domain.model.ItemEnchantment;
 import org.shovelgame.game.domain.model.ItemModel;
-import org.shovelgame.game.domain.model.QualityGrade;
 
 privileged aspect ItemModel_Roo_DbManaged {
     
@@ -31,10 +30,6 @@ privileged aspect ItemModel_Roo_DbManaged {
     @ManyToOne
     @JoinColumn(name = "attribute_type", referencedColumnName = "id", nullable = false)
     private AttributeType ItemModel.attributeType;
-    
-    @ManyToOne
-    @JoinColumn(name = "quality_grade", referencedColumnName = "id", nullable = false)
-    private QualityGrade ItemModel.qualityGrade;
     
     @Column(name = "value", precision = 10, scale = 5)
     @NotNull
@@ -77,14 +72,6 @@ privileged aspect ItemModel_Roo_DbManaged {
     
     public void ItemModel.setAttributeType(AttributeType attributeType) {
         this.attributeType = attributeType;
-    }
-    
-    public QualityGrade ItemModel.getQualityGrade() {
-        return qualityGrade;
-    }
-    
-    public void ItemModel.setQualityGrade(QualityGrade qualityGrade) {
-        this.qualityGrade = qualityGrade;
     }
     
     public BigDecimal ItemModel.getValue() {

@@ -13,9 +13,8 @@ import org.shovelgame.game.domain.data.Minion;
 import org.shovelgame.game.domain.model.MinionAttribute;
 import org.shovelgame.game.domain.model.MinionModel;
 import org.shovelgame.game.domain.model.MinionSkill;
+import org.shovelgame.game.domain.model.MinionSpecialization;
 import org.shovelgame.game.domain.model.MinionTrait;
-import org.shovelgame.game.domain.model.QualityGrade;
-import org.shovelgame.game.domain.model.Specialization;
 
 privileged aspect MinionModel_Roo_DbManaged {
     
@@ -32,12 +31,8 @@ privileged aspect MinionModel_Roo_DbManaged {
     private Set<MinionTrait> MinionModel.minionTraits;
     
     @ManyToOne
-    @JoinColumn(name = "quality_grade", referencedColumnName = "id", nullable = false)
-    private QualityGrade MinionModel.qualityGrade;
-    
-    @ManyToOne
     @JoinColumn(name = "specialization", referencedColumnName = "id", nullable = false)
-    private Specialization MinionModel.specialization;
+    private MinionSpecialization MinionModel.specialization;
     
     @Column(name = "name", length = 50)
     @NotNull
@@ -79,19 +74,11 @@ privileged aspect MinionModel_Roo_DbManaged {
         this.minionTraits = minionTraits;
     }
     
-    public QualityGrade MinionModel.getQualityGrade() {
-        return qualityGrade;
-    }
-    
-    public void MinionModel.setQualityGrade(QualityGrade qualityGrade) {
-        this.qualityGrade = qualityGrade;
-    }
-    
-    public Specialization MinionModel.getSpecialization() {
+    public MinionSpecialization MinionModel.getSpecialization() {
         return specialization;
     }
     
-    public void MinionModel.setSpecialization(Specialization specialization) {
+    public void MinionModel.setSpecialization(MinionSpecialization specialization) {
         this.specialization = specialization;
     }
     

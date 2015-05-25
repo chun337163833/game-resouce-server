@@ -9,7 +9,7 @@ import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 import org.shovelgame.game.domain.i18n.Language;
 import org.shovelgame.game.domain.i18n.MinionSpecializationDescription;
-import org.shovelgame.game.domain.model.Specialization;
+import org.shovelgame.game.domain.model.MinionSpecialization;
 
 privileged aspect MinionSpecializationDescription_Roo_DbManaged {
     
@@ -19,7 +19,7 @@ privileged aspect MinionSpecializationDescription_Roo_DbManaged {
     
     @ManyToOne
     @JoinColumn(name = "specialization", referencedColumnName = "id", nullable = false)
-    private Specialization MinionSpecializationDescription.specialization;
+    private MinionSpecialization MinionSpecializationDescription.specialization;
     
     @Column(name = "text")
     @NotNull
@@ -33,11 +33,11 @@ privileged aspect MinionSpecializationDescription_Roo_DbManaged {
         this.lang = lang;
     }
     
-    public Specialization MinionSpecializationDescription.getSpecialization() {
+    public MinionSpecialization MinionSpecializationDescription.getSpecialization() {
         return specialization;
     }
     
-    public void MinionSpecializationDescription.setSpecialization(Specialization specialization) {
+    public void MinionSpecializationDescription.setSpecialization(MinionSpecialization specialization) {
         this.specialization = specialization;
     }
     

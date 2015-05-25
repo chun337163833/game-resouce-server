@@ -3,11 +3,11 @@
 
 package org.shovelgame.game.domain.model;
 
-import org.shovelgame.game.domain.model.QualityGrade;
+import org.shovelgame.game.domain.model.MinionSpecialization;
 import org.springframework.beans.factory.annotation.Configurable;
 
-privileged aspect QualityGrade_Roo_Configurable {
+privileged aspect MinionSpecialization_Roo_Configurable {
     
-    declare @type: QualityGrade: @Configurable;
+    declare @type: MinionSpecialization: @Configurable;
     
 }

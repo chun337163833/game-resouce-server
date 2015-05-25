@@ -8,44 +8,44 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 import org.shovelgame.game.domain.i18n.Language;
-import org.shovelgame.game.domain.i18n.SpecializationDescription;
+import org.shovelgame.game.domain.i18n.SeekerSpecializationDescription;
 import org.shovelgame.game.domain.model.SeekerSpecialization;
 
-privileged aspect SpecializationDescription_Roo_DbManaged {
+privileged aspect SeekerSpecializationDescription_Roo_DbManaged {
     
     @ManyToOne
     @JoinColumn(name = "lang", referencedColumnName = "id", nullable = false)
-    private Language SpecializationDescription.lang;
+    private Language SeekerSpecializationDescription.lang;
     
     @ManyToOne
     @JoinColumn(name = "seeker_specialization", referencedColumnName = "id", nullable = false)
-    private SeekerSpecialization SpecializationDescription.seekerSpecialization;
+    private SeekerSpecialization SeekerSpecializationDescription.seekerSpecialization;
     
     @Column(name = "value")
     @NotNull
-    private String SpecializationDescription.value;
+    private String SeekerSpecializationDescription.value;
     
-    public Language SpecializationDescription.getLang() {
+    public Language SeekerSpecializationDescription.getLang() {
         return lang;
     }
     
-    public void SpecializationDescription.setLang(Language lang) {
+    public void SeekerSpecializationDescription.setLang(Language lang) {
         this.lang = lang;
     }
     
-    public SeekerSpecialization SpecializationDescription.getSeekerSpecialization() {
+    public SeekerSpecialization SeekerSpecializationDescription.getSeekerSpecialization() {
         return seekerSpecialization;
     }
     
-    public void SpecializationDescription.setSeekerSpecialization(SeekerSpecialization seekerSpecialization) {
+    public void SeekerSpecializationDescription.setSeekerSpecialization(SeekerSpecialization seekerSpecialization) {
         this.seekerSpecialization = seekerSpecialization;
     }
     
-    public String SpecializationDescription.getValue() {
+    public String SeekerSpecializationDescription.getValue() {
         return value;
     }
     
-    public void SpecializationDescription.setValue(String value) {
+    public void SeekerSpecializationDescription.setValue(String value) {
         this.value = value;
     }
     

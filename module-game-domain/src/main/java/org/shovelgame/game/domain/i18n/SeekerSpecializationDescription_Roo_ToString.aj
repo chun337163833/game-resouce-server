@@ -5,11 +5,11 @@ package org.shovelgame.game.domain.i18n;
 
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
-import org.shovelgame.game.domain.i18n.SpecializationDescription;
+import org.shovelgame.game.domain.i18n.SeekerSpecializationDescription;
 
-privileged aspect SpecializationDescription_Roo_ToString {
+privileged aspect SeekerSpecializationDescription_Roo_ToString {
     
-    public String SpecializationDescription.toString() {
+    public String SeekerSpecializationDescription.toString() {
         return new ReflectionToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE).setExcludeFieldNames("lang", "seekerSpecialization").toString();
     }
     

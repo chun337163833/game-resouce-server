@@ -5,12 +5,12 @@ package org.shovelgame.game.domain.model;
 
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
-import org.shovelgame.game.domain.model.QualityGrade;
+import org.shovelgame.game.domain.model.MinionSpecialization;
 
-privileged aspect QualityGrade_Roo_ToString {
+privileged aspect MinionSpecialization_Roo_ToString {
     
-    public String QualityGrade.toString() {
-        return new ReflectionToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE).setExcludeFieldNames("heroModels", "itemModels", "minionModels", "seekerModels").toString();
+    public String MinionSpecialization.toString() {
+        return new ReflectionToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE).setExcludeFieldNames("minionSpecializationDescriptions", "minionModels").toString();
     }
     
 }

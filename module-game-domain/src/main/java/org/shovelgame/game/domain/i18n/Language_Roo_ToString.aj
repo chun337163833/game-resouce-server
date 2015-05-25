@@ -10,7 +10,7 @@ import org.shovelgame.game.domain.i18n.Language;
 privileged aspect Language_Roo_ToString {
     
     public String Language.toString() {
-        return new ReflectionToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE).setExcludeFieldNames("attributeTypeDescriptions", "enchantmentTypeDescriptions", "heroTypeDescriptions", "itemModelDescriptions", "missionDescriptions", "skillDescriptions", "specializationDescriptions", "traitDescriptions", "minionSpecializationDescriptions").toString();
+        return new ReflectionToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE).setExcludeFieldNames("attributeTypeDescriptions", "enchantmentTypeDescriptions", "heroTypeDescriptions", "itemModelDescriptions", "missionDescriptions", "skillDescriptions", "specializationDescriptions", "traitDescriptions", "minionSpecializationDescriptions", "seekerSpecializationDescriptions").toString();
     }
     
 }
