@@ -10,7 +10,7 @@ import org.shovelgame.game.domain.model.ItemModel;
 privileged aspect ItemModel_Roo_ToString {
     
     public String ItemModel.toString() {
-        return new ReflectionToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE).setExcludeFieldNames("items", "itemModelDescriptions", "itemEnchantments", "attributeType", "qualityGrade").toString();
+        return new ReflectionToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE).setExcludeFieldNames("items", "itemModelDescriptions", "itemEnchantments", "attributeType", "qualityGrade", "missionRewardItems", "missionRewards").toString();
     }
     
 }

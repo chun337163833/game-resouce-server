@@ -11,8 +11,8 @@ import org.springframework.roo.addon.tostring.RooToString;
 
 @RooJavaBean
 @RooDbManaged(automaticallyDelete = true)
-@RooToString(excludeFields = { "items", "itemModelDescriptions", "itemEnchantments", "attributeType", "qualityGrade" })
 @RooJpaActiveRecord(versionField = "", table = "item_model", schema = "model", sequenceName = "model.item_model_id_seq")
+@RooToString(excludeFields = { "items", "itemModelDescriptions", "itemEnchantments", "attributeType", "qualityGrade", "missionRewardItems", "missionRewards" })
 public class ItemModel {
 
     @Column(name = "type", length = 10)

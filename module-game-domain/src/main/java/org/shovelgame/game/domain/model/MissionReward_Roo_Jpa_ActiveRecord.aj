@@ -17,7 +17,8 @@ privileged aspect MissionReward_Roo_Jpa_ActiveRecord {
     public static final List<String> MissionReward.fieldNames4OrderClauseFilter = java.util.Arrays.asList("");
     
     public static final EntityManager MissionReward.entityManager() {
-        EntityManager em = new MissionReward().entityManager;
+        EntityManager em = new MissionReward() {
+        }.entityManager;
         if (em == null) throw new IllegalStateException("Entity manager has not been injected (is the Spring Aspects JAR configured as an AJC/AJDT aspects library?)");
         return em;
     }

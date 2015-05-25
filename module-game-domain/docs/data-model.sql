@@ -110,7 +110,8 @@ CREATE TABLE model.item_model (
 	value decimal(10,5) DEFAULT 0 NOT NULL,
 	max_enchant integer DEFAULT 10,
 	type varchar(10) NOT NULL,
-	icon_name varchar(50) NOT NULL
+	icon_name varchar(50) NOT NULL,
+	price integer
 );
 
 CREATE SEQUENCE i18n.item_model_description_id_seq INCREMENT 1 START 1;
@@ -133,7 +134,6 @@ CREATE TABLE data.minion (
 	id bigint DEFAULT nextval(('data.minion_id_seq'::text)::regclass) NOT NULL,
 	minion_model bigint NOT NULL,
 	owner bigint,
-	position varchar(50),
 	level integer DEFAULT 1 NOT NULL
 );
 
@@ -151,8 +151,9 @@ CREATE SEQUENCE model.minion_model_id_seq INCREMENT 1 START 1;
 CREATE TABLE model.minion_model ( 
 	id bigint DEFAULT nextval(('model.minion_model_id_seq'::text)::regclass) NOT NULL,
 	name varchar(50) NOT NULL,
+	image_bundle_name varchar(50) NOT NULL,
 	specialization bigint NOT NULL,
-	image_bundle_name varchar(50) NOT NULL
+	price integer
 );
 
 CREATE TABLE model.minion_skill ( 
@@ -205,7 +206,13 @@ CREATE SEQUENCE model.mission_reward_id_seq INCREMENT 1 START 1;
 
 CREATE TABLE model.mission_reward ( 
 	id bigint DEFAULT nextval(('model.mission_reward_id_seq'::text)::regclass) NOT NULL,
-	mission bigint NOT NULL
+	dtype varchar(100) NOT NULL,
+	minion bigint,
+	item bigint,
+	chance decimal(3,2),
+	mission bigint NOT NULL,
+	gold integer,
+	diamond integer
 );
 
 CREATE SEQUENCE data.player_id_seq INCREMENT 1 START 1;
@@ -361,6 +368,10 @@ CREATE INDEX IXFK_mission_description_language
 	ON i18n.mission_description (lang);
 CREATE INDEX IXFK_mission_description_mission
 	ON i18n.mission_description (mission);
+CREATE INDEX IXFK_mission_reward_minion_model
+	ON model.mission_reward (minion);
+CREATE INDEX IXFK_mission_reward_item_model
+	ON model.mission_reward (item);
 CREATE INDEX IXFK_mission_reward_mission
 	ON model.mission_reward (mission);
 CREATE INDEX IXFK_seeker_specialization_specialization_type
@@ -602,6 +613,12 @@ ALTER TABLE i18n.mission_description ADD CONSTRAINT FK_mission_description_langu
 
 ALTER TABLE i18n.mission_description ADD CONSTRAINT FK_mission_description_mission 
 	FOREIGN KEY (mission) REFERENCES model.mission (id);
+
+ALTER TABLE model.mission_reward ADD CONSTRAINT FK_mission_reward_minion_model 
+	FOREIGN KEY (minion) REFERENCES model.minion_model (id);
+
+ALTER TABLE model.mission_reward ADD CONSTRAINT FK_mission_reward_item_model 
+	FOREIGN KEY (item) REFERENCES model.item_model (id);
 
 ALTER TABLE model.mission_reward ADD CONSTRAINT FK_mission_reward_mission 
 	FOREIGN KEY (mission) REFERENCES model.mission (id);

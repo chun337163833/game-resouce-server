@@ -15,6 +15,7 @@ import org.shovelgame.game.domain.i18n.ItemModelDescription;
 import org.shovelgame.game.domain.model.AttributeType;
 import org.shovelgame.game.domain.model.ItemEnchantment;
 import org.shovelgame.game.domain.model.ItemModel;
+import org.shovelgame.game.domain.model.MissionReward;
 
 privileged aspect ItemModel_Roo_DbManaged {
     
@@ -26,6 +27,9 @@ privileged aspect ItemModel_Roo_DbManaged {
     
     @OneToMany(mappedBy = "itemModel")
     private Set<ItemEnchantment> ItemModel.itemEnchantments;
+    
+    @OneToMany(mappedBy = "item")
+    private Set<MissionReward> ItemModel.missionRewards;
     
     @ManyToOne
     @JoinColumn(name = "attribute_type", referencedColumnName = "id", nullable = false)
@@ -41,6 +45,9 @@ privileged aspect ItemModel_Roo_DbManaged {
     @Column(name = "icon_name", length = 50)
     @NotNull
     private String ItemModel.iconName;
+    
+    @Column(name = "price")
+    private Integer ItemModel.price;
     
     public Set<Item> ItemModel.getItems() {
         return items;
@@ -64,6 +71,14 @@ privileged aspect ItemModel_Roo_DbManaged {
     
     public void ItemModel.setItemEnchantments(Set<ItemEnchantment> itemEnchantments) {
         this.itemEnchantments = itemEnchantments;
+    }
+    
+    public Set<MissionReward> ItemModel.getMissionRewards() {
+        return missionRewards;
+    }
+    
+    public void ItemModel.setMissionRewards(Set<MissionReward> missionRewards) {
+        this.missionRewards = missionRewards;
     }
     
     public AttributeType ItemModel.getAttributeType() {
@@ -96,6 +111,14 @@ privileged aspect ItemModel_Roo_DbManaged {
     
     public void ItemModel.setIconName(String iconName) {
         this.iconName = iconName;
+    }
+    
+    public Integer ItemModel.getPrice() {
+        return price;
+    }
+    
+    public void ItemModel.setPrice(Integer price) {
+        this.price = price;
     }
     
 }

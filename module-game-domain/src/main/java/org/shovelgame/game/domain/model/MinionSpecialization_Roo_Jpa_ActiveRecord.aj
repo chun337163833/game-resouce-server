@@ -14,7 +14,7 @@ privileged aspect MinionSpecialization_Roo_Jpa_ActiveRecord {
     @PersistenceContext
     transient EntityManager MinionSpecialization.entityManager;
     
-    public static final List<String> MinionSpecialization.fieldNames4OrderClauseFilter = java.util.Arrays.asList("");
+    public static final List<String> MinionSpecialization.fieldNames4OrderClauseFilter = java.util.Arrays.asList("type");
     
     public static final EntityManager MinionSpecialization.entityManager() {
         EntityManager em = new MinionSpecialization().entityManager;

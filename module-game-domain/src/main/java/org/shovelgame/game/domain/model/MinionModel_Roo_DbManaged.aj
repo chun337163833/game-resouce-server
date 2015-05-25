@@ -15,6 +15,7 @@ import org.shovelgame.game.domain.model.MinionModel;
 import org.shovelgame.game.domain.model.MinionSkill;
 import org.shovelgame.game.domain.model.MinionSpecialization;
 import org.shovelgame.game.domain.model.MinionTrait;
+import org.shovelgame.game.domain.model.MissionReward;
 
 privileged aspect MinionModel_Roo_DbManaged {
     
@@ -30,6 +31,9 @@ privileged aspect MinionModel_Roo_DbManaged {
     @OneToMany(mappedBy = "minionModel")
     private Set<MinionTrait> MinionModel.minionTraits;
     
+    @OneToMany(mappedBy = "minion")
+    private Set<MissionReward> MinionModel.missionRewards;
+    
     @ManyToOne
     @JoinColumn(name = "specialization", referencedColumnName = "id", nullable = false)
     private MinionSpecialization MinionModel.specialization;
@@ -41,6 +45,9 @@ privileged aspect MinionModel_Roo_DbManaged {
     @Column(name = "image_bundle_name", length = 50)
     @NotNull
     private String MinionModel.imageBundleName;
+    
+    @Column(name = "price")
+    private Integer MinionModel.price;
     
     public Set<Minion> MinionModel.getMinions() {
         return minions;
@@ -74,6 +81,14 @@ privileged aspect MinionModel_Roo_DbManaged {
         this.minionTraits = minionTraits;
     }
     
+    public Set<MissionReward> MinionModel.getMissionRewards() {
+        return missionRewards;
+    }
+    
+    public void MinionModel.setMissionRewards(Set<MissionReward> missionRewards) {
+        this.missionRewards = missionRewards;
+    }
+    
     public MinionSpecialization MinionModel.getSpecialization() {
         return specialization;
     }
@@ -96,6 +111,14 @@ privileged aspect MinionModel_Roo_DbManaged {
     
     public void MinionModel.setImageBundleName(String imageBundleName) {
         this.imageBundleName = imageBundleName;
+    }
+    
+    public Integer MinionModel.getPrice() {
+        return price;
+    }
+    
+    public void MinionModel.setPrice(Integer price) {
+        this.price = price;
     }
     
 }

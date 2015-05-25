@@ -46,7 +46,6 @@
         <column name="id" primaryKey="true" required="true" scale="0" size="19" type="-5,bigserial"/>
         <column name="minion_model" primaryKey="false" required="true" scale="0" size="19" type="-5,int8"/>
         <column name="owner" primaryKey="false" required="false" scale="0" size="19" type="-5,int8"/>
-        <column name="position" primaryKey="false" required="false" scale="0" size="50" type="12,varchar"/>
         <column name="level" primaryKey="false" required="true" scale="0" size="10" type="4,int4"/>
         <foreign-key foreignTable="player" name="fk_minion_player" onDelete="none" onUpdate="none">
             <option key="foreignSchemaName" value="data"/>
@@ -278,6 +277,7 @@
         <column name="max_enchant" primaryKey="false" required="false" scale="0" size="10" type="4,int4"/>
         <column name="type" primaryKey="false" required="true" scale="0" size="10" type="12,varchar"/>
         <column name="icon_name" primaryKey="false" required="true" scale="0" size="50" type="12,varchar"/>
+        <column name="price" primaryKey="false" required="false" scale="0" size="10" type="4,int4"/>
         <foreign-key foreignTable="attribute_type" name="fk_item_model_attribute_type" onDelete="none" onUpdate="none">
             <option key="foreignSchemaName" value="model"/>
             <option key="exported" value="false"/>
@@ -297,6 +297,11 @@
             <option key="foreignSchemaName" value="model"/>
             <option key="exported" value="true"/>
             <reference foreign="item_model" local="id"/>
+        </foreign-key>
+        <foreign-key foreignTable="mission_reward" name="fk_mission_reward_item_model" onDelete="none" onUpdate="none">
+            <option key="foreignSchemaName" value="model"/>
+            <option key="exported" value="true"/>
+            <reference foreign="item" local="id"/>
         </foreign-key>
         <unique name="pk_item_model">
             <unique-column name="id"/>
@@ -333,8 +338,9 @@
     <table alias="model" name="minion_model">
         <column name="id" primaryKey="true" required="true" scale="0" size="19" type="-5,bigserial"/>
         <column name="name" primaryKey="false" required="true" scale="0" size="50" type="12,varchar"/>
-        <column name="specialization" primaryKey="false" required="true" scale="0" size="19" type="-5,int8"/>
         <column name="image_bundle_name" primaryKey="false" required="true" scale="0" size="50" type="12,varchar"/>
+        <column name="specialization" primaryKey="false" required="true" scale="0" size="19" type="-5,int8"/>
+        <column name="price" primaryKey="false" required="false" scale="0" size="10" type="4,int4"/>
         <foreign-key foreignTable="minion_specialization" name="fk_minion_model_minion_specialization" onDelete="none" onUpdate="none">
             <option key="foreignSchemaName" value="model"/>
             <option key="exported" value="false"/>
@@ -359,6 +365,11 @@
             <option key="foreignSchemaName" value="model"/>
             <option key="exported" value="true"/>
             <reference foreign="minion_model" local="id"/>
+        </foreign-key>
+        <foreign-key foreignTable="mission_reward" name="fk_mission_reward_minion_model" onDelete="none" onUpdate="none">
+            <option key="foreignSchemaName" value="model"/>
+            <option key="exported" value="true"/>
+            <reference foreign="minion" local="id"/>
         </foreign-key>
         <unique name="pk_minion_model">
             <unique-column name="id"/>
@@ -466,7 +477,23 @@
     </table>
     <table alias="model" name="mission_reward">
         <column name="id" primaryKey="true" required="true" scale="0" size="19" type="-5,bigserial"/>
+        <column name="dtype" primaryKey="false" required="true" scale="0" size="100" type="12,varchar"/>
+        <column name="minion" primaryKey="false" required="false" scale="0" size="19" type="-5,int8"/>
+        <column name="item" primaryKey="false" required="false" scale="0" size="19" type="-5,int8"/>
+        <column name="chance" primaryKey="false" required="false" scale="2" size="3" type="2,numeric"/>
         <column name="mission" primaryKey="false" required="true" scale="0" size="19" type="-5,int8"/>
+        <column name="gold" primaryKey="false" required="false" scale="0" size="10" type="4,int4"/>
+        <column name="diamond" primaryKey="false" required="false" scale="0" size="10" type="4,int4"/>
+        <foreign-key foreignTable="item_model" name="fk_mission_reward_item_model" onDelete="none" onUpdate="none">
+            <option key="foreignSchemaName" value="model"/>
+            <option key="exported" value="false"/>
+            <reference foreign="id" local="item"/>
+        </foreign-key>
+        <foreign-key foreignTable="minion_model" name="fk_mission_reward_minion_model" onDelete="none" onUpdate="none">
+            <option key="foreignSchemaName" value="model"/>
+            <option key="exported" value="false"/>
+            <reference foreign="id" local="minion"/>
+        </foreign-key>
         <foreign-key foreignTable="mission" name="fk_mission_reward_mission" onDelete="none" onUpdate="none">
             <option key="foreignSchemaName" value="model"/>
             <option key="exported" value="false"/>
@@ -475,6 +502,12 @@
         <unique name="pk_mission_reward">
             <unique-column name="id"/>
         </unique>
+        <index name="ixfk_mission_reward_item_model">
+            <index-column name="item"/>
+        </index>
+        <index name="ixfk_mission_reward_minion_model">
+            <index-column name="minion"/>
+        </index>
         <index name="ixfk_mission_reward_mission">
             <index-column name="mission"/>
         </index>

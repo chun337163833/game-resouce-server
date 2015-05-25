@@ -4,11 +4,13 @@
 package org.shovelgame.game.domain.data;
 
 import java.util.Set;
+
 import javax.persistence.Column;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
+
 import org.shovelgame.game.domain.data.Minion;
 import org.shovelgame.game.domain.data.Player;
 import org.shovelgame.game.domain.data.Team;
@@ -35,9 +37,6 @@ privileged aspect Minion_Roo_DbManaged {
     @ManyToOne
     @JoinColumn(name = "minion_model", referencedColumnName = "id", nullable = false)
     private MinionModel Minion.minionModel;
-    
-    @Column(name = "position", length = 50)
-    private String Minion.position;
     
     @Column(name = "level")
     @NotNull
@@ -89,14 +88,6 @@ privileged aspect Minion_Roo_DbManaged {
     
     public void Minion.setMinionModel(MinionModel minionModel) {
         this.minionModel = minionModel;
-    }
-    
-    public String Minion.getPosition() {
-        return position;
-    }
-    
-    public void Minion.setPosition(String position) {
-        this.position = position;
     }
     
     public Integer Minion.getLevel() {

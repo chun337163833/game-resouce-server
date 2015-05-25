@@ -11,13 +11,12 @@
 		<class>org.shovelgame.game.domain.data.Team</class>
 		<class>org.shovelgame.game.domain.i18n.AttributeTypeDescription</class>
 		<class>org.shovelgame.game.domain.i18n.EnchantmentTypeDescription</class>
-		<class>org.shovelgame.game.domain.i18n.HeroTypeDescription</class>
 		<class>org.shovelgame.game.domain.i18n.ItemModelDescription</class>
 		<class>org.shovelgame.game.domain.i18n.Language</class>
 		<class>org.shovelgame.game.domain.i18n.MinionSpecializationDescription</class>
 		<class>org.shovelgame.game.domain.i18n.MissionDescription</class>
+		<class>org.shovelgame.game.domain.i18n.SeekerSpecializationDescription</class>
 		<class>org.shovelgame.game.domain.i18n.SkillDescription</class>
-		<class>org.shovelgame.game.domain.i18n.SpecializationDescription</class>
 		<class>org.shovelgame.game.domain.i18n.TraitDescription</class>
 		<class>org.shovelgame.game.domain.model.AttributeType</class>
 		<class>org.shovelgame.game.domain.model.EnchantmentType</class>
@@ -26,14 +25,13 @@
 		<class>org.shovelgame.game.domain.model.MinionAttribute</class>
 		<class>org.shovelgame.game.domain.model.MinionModel</class>
 		<class>org.shovelgame.game.domain.model.MinionSkill</class>
+		<class>org.shovelgame.game.domain.model.MinionSpecialization</class>
 		<class>org.shovelgame.game.domain.model.MinionTrait</class>
 		<class>org.shovelgame.game.domain.model.Mission</class>
 		<class>org.shovelgame.game.domain.model.MissionReward</class>
-		<class>org.shovelgame.game.domain.model.QualityGrade</class>
 		<class>org.shovelgame.game.domain.model.SeekerModel</class>
 		<class>org.shovelgame.game.domain.model.SeekerSpecialization</class>
 		<class>org.shovelgame.game.domain.model.Skill</class>
-		<class>org.shovelgame.game.domain.model.Specialization</class>
 		<class>org.shovelgame.game.domain.model.Trait</class>
 		<class>org.shovelgame.game.domain.model.TraitTarget</class>
 		<exclude-unlisted-classes>true</exclude-unlisted-classes>

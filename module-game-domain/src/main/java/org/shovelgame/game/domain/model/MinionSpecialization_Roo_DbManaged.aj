@@ -4,9 +4,7 @@
 package org.shovelgame.game.domain.model;
 
 import java.util.Set;
-import javax.persistence.Column;
 import javax.persistence.OneToMany;
-import javax.validation.constraints.NotNull;
 import org.shovelgame.game.domain.i18n.MinionSpecializationDescription;
 import org.shovelgame.game.domain.model.MinionModel;
 import org.shovelgame.game.domain.model.MinionSpecialization;
@@ -18,10 +16,6 @@ privileged aspect MinionSpecialization_Roo_DbManaged {
     
     @OneToMany(mappedBy = "specialization")
     private Set<MinionModel> MinionSpecialization.minionModels;
-    
-    @Column(name = "type", length = 50, unique = true)
-    @NotNull
-    private String MinionSpecialization.type;
     
     public Set<MinionSpecializationDescription> MinionSpecialization.getMinionSpecializationDescriptions() {
         return minionSpecializationDescriptions;
@@ -37,14 +31,6 @@ privileged aspect MinionSpecialization_Roo_DbManaged {
     
     public void MinionSpecialization.setMinionModels(Set<MinionModel> minionModels) {
         this.minionModels = minionModels;
-    }
-    
-    public String MinionSpecialization.getType() {
-        return type;
-    }
-    
-    public void MinionSpecialization.setType(String type) {
-        this.type = type;
     }
     
 }
