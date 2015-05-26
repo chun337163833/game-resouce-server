@@ -3,6 +3,7 @@ import javax.persistence.Column;
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
+import org.shovelgame.game.domain.data.Player;
 import org.springframework.roo.addon.dbre.RooDbManaged;
 import org.springframework.roo.addon.jpa.activerecord.RooJpaActiveRecord;
 import org.springframework.roo.addon.tostring.RooToString;
@@ -38,4 +39,6 @@ public abstract class MissionReward {
     public void setDtype(String dtype) {
         this.dtype = dtype;
     }
+
+    public abstract void claim(Player player);
 }

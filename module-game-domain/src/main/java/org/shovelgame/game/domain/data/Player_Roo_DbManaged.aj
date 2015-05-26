@@ -8,6 +8,7 @@ import javax.persistence.OneToMany;
 import org.shovelgame.game.domain.data.Item;
 import org.shovelgame.game.domain.data.Minion;
 import org.shovelgame.game.domain.data.Player;
+import org.shovelgame.game.domain.data.Seeker;
 import org.shovelgame.game.domain.data.Team;
 
 privileged aspect Player_Roo_DbManaged {
@@ -17,6 +18,9 @@ privileged aspect Player_Roo_DbManaged {
     
     @OneToMany(mappedBy = "owner")
     private Set<Minion> Player.minions;
+    
+    @OneToMany(mappedBy = "owner")
+    private Set<Seeker> Player.seekers;
     
     @OneToMany(mappedBy = "owner")
     private Set<Team> Player.teams;
@@ -35,6 +39,14 @@ privileged aspect Player_Roo_DbManaged {
     
     public void Player.setMinions(Set<Minion> minions) {
         this.minions = minions;
+    }
+    
+    public Set<Seeker> Player.getSeekers() {
+        return seekers;
+    }
+    
+    public void Player.setSeekers(Set<Seeker> seekers) {
+        this.seekers = seekers;
     }
     
     public Set<Team> Player.getTeams() {

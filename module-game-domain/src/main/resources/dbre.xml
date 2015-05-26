@@ -13,7 +13,7 @@
         <column name="item_model" primaryKey="false" required="true" scale="0" size="19" type="-5,int8"/>
         <column name="team" primaryKey="false" required="false" scale="0" size="19" type="-5,int8"/>
         <column name="owner" primaryKey="false" required="false" scale="0" size="19" type="-5,int8"/>
-        <column name="enchant" primaryKey="false" required="false" scale="0" size="10" type="4,int4"/>
+        <column name="enchant" primaryKey="false" required="true" scale="0" size="10" type="4,int4"/>
         <foreign-key foreignTable="player" name="fk_item_player" onDelete="none" onUpdate="none">
             <option key="foreignSchemaName" value="data"/>
             <option key="exported" value="false"/>
@@ -102,6 +102,11 @@
             <option key="exported" value="true"/>
             <reference foreign="owner" local="id"/>
         </foreign-key>
+        <foreign-key foreignTable="seeker" name="fk_seeker_player" onDelete="none" onUpdate="none">
+            <option key="foreignSchemaName" value="data"/>
+            <option key="exported" value="true"/>
+            <reference foreign="owner" local="id"/>
+        </foreign-key>
         <foreign-key foreignTable="team" name="fk_team_player" onDelete="none" onUpdate="none">
             <option key="foreignSchemaName" value="data"/>
             <option key="exported" value="true"/>
@@ -110,6 +115,31 @@
         <unique name="pk_player">
             <unique-column name="id"/>
         </unique>
+    </table>
+    <table alias="data" name="seeker">
+        <column name="id" primaryKey="true" required="true" scale="0" size="19" type="-5,bigserial"/>
+        <column name="seeker_model" primaryKey="false" required="true" scale="0" size="19" type="-5,int8"/>
+        <column name="owner" primaryKey="false" required="true" scale="0" size="19" type="-5,int8"/>
+        <column name="level" primaryKey="false" required="true" scale="0" size="10" type="4,int4"/>
+        <foreign-key foreignTable="player" name="fk_seeker_player" onDelete="none" onUpdate="none">
+            <option key="foreignSchemaName" value="data"/>
+            <option key="exported" value="false"/>
+            <reference foreign="id" local="owner"/>
+        </foreign-key>
+        <foreign-key foreignTable="seeker_model" name="fk_seeker_seeker_model" onDelete="none" onUpdate="none">
+            <option key="foreignSchemaName" value="model"/>
+            <option key="exported" value="false"/>
+            <reference foreign="id" local="seeker_model"/>
+        </foreign-key>
+        <unique name="pk_seeker">
+            <unique-column name="id"/>
+        </unique>
+        <index name="ixfk_seeker_player">
+            <index-column name="owner"/>
+        </index>
+        <index name="ixfk_seeker_seeker_model">
+            <index-column name="seeker_model"/>
+        </index>
     </table>
     <table alias="data" name="team">
         <column name="id" primaryKey="true" required="true" scale="0" size="19" type="-5,bigserial"/>
@@ -525,6 +555,11 @@
         <column name="name" primaryKey="false" required="true" scale="0" size="50" type="12,varchar"/>
         <column name="price" primaryKey="false" required="true" scale="0" size="10" type="4,int4"/>
         <column name="image_bundle_name" primaryKey="false" required="true" scale="0" size="50" type="12,varchar"/>
+        <foreign-key foreignTable="seeker" name="fk_seeker_seeker_model" onDelete="none" onUpdate="none">
+            <option key="foreignSchemaName" value="data"/>
+            <option key="exported" value="true"/>
+            <reference foreign="seeker_model" local="id"/>
+        </foreign-key>
         <foreign-key foreignTable="mission_reward" name="fk_mission_reward_seeker_model" onDelete="none" onUpdate="none">
             <option key="foreignSchemaName" value="model"/>
             <option key="exported" value="true"/>

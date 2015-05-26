@@ -9,7 +9,7 @@ import org.springframework.roo.addon.tostring.RooToString;
 @RooJavaBean
 @RooJpaActiveRecord(versionField = "", table = "seeker_model", schema = "model", sequenceName = "model.seeker_model_id_seq")
 @RooDbManaged(automaticallyDelete = true)
-@RooToString(excludeFields = { "missionRewards", "seekerSpecializations" })
+@RooToString(excludeFields = { "missionRewards", "seekerSpecializations", "seekers" })
 public class SeekerModel {
 
     @Transient

@@ -5,12 +5,12 @@ package org.shovelgame.game.domain.data;
 
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
-import org.shovelgame.game.domain.data.Player;
+import org.shovelgame.game.domain.data.Seeker;
 
-privileged aspect Player_Roo_ToString {
+privileged aspect Seeker_Roo_ToString {
     
-    public String Player.toString() {
-        return new ReflectionToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE).setExcludeFieldNames("items", "minions", "teams", "seekers").toString();
+    public String Seeker.toString() {
+        return new ReflectionToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE).setExcludeFieldNames("owner", "seekerModel").toString();
     }
     
 }

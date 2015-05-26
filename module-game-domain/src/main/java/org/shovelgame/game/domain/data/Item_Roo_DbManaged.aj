@@ -6,6 +6,7 @@ package org.shovelgame.game.domain.data;
 import javax.persistence.Column;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.validation.constraints.NotNull;
 import org.shovelgame.game.domain.data.Item;
 import org.shovelgame.game.domain.data.Player;
 import org.shovelgame.game.domain.data.Team;
@@ -26,6 +27,7 @@ privileged aspect Item_Roo_DbManaged {
     private ItemModel Item.itemModel;
     
     @Column(name = "enchant")
+    @NotNull
     private Integer Item.enchant;
     
     public Player Item.getOwner() {

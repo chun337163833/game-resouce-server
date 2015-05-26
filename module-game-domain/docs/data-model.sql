@@ -34,6 +34,8 @@ DROP TABLE IF EXISTS model.mission_reward CASCADE;
 DROP SEQUENCE IF EXISTS model.mission_reward_id_seq;
 DROP TABLE IF EXISTS data.player CASCADE;
 DROP SEQUENCE IF EXISTS data.player_id_seq;
+DROP TABLE IF EXISTS data.seeker CASCADE;
+DROP SEQUENCE IF EXISTS data.seeker_id_seq;
 DROP TABLE IF EXISTS model.seeker_model CASCADE;
 DROP SEQUENCE IF EXISTS model.seeker_model_id_seq;
 DROP TABLE IF EXISTS model.seeker_specialization CASCADE;
@@ -44,12 +46,16 @@ DROP TABLE IF EXISTS model.skill CASCADE;
 DROP SEQUENCE IF EXISTS model.skill_id_seq;
 DROP TABLE IF EXISTS i18n.skill_description CASCADE;
 DROP SEQUENCE IF EXISTS i18n.skill_description_id_seq;
+DROP TABLE IF EXISTS i18n.skill_name CASCADE;
+DROP SEQUENCE IF EXISTS i18n.skill_name_id_seq;
 DROP TABLE IF EXISTS data.team CASCADE;
 DROP SEQUENCE IF EXISTS data.team_id_seq;
 DROP TABLE IF EXISTS model.trait CASCADE;
 DROP SEQUENCE IF EXISTS model.trait_id_seq;
 DROP TABLE IF EXISTS i18n.trait_description CASCADE;
 DROP SEQUENCE IF EXISTS i18n.trait_description_id_seq;
+DROP TABLE IF EXISTS i18n.trait_name CASCADE;
+DROP SEQUENCE IF EXISTS i18n.trait_name_id_seq;
 DROP TABLE IF EXISTS model.trait_target CASCADE;
 DROP SEQUENCE IF EXISTS model.trait_target_id_seq;
 
@@ -90,7 +96,7 @@ CREATE TABLE data.item (
 	item_model bigint NOT NULL,
 	team bigint,
 	owner bigint,
-	enchant integer
+	enchant integer DEFAULT 0 NOT NULL
 );
 
 CREATE SEQUENCE model.item_enchantment_id_seq INCREMENT 1 START 1;
@@ -221,6 +227,15 @@ CREATE TABLE data.player (
 	id bigint DEFAULT nextval(('data.player_id_seq'::text)::regclass) NOT NULL
 );
 
+CREATE SEQUENCE data.seeker_id_seq INCREMENT 1 START 1;
+
+CREATE TABLE data.seeker ( 
+	id bigint DEFAULT nextval(('data.seeker_id_seq'::text)::regclass) NOT NULL,
+	seeker_model bigint NOT NULL,
+	owner bigint NOT NULL,
+	level integer DEFAULT 1 NOT NULL
+);
+
 CREATE SEQUENCE model.seeker_model_id_seq INCREMENT 1 START 1;
 
 CREATE TABLE model.seeker_model ( 
@@ -268,6 +283,15 @@ CREATE TABLE i18n.skill_description (
 	value text NOT NULL
 );
 
+CREATE SEQUENCE i18n.skill_name_id_seq INCREMENT 1 START 1;
+
+CREATE TABLE i18n.skill_name ( 
+	id bigint DEFAULT nextval(('i18n.skill_name_id_seq'::text)::regclass) NOT NULL,
+	skill bigint NOT NULL,
+	lang char(2) NOT NULL,
+	value text NOT NULL
+);
+
 CREATE SEQUENCE data.team_id_seq INCREMENT 1 START 1;
 
 CREATE TABLE data.team ( 
@@ -294,6 +318,15 @@ CREATE SEQUENCE i18n.trait_description_id_seq INCREMENT 1 START 1;
 
 CREATE TABLE i18n.trait_description ( 
 	id bigint DEFAULT nextval(('i18n.trait_description_id_seq'::text)::regclass) NOT NULL,
+	trait bigint NOT NULL,
+	lang char(2) NOT NULL,
+	value text NOT NULL
+);
+
+CREATE SEQUENCE i18n.trait_name_id_seq INCREMENT 1 START 1;
+
+CREATE TABLE i18n.trait_name ( 
+	id bigint DEFAULT nextval(('i18n.trait_name_id_seq'::text)::regclass) NOT NULL,
 	trait bigint NOT NULL,
 	lang char(2) NOT NULL,
 	value text NOT NULL
@@ -376,6 +409,10 @@ CREATE INDEX IXFK_mission_reward_item_model
 	ON model.mission_reward (item);
 CREATE INDEX IXFK_mission_reward_mission
 	ON model.mission_reward (mission);
+CREATE INDEX IXFK_seeker_seeker_model
+	ON data.seeker (seeker_model);
+CREATE INDEX IXFK_seeker_player
+	ON data.seeker (owner);
 CREATE INDEX IXFK_seeker_specialization_specialization_type
 	ON model.seeker_specialization (type);
 CREATE INDEX IXFK_seeker_specialization_seeker_model
@@ -390,6 +427,10 @@ CREATE INDEX IXFK_skill_model_descirption_skill_model
 	ON i18n.skill_description (skill);
 CREATE INDEX IXFK_skill_model_descirption_language
 	ON i18n.skill_description (lang);
+CREATE INDEX IXFK_skill_name_language
+	ON i18n.skill_name (lang);
+CREATE INDEX IXFK_skill_name_skill
+	ON i18n.skill_name (skill);
 CREATE INDEX IXFK_team_minion_04
 	ON data.team (leader);
 CREATE INDEX IXFK_team_hero
@@ -408,6 +449,10 @@ CREATE INDEX IXFK_trait_model_description_trait_model
 	ON i18n.trait_description (trait);
 CREATE INDEX IXFK_trait_model_description_language
 	ON i18n.trait_description (lang);
+CREATE INDEX IXFK_trait_name_trait
+	ON i18n.trait_name (trait);
+CREATE INDEX IXFK_trait_name_language
+	ON i18n.trait_name (lang);
 CREATE INDEX IXFK_trait_target_trait
 	ON model.trait_target (trait);
 ALTER TABLE model.attribute_type ADD CONSTRAINT PK_attribute_type 
@@ -490,6 +535,10 @@ ALTER TABLE data.player ADD CONSTRAINT PK_player
 	PRIMARY KEY (id);
 
 
+ALTER TABLE data.seeker ADD CONSTRAINT PK_seeker 
+	PRIMARY KEY (id);
+
+
 ALTER TABLE model.seeker_model ADD CONSTRAINT PK_seeker_model 
 	PRIMARY KEY (id);
 
@@ -510,6 +559,10 @@ ALTER TABLE i18n.skill_description ADD CONSTRAINT PK_skill_model_descirption
 	PRIMARY KEY (id);
 
 
+ALTER TABLE i18n.skill_name ADD CONSTRAINT PK_skill_name 
+	PRIMARY KEY (id);
+
+
 ALTER TABLE data.team ADD CONSTRAINT PK_team 
 	PRIMARY KEY (id);
 
@@ -519,6 +572,10 @@ ALTER TABLE model.trait ADD CONSTRAINT PK_trait_model
 
 
 ALTER TABLE i18n.trait_description ADD CONSTRAINT PK_trait_model_description 
+	PRIMARY KEY (id);
+
+
+ALTER TABLE i18n.trait_name ADD CONSTRAINT PK_trait_name 
 	PRIMARY KEY (id);
 
 
@@ -628,6 +685,12 @@ ALTER TABLE model.mission_reward ADD CONSTRAINT FK_mission_reward_item_model
 ALTER TABLE model.mission_reward ADD CONSTRAINT FK_mission_reward_mission 
 	FOREIGN KEY (mission) REFERENCES model.mission (id);
 
+ALTER TABLE data.seeker ADD CONSTRAINT FK_seeker_seeker_model 
+	FOREIGN KEY (seeker_model) REFERENCES model.seeker_model (id);
+
+ALTER TABLE data.seeker ADD CONSTRAINT FK_seeker_player 
+	FOREIGN KEY (owner) REFERENCES data.player (id);
+
 ALTER TABLE model.seeker_specialization ADD CONSTRAINT FK_seeker_specialization_seeker_model 
 	FOREIGN KEY (seeker_model) REFERENCES model.seeker_model (id);
 
@@ -645,6 +708,12 @@ ALTER TABLE i18n.skill_description ADD CONSTRAINT FK_skill_model_descirption_ski
 
 ALTER TABLE i18n.skill_description ADD CONSTRAINT FK_skill_model_descirption_language 
 	FOREIGN KEY (lang) REFERENCES i18n.language (id);
+
+ALTER TABLE i18n.skill_name ADD CONSTRAINT FK_skill_name_language 
+	FOREIGN KEY (lang) REFERENCES i18n.language (id);
+
+ALTER TABLE i18n.skill_name ADD CONSTRAINT FK_skill_name_skill 
+	FOREIGN KEY (skill) REFERENCES model.skill (id);
 
 ALTER TABLE data.team ADD CONSTRAINT FK_team_minion_04 
 	FOREIGN KEY (leader) REFERENCES data.minion (id)
@@ -669,6 +738,12 @@ ALTER TABLE i18n.trait_description ADD CONSTRAINT FK_trait_model_description_tra
 	FOREIGN KEY (trait) REFERENCES model.trait (id);
 
 ALTER TABLE i18n.trait_description ADD CONSTRAINT FK_trait_model_description_language 
+	FOREIGN KEY (lang) REFERENCES i18n.language (id);
+
+ALTER TABLE i18n.trait_name ADD CONSTRAINT FK_trait_name_trait 
+	FOREIGN KEY (trait) REFERENCES model.trait (id);
+
+ALTER TABLE i18n.trait_name ADD CONSTRAINT FK_trait_name_language 
 	FOREIGN KEY (lang) REFERENCES i18n.language (id);
 
 ALTER TABLE model.trait_target ADD CONSTRAINT FK_trait_target_trait 
