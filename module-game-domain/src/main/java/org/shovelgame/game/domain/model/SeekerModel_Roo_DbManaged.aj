@@ -31,6 +31,10 @@ privileged aspect SeekerModel_Roo_DbManaged {
     @NotNull
     private String SeekerModel.imageBundleName;
     
+    @Column(name = "rarity", length = 50)
+    @NotNull
+    private String SeekerModel.rarity;
+    
     public Set<Seeker> SeekerModel.getSeekers() {
         return seekers;
     }
@@ -69,6 +73,14 @@ privileged aspect SeekerModel_Roo_DbManaged {
     
     public void SeekerModel.setImageBundleName(String imageBundleName) {
         this.imageBundleName = imageBundleName;
+    }
+    
+    public String SeekerModel.getRarity() {
+        return rarity;
+    }
+    
+    public void SeekerModel.setRarity(String rarity) {
+        this.rarity = rarity;
     }
     
 }

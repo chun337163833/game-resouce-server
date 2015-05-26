@@ -45,6 +45,10 @@ privileged aspect ItemModel_Roo_DbManaged {
     @Column(name = "price")
     private Integer ItemModel.price;
     
+    @Column(name = "rarity", length = 50)
+    @NotNull
+    private String ItemModel.rarity;
+    
     public Set<Item> ItemModel.getItems() {
         return items;
     }
@@ -107,6 +111,14 @@ privileged aspect ItemModel_Roo_DbManaged {
     
     public void ItemModel.setPrice(Integer price) {
         this.price = price;
+    }
+    
+    public String ItemModel.getRarity() {
+        return rarity;
+    }
+    
+    public void ItemModel.setRarity(String rarity) {
+        this.rarity = rarity;
     }
     
 }
