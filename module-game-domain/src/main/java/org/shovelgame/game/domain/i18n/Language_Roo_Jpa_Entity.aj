@@ -3,7 +3,11 @@
 
 package org.shovelgame.game.domain.i18n;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.Table;
 import org.shovelgame.game.domain.i18n.Language;
 
@@ -12,5 +16,18 @@ privileged aspect Language_Roo_Jpa_Entity {
     declare @type: Language: @Entity;
     
     declare @type: Language: @Table(schema = "i18n", name = "language");
+    
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id", length = 2)
+    private String Language.id;
+    
+    public String Language.getId() {
+        return this.id;
+    }
+    
+    public void Language.setId(String id) {
+        this.id = id;
+    }
     
 }

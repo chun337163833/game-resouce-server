@@ -9,24 +9,24 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import org.shovelgame.game.domain.i18n.TraitDescription;
+import org.shovelgame.game.domain.i18n.SkillName;
 
-privileged aspect TraitDescription_Roo_Jpa_Entity {
+privileged aspect SkillName_Roo_Jpa_Entity {
     
-    declare @type: TraitDescription: @Entity;
+    declare @type: SkillName: @Entity;
     
-    declare @type: TraitDescription: @Table(schema = "i18n", name = "trait_description");
+    declare @type: SkillName: @Table(schema = "i18n", name = "skill_name");
     
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
-    private Long TraitDescription.id;
+    private Long SkillName.id;
     
-    public Long TraitDescription.getId() {
+    public Long SkillName.getId() {
         return this.id;
     }
     
-    public void TraitDescription.setId(Long id) {
+    public void SkillName.setId(Long id) {
         this.id = id;
     }
     

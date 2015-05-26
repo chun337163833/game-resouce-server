@@ -11,6 +11,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
 import org.shovelgame.game.domain.i18n.SkillDescription;
+import org.shovelgame.game.domain.i18n.SkillName;
 import org.shovelgame.game.domain.model.AttributeType;
 import org.shovelgame.game.domain.model.EnchantmentType;
 import org.shovelgame.game.domain.model.MinionSkill;
@@ -20,6 +21,9 @@ privileged aspect Skill_Roo_DbManaged {
     
     @OneToMany(mappedBy = "skill")
     private Set<SkillDescription> Skill.skillDescriptions;
+    
+    @OneToMany(mappedBy = "skill")
+    private Set<SkillName> Skill.skillNames;
     
     @OneToMany(mappedBy = "skillModel")
     private Set<EnchantmentType> Skill.enchantmentTypes;
@@ -51,6 +55,14 @@ privileged aspect Skill_Roo_DbManaged {
     
     public void Skill.setSkillDescriptions(Set<SkillDescription> skillDescriptions) {
         this.skillDescriptions = skillDescriptions;
+    }
+    
+    public Set<SkillName> Skill.getSkillNames() {
+        return skillNames;
+    }
+    
+    public void Skill.setSkillNames(Set<SkillName> skillNames) {
+        this.skillNames = skillNames;
     }
     
     public Set<EnchantmentType> Skill.getEnchantmentTypes() {

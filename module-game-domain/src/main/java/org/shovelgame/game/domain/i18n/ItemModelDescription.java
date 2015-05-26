@@ -5,8 +5,8 @@ import org.springframework.roo.addon.jpa.activerecord.RooJpaActiveRecord;
 import org.springframework.roo.addon.tostring.RooToString;
 
 @RooJavaBean
+@RooJpaActiveRecord(versionField = "", table = "item_model_description", schema = "i18n")
 @RooDbManaged(automaticallyDelete = true)
 @RooToString(excludeFields = { "lang", "itemModel" })
-@RooJpaActiveRecord(versionField = "", table = "item_model_description", schema = "i18n", sequenceName = "i18n.item_model_description_id_seq")
 public class ItemModelDescription {
 }

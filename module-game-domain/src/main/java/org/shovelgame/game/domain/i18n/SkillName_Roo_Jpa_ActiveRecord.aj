@@ -6,94 +6,94 @@ package org.shovelgame.game.domain.i18n;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import org.shovelgame.game.domain.i18n.Language;
+import org.shovelgame.game.domain.i18n.SkillName;
 import org.springframework.transaction.annotation.Transactional;
 
-privileged aspect Language_Roo_Jpa_ActiveRecord {
+privileged aspect SkillName_Roo_Jpa_ActiveRecord {
     
     @PersistenceContext
-    transient EntityManager Language.entityManager;
+    transient EntityManager SkillName.entityManager;
     
-    public static final List<String> Language.fieldNames4OrderClauseFilter = java.util.Arrays.asList("");
+    public static final List<String> SkillName.fieldNames4OrderClauseFilter = java.util.Arrays.asList("");
     
-    public static final EntityManager Language.entityManager() {
-        EntityManager em = new Language().entityManager;
+    public static final EntityManager SkillName.entityManager() {
+        EntityManager em = new SkillName().entityManager;
         if (em == null) throw new IllegalStateException("Entity manager has not been injected (is the Spring Aspects JAR configured as an AJC/AJDT aspects library?)");
         return em;
     }
     
-    public static long Language.countLanguages() {
-        return entityManager().createQuery("SELECT COUNT(o) FROM Language o", Long.class).getSingleResult();
+    public static long SkillName.countSkillNames() {
+        return entityManager().createQuery("SELECT COUNT(o) FROM SkillName o", Long.class).getSingleResult();
     }
     
-    public static List<Language> Language.findAllLanguages() {
-        return entityManager().createQuery("SELECT o FROM Language o", Language.class).getResultList();
+    public static List<SkillName> SkillName.findAllSkillNames() {
+        return entityManager().createQuery("SELECT o FROM SkillName o", SkillName.class).getResultList();
     }
     
-    public static List<Language> Language.findAllLanguages(String sortFieldName, String sortOrder) {
-        String jpaQuery = "SELECT o FROM Language o";
+    public static List<SkillName> SkillName.findAllSkillNames(String sortFieldName, String sortOrder) {
+        String jpaQuery = "SELECT o FROM SkillName o";
         if (fieldNames4OrderClauseFilter.contains(sortFieldName)) {
             jpaQuery = jpaQuery + " ORDER BY " + sortFieldName;
             if ("ASC".equalsIgnoreCase(sortOrder) || "DESC".equalsIgnoreCase(sortOrder)) {
                 jpaQuery = jpaQuery + " " + sortOrder;
             }
         }
-        return entityManager().createQuery(jpaQuery, Language.class).getResultList();
+        return entityManager().createQuery(jpaQuery, SkillName.class).getResultList();
     }
     
-    public static Language Language.findLanguage(String id) {
-        if (id == null || id.length() == 0) return null;
-        return entityManager().find(Language.class, id);
+    public static SkillName SkillName.findSkillName(Long id) {
+        if (id == null) return null;
+        return entityManager().find(SkillName.class, id);
     }
     
-    public static List<Language> Language.findLanguageEntries(int firstResult, int maxResults) {
-        return entityManager().createQuery("SELECT o FROM Language o", Language.class).setFirstResult(firstResult).setMaxResults(maxResults).getResultList();
+    public static List<SkillName> SkillName.findSkillNameEntries(int firstResult, int maxResults) {
+        return entityManager().createQuery("SELECT o FROM SkillName o", SkillName.class).setFirstResult(firstResult).setMaxResults(maxResults).getResultList();
     }
     
-    public static List<Language> Language.findLanguageEntries(int firstResult, int maxResults, String sortFieldName, String sortOrder) {
-        String jpaQuery = "SELECT o FROM Language o";
+    public static List<SkillName> SkillName.findSkillNameEntries(int firstResult, int maxResults, String sortFieldName, String sortOrder) {
+        String jpaQuery = "SELECT o FROM SkillName o";
         if (fieldNames4OrderClauseFilter.contains(sortFieldName)) {
             jpaQuery = jpaQuery + " ORDER BY " + sortFieldName;
             if ("ASC".equalsIgnoreCase(sortOrder) || "DESC".equalsIgnoreCase(sortOrder)) {
                 jpaQuery = jpaQuery + " " + sortOrder;
             }
         }
-        return entityManager().createQuery(jpaQuery, Language.class).setFirstResult(firstResult).setMaxResults(maxResults).getResultList();
+        return entityManager().createQuery(jpaQuery, SkillName.class).setFirstResult(firstResult).setMaxResults(maxResults).getResultList();
     }
     
     @Transactional
-    public void Language.persist() {
+    public void SkillName.persist() {
         if (this.entityManager == null) this.entityManager = entityManager();
         this.entityManager.persist(this);
     }
     
     @Transactional
-    public void Language.remove() {
+    public void SkillName.remove() {
         if (this.entityManager == null) this.entityManager = entityManager();
         if (this.entityManager.contains(this)) {
             this.entityManager.remove(this);
         } else {
-            Language attached = Language.findLanguage(this.id);
+            SkillName attached = SkillName.findSkillName(this.id);
             this.entityManager.remove(attached);
         }
     }
     
     @Transactional
-    public void Language.flush() {
+    public void SkillName.flush() {
         if (this.entityManager == null) this.entityManager = entityManager();
         this.entityManager.flush();
     }
     
     @Transactional
-    public void Language.clear() {
+    public void SkillName.clear() {
         if (this.entityManager == null) this.entityManager = entityManager();
         this.entityManager.clear();
     }
     
     @Transactional
-    public Language Language.merge() {
+    public SkillName SkillName.merge() {
         if (this.entityManager == null) this.entityManager = entityManager();
-        Language merged = this.entityManager.merge(this);
+        SkillName merged = this.entityManager.merge(this);
         this.entityManager.flush();
         return merged;
     }

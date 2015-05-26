@@ -10,7 +10,7 @@ import org.shovelgame.game.domain.data.Minion;
 privileged aspect Minion_Roo_ToString {
     
     public String Minion.toString() {
-        return new ReflectionToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE).setExcludeFieldNames("team", "minionModel", "teams", "teams1", "teams2", "owner", "teams3").toString();
+        return new ReflectionToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE).setExcludeFieldNames("teams", "teams1", "teams2", "teams3", "owner", "minionModel").toString();
     }
     
 }

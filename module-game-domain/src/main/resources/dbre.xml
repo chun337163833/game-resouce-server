@@ -483,8 +483,7 @@
         <column name="item" primaryKey="false" required="false" scale="0" size="19" type="-5,int8"/>
         <column name="seeker" primaryKey="false" required="false" scale="0" size="19" type="-5,int8"/>
         <column name="chance" primaryKey="false" required="false" scale="2" size="3" type="2,numeric"/>
-        <column name="golds" primaryKey="false" required="false" scale="0" size="10" type="4,int4"/>
-        <column name="diamonds" primaryKey="false" required="false" scale="0" size="10" type="4,int4"/>
+        <column name="value" primaryKey="false" required="false" scale="0" size="10" type="4,int4"/>
         <foreign-key foreignTable="item_model" name="fk_mission_reward_item_model" onDelete="none" onUpdate="none">
             <option key="foreignSchemaName" value="model"/>
             <option key="exported" value="false"/>
@@ -582,6 +581,11 @@
             <option key="exported" value="true"/>
             <reference foreign="skill" local="id"/>
         </foreign-key>
+        <foreign-key foreignTable="skill_name" name="fk_skill_name_skill" onDelete="none" onUpdate="none">
+            <option key="foreignSchemaName" value="i18n"/>
+            <option key="exported" value="true"/>
+            <reference foreign="skill" local="id"/>
+        </foreign-key>
         <foreign-key foreignTable="enchantment_type" name="fk_enchantment_type_skill_model_02" onDelete="none" onUpdate="none">
             <option key="foreignSchemaName" value="model"/>
             <option key="exported" value="true"/>
@@ -612,6 +616,11 @@
             <reference foreign="id" local="affected_attribute_type"/>
         </foreign-key>
         <foreign-key foreignTable="trait_description" name="fk_trait_model_description_trait_model" onDelete="none" onUpdate="none">
+            <option key="foreignSchemaName" value="i18n"/>
+            <option key="exported" value="true"/>
+            <reference foreign="trait" local="id"/>
+        </foreign-key>
+        <foreign-key foreignTable="trait_name" name="fk_trait_name_trait" onDelete="none" onUpdate="none">
             <option key="foreignSchemaName" value="i18n"/>
             <option key="exported" value="true"/>
             <reference foreign="trait" local="id"/>
@@ -762,7 +771,17 @@
             <option key="exported" value="true"/>
             <reference foreign="lang" local="id"/>
         </foreign-key>
+        <foreign-key foreignTable="skill_name" name="fk_skill_name_language" onDelete="none" onUpdate="none">
+            <option key="foreignSchemaName" value="i18n"/>
+            <option key="exported" value="true"/>
+            <reference foreign="lang" local="id"/>
+        </foreign-key>
         <foreign-key foreignTable="trait_description" name="fk_trait_model_description_language" onDelete="none" onUpdate="none">
+            <option key="foreignSchemaName" value="i18n"/>
+            <option key="exported" value="true"/>
+            <reference foreign="lang" local="id"/>
+        </foreign-key>
+        <foreign-key foreignTable="trait_name" name="fk_trait_name_language" onDelete="none" onUpdate="none">
             <option key="foreignSchemaName" value="i18n"/>
             <option key="exported" value="true"/>
             <reference foreign="lang" local="id"/>
@@ -871,6 +890,31 @@
             <index-column name="skill"/>
         </index>
     </table>
+    <table alias="i18n" name="skill_name">
+        <column name="id" primaryKey="true" required="true" scale="0" size="19" type="-5,bigserial"/>
+        <column name="skill" primaryKey="false" required="true" scale="0" size="19" type="-5,int8"/>
+        <column name="lang" primaryKey="false" required="true" scale="0" size="2" type="1,bpchar"/>
+        <column name="value" primaryKey="false" required="true" scale="0" size="2147483647" type="12,text"/>
+        <foreign-key foreignTable="language" name="fk_skill_name_language" onDelete="none" onUpdate="none">
+            <option key="foreignSchemaName" value="i18n"/>
+            <option key="exported" value="false"/>
+            <reference foreign="id" local="lang"/>
+        </foreign-key>
+        <foreign-key foreignTable="skill" name="fk_skill_name_skill" onDelete="none" onUpdate="none">
+            <option key="foreignSchemaName" value="model"/>
+            <option key="exported" value="false"/>
+            <reference foreign="id" local="skill"/>
+        </foreign-key>
+        <unique name="pk_skill_name">
+            <unique-column name="id"/>
+        </unique>
+        <index name="ixfk_skill_name_language">
+            <index-column name="lang"/>
+        </index>
+        <index name="ixfk_skill_name_skill">
+            <index-column name="skill"/>
+        </index>
+    </table>
     <table alias="i18n" name="trait_description">
         <column name="id" primaryKey="true" required="true" scale="0" size="19" type="-5,bigserial"/>
         <column name="trait" primaryKey="false" required="true" scale="0" size="19" type="-5,int8"/>
@@ -893,6 +937,31 @@
             <index-column name="lang"/>
         </index>
         <index name="ixfk_trait_model_description_trait_model">
+            <index-column name="trait"/>
+        </index>
+    </table>
+    <table alias="i18n" name="trait_name">
+        <column name="id" primaryKey="true" required="true" scale="0" size="19" type="-5,bigserial"/>
+        <column name="trait" primaryKey="false" required="true" scale="0" size="19" type="-5,int8"/>
+        <column name="lang" primaryKey="false" required="true" scale="0" size="2" type="1,bpchar"/>
+        <column name="value" primaryKey="false" required="true" scale="0" size="2147483647" type="12,text"/>
+        <foreign-key foreignTable="language" name="fk_trait_name_language" onDelete="none" onUpdate="none">
+            <option key="foreignSchemaName" value="i18n"/>
+            <option key="exported" value="false"/>
+            <reference foreign="id" local="lang"/>
+        </foreign-key>
+        <foreign-key foreignTable="trait" name="fk_trait_name_trait" onDelete="none" onUpdate="none">
+            <option key="foreignSchemaName" value="model"/>
+            <option key="exported" value="false"/>
+            <reference foreign="id" local="trait"/>
+        </foreign-key>
+        <unique name="pk_trait_name">
+            <unique-column name="id"/>
+        </unique>
+        <index name="ixfk_trait_name_language">
+            <index-column name="lang"/>
+        </index>
+        <index name="ixfk_trait_name_trait">
             <index-column name="trait"/>
         </index>
     </table>

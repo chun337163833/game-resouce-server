@@ -4,41 +4,17 @@
 package org.shovelgame.game.domain.model;
 
 import java.util.Set;
+import org.shovelgame.game.domain.model.MissionReward;
 import org.shovelgame.game.domain.model.SeekerModel;
-import org.shovelgame.game.domain.model.SeekerSpecialization;
 
 privileged aspect SeekerModel_Roo_JavaBean {
     
-    public Set<SeekerSpecialization> SeekerModel.getSeekerSpecializations() {
-        return this.seekerSpecializations;
+    public Set<MissionReward> SeekerModel.getMissionRewards() {
+        return this.missionRewards;
     }
     
-    public void SeekerModel.setSeekerSpecializations(Set<SeekerSpecialization> seekerSpecializations) {
-        this.seekerSpecializations = seekerSpecializations;
-    }
-    
-    public String SeekerModel.getName() {
-        return this.name;
-    }
-    
-    public void SeekerModel.setName(String name) {
-        this.name = name;
-    }
-    
-    public Integer SeekerModel.getPrice() {
-        return this.price;
-    }
-    
-    public void SeekerModel.setPrice(Integer price) {
-        this.price = price;
-    }
-    
-    public String SeekerModel.getImageBundleName() {
-        return this.imageBundleName;
-    }
-    
-    public void SeekerModel.setImageBundleName(String imageBundleName) {
-        this.imageBundleName = imageBundleName;
+    public void SeekerModel.setMissionRewards(Set<MissionReward> missionRewards) {
+        this.missionRewards = missionRewards;
     }
     
 }

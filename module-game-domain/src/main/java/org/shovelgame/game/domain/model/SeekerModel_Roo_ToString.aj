@@ -10,7 +10,7 @@ import org.shovelgame.game.domain.model.SeekerModel;
 privileged aspect SeekerModel_Roo_ToString {
     
     public String SeekerModel.toString() {
-        return new ReflectionToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE).setExcludeFieldNames("seekerSpecializations", "qualityGrade", "missionRewards").toString();
+        return new ReflectionToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE).setExcludeFieldNames("missionRewards", "seekerSpecializations").toString();
     }
     
 }

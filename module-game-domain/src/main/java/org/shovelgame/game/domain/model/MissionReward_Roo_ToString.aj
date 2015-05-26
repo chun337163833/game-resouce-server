@@ -10,7 +10,7 @@ import org.shovelgame.game.domain.model.MissionReward;
 privileged aspect MissionReward_Roo_ToString {
     
     public String MissionReward.toString() {
-        return new ReflectionToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE).setExcludeFieldNames("mission", "item", "minion", "seeker").toString();
+        return new ReflectionToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE).setExcludeFieldNames("item", "minion", "mission", "seeker").toString();
     }
     
 }

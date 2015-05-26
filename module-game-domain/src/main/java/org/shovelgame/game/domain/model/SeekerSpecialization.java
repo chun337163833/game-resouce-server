@@ -10,13 +10,13 @@ import org.springframework.roo.addon.jpa.activerecord.RooJpaActiveRecord;
 import org.springframework.roo.addon.tostring.RooToString;
 
 @RooJavaBean
-@RooDbManaged(automaticallyDelete = true)
 @RooJpaActiveRecord(versionField = "", table = "seeker_specialization", schema = "model", sequenceName = "model.seeker_specialization_id_seq")
-@RooToString(excludeFields = { "specializationDescriptions", "seekerModel", "seekerSpecializationDescriptions" })
+@RooDbManaged(automaticallyDelete = true)
+@RooToString(excludeFields = { "seekerSpecializationDescriptions", "seekerModel" })
 public class SeekerSpecialization {
 
     @Column(name = "type", length = 10)
-    @Enumerated(EnumType.STRING)
     @NotNull
+    @Enumerated(EnumType.STRING)
     private SeekerSpecializationType type;
 }

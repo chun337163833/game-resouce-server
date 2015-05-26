@@ -15,7 +15,9 @@ import org.shovelgame.game.domain.i18n.MinionSpecializationDescription;
 import org.shovelgame.game.domain.i18n.MissionDescription;
 import org.shovelgame.game.domain.i18n.SeekerSpecializationDescription;
 import org.shovelgame.game.domain.i18n.SkillDescription;
+import org.shovelgame.game.domain.i18n.SkillName;
 import org.shovelgame.game.domain.i18n.TraitDescription;
+import org.shovelgame.game.domain.i18n.TraitName;
 
 privileged aspect Language_Roo_DbManaged {
     
@@ -41,7 +43,13 @@ privileged aspect Language_Roo_DbManaged {
     private Set<SkillDescription> Language.skillDescriptions;
     
     @OneToMany(mappedBy = "lang")
+    private Set<SkillName> Language.skillNames;
+    
+    @OneToMany(mappedBy = "lang")
     private Set<TraitDescription> Language.traitDescriptions;
+    
+    @OneToMany(mappedBy = "lang")
+    private Set<TraitName> Language.traitNames;
     
     @Column(name = "description", length = 50)
     @NotNull
@@ -103,12 +111,28 @@ privileged aspect Language_Roo_DbManaged {
         this.skillDescriptions = skillDescriptions;
     }
     
+    public Set<SkillName> Language.getSkillNames() {
+        return skillNames;
+    }
+    
+    public void Language.setSkillNames(Set<SkillName> skillNames) {
+        this.skillNames = skillNames;
+    }
+    
     public Set<TraitDescription> Language.getTraitDescriptions() {
         return traitDescriptions;
     }
     
     public void Language.setTraitDescriptions(Set<TraitDescription> traitDescriptions) {
         this.traitDescriptions = traitDescriptions;
+    }
+    
+    public Set<TraitName> Language.getTraitNames() {
+        return traitNames;
+    }
+    
+    public void Language.setTraitNames(Set<TraitName> traitNames) {
+        this.traitNames = traitNames;
     }
     
     public String Language.getDescription() {

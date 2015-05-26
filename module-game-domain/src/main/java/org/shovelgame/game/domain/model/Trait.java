@@ -11,9 +11,9 @@ import org.springframework.roo.addon.jpa.activerecord.RooJpaActiveRecord;
 import org.springframework.roo.addon.tostring.RooToString;
 
 @RooJavaBean
-@RooDbManaged(automaticallyDelete = true)
-@RooToString(excludeFields = { "traitDescriptions", "heroTraits", "minionTraits", "traitTargets", "affectedAttributeType" })
 @RooJpaActiveRecord(versionField = "", table = "trait", schema = "model", sequenceName = "model.trait_id_seq")
+@RooDbManaged(automaticallyDelete = true)
+@RooToString(excludeFields = { "traitDescriptions", "traitNames", "minionTraits", "traitTargets", "affectedAttributeType" })
 public class Trait {
 
     @Column(name = "affected_skill_alg", length = 50)

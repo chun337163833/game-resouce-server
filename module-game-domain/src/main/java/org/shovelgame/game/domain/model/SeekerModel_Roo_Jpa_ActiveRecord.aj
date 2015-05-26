@@ -14,7 +14,7 @@ privileged aspect SeekerModel_Roo_Jpa_ActiveRecord {
     @PersistenceContext
     transient EntityManager SeekerModel.entityManager;
     
-    public static final List<String> SeekerModel.fieldNames4OrderClauseFilter = java.util.Arrays.asList("seekerSpecializations", "name", "price", "imageBundleName");
+    public static final List<String> SeekerModel.fieldNames4OrderClauseFilter = java.util.Arrays.asList("missionRewards");
     
     public static final EntityManager SeekerModel.entityManager() {
         EntityManager em = new SeekerModel().entityManager;

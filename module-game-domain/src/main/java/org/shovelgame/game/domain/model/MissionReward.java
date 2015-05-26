@@ -1,27 +1,41 @@
 package org.shovelgame.game.domain.model;
-import java.math.BigDecimal;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorColumn;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.MappedSuperclass;
+import javax.persistence.Transient;
+import javax.validation.constraints.NotNull;
 import org.springframework.roo.addon.dbre.RooDbManaged;
-import org.springframework.roo.addon.javabean.RooJavaBean;
 import org.springframework.roo.addon.jpa.activerecord.RooJpaActiveRecord;
 import org.springframework.roo.addon.tostring.RooToString;
 
-@RooJavaBean
-//@RooDbManaged(automaticallyDelete = true)
+//@RooJavaBean
 @RooJpaActiveRecord(inheritanceType = "SINGLE_TABLE", versionField = "", table = "mission_reward", schema = "model", sequenceName = "model.mission_reward_id_seq")
-@RooToString(excludeFields = { "mission", "item", "minion", "seeker" })
+@RooDbManaged(automaticallyDelete = false)
+@RooToString(excludeFields = { "item", "minion", "mission", "seeker" })
 @DiscriminatorColumn(name = "dtype")
-// @MappedSuperclass
+// @Roo
 public abstract class MissionReward {
 
-    @ManyToOne
-    @JoinColumn(name = "mission", referencedColumnName = "id", nullable = false)
-    private Mission mission;
+    @Column(name = "dtype", length = 100, insertable = false, updatable = false)
+    @NotNull
+    private String dtype;
 
-    @Column(name = "chance", precision = 3, scale = 2)
-    private BigDecimal chance;
+    @Transient
+    private SeekerModel seeker;
+
+    @Transient
+    private ItemModel item;
+
+    @Transient
+    private MinionModel minion;
+
+    @Transient
+    private Integer value;
+
+    public String getDtype() {
+        return dtype;
+    }
+
+    public void setDtype(String dtype) {
+        this.dtype = dtype;
+    }
 }
