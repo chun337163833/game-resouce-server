@@ -4,13 +4,19 @@
 package org.shovelgame.game.domain.model;
 
 import java.math.BigDecimal;
+import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import org.shovelgame.game.domain.data.Player;
 import org.shovelgame.game.domain.model.Mission;
 import org.shovelgame.game.domain.model.MissionReward;
 
 privileged aspect MissionReward_Roo_DbManaged {
+    
+    @ManyToMany(mappedBy = "missionRewards")
+    private Set<Player> MissionReward.players;
     
     @ManyToOne
     @JoinColumn(name = "mission", referencedColumnName = "id", nullable = false)
@@ -18,6 +24,14 @@ privileged aspect MissionReward_Roo_DbManaged {
     
     @Column(name = "chance", precision = 3, scale = 2)
     private BigDecimal MissionReward.chance;
+    
+    public Set<Player> MissionReward.getPlayers() {
+        return players;
+    }
+    
+    public void MissionReward.setPlayers(Set<Player> players) {
+        this.players = players;
+    }
     
     public Mission MissionReward.getMission() {
         return mission;

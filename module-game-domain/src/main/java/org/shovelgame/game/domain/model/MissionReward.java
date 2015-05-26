@@ -3,17 +3,15 @@ import javax.persistence.Column;
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
-import org.shovelgame.game.domain.data.Player;
+import org.shovelgame.game.domain.data.RewardClaim;
 import org.springframework.roo.addon.dbre.RooDbManaged;
 import org.springframework.roo.addon.jpa.activerecord.RooJpaActiveRecord;
 import org.springframework.roo.addon.tostring.RooToString;
 
-//@RooJavaBean
 @RooJpaActiveRecord(inheritanceType = "SINGLE_TABLE", versionField = "", table = "mission_reward", schema = "model", sequenceName = "model.mission_reward_id_seq")
 @RooDbManaged(automaticallyDelete = false)
-@RooToString(excludeFields = { "item", "minion", "mission", "seeker" })
 @DiscriminatorColumn(name = "dtype")
-// @Roo
+@RooToString(excludeFields = { "item", "minion", "mission", "seeker", "rewardClaims", "players" })
 public abstract class MissionReward {
 
     @Column(name = "dtype", length = 100, insertable = false, updatable = false)
@@ -40,5 +38,5 @@ public abstract class MissionReward {
         this.dtype = dtype;
     }
 
-    public abstract void claim(Player player);
+    public abstract void claim(RewardClaim claim);
 }

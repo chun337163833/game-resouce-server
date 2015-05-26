@@ -5,8 +5,8 @@ import org.springframework.roo.addon.jpa.activerecord.RooJpaActiveRecord;
 import org.springframework.roo.addon.tostring.RooToString;
 
 @RooJavaBean
-@RooJpaActiveRecord(versionField = "", table = "player", schema = "data")
+@RooJpaActiveRecord(identifierType = RewardClaimPK.class, versionField = "", table = "reward_claim", schema = "data")
 @RooDbManaged(automaticallyDelete = true)
-@RooToString(excludeFields = { "items", "minions", "teams", "seekers", "rewardClaims", "missionRewards" })
-public class Player {
+@RooToString(excludeFields = { "player", "reward" })
+public class RewardClaim {
 }

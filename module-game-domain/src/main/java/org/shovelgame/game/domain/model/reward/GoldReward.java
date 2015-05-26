@@ -3,7 +3,7 @@ package org.shovelgame.game.domain.model.reward;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 
-import org.shovelgame.game.domain.data.Player;
+import org.shovelgame.game.domain.data.RewardClaim;
 import org.shovelgame.game.domain.model.MissionReward;
 import org.springframework.roo.addon.javabean.RooJavaBean;
 import org.springframework.roo.addon.jpa.activerecord.RooJpaActiveRecord;
@@ -17,7 +17,7 @@ public class GoldReward extends MissionReward {
     private Integer golds;
 	
 	@Override
-	public void claim(Player player) {
-		// TODO Auto-generated method stub
+	public void claim(RewardClaim claim) {
+		claim.remove();
 	}
 }

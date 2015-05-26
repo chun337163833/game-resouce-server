@@ -4,14 +4,22 @@
 package org.shovelgame.game.domain.data;
 
 import java.util.Set;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import org.shovelgame.game.domain.data.Item;
 import org.shovelgame.game.domain.data.Minion;
 import org.shovelgame.game.domain.data.Player;
 import org.shovelgame.game.domain.data.Seeker;
 import org.shovelgame.game.domain.data.Team;
+import org.shovelgame.game.domain.model.MissionReward;
 
 privileged aspect Player_Roo_DbManaged {
+    
+    @ManyToMany
+    @JoinTable(name = "reward_claim", joinColumns = { @JoinColumn(name = "player", nullable = false) }, inverseJoinColumns = { @JoinColumn(name = "reward", nullable = false) })
+    private Set<MissionReward> Player.missionRewards;
     
     @OneToMany(mappedBy = "owner")
     private Set<Item> Player.items;
@@ -24,6 +32,14 @@ privileged aspect Player_Roo_DbManaged {
     
     @OneToMany(mappedBy = "owner")
     private Set<Team> Player.teams;
+    
+    public Set<MissionReward> Player.getMissionRewards() {
+        return missionRewards;
+    }
+    
+    public void Player.setMissionRewards(Set<MissionReward> missionRewards) {
+        this.missionRewards = missionRewards;
+    }
     
     public Set<Item> Player.getItems() {
         return items;

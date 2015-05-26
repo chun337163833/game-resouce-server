@@ -18,7 +18,7 @@ privileged aspect MissionReward_Roo_Jpa_ActiveRecord {
     
     public static final EntityManager MissionReward.entityManager() {
         EntityManager em = new MissionReward() {
-            public void claim(org.shovelgame.game.domain.data.Player player) {
+            public void claim(org.shovelgame.game.domain.data.RewardClaim claim) {
                 throw new UnsupportedOperationException();
             }
         }.entityManager;

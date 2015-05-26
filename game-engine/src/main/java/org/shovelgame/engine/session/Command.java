@@ -1,6 +1,5 @@
 package org.shovelgame.engine.session;
 
-import org.shovelgame.game.domain.enumeration.Position;
 
 public class Command {
 

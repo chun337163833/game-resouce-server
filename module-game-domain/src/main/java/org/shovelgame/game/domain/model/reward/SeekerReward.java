@@ -4,7 +4,7 @@ import javax.persistence.DiscriminatorValue;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
-import org.shovelgame.game.domain.data.Player;
+import org.shovelgame.game.domain.data.RewardClaim;
 import org.shovelgame.game.domain.data.Seeker;
 import org.shovelgame.game.domain.model.MissionReward;
 import org.shovelgame.game.domain.model.SeekerModel;
@@ -21,10 +21,11 @@ public class SeekerReward extends MissionReward {
 	private SeekerModel seeker;
 	
 	@Override
-	public void claim(Player player) {
+	public void claim(RewardClaim claim) {
 		Seeker seeker = new Seeker();
 		seeker.setSeekerModel(this.seeker);
-		seeker.setOwner(player);
+		seeker.setOwner(claim.getPlayer());
 		seeker.persist();
+		claim.remove();
 	}
 }

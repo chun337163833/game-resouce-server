@@ -102,6 +102,11 @@
             <option key="exported" value="true"/>
             <reference foreign="owner" local="id"/>
         </foreign-key>
+        <foreign-key foreignTable="reward_claim" name="fk_reward_claim_player" onDelete="none" onUpdate="none">
+            <option key="foreignSchemaName" value="data"/>
+            <option key="exported" value="true"/>
+            <reference foreign="player" local="id"/>
+        </foreign-key>
         <foreign-key foreignTable="seeker" name="fk_seeker_player" onDelete="none" onUpdate="none">
             <option key="foreignSchemaName" value="data"/>
             <option key="exported" value="true"/>
@@ -115,6 +120,30 @@
         <unique name="pk_player">
             <unique-column name="id"/>
         </unique>
+    </table>
+    <table alias="data" name="reward_claim">
+        <column name="player" primaryKey="true" required="true" scale="0" size="19" type="-5,int8"/>
+        <column name="reward" primaryKey="true" required="true" scale="0" size="19" type="-5,int8"/>
+        <foreign-key foreignTable="player" name="fk_reward_claim_player" onDelete="none" onUpdate="none">
+            <option key="foreignSchemaName" value="data"/>
+            <option key="exported" value="false"/>
+            <reference foreign="id" local="player"/>
+        </foreign-key>
+        <foreign-key foreignTable="mission_reward" name="fk_reward_claim_mission_reward" onDelete="none" onUpdate="none">
+            <option key="foreignSchemaName" value="model"/>
+            <option key="exported" value="false"/>
+            <reference foreign="id" local="reward"/>
+        </foreign-key>
+        <unique name="pk_reward_claim">
+            <unique-column name="player"/>
+            <unique-column name="reward"/>
+        </unique>
+        <index name="ixfk_reward_claim_mission_reward">
+            <index-column name="reward"/>
+        </index>
+        <index name="ixfk_reward_claim_player">
+            <index-column name="player"/>
+        </index>
     </table>
     <table alias="data" name="seeker">
         <column name="id" primaryKey="true" required="true" scale="0" size="19" type="-5,bigserial"/>
@@ -533,6 +562,11 @@
             <option key="foreignSchemaName" value="model"/>
             <option key="exported" value="false"/>
             <reference foreign="id" local="seeker"/>
+        </foreign-key>
+        <foreign-key foreignTable="reward_claim" name="fk_reward_claim_mission_reward" onDelete="none" onUpdate="none">
+            <option key="foreignSchemaName" value="data"/>
+            <option key="exported" value="true"/>
+            <reference foreign="reward" local="id"/>
         </foreign-key>
         <unique name="pk_mission_reward">
             <unique-column name="id"/>
