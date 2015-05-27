@@ -5,6 +5,7 @@ package org.shovelgame.game.domain.model;
 
 import java.util.Set;
 import org.shovelgame.game.domain.enumeration.ItemType;
+import org.shovelgame.game.domain.enumeration.Rarity;
 import org.shovelgame.game.domain.model.ItemModel;
 import org.shovelgame.game.domain.model.MissionReward;
 
@@ -24,6 +25,14 @@ privileged aspect ItemModel_Roo_JavaBean {
     
     public void ItemModel.setMissionRewards(Set<MissionReward> missionRewards) {
         this.missionRewards = missionRewards;
+    }
+    
+    public Rarity ItemModel.getRarity() {
+        return this.rarity;
+    }
+    
+    public void ItemModel.setRarity(Rarity rarity) {
+        this.rarity = rarity;
     }
     
 }

@@ -4,10 +4,12 @@
 package org.shovelgame.game.domain.data;
 
 import java.util.Set;
+import javax.persistence.Column;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
+import javax.validation.constraints.NotNull;
 import org.shovelgame.game.domain.data.Item;
 import org.shovelgame.game.domain.data.Minion;
 import org.shovelgame.game.domain.data.Player;
@@ -32,6 +34,14 @@ privileged aspect Player_Roo_DbManaged {
     
     @OneToMany(mappedBy = "owner")
     private Set<Team> Player.teams;
+    
+    @Column(name = "golds")
+    @NotNull
+    private Long Player.golds;
+    
+    @Column(name = "diamonds")
+    @NotNull
+    private Long Player.diamonds;
     
     public Set<MissionReward> Player.getMissionRewards() {
         return missionRewards;
@@ -71,6 +81,22 @@ privileged aspect Player_Roo_DbManaged {
     
     public void Player.setTeams(Set<Team> teams) {
         this.teams = teams;
+    }
+    
+    public Long Player.getGolds() {
+        return golds;
+    }
+    
+    public void Player.setGolds(Long golds) {
+        this.golds = golds;
+    }
+    
+    public Long Player.getDiamonds() {
+        return diamonds;
+    }
+    
+    public void Player.setDiamonds(Long diamonds) {
+        this.diamonds = diamonds;
     }
     
 }

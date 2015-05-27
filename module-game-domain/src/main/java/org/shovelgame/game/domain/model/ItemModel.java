@@ -6,6 +6,8 @@ import javax.persistence.Enumerated;
 import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 import org.shovelgame.game.domain.enumeration.ItemType;
+import org.shovelgame.game.domain.enumeration.Rarity;
+import org.shovelgame.game.domain.finders.SeekerReward;
 import org.springframework.roo.addon.dbre.RooDbManaged;
 import org.springframework.roo.addon.javabean.RooJavaBean;
 import org.springframework.roo.addon.jpa.activerecord.RooJpaActiveRecord;
@@ -15,7 +17,7 @@ import org.springframework.roo.addon.tostring.RooToString;
 @RooDbManaged(automaticallyDelete = true)
 @RooJpaActiveRecord(versionField = "", table = "item_model", schema = "model", sequenceName = "model.item_model_id_seq")
 @RooToString(excludeFields = { "items", "itemModelDescriptions", "itemEnchantments", "attributeType", "qualityGrade", "missionRewardItems", "missionRewards" })
-public class ItemModel {
+public class ItemModel implements SeekerReward {
 
     @Column(name = "type", length = 10)
     @Enumerated(EnumType.STRING)
@@ -24,4 +26,9 @@ public class ItemModel {
 
     @Transient
     private Set<MissionReward> missionRewards;
+
+    @Column(name = "rarity", length = 50)
+    @NotNull
+    @Enumerated(EnumType.STRING)
+    private Rarity rarity;
 }

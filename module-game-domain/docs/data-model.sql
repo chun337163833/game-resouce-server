@@ -39,10 +39,6 @@ DROP TABLE IF EXISTS data.seeker CASCADE;
 DROP SEQUENCE IF EXISTS data.seeker_id_seq;
 DROP TABLE IF EXISTS model.seeker_model CASCADE;
 DROP SEQUENCE IF EXISTS model.seeker_model_id_seq;
-DROP TABLE IF EXISTS model.seeker_specialization CASCADE;
-DROP SEQUENCE IF EXISTS model.seeker_specialization_id_seq;
-DROP TABLE IF EXISTS i18n.seeker_specialization_description CASCADE;
-DROP SEQUENCE IF EXISTS i18n.seeker_specialization_description_id_seq;
 DROP TABLE IF EXISTS model.skill CASCADE;
 DROP SEQUENCE IF EXISTS model.skill_id_seq;
 DROP TABLE IF EXISTS i18n.skill_description CASCADE;
@@ -225,7 +221,9 @@ CREATE TABLE model.mission_reward (
 CREATE SEQUENCE data.player_id_seq INCREMENT 1 START 1;
 
 CREATE TABLE data.player ( 
-	id bigint DEFAULT nextval(('data.player_id_seq'::text)::regclass) NOT NULL
+	id bigint DEFAULT nextval(('data.player_id_seq'::text)::regclass) NOT NULL,
+	golds bigint DEFAULT 10000 NOT NULL,
+	diamonds bigint DEFAULT 10 NOT NULL
 );
 
 CREATE TABLE data.reward_claim ( 
@@ -239,7 +237,8 @@ CREATE TABLE data.seeker (
 	id bigint DEFAULT nextval(('data.seeker_id_seq'::text)::regclass) NOT NULL,
 	seeker_model bigint NOT NULL,
 	owner bigint NOT NULL,
-	level integer DEFAULT 1 NOT NULL
+	level integer DEFAULT 1 NOT NULL,
+	started_search_time timestamp(0)
 );
 
 CREATE SEQUENCE model.seeker_model_id_seq INCREMENT 1 START 1;
@@ -248,24 +247,8 @@ CREATE TABLE model.seeker_model (
 	id bigint DEFAULT nextval(('model.seeker_model_id_seq'::text)::regclass) NOT NULL,
 	name varchar(50) NOT NULL,
 	price integer NOT NULL,
-	image_bundle_name varchar(50) NOT NULL
-);
-
-CREATE SEQUENCE model.seeker_specialization_id_seq INCREMENT 1 START 1;
-
-CREATE TABLE model.seeker_specialization ( 
-	id bigint DEFAULT nextval(('model.seeker_specialization_id_seq'::text)::regclass) NOT NULL,
-	seeker_model bigint NOT NULL,
-	type varchar(10) NOT NULL
-);
-
-CREATE SEQUENCE i18n.seeker_specialization_description_id_seq INCREMENT 1 START 1;
-
-CREATE TABLE i18n.seeker_specialization_description ( 
-	id bigint DEFAULT nextval(('i18n.seeker_specialization_description_id_seq'::text)::regclass) NOT NULL,
-	seeker_specialization bigint NOT NULL,
-	lang char(2) NOT NULL,
-	value text NOT NULL
+	image_bundle_name varchar(50) NOT NULL,
+	specialization varchar(50) NOT NULL
 );
 
 CREATE SEQUENCE model.skill_id_seq INCREMENT 1 START 1;
@@ -423,14 +406,6 @@ CREATE INDEX IXFK_seeker_seeker_model
 	ON data.seeker (seeker_model);
 CREATE INDEX IXFK_seeker_player
 	ON data.seeker (owner);
-CREATE INDEX IXFK_seeker_specialization_specialization_type
-	ON model.seeker_specialization (type);
-CREATE INDEX IXFK_seeker_specialization_seeker_model
-	ON model.seeker_specialization (seeker_model);
-CREATE INDEX IXFK_specialization_type_desc_specialization_type
-	ON i18n.seeker_specialization_description (seeker_specialization);
-CREATE INDEX IXFK_specialization_type_desc_l_language
-	ON i18n.seeker_specialization_description (lang);
 CREATE INDEX IXFK_skill_model_attribute_type
 	ON model.skill (attribute_type);
 CREATE INDEX IXFK_skill_model_descirption_skill_model
@@ -554,14 +529,6 @@ ALTER TABLE data.seeker ADD CONSTRAINT PK_seeker
 
 
 ALTER TABLE model.seeker_model ADD CONSTRAINT PK_seeker_model 
-	PRIMARY KEY (id);
-
-
-ALTER TABLE model.seeker_specialization ADD CONSTRAINT PK_seeker_specialization 
-	PRIMARY KEY (id);
-
-
-ALTER TABLE i18n.seeker_specialization_description ADD CONSTRAINT PK_specialization_type_desc 
 	PRIMARY KEY (id);
 
 
@@ -710,15 +677,6 @@ ALTER TABLE data.seeker ADD CONSTRAINT FK_seeker_seeker_model
 
 ALTER TABLE data.seeker ADD CONSTRAINT FK_seeker_player 
 	FOREIGN KEY (owner) REFERENCES data.player (id);
-
-ALTER TABLE model.seeker_specialization ADD CONSTRAINT FK_seeker_specialization_seeker_model 
-	FOREIGN KEY (seeker_model) REFERENCES model.seeker_model (id);
-
-ALTER TABLE i18n.seeker_specialization_description ADD CONSTRAINT FK_specialization_type_desc_l_language 
-	FOREIGN KEY (lang) REFERENCES i18n.language (id);
-
-ALTER TABLE i18n.seeker_specialization_description ADD CONSTRAINT FK_specialization_desc_seeker_specialization 
-	FOREIGN KEY (seeker_specialization) REFERENCES model.seeker_specialization (id);
 
 ALTER TABLE model.skill ADD CONSTRAINT FK_skill_model_attribute_type 
 	FOREIGN KEY (attribute_type) REFERENCES model.attribute_type (id);

@@ -4,6 +4,7 @@
 package org.shovelgame.game.domain.model;
 
 import java.util.Set;
+import org.shovelgame.game.domain.enumeration.Rarity;
 import org.shovelgame.game.domain.model.MinionModel;
 import org.shovelgame.game.domain.model.MissionReward;
 
@@ -15,6 +16,14 @@ privileged aspect MinionModel_Roo_JavaBean {
     
     public void MinionModel.setMissionRewards(Set<MissionReward> missionRewards) {
         this.missionRewards = missionRewards;
+    }
+    
+    public Rarity MinionModel.getRarity() {
+        return this.rarity;
+    }
+    
+    public void MinionModel.setRarity(Rarity rarity) {
+        this.rarity = rarity;
     }
     
 }

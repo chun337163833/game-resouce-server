@@ -4,6 +4,8 @@
 package org.shovelgame.game.domain.model;
 
 import java.util.Set;
+import org.shovelgame.game.domain.enumeration.Rarity;
+import org.shovelgame.game.domain.enumeration.SeekerSpecializationType;
 import org.shovelgame.game.domain.model.MissionReward;
 import org.shovelgame.game.domain.model.SeekerModel;
 
@@ -15,6 +17,22 @@ privileged aspect SeekerModel_Roo_JavaBean {
     
     public void SeekerModel.setMissionRewards(Set<MissionReward> missionRewards) {
         this.missionRewards = missionRewards;
+    }
+    
+    public Rarity SeekerModel.getRarity() {
+        return this.rarity;
+    }
+    
+    public void SeekerModel.setRarity(Rarity rarity) {
+        this.rarity = rarity;
+    }
+    
+    public SeekerSpecializationType SeekerModel.getSpecialization() {
+        return this.specialization;
+    }
+    
+    public void SeekerModel.setSpecialization(SeekerSpecializationType specialization) {
+        this.specialization = specialization;
     }
     
 }

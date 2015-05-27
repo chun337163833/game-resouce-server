@@ -1,8 +1,6 @@
 package org.shovelgame.engine.session;
 
-import java.math.BigDecimal;
-
-import org.shovelgame.engine.ChanceEvaluator;
+import org.shovelgame.game.domain.ChanceEvaluator;
 import org.shovelgame.game.domain.data.Player;
 import org.shovelgame.game.domain.data.RewardClaim;
 import org.shovelgame.game.domain.data.RewardClaimPK;

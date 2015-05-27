@@ -45,10 +45,6 @@ privileged aspect MinionModel_Roo_DbManaged {
     @Column(name = "price")
     private Integer MinionModel.price;
     
-    @Column(name = "rarity", length = 50)
-    @NotNull
-    private String MinionModel.rarity;
-    
     public Set<Minion> MinionModel.getMinions() {
         return minions;
     }
@@ -111,14 +107,6 @@ privileged aspect MinionModel_Roo_DbManaged {
     
     public void MinionModel.setPrice(Integer price) {
         this.price = price;
-    }
-    
-    public String MinionModel.getRarity() {
-        return rarity;
-    }
-    
-    public void MinionModel.setRarity(String rarity) {
-        this.rarity = rarity;
     }
     
 }

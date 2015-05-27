@@ -9,15 +9,11 @@ import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
 import org.shovelgame.game.domain.data.Seeker;
 import org.shovelgame.game.domain.model.SeekerModel;
-import org.shovelgame.game.domain.model.SeekerSpecialization;
 
 privileged aspect SeekerModel_Roo_DbManaged {
     
     @OneToMany(mappedBy = "seekerModel")
     private Set<Seeker> SeekerModel.seekers;
-    
-    @OneToMany(mappedBy = "seekerModel")
-    private Set<SeekerSpecialization> SeekerModel.seekerSpecializations;
     
     @Column(name = "name", length = 50)
     @NotNull
@@ -31,24 +27,12 @@ privileged aspect SeekerModel_Roo_DbManaged {
     @NotNull
     private String SeekerModel.imageBundleName;
     
-    @Column(name = "rarity", length = 50)
-    @NotNull
-    private String SeekerModel.rarity;
-    
     public Set<Seeker> SeekerModel.getSeekers() {
         return seekers;
     }
     
     public void SeekerModel.setSeekers(Set<Seeker> seekers) {
         this.seekers = seekers;
-    }
-    
-    public Set<SeekerSpecialization> SeekerModel.getSeekerSpecializations() {
-        return seekerSpecializations;
-    }
-    
-    public void SeekerModel.setSeekerSpecializations(Set<SeekerSpecialization> seekerSpecializations) {
-        this.seekerSpecializations = seekerSpecializations;
     }
     
     public String SeekerModel.getName() {
@@ -73,14 +57,6 @@ privileged aspect SeekerModel_Roo_DbManaged {
     
     public void SeekerModel.setImageBundleName(String imageBundleName) {
         this.imageBundleName = imageBundleName;
-    }
-    
-    public String SeekerModel.getRarity() {
-        return rarity;
-    }
-    
-    public void SeekerModel.setRarity(String rarity) {
-        this.rarity = rarity;
     }
     
 }

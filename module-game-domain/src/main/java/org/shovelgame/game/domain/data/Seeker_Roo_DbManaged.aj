@@ -3,13 +3,17 @@
 
 package org.shovelgame.game.domain.data;
 
+import java.util.Calendar;
 import javax.persistence.Column;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import org.shovelgame.game.domain.data.Player;
 import org.shovelgame.game.domain.data.Seeker;
 import org.shovelgame.game.domain.model.SeekerModel;
+import org.springframework.format.annotation.DateTimeFormat;
 
 privileged aspect Seeker_Roo_DbManaged {
     
@@ -24,6 +28,11 @@ privileged aspect Seeker_Roo_DbManaged {
     @Column(name = "level")
     @NotNull
     private Integer Seeker.level;
+    
+    @Column(name = "started_search_time")
+    @Temporal(TemporalType.TIMESTAMP)
+    @DateTimeFormat(style = "MM")
+    private Calendar Seeker.startedSearchTime;
     
     public Player Seeker.getOwner() {
         return owner;
@@ -47,6 +56,14 @@ privileged aspect Seeker_Roo_DbManaged {
     
     public void Seeker.setLevel(Integer level) {
         this.level = level;
+    }
+    
+    public Calendar Seeker.getStartedSearchTime() {
+        return startedSearchTime;
+    }
+    
+    public void Seeker.setStartedSearchTime(Calendar startedSearchTime) {
+        this.startedSearchTime = startedSearchTime;
     }
     
 }
