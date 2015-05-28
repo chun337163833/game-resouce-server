@@ -47,6 +47,7 @@
         <column name="minion_model" primaryKey="false" required="true" scale="0" size="19" type="-5,int8"/>
         <column name="owner" primaryKey="false" required="false" scale="0" size="19" type="-5,int8"/>
         <column name="level" primaryKey="false" required="true" scale="0" size="10" type="4,int4"/>
+        <column name="experience" primaryKey="false" required="true" scale="0" size="19" type="-5,int8"/>
         <foreign-key foreignTable="player" name="fk_minion_player" onDelete="none" onUpdate="none">
             <option key="foreignSchemaName" value="data"/>
             <option key="exported" value="false"/>
@@ -152,6 +153,7 @@
         <column name="seeker_model" primaryKey="false" required="true" scale="0" size="19" type="-5,int8"/>
         <column name="owner" primaryKey="false" required="true" scale="0" size="19" type="-5,int8"/>
         <column name="level" primaryKey="false" required="true" scale="0" size="10" type="4,int4"/>
+        <column name="experience" primaryKey="false" required="true" scale="0" size="19" type="-5,int8"/>
         <column name="started_search_time" primaryKey="false" required="false" scale="0" size="22" type="93,timestamp"/>
         <foreign-key foreignTable="player" name="fk_seeker_player" onDelete="none" onUpdate="none">
             <option key="foreignSchemaName" value="data"/>

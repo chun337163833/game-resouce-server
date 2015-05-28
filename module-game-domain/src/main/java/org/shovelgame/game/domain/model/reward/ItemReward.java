@@ -22,10 +22,7 @@ public class ItemReward extends MissionReward {
 
 	@Override
 	public void claim(RewardClaim claim) {
-		Item item = new Item();
-		item.setOwner(claim.getPlayer());
-		item.setItemModel(this.item);
-		item.persist();
+		this.item.claim(claim.getPlayer());
 		claim.remove();
 	}
 	

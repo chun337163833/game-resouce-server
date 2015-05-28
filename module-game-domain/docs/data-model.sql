@@ -137,7 +137,8 @@ CREATE TABLE data.minion (
 	id bigint DEFAULT nextval(('data.minion_id_seq'::text)::regclass) NOT NULL,
 	minion_model bigint NOT NULL,
 	owner bigint,
-	level integer DEFAULT 1 NOT NULL
+	level integer DEFAULT 1 NOT NULL,
+	experience bigint DEFAULT 0 NOT NULL
 );
 
 CREATE SEQUENCE model.minion_attribute_id_seq INCREMENT 1 START 1;
@@ -238,6 +239,7 @@ CREATE TABLE data.seeker (
 	seeker_model bigint NOT NULL,
 	owner bigint NOT NULL,
 	level integer DEFAULT 1 NOT NULL,
+	experience bigint DEFAULT 0 NOT NULL,
 	started_search_time timestamp(0)
 );
 

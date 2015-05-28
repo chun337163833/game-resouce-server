@@ -29,6 +29,10 @@ privileged aspect Seeker_Roo_DbManaged {
     @NotNull
     private Integer Seeker.level;
     
+    @Column(name = "experience")
+    @NotNull
+    private Long Seeker.experience;
+    
     @Column(name = "started_search_time")
     @Temporal(TemporalType.TIMESTAMP)
     @DateTimeFormat(style = "MM")
@@ -56,6 +60,14 @@ privileged aspect Seeker_Roo_DbManaged {
     
     public void Seeker.setLevel(Integer level) {
         this.level = level;
+    }
+    
+    public Long Seeker.getExperience() {
+        return experience;
+    }
+    
+    public void Seeker.setExperience(Long experience) {
+        this.experience = experience;
     }
     
     public Calendar Seeker.getStartedSearchTime() {

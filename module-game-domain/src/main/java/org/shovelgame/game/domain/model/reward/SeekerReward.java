@@ -5,7 +5,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 import org.shovelgame.game.domain.data.RewardClaim;
-import org.shovelgame.game.domain.data.Seeker;
 import org.shovelgame.game.domain.model.MissionReward;
 import org.shovelgame.game.domain.model.SeekerModel;
 import org.springframework.roo.addon.javabean.RooJavaBean;
@@ -22,10 +21,7 @@ public class SeekerReward extends MissionReward {
 	
 	@Override
 	public void claim(RewardClaim claim) {
-		Seeker seeker = new Seeker();
-		seeker.setSeekerModel(this.seeker);
-		seeker.setOwner(claim.getPlayer());
-		seeker.persist();
+		this.seeker.claim(claim.getPlayer());
 		claim.remove();
 	}
 }

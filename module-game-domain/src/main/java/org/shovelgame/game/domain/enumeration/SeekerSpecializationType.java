@@ -2,8 +2,9 @@ package org.shovelgame.game.domain.enumeration;
 
 import org.shovelgame.game.domain.finders.ArmorModelRewardFinder;
 import org.shovelgame.game.domain.finders.MinionModelRewardFinder;
+import org.shovelgame.game.domain.finders.Reward;
 import org.shovelgame.game.domain.finders.SeekerModelRewardFinder;
-import org.shovelgame.game.domain.finders.SeekerRewardFinder;
+import org.shovelgame.game.domain.finders.RewardFinder;
 import org.shovelgame.game.domain.finders.TalismanModelRewardFinder;
 import org.shovelgame.game.domain.finders.WeaponModelRewardFinder;
 
@@ -15,7 +16,7 @@ public enum SeekerSpecializationType {
 	Armor(ArmorModelRewardFinder.class), 
 	Weapon(WeaponModelRewardFinder.class), 
 	Talisman(TalismanModelRewardFinder.class);
-	private Class<? extends SeekerRewardFinder<?>> finder;
+	private Class<? extends RewardFinder<? extends Reward>> finder;
 	private PlayerResource resource;
 	
 	private SeekerSpecializationType(PlayerResource resource) {
@@ -27,11 +28,11 @@ public enum SeekerSpecializationType {
 	}
 
 	private SeekerSpecializationType(
-			Class<? extends SeekerRewardFinder<?>> modelClass) {
+			Class<? extends RewardFinder<? extends Reward>> modelClass) {
 		this.finder = modelClass;
 	}
 
-	public Class<? extends SeekerRewardFinder<?>> getFinder() {
+	public Class<? extends RewardFinder<? extends Reward>> getFinder() {
 		return finder;
 	}
 	

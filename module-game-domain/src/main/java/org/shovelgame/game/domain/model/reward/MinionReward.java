@@ -22,10 +22,7 @@ public class MinionReward extends MissionReward {
 
 	@Override
 	public void claim(RewardClaim claim) {
-		Minion minion = new Minion();
-		minion.setMinionModel(this.minion);
-		minion.setOwner(claim.getPlayer());
-		minion.persist();
+		this.minion.claim(claim.getPlayer());
 		claim.remove();
 	}
 }

@@ -40,6 +40,10 @@ privileged aspect Minion_Roo_DbManaged {
     @NotNull
     private Integer Minion.level;
     
+    @Column(name = "experience")
+    @NotNull
+    private Long Minion.experience;
+    
     public Set<Team> Minion.getTeams() {
         return teams;
     }
@@ -94,6 +98,14 @@ privileged aspect Minion_Roo_DbManaged {
     
     public void Minion.setLevel(Integer level) {
         this.level = level;
+    }
+    
+    public Long Minion.getExperience() {
+        return experience;
+    }
+    
+    public void Minion.setExperience(Long experience) {
+        this.experience = experience;
     }
     
 }

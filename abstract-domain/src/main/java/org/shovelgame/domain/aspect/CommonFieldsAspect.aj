@@ -25,5 +25,5 @@ public aspect CommonFieldsAspect {
 		this.published = published;
 	}
 	
-	declare parents: @Publicable * implements PublishedFieldDeclaration;
+	declare parents: @ExperienceSetter * implements PublishedFieldDeclaration;
 }

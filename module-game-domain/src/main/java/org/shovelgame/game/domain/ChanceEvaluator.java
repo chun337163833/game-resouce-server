@@ -5,7 +5,8 @@ import java.math.BigDecimal;
 public class ChanceEvaluator {
 
 	public static boolean success(double val) {
-		return false;
+		if(val >= 1.) return true;
+		return Math.random() <= val;
 	}
 	public static boolean success(BigDecimal val) {
 		return success(val.doubleValue());
