@@ -39,7 +39,7 @@ public class CommonTests {
 	}
 	
 	@Test
-	public void testSeekerResourceRewardClaim() {
+	public void testSeekerRewardClaim() {
 		SeekerRewardClaimer claimer = new SeekerRewardClaimer();
 		Seeker s = new Seeker();
 		SeekerModel model = new SeekerModel();
