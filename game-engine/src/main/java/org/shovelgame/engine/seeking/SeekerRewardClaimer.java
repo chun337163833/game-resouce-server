@@ -10,7 +10,10 @@ import org.shovelgame.game.domain.enumeration.ResourceGeneratorData;
 import org.shovelgame.game.domain.enumeration.SeekerSpecializationType;
 import org.shovelgame.game.domain.finders.Reward;
 import org.shovelgame.game.domain.finders.RewardFinder;
+import org.shovelgame.game.domain.leveling.Level;
 import org.shovelgame.game.domain.leveling.Levelable;
+import org.shovelgame.game.domain.leveling.LevelingService;
+import org.shovelgame.game.domain.leveling.LevelingServiceAccessor;
 
 @Logger
 public class SeekerRewardClaimer {
@@ -22,25 +25,30 @@ public class SeekerRewardClaimer {
 		Player p = seeker.getOwner();
 		SeekerRewardDetail detail = null;
 		try {
+			String serviceName = Seeker.class.getAnnotation(Levelable.class).service();
+			int level = seeker.getLevel();
 			if (spec.getResource() != null) {
 				// reward is resource
-				int level = seeker.getLevel();
 				ResourceGeneratorData data = spec.getResource().getGenData();
 				int baseValue = data.randomValue(level);
 				long value = calculateResourceValue(level, baseValue, seeker.getSeekerModel().getRarity());
 				p.addResource(spec.getResource(), value);
 				detail = new SeekerRewardDetail(spec, value);
-				String serviceName = Seeker.class.getAnnotation(Levelable.class).service();
 				long experience = data.calculateExperienceForSeeker(level, baseValue, serviceName);
 				seeker.addExperience(experience);
 			} else {
 				RewardFinder<? extends Reward> finder = spec.getFinder().newInstance();
 				Reward reward = finder.find(seeker);
+				ResourceGeneratorData data = new ResourceGeneratorData(1, 10, 1.);
+				int baseValue = data.getMinByLevel(level);
 				if (reward != null) {
+					baseValue = data.randomValue(level);
+					baseValue += baseValue * (((double) reward.getRarity().ordinal() + 1 / 100d) * 2);
 					reward.claim(p);
 					detail = new SeekerRewardDetail(spec, reward.getId());
 				}
-				Rarity r = reward.getRarity();
+				long experience = data.calculateExperienceForSeeker(level, baseValue, serviceName);
+				seeker.addExperience(experience);
 			}
 			seeker.setStartedSearchTime(null);
 		} catch (Exception e) {

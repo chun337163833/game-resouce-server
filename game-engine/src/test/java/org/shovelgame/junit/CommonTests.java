@@ -43,14 +43,14 @@ public class CommonTests {
 		SeekerRewardClaimer claimer = new SeekerRewardClaimer();
 		Seeker s = new Seeker();
 		SeekerModel model = new SeekerModel();
-		model.setRarity(Rarity.Ancient);
-		model.setSpecialization(SeekerSpecializationType.Gold);
+		model.setRarity(Rarity.Common);
+		model.setSpecialization(SeekerSpecializationType.Test);
 		s.setSeekerModel(model);
 		Player p = new Player();
 		p.setExperienceBoost(BigDecimal.valueOf(1.5));
 		Calendar exp = Calendar.getInstance();
 		exp.add(Calendar.DATE, 1);
-//		p.setExperienceBoostExpire(exp.getTime());
+		p.setExperienceBoostExpire(exp.getTime());
 		p.setGolds(0L);
 		p.setDiamonds(0L);
 		s.setOwner(p);

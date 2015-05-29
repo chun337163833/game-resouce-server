@@ -6,6 +6,7 @@ import org.shovelgame.game.domain.finders.Reward;
 import org.shovelgame.game.domain.finders.SeekerModelRewardFinder;
 import org.shovelgame.game.domain.finders.RewardFinder;
 import org.shovelgame.game.domain.finders.TalismanModelRewardFinder;
+import org.shovelgame.game.domain.finders.TestRewardFinder;
 import org.shovelgame.game.domain.finders.WeaponModelRewardFinder;
 
 public enum SeekerSpecializationType {
@@ -15,7 +16,8 @@ public enum SeekerSpecializationType {
 	Minion(MinionModelRewardFinder.class), 
 	Armor(ArmorModelRewardFinder.class), 
 	Weapon(WeaponModelRewardFinder.class), 
-	Talisman(TalismanModelRewardFinder.class);
+	Talisman(TalismanModelRewardFinder.class),
+	Test(TestRewardFinder.class);
 	private Class<? extends RewardFinder<? extends Reward>> finder;
 	private PlayerResource resource;
 	

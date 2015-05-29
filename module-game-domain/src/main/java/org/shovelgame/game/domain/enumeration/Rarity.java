@@ -32,7 +32,9 @@ public enum Rarity {
 	 * Multiplier for resource reward founded by seeker.
 	 */
 	private double resourceMultiplier;
-
+	
+	private double expMultiplier;
+	
 	private Rarity(int seekerLevel, int seekerSearchTime, double chanceToFind, double resourceMultiplier) {
 		this.seekerLevel = seekerLevel;
 		this.seekerSearchTime = seekerSearchTime;

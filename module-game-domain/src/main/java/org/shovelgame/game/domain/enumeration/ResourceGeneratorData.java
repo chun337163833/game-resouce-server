@@ -45,14 +45,17 @@ public class ResourceGeneratorData {
 
 	    return randomNum == 0? 1: randomNum;
 	}
-	
+	public int getMinByLevel(int level) {
+		int[] minmax = getMinMax(level);
+		return minmax[0];
+	}
 	private int[] getMinMax(int level) {
 		int diff = (max - min);
 		int lvlDiff = diff * level;
 		int lvlMin = min + lvlDiff - diff;
 		int lvlMax = max + lvlDiff - diff;
-		int min = (int)(lvlMin * multiplier);
-		int max = (int)(lvlMax * multiplier);
+		int min = (int)(Math.floor(lvlMin * multiplier));
+		int max = (int)(Math.ceil(lvlMax * multiplier));
 		return new int[]{min, max};
 	}
 	
@@ -62,7 +65,13 @@ public class ResourceGeneratorData {
 		int max = minmax[1];
 		int res = max - min;
 		int val = value - min;
-		double perc = (double)val/(double)res;
+		double perc = (double) val / (double) res;
+		if(value == min) {
+			perc = .1;
+		} else if(value == max) {
+			perc = .9;
+		}
+		
 		LevelingService service = LevelingServiceAccessor.getLevelingService(serviceName);
 		return service.calculateExperience(level, perc);
 	}
