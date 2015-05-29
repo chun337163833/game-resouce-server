@@ -10,7 +10,7 @@ import org.springframework.roo.addon.tostring.RooToString;
 @RooJpaActiveRecord(versionField = "", table = "seeker", schema = "data")
 @RooDbManaged(automaticallyDelete = true)
 @RooToString(excludeFields = { "owner", "seekerModel" })
-@Levelable
+@Levelable(service = "lowExperience")
 public class Seeker {
 
     public int getSearchTime() {
@@ -26,5 +26,9 @@ public class Seeker {
         endTime.setTime(getStartedSearchTime().getTime());
         endTime.add(Calendar.HOUR, getSearchTime());
         return endTime;
+    }
+
+    public double getBoostExperience() {
+        return getOwner().getCurrentExperienceBoost();
     }
 }

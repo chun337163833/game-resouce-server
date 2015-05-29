@@ -95,6 +95,8 @@
         <column name="id" primaryKey="true" required="true" scale="0" size="19" type="-5,bigserial"/>
         <column name="golds" primaryKey="false" required="true" scale="0" size="19" type="-5,int8"/>
         <column name="diamonds" primaryKey="false" required="true" scale="0" size="19" type="-5,int8"/>
+        <column name="experience_boost" primaryKey="false" required="false" scale="2" size="3" type="2,numeric"/>
+        <column name="experience_boost_expire" primaryKey="false" required="false" scale="0" size="13" type="91,date"/>
         <foreign-key foreignTable="item" name="fk_item_player" onDelete="none" onUpdate="none">
             <option key="foreignSchemaName" value="data"/>
             <option key="exported" value="true"/>

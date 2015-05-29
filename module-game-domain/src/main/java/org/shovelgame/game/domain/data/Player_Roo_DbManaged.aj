@@ -3,12 +3,16 @@
 
 package org.shovelgame.game.domain.data;
 
+import java.math.BigDecimal;
+import java.util.Date;
 import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import org.shovelgame.game.domain.data.Item;
 import org.shovelgame.game.domain.data.Minion;
@@ -16,6 +20,7 @@ import org.shovelgame.game.domain.data.Player;
 import org.shovelgame.game.domain.data.Seeker;
 import org.shovelgame.game.domain.data.Team;
 import org.shovelgame.game.domain.model.MissionReward;
+import org.springframework.format.annotation.DateTimeFormat;
 
 privileged aspect Player_Roo_DbManaged {
     
@@ -42,6 +47,14 @@ privileged aspect Player_Roo_DbManaged {
     @Column(name = "diamonds")
     @NotNull
     private Long Player.diamonds;
+    
+    @Column(name = "experience_boost", precision = 3, scale = 2)
+    private BigDecimal Player.experienceBoost;
+    
+    @Column(name = "experience_boost_expire")
+    @Temporal(TemporalType.DATE)
+    @DateTimeFormat(style = "M-")
+    private Date Player.experienceBoostExpire;
     
     public Set<MissionReward> Player.getMissionRewards() {
         return missionRewards;
@@ -97,6 +110,22 @@ privileged aspect Player_Roo_DbManaged {
     
     public void Player.setDiamonds(Long diamonds) {
         this.diamonds = diamonds;
+    }
+    
+    public BigDecimal Player.getExperienceBoost() {
+        return experienceBoost;
+    }
+    
+    public void Player.setExperienceBoost(BigDecimal experienceBoost) {
+        this.experienceBoost = experienceBoost;
+    }
+    
+    public Date Player.getExperienceBoostExpire() {
+        return experienceBoostExpire;
+    }
+    
+    public void Player.setExperienceBoostExpire(Date experienceBoostExpire) {
+        this.experienceBoostExpire = experienceBoostExpire;
     }
     
 }

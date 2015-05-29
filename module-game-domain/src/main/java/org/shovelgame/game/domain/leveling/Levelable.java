@@ -12,5 +12,9 @@ import java.lang.annotation.Target;
 @Inherited
 @Documented
 public @interface Levelable {
-
+	/**
+	 * Name of Experience service.
+	 * @return
+	 */
+	String service();
 }

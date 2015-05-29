@@ -1,4 +1,5 @@
 package org.shovelgame.game.domain.data;
+import java.util.Date;
 import org.shovelgame.game.domain.enumeration.PlayerResource;
 import org.springframework.roo.addon.dbre.RooDbManaged;
 import org.springframework.roo.addon.javabean.RooJavaBean;
@@ -17,5 +18,12 @@ public class Player {
         } else if (PlayerResource.Diamond.equals(res)) {
             setGolds(getDiamonds() + value);
         }
+    }
+
+    public double getCurrentExperienceBoost() {
+        if (getExperienceBoostExpire() == null || getExperienceBoostExpire().before(new Date())) {
+            return 0d;
+        }
+        return getExperienceBoost().doubleValue();
     }
 }

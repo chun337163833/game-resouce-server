@@ -1,27 +1,15 @@
-package org.shovelgame.engine;
+package org.shovelgame.engine.leveling.service;
 
-import java.util.HashMap;
 import java.util.Map;
 
 import org.shovelgame.game.domain.leveling.Level;
 import org.shovelgame.game.domain.leveling.LevelingService;
 
-public class StaticLevelingService implements LevelingService {
-
-	public static Map<Integer, Long> experienceMap = new HashMap<>();
-	private static int baseExp = 10;
-	static {
-		long prev = 0;
-		for (int i = 1; i <= Level.MAX; i++) {
-			long value = (long) i * baseExp + prev;
-			experienceMap.put(i, value);
-			prev = value;
-			System.out.println(i + ":" + value);
-		}
-	}
+public abstract class BasicLevelingAlgorithmService implements LevelingService {
 
 	@Override
 	public void experienceChanged(Level level) {
+		Map<Integer, Long> experienceMap = getExperienceMap();
 		Long cap = experienceMap.get(Level.MAX - 1);
 		if(level.getExperience() > cap) {
 			level.setExperience(cap);
@@ -36,6 +24,12 @@ public class StaticLevelingService implements LevelingService {
 				break;
 			}
 		}
+	}	
+	@Override
+	public long calculateExperience(int level, double perc) {
+		if(level == Level.MAX) return 0L;
+		long exp = getExperienceMap().get(level);
+		long nexp = getExperienceMap().get(level + 1);
+		return (long) ((nexp - exp) * perc);
 	}
-
 }

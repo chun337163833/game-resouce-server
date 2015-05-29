@@ -2,6 +2,9 @@ package org.shovelgame.game.domain.enumeration;
 
 import java.util.Random;
 
+import org.shovelgame.game.domain.leveling.LevelingService;
+import org.shovelgame.game.domain.leveling.LevelingServiceAccessor;
+
 public class ResourceGeneratorData {
 
 	private final int min;
@@ -28,12 +31,10 @@ public class ResourceGeneratorData {
 	}
 	
 	public int randomValue(int level) {
-		int diff = (max - min);
-		int lvlDiff = diff * level;
-		int lvlMin = min + lvlDiff - diff;
-		int lvlMax = max + lvlDiff - diff;
-		int min = (int)(lvlMin * multiplier);
-		int max = (int)(lvlMax * multiplier);
+		int[] minmax = getMinMax(level);
+		int min = minmax[0];
+		int max = minmax[1];
+		
 	    // NOTE: Usually this should be a field rather than a method
 	    // variable so that it is not re-seeded every call.
 	    Random rand = new Random();
@@ -44,4 +45,26 @@ public class ResourceGeneratorData {
 
 	    return randomNum == 0? 1: randomNum;
 	}
+	
+	private int[] getMinMax(int level) {
+		int diff = (max - min);
+		int lvlDiff = diff * level;
+		int lvlMin = min + lvlDiff - diff;
+		int lvlMax = max + lvlDiff - diff;
+		int min = (int)(lvlMin * multiplier);
+		int max = (int)(lvlMax * multiplier);
+		return new int[]{min, max};
+	}
+	
+	public long calculateExperienceForSeeker(int level, int value, String serviceName) {
+		int[] minmax = getMinMax(level);
+		int min = minmax[0];
+		int max = minmax[1];
+		int res = max - min;
+		int val = value - min;
+		double perc = (double)val/(double)res;
+		LevelingService service = LevelingServiceAccessor.getLevelingService(serviceName);
+		return service.calculateExperience(level, perc);
+	}
+	
 }

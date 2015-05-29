@@ -224,7 +224,9 @@ CREATE SEQUENCE data.player_id_seq INCREMENT 1 START 1;
 CREATE TABLE data.player ( 
 	id bigint DEFAULT nextval(('data.player_id_seq'::text)::regclass) NOT NULL,
 	golds bigint DEFAULT 10000 NOT NULL,
-	diamonds bigint DEFAULT 10 NOT NULL
+	diamonds bigint DEFAULT 10 NOT NULL,
+	experience_boost decimal(3,2) DEFAULT 0,
+	experience_boost_expire date
 );
 
 CREATE TABLE data.reward_claim ( 

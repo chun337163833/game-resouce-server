@@ -10,6 +10,7 @@ import org.shovelgame.game.domain.enumeration.ResourceGeneratorData;
 import org.shovelgame.game.domain.enumeration.SeekerSpecializationType;
 import org.shovelgame.game.domain.finders.Reward;
 import org.shovelgame.game.domain.finders.RewardFinder;
+import org.shovelgame.game.domain.leveling.Levelable;
 
 @Logger
 public class SeekerRewardClaimer {
@@ -23,11 +24,15 @@ public class SeekerRewardClaimer {
 		try {
 			if (spec.getResource() != null) {
 				// reward is resource
-				long value = calculateResourceValue(seeker.getLevel(), spec
-						.getResource().getGenData(), seeker.getSeekerModel()
-						.getRarity());
+				int level = seeker.getLevel();
+				ResourceGeneratorData data = spec.getResource().getGenData();
+				int baseValue = data.randomValue(level);
+				long value = calculateResourceValue(level, baseValue, seeker.getSeekerModel().getRarity());
 				p.addResource(spec.getResource(), value);
 				detail = new SeekerRewardDetail(spec, value);
+				String serviceName = Seeker.class.getAnnotation(Levelable.class).service();
+				long experience = data.calculateExperienceForSeeker(level, baseValue, serviceName);
+				seeker.addExperience(experience);
 			} else {
 				RewardFinder<? extends Reward> finder = spec.getFinder().newInstance();
 				Reward reward = finder.find(seeker);
@@ -35,8 +40,8 @@ public class SeekerRewardClaimer {
 					reward.claim(p);
 					detail = new SeekerRewardDetail(spec, reward.getId());
 				}
+				Rarity r = reward.getRarity();
 			}
-//			seeker.set
 			seeker.setStartedSearchTime(null);
 		} catch (Exception e) {
 			log.error("", e);
@@ -44,9 +49,7 @@ public class SeekerRewardClaimer {
 		return detail;
 	}
 
-	public long calculateResourceValue(int level, ResourceGeneratorData data,
-			Rarity rarity) {
-		int baseValue = data.randomValue(level);
+	public long calculateResourceValue(int level, int baseValue, Rarity rarity) {
 		return (long) (baseValue * rarity.getResourceMultiplier());
 	}
 
