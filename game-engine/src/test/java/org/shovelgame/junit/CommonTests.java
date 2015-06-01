@@ -46,14 +46,7 @@ public class CommonTests {
 		model.setRarity(Rarity.Common);
 		model.setSpecialization(SeekerSpecializationType.Test);
 		s.setSeekerModel(model);
-		Player p = new Player();
-		p.setExperienceBoost(BigDecimal.valueOf(1.5));
-		Calendar exp = Calendar.getInstance();
-		exp.add(Calendar.DATE, 1);
-		p.setExperienceBoostExpire(exp.getTime());
-		p.setGolds(0L);
-		p.setDiamonds(0L);
-		s.setOwner(p);
+		s.setOwner(createTestPlayer());
 		s.setLevel(1);
 		s.setExperience(0L);
 		
@@ -90,20 +83,35 @@ public class CommonTests {
 	
 	@Test
 	public void testLevelingMinion() {
-		Minion seeker = new Minion();
-		seeker.setLevel(1);
-		int fromLevel = Level.MAX -1;
-		seeker.setExperience(LevelingServiceAccessor.getLevelingService(Minion.class.getAnnotation(Levelable.class).service()).getExperienceMap().get(fromLevel) - 1);
-		Assert.assertEquals(Integer.valueOf(fromLevel), seeker.getLevel());
+		Minion minion = new Minion();
+		minion.setLevel(1);
+		minion.setOwner(createTestPlayer());
+		minion.setExperience(0L);
+		int fromLevel = Level.MAX;
+		minion.addExperience(LevelingServiceAccessor.getLevelingService(Minion.class.getAnnotation(Levelable.class).service()).getExperienceMap().get(fromLevel));
+		Assert.assertEquals(Integer.valueOf(fromLevel), minion.getLevel());
 	}
 	
 	@Test
 	public void testLevelingSeeker() {
 		Seeker seeker = new Seeker();
 		seeker.setLevel(1);
-		int fromLevel = Level.MAX -1;
-		seeker.setExperience(LevelingServiceAccessor.getLevelingService(Seeker.class.getAnnotation(Levelable.class).service()).getExperienceMap().get(fromLevel) - 1);
+		seeker.setOwner(createTestPlayer());
+		seeker.setExperience(0L);
+		int fromLevel = Level.MAX;
+		seeker.addExperience(LevelingServiceAccessor.getLevelingService(Seeker.class.getAnnotation(Levelable.class).service()).getExperienceMap().get(fromLevel));
 		Assert.assertEquals(Integer.valueOf(fromLevel), seeker.getLevel());
 	}
 
+	private Player createTestPlayer() {
+		Player p = new Player();
+		p.setExperienceBoost(BigDecimal.valueOf(1.5));
+		Calendar exp = Calendar.getInstance();
+		exp.add(Calendar.DATE, 1);
+		p.setExperienceBoostExpire(exp.getTime());
+		p.setGolds(0L);
+		p.setDiamonds(0L);
+		return p;
+	}
+	
 }

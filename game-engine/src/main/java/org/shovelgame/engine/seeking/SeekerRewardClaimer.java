@@ -10,10 +10,7 @@ import org.shovelgame.game.domain.enumeration.ResourceGeneratorData;
 import org.shovelgame.game.domain.enumeration.SeekerSpecializationType;
 import org.shovelgame.game.domain.finders.Reward;
 import org.shovelgame.game.domain.finders.RewardFinder;
-import org.shovelgame.game.domain.leveling.Level;
 import org.shovelgame.game.domain.leveling.Levelable;
-import org.shovelgame.game.domain.leveling.LevelingService;
-import org.shovelgame.game.domain.leveling.LevelingServiceAccessor;
 
 @Logger
 public class SeekerRewardClaimer {

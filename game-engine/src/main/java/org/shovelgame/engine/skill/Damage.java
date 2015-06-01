@@ -1,6 +1,6 @@
 package org.shovelgame.engine.skill;
 
-import org.shovelgame.engine.session.Command;
+import org.shovelgame.engine.session.command.Command;
 
 public class Damage implements ISkill {
 
