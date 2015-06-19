@@ -52,7 +52,6 @@ public class ServerConnection implements Runnable, InitializingBean {
 					@Override
 					public void disconnected() {
 						connectedClients.remove(client);
-						client.interrupt();
 					}
 
 					@Override
@@ -76,7 +75,7 @@ public class ServerConnection implements Runnable, InitializingBean {
 					}
 				});
 				this.connectedClients.add(client);
-				client.start();
+				this.clientExecutor.execute(client);
 			}
 		} catch (Exception e) {
 			log.error("", e);

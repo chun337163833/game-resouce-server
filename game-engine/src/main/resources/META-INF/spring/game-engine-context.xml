@@ -18,7 +18,10 @@
 	<task:annotation-driven />
 <!-- 	<task:scheduler id="serverScheduler" pool-size="1" /> -->
 	<task:executor id="socketListenerExecutor" pool-size="1" />
-	<task:executor id="clientTaskExecutor" pool-size="100" />
+	<bean id="clientTaskExecutor" class="org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor" 
+	p:corePoolSize="1000"
+	p:keepAliveSeconds="10"
+	p:allowCoreThreadTimeOut="true" />
 	
 	<import resource="classpath:META-INF/spring/property-files.xml" />
 	<bean class="org.shovelgame.engine.io.ServerConnection" 
