@@ -15,7 +15,8 @@
         http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-3.0.xsd ">
 	<context:annotation-config />
 	
-	<import resource="property-files.xml" />
+	
+	<import resource="classpath:META-INF/spring/property-files.xml" />
 	
 	<bean id="messageSource"
 		class="org.springframework.context.support.ReloadableResourceBundleMessageSource"
@@ -67,5 +68,6 @@
 		class="org.springframework.security.authentication.encoding.ShaPasswordEncoder">
 		<constructor-arg value="256" />
 	</bean>
-	<bean class="org.shovelgame.gcm.GCMTempCache" />	
+	<bean class="org.shovelgame.gcm.GCMTempCache" />
+	
 </beans>

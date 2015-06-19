@@ -5,8 +5,8 @@ import java.util.Map;
 
 import org.shovelgame.http.HttpResponse;
 import org.shovelgame.http.HttpRestClient;
-import org.shovelgame.http.SSLCertificateDelegate;
 import org.shovelgame.http.HttpRestClient.RequestMethod;
+import org.shovelgame.http.SSLCertificateDelegate;
 
 public class OAuthClient {
 
@@ -46,11 +46,15 @@ public class OAuthClient {
 		this.encodedClientAuthorization = encodedClientAuthorization;
 		return this;
 	}
-
 	public HttpResponse requestToken() throws Exception {
+		return this.requestToken(new HashMap<>());
+	}
+	public HttpResponse requestToken(Map<String, String> headers) throws Exception {
 		HttpRestClient client = new HttpRestClient();
 		client.setSSLDelegate(this.sslDelegate);
-		Map<String, String> headers = new HashMap<String, String>();
+		if(headers == null) {
+			headers = new HashMap<String, String>();
+		}
 		headers.put("Authorization", "Basic " + encodedClientAuthorization);
 		String params = "grant_type=password&username=" + this.username + "&password=" + this.password;
 		if(this.username == null && this.password == null) {

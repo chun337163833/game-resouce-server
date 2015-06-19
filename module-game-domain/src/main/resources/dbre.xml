@@ -97,6 +97,8 @@
         <column name="diamonds" primaryKey="false" required="true" scale="0" size="19" type="-5,int8"/>
         <column name="experience_boost" primaryKey="false" required="false" scale="2" size="3" type="2,numeric"/>
         <column name="experience_boost_expire" primaryKey="false" required="false" scale="0" size="13" type="91,date"/>
+        <column name="user_name" primaryKey="false" required="true" scale="0" size="200" type="12,varchar"/>
+        <column name="password" primaryKey="false" required="false" scale="0" size="50" type="12,varchar"/>
         <foreign-key foreignTable="item" name="fk_item_player" onDelete="none" onUpdate="none">
             <option key="foreignSchemaName" value="data"/>
             <option key="exported" value="true"/>
@@ -108,6 +110,11 @@
             <reference foreign="owner" local="id"/>
         </foreign-key>
         <foreign-key foreignTable="reward_claim" name="fk_reward_claim_player" onDelete="none" onUpdate="none">
+            <option key="foreignSchemaName" value="data"/>
+            <option key="exported" value="true"/>
+            <reference foreign="player" local="id"/>
+        </foreign-key>
+        <foreign-key foreignTable="rights" name="fk_rights_player" onDelete="none" onUpdate="none">
             <option key="foreignSchemaName" value="data"/>
             <option key="exported" value="true"/>
             <reference foreign="player" local="id"/>
@@ -124,6 +131,9 @@
         </foreign-key>
         <unique name="pk_player">
             <unique-column name="id"/>
+        </unique>
+        <unique name="uq_player_username">
+            <unique-column name="user_name"/>
         </unique>
     </table>
     <table alias="data" name="reward_claim">
@@ -149,6 +159,38 @@
         <index name="ixfk_reward_claim_player">
             <index-column name="player"/>
         </index>
+    </table>
+    <table alias="data" name="rights">
+        <column name="role" primaryKey="false" required="true" scale="0" size="19" type="-5,int8"/>
+        <column name="player" primaryKey="false" required="true" scale="0" size="19" type="-5,int8"/>
+        <foreign-key foreignTable="player" name="fk_rights_player" onDelete="none" onUpdate="none">
+            <option key="foreignSchemaName" value="data"/>
+            <option key="exported" value="false"/>
+            <reference foreign="id" local="player"/>
+        </foreign-key>
+        <foreign-key foreignTable="role" name="fk_rights_role" onDelete="none" onUpdate="none">
+            <option key="foreignSchemaName" value="data"/>
+            <option key="exported" value="false"/>
+            <reference foreign="id" local="role"/>
+        </foreign-key>
+        <index name="ixfk_rights_player">
+            <index-column name="player"/>
+        </index>
+        <index name="ixfk_rights_role">
+            <index-column name="role"/>
+        </index>
+    </table>
+    <table alias="data" name="role">
+        <column name="id" primaryKey="true" required="true" scale="0" size="19" type="-5,int8"/>
+        <column name="code" primaryKey="false" required="true" scale="0" size="50" type="12,varchar"/>
+        <foreign-key foreignTable="rights" name="fk_rights_role" onDelete="none" onUpdate="none">
+            <option key="foreignSchemaName" value="data"/>
+            <option key="exported" value="true"/>
+            <reference foreign="role" local="id"/>
+        </foreign-key>
+        <unique name="pk_role">
+            <unique-column name="id"/>
+        </unique>
     </table>
     <table alias="data" name="seeker">
         <column name="id" primaryKey="true" required="true" scale="0" size="19" type="-5,bigserial"/>

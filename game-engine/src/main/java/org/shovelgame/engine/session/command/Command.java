@@ -1,41 +1,64 @@
 package org.shovelgame.engine.session.command;
 
+import java.io.IOException;
+
+import org.springframework.util.Assert;
+
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 public class Command {
 
-	private Long skill;
-	private String source;
-	private String destination;
+	private CommandName name;
+	private CommandStatus status = CommandStatus.Ok;
+	private String[] parameters;
 
-	public Long getSkill() {
-		return skill;
-	}
-
-	public void setSkill(Long skill) {
-		this.skill = skill;
+	public CommandName getName() {
+		return name;
 	}
 
-	public String getSource() {
-		return source;
+	public Command setName(CommandName name) {
+		this.name = name;
+		return this;
 	}
 
-	public void setSource(String source) {
-		this.source = source;
+	public String[] getParameters() {
+		return parameters;
 	}
 
-	public String getDestination() {
-		return destination;
+	public Command setParameters(String[] parameters) {
+		this.parameters = parameters;
+		return this;
 	}
 
-	public void setDestination(String destination) {
-		this.destination = destination;
+	public CommandStatus getStatus() {
+		return status;
 	}
 
-	public static Command fromString(String json) {
-		return null;
+	public Command setStatus(CommandStatus status) {
+		this.status = status;
+		return this;
 	}
-	
-	public String toJson() {
-		return "";
+
+	public static Command fromString(String json) throws JsonParseException,
+			JsonMappingException, IOException {
+		return new ObjectMapper().readValue(json, Command.class);
 	}
-	
+
+	public String toJson() throws JsonProcessingException {
+		return new ObjectMapper().writeValueAsString(this);
+	}
+
+	public void validate() throws CommandException {
+		try {
+			Assert.notNull(this.status);
+			Assert.notNull(this.name);
+			Assert.notNull(this.parameters);
+		} catch (Exception e) {
+			throw new CommandException("Command is not valid.", e);
+		}
+	}
+
 }

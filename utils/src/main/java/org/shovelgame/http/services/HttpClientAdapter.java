@@ -7,8 +7,8 @@ import java.util.Map;
 
 import org.shovelgame.http.HttpResponse;
 import org.shovelgame.http.HttpRestClient;
-import org.shovelgame.http.SSLCertificateDelegate;
 import org.shovelgame.http.HttpRestClient.RequestMethod;
+import org.shovelgame.http.SSLCertificateDelegate;
 import org.springframework.util.StringUtils;
 
 public class HttpClientAdapter {

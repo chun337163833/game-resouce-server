@@ -1,4 +1,4 @@
-package org.shovelgame.engine.session.connection;
+package org.shovelgame.engine.io;
 
 import java.io.IOException;
 import java.io.InputStream;

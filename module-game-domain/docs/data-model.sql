@@ -35,6 +35,9 @@ DROP SEQUENCE IF EXISTS model.mission_reward_id_seq;
 DROP TABLE IF EXISTS data.player CASCADE;
 DROP SEQUENCE IF EXISTS data.player_id_seq;
 DROP TABLE IF EXISTS data.reward_claim CASCADE;
+DROP TABLE IF EXISTS data.rights CASCADE;
+DROP TABLE IF EXISTS data.Role CASCADE;
+DROP SEQUENCE IF EXISTS data.Role_id_seq;
 DROP TABLE IF EXISTS data.seeker CASCADE;
 DROP SEQUENCE IF EXISTS data.seeker_id_seq;
 DROP TABLE IF EXISTS model.seeker_model CASCADE;
@@ -226,12 +229,26 @@ CREATE TABLE data.player (
 	golds bigint DEFAULT 10000 NOT NULL,
 	diamonds bigint DEFAULT 10 NOT NULL,
 	experience_boost decimal(3,2) DEFAULT 0,
-	experience_boost_expire date
+	experience_boost_expire date,
+	user_name varchar(200) NOT NULL,
+	password varchar(255)
 );
 
 CREATE TABLE data.reward_claim ( 
 	player bigint NOT NULL,
 	reward bigint NOT NULL
+);
+
+CREATE TABLE data.rights ( 
+	role bigint NOT NULL,
+	player bigint NOT NULL
+);
+
+CREATE SEQUENCE data.Role_id_seq INCREMENT 1 START 1;
+
+CREATE TABLE data.Role ( 
+	id bigint DEFAULT nextval(('data.Role_id_seq'::text)::regclass) NOT NULL,
+	code varchar(50) NOT NULL
 );
 
 CREATE SEQUENCE data.seeker_id_seq INCREMENT 1 START 1;
@@ -402,10 +419,16 @@ CREATE INDEX IXFK_mission_reward_item_model
 	ON model.mission_reward (item);
 CREATE INDEX IXFK_mission_reward_mission
 	ON model.mission_reward (mission);
+ALTER TABLE data.player
+	ADD CONSTRAINT UQ_player_username UNIQUE (user_name);
 CREATE INDEX IXFK_reward_claim_player
 	ON data.reward_claim (player);
 CREATE INDEX IXFK_reward_claim_mission_reward
 	ON data.reward_claim (reward);
+CREATE INDEX IXFK_rights_player
+	ON data.rights (player);
+CREATE INDEX IXFK_rights_Role
+	ON data.rights (role);
 CREATE INDEX IXFK_seeker_seeker_model
 	ON data.seeker (seeker_model);
 CREATE INDEX IXFK_seeker_player
@@ -526,6 +549,10 @@ ALTER TABLE data.player ADD CONSTRAINT PK_player
 
 ALTER TABLE data.reward_claim ADD CONSTRAINT PK_reward_claim 
 	PRIMARY KEY (player, reward);
+
+
+ALTER TABLE data.Role ADD CONSTRAINT PK_Role 
+	PRIMARY KEY (id);
 
 
 ALTER TABLE data.seeker ADD CONSTRAINT PK_seeker 
@@ -675,6 +702,12 @@ ALTER TABLE data.reward_claim ADD CONSTRAINT FK_reward_claim_player
 
 ALTER TABLE data.reward_claim ADD CONSTRAINT FK_reward_claim_mission_reward 
 	FOREIGN KEY (reward) REFERENCES model.mission_reward (id);
+
+ALTER TABLE data.rights ADD CONSTRAINT FK_rights_player 
+	FOREIGN KEY (player) REFERENCES data.player (id);
+
+ALTER TABLE data.rights ADD CONSTRAINT FK_rights_Role 
+	FOREIGN KEY (role) REFERENCES data.Role (id);
 
 ALTER TABLE data.seeker ADD CONSTRAINT FK_seeker_seeker_model 
 	FOREIGN KEY (seeker_model) REFERENCES model.seeker_model (id);

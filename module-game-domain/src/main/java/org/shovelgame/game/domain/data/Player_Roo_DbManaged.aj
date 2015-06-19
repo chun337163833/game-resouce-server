@@ -17,6 +17,7 @@ import javax.validation.constraints.NotNull;
 import org.shovelgame.game.domain.data.Item;
 import org.shovelgame.game.domain.data.Minion;
 import org.shovelgame.game.domain.data.Player;
+import org.shovelgame.game.domain.data.Rights;
 import org.shovelgame.game.domain.data.Seeker;
 import org.shovelgame.game.domain.data.Team;
 import org.shovelgame.game.domain.model.MissionReward;
@@ -33,6 +34,9 @@ privileged aspect Player_Roo_DbManaged {
     
     @OneToMany(mappedBy = "owner")
     private Set<Minion> Player.minions;
+    
+    @OneToMany(mappedBy = "player")
+    private Set<Rights> Player.rightss;
     
     @OneToMany(mappedBy = "owner")
     private Set<Seeker> Player.seekers;
@@ -56,6 +60,13 @@ privileged aspect Player_Roo_DbManaged {
     @DateTimeFormat(style = "M-")
     private Date Player.experienceBoostExpire;
     
+    @Column(name = "user_name", length = 200, unique = true)
+    @NotNull
+    private String Player.userName;
+    
+    @Column(name = "password", length = 50)
+    private String Player.password;
+    
     public Set<MissionReward> Player.getMissionRewards() {
         return missionRewards;
     }
@@ -78,6 +89,14 @@ privileged aspect Player_Roo_DbManaged {
     
     public void Player.setMinions(Set<Minion> minions) {
         this.minions = minions;
+    }
+    
+    public Set<Rights> Player.getRightss() {
+        return rightss;
+    }
+    
+    public void Player.setRightss(Set<Rights> rightss) {
+        this.rightss = rightss;
     }
     
     public Set<Seeker> Player.getSeekers() {
@@ -126,6 +145,22 @@ privileged aspect Player_Roo_DbManaged {
     
     public void Player.setExperienceBoostExpire(Date experienceBoostExpire) {
         this.experienceBoostExpire = experienceBoostExpire;
+    }
+    
+    public String Player.getUserName() {
+        return userName;
+    }
+    
+    public void Player.setUserName(String userName) {
+        this.userName = userName;
+    }
+    
+    public String Player.getPassword() {
+        return password;
+    }
+    
+    public void Player.setPassword(String password) {
+        this.password = password;
     }
     
 }

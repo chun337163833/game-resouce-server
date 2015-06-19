@@ -1,14 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:sec="http://www.springframework.org/schema/security" 
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xmlns:jee="http://www.springframework.org/schema/jee"
+	xmlns:sec="http://www.springframework.org/schema/security" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:oauth="http://www.springframework.org/schema/security/oauth2"
 	xmlns:context="http://www.springframework.org/schema/context"
 	xmlns:p="http://www.springframework.org/schema/p"
-	xsi:schemaLocation="http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-2.5.xsd
-						http://www.springframework.org/schema/beans
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
                       http://www.springframework.org/schema/beans/spring-beans.xsd
 					  http://www.springframework.org/schema/security/oauth2
 					  http://www.springframework.org/schema/security/spring-security-oauth2.xsd
@@ -16,22 +13,28 @@
 					  http://www.springframework.org/schema/context/spring-context.xsd
 					  http://www.springframework.org/schema/security
 					  http://www.springframework.org/schema/security/spring-security.xsd">
-	<jee:jndi-lookup jndi-name="jdbc/oauth" id="oauthDataSource"
-		lookup-on-startup="true" cache="true" />
+
 	<bean id="tokenStore"
 		class="org.springframework.security.oauth2.provider.token.store.JdbcTokenStore">
 		<constructor-arg name="dataSource" ref="oauthDataSource" />
 	</bean>
 
-	<!-- <bean id="tokenStore" -->
-	<!-- class="org.springframework.security.oauth2.provider.token.store.InMemoryTokenStore" 
-		/> -->
-
 	<bean id="tokenServices"
 		class="org.springframework.security.oauth2.provider.token.DefaultTokenServices">
 		<property name="tokenStore" ref="tokenStore" />
+		<property name="clientDetailsService" ref="clientDetailsService" />
 	</bean>
-
+	
+	<bean id="clientDetailsService" class="org.springframework.security.oauth2.provider.client.JdbcClientDetailsService">
+		<constructor-arg name="dataSource" ref="oauthDataSource" />
+	</bean>
+	
+	<bean id="springTokenService"
+		class="org.shovelgame.spring.oauth.SpringTokenService" 
+		p:tokenService-ref="tokenServices" 
+		p:tokenStore-ref="tokenStore"
+		p:clientDetails-ref="clientDetailsService" />
+		
 	<bean id="authenticationEntryPoint"
 		class="org.springframework.security.oauth2.provider.error.OAuth2AuthenticationEntryPoint">
 		<property name="realmName" value="atlant-taxi" />
@@ -60,7 +63,7 @@
 		<sec:expression-handler ref="oauthExpressionHandler" />
 	</sec:global-method-security>
 	<oauth:resource-server id="oauthResourceFilter"
-		resource-id="oauthGame" token-services-ref="tokenServices" />
+		resource-id="oauthAtlantTaxi" token-services-ref="tokenServices" />
 	
 
 	<sec:http 
@@ -69,11 +72,6 @@
 		entry-point-ref="authenticationEntryPoint"
 		access-decision-manager-ref="accessDecisionManager">
 		<sec:anonymous enabled="false" />
-		
-		<sec:intercept-url pattern="/ws/v1/registration/**" access="SCOPE_READ,SCOPE_WRITE,DEVICE_CUSTOMER" />
-		
-		<sec:intercept-url pattern="/ws/v1/order/**" access="ROLE_CUSTOMER,SCOPE_READ" method="GET"/>
-		<sec:intercept-url pattern="/ws/v1/order/**" access="ROLE_CUSTOMER,SCOPE_WRITE" />
 		
 		<sec:intercept-url pattern="/ws/**" access="SCOPE_READ" method="GET" />
 		<sec:intercept-url pattern="/ws/**" access="SCOPE_WRITE" />

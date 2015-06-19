@@ -7,9 +7,9 @@ import org.springframework.roo.addon.jpa.activerecord.RooJpaActiveRecord;
 import org.springframework.roo.addon.tostring.RooToString;
 
 @RooJavaBean
-@RooJpaActiveRecord(versionField = "", table = "player", schema = "data")
+@RooJpaActiveRecord(finders = { "findPlayersByUserName" }, versionField = "", table = "player", schema = "data")
 @RooDbManaged(automaticallyDelete = true)
-@RooToString(excludeFields = { "items", "minions", "teams", "seekers", "rewardClaims", "missionRewards" })
+@RooToString(excludeFields = { "items", "minions", "teams", "seekers", "rewardClaims", "missionRewards", "rightss" })
 public class Player {
 
     public void addResource(PlayerResource res, long value) {

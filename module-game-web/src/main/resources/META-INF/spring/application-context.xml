@@ -14,8 +14,9 @@
 		http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd
         http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-3.0.xsd ">
 	<context:annotation-config />
-	
-	<import resource="property-files.xml" />
+	<task:annotation-driven />
+
+	<import resource="classpath:META-INF/spring/property-files.xml" />
 	
 	<bean id="messageSource"
 		class="org.springframework.context.support.ReloadableResourceBundleMessageSource"
