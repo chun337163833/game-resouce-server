@@ -19,6 +19,9 @@ privileged aspect Team_Roo_DbManaged {
     private Set<Item> Team.items;
     
     @OneToMany(mappedBy = "team")
+    private Set<Player> Team.players;
+    
+    @OneToMany(mappedBy = "team")
     private Set<Mission> Team.missions;
     
     @ManyToOne
@@ -37,16 +40,16 @@ privileged aspect Team_Roo_DbManaged {
     @JoinColumn(name = "minion_bot", referencedColumnName = "id", nullable = false)
     private Minion Team.minionBot;
     
-    @ManyToOne
-    @JoinColumn(name = "owner", referencedColumnName = "id")
-    private Player Team.owner;
-    
     public Set<Item> Team.getItems() {
         return items;
     }
     
     public void Team.setItems(Set<Item> items) {
         this.items = items;
+    }
+    
+    public void Team.setPlayers(Set<Player> players) {
+        this.players = players;
     }
     
     public Set<Mission> Team.getMissions() {
@@ -87,14 +90,6 @@ privileged aspect Team_Roo_DbManaged {
     
     public void Team.setMinionBot(Minion minionBot) {
         this.minionBot = minionBot;
-    }
-    
-    public Player Team.getOwner() {
-        return owner;
-    }
-    
-    public void Team.setOwner(Player owner) {
-        this.owner = owner;
     }
     
 }

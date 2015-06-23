@@ -1,8 +1,10 @@
 package org.shovelgame.game.domain.model;
 import javax.persistence.Column;
+import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.validation.constraints.NotNull;
 import org.shovelgame.game.domain.enumeration.SkillAlgorithm;
+import org.shovelgame.game.domain.enumeration.SkillType;
 import org.springframework.roo.addon.dbre.RooDbManaged;
 import org.springframework.roo.addon.javabean.RooJavaBean;
 import org.springframework.roo.addon.jpa.activerecord.RooJpaActiveRecord;
@@ -16,6 +18,11 @@ public class Skill {
 
     @Column(name = "alg", length = 50)
     @NotNull
-    @Enumerated
+    @Enumerated(EnumType.STRING)
     private SkillAlgorithm alg;
+
+    @Column(name = "type", length = 50)
+    @NotNull
+    @Enumerated(EnumType.STRING)
+    private SkillType type;
 }

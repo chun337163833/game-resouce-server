@@ -4,6 +4,7 @@
 package org.shovelgame.game.domain.model;
 
 import org.shovelgame.game.domain.enumeration.SkillAlgorithm;
+import org.shovelgame.game.domain.enumeration.SkillType;
 import org.shovelgame.game.domain.model.Skill;
 
 privileged aspect Skill_Roo_JavaBean {
@@ -14,6 +15,14 @@ privileged aspect Skill_Roo_JavaBean {
     
     public void Skill.setAlg(SkillAlgorithm alg) {
         this.alg = alg;
+    }
+    
+    public SkillType Skill.getType() {
+        return this.type;
+    }
+    
+    public void Skill.setType(SkillType type) {
+        this.type = type;
     }
     
 }

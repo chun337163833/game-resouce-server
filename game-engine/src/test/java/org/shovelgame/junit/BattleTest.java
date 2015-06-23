@@ -8,7 +8,6 @@ import java.util.Map;
 
 import org.junit.Test;
 import org.shovelgame.engine.io.LineReader;
-import org.shovelgame.engine.session.command.Command;
 import org.shovelgame.engine.session.command.CommandName;
 import org.shovelgame.http.HttpResponse;
 import org.shovelgame.http.oauth.OAuthClient;
@@ -23,11 +22,20 @@ public class BattleTest {
 		Token token = getToken(errors);
 		Socket socket = new Socket("localhost", 8888);
 		OutputStream os = socket.getOutputStream();
-		os.write(CommandName.Matchmaking.createCommand(token.getAccessToken()).toJson().getBytes());
+		//authenticate
+		os.write(CommandName.Authentication.createCommand(token.getAccessToken()).toJson().getBytes());
 		os.write("\n".getBytes());
 		LineReader reader = new LineReader(socket.getInputStream());
-		String line = reader.readLine();
-		System.out.println(line);
+		reader.readLine();
+		//begin mission
+		os.write(CommandName.Mission.createCommand("1").toJson().getBytes());
+		os.write("\n".getBytes());
+		reader.readLine();
+		
+		os.write(CommandName.UseSkill.createCommand("1").toJson().getBytes());
+		os.write("\n".getBytes());
+		reader.readLine();
+		
 		socket.close();
 	}
 	private Token getToken(StringBuffer errors) throws Exception {

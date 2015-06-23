@@ -1,7 +1,14 @@
 package org.shovelgame.engine.session;
 
-import org.shovelgame.engine.session.communication.AICommunication;
-import org.shovelgame.engine.session.communication.TcpCommunication;
+import org.shovelgame.annotation.Logger;
+import org.shovelgame.engine.io.ClientConnection;
+import org.shovelgame.engine.io.ClientStreamException;
+import org.shovelgame.engine.session.command.Command;
+import org.shovelgame.engine.session.command.CommandDelegate;
+import org.shovelgame.engine.session.command.CommandName;
+import org.shovelgame.engine.session.communication.AICommunicator;
+import org.shovelgame.engine.session.communication.Communicator;
+import org.shovelgame.engine.session.communication.TcpCommunicator;
 import org.shovelgame.game.domain.ChanceEvaluator;
 import org.shovelgame.game.domain.data.Player;
 import org.shovelgame.game.domain.data.RewardClaim;
@@ -10,15 +17,27 @@ import org.shovelgame.game.domain.data.Team;
 import org.shovelgame.game.domain.model.Mission;
 import org.shovelgame.game.domain.model.MissionReward;
 
-public class PveBattle extends BattleMechanism {
+@Logger
+public class PveBattle extends BattleMechanism implements CommandDelegate {
 
 	private Mission mission;
 
-	public PveBattle(Team playerTeam, Mission mission) {
-		super(new TcpCommunication(playerTeam), new AICommunication(mission.getTeam()));
+	public PveBattle(ClientConnection client, Mission mission) {
+		super(new TcpCommunicator(client), new AICommunicator(
+				mission.getTeam()));
 		this.mission = mission;
 	}
 
+	@Override
+	public void begin() {
+		Communicator c = getPlayerCommunicator();
+		try {
+			c.send(CommandName.Mission.createCommand("Begin"));
+		} catch (ClientStreamException e) {
+			log.error("", e);
+		}
+	}
+	
 	@Override
 	public void end(Team winner) {
 		if (winner != null) {
@@ -32,5 +51,14 @@ public class PveBattle extends BattleMechanism {
 			}
 		}
 	}
-
+	
+	private Communicator getPlayerCommunicator() {
+		return this.team1;
+	}
+	
+	@Override
+	public void received(Command command) {
+		System.out.println(command);
+	}
+	
 }

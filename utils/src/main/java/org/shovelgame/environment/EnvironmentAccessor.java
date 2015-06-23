@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Value;
 @Configurable
 public class EnvironmentAccessor { //NOSONAR
 	
-	@Value("${environment}")
+	@Value("${environment:development}")
 	private String environment;
 
 	private static EnvironmentAccessor instance;
@@ -15,8 +15,8 @@ public class EnvironmentAccessor { //NOSONAR
 		EnvironmentAccessor.instance = new EnvironmentAccessor();
 	}
 	
-	public static Environment getEnvironment() {
-		return Environment.valueOf(EnvironmentAccessor.instance.environment.toUpperCase());
+	public static EnvironmentType getEnvironment() {
+		return EnvironmentType.valueOf(EnvironmentAccessor.instance.environment.toUpperCase());
 	}
 
 }

@@ -5,9 +5,9 @@ import java.lang.reflect.InvocationTargetException;
 
 public aspect EnvironmentTypeAspect {
 
-	before(EnvironmentType type): @annotation(type) {
-		Environment env = EnvironmentAccessor.getEnvironment();
-		for(Environment e: type.value()) {
+	before(Environment type): @annotation(type) {
+		EnvironmentType env = EnvironmentAccessor.getEnvironment();
+		for(EnvironmentType e: type.value()) {
 			if(e.equals(env)) {
 				return;
 			}
@@ -15,13 +15,13 @@ public aspect EnvironmentTypeAspect {
 		this.throwException(type, env);
 	}
 	
-	private void throwException(EnvironmentType type, Environment env) {
+	private void throwException(Environment type, EnvironmentType env) {
 		Class<? extends EnvironmentException> cls = type.exception();
 		try {
-			Constructor<?> ctor = cls.getConstructor(Environment.class);
+			Constructor<?> ctor = cls.getConstructor(EnvironmentType.class);
 			throw (EnvironmentException) ctor.newInstance(env);
 		} catch (NoSuchMethodException e) {
-			throw new RuntimeException("Class must have constructor with one argument of type " + Environment.class, e);
+			throw new RuntimeException("Class must have constructor with one argument of type " + EnvironmentType.class, e);
 		} catch (SecurityException e) {
 			throw new RuntimeException("Constructor must be public.", e);
 		} catch (InstantiationException e) {

@@ -32,7 +32,9 @@ public class Command {
 		this.parameters = parameters;
 		return this;
 	}
-
+	public void emptyParameters() {
+		this.parameters = new String[0];
+	}
 	public CommandStatus getStatus() {
 		return status;
 	}

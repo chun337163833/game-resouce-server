@@ -6,6 +6,5 @@ import org.shovelgame.game.domain.data.Player;
 public interface ClientDelegate {
 
 	void disconnected();
-	void commandReceived(Command command);
 	Player authenticate(Command command);
 }

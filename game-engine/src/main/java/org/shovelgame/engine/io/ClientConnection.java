@@ -6,14 +6,19 @@ import java.net.Socket;
 
 import org.shovelgame.annotation.Logger;
 import org.shovelgame.engine.session.command.Command;
+import org.shovelgame.engine.session.command.CommandDelegate;
 import org.shovelgame.engine.session.command.CommandName;
 import org.shovelgame.engine.session.command.CommandStatus;
+import org.shovelgame.engine.session.command.ErrorMessageCommand;
 import org.shovelgame.game.domain.data.Player;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 @Logger
 public class ClientConnection extends Thread implements Runnable {
 	private Socket socket;
-	private ClientDelegate delegate;
+	private ClientDelegate clientDelegate;
+	private CommandDelegate commandDelegate;
 	private Player player;
 
 	public ClientConnection(Socket socket, String name) {
@@ -21,19 +26,24 @@ public class ClientConnection extends Thread implements Runnable {
 		this.socket = socket;
 	}
 
-	public void setDelegate(ClientDelegate delegate) {
-		this.delegate = delegate;
+	public void setClientDelegate(ClientDelegate clientDelegate) {
+		this.clientDelegate = clientDelegate;
+	}
+
+	public synchronized void setCommandDelegate(CommandDelegate commandDelegate) {
+		this.commandDelegate = commandDelegate;
 	}
 
 	@Override
+	@Transactional(propagation = Propagation.REQUIRED)
 	public void run() {
 		try {
 			Command command = null;
 			while ((command = listen()) != null) {
 				if (this.player == null) {
 					if (CommandName.Authentication.equals(command.getName())) {
-						this.player = this.delegate.authenticate(command);
-						if(this.player == null) {
+						this.player = this.clientDelegate.authenticate(command);
+						if (this.player == null) {
 							this.sendAuthenticationFailed();
 						} else {
 							this.sendAuthenticationSuccess();
@@ -42,16 +52,16 @@ public class ClientConnection extends Thread implements Runnable {
 						this.sendAuthenticationRequired();
 					}
 				} else {
-					this.delegate.commandReceived(command);
+					this.commandDelegate.received(command);
 				}
 			}
-			if(!socket.isClosed())
+			if (!socket.isClosed())
 				socket.close();
-			delegate.disconnected();
+			this.clientDelegate.disconnected();
 		} catch (Exception e) {
 			log.error("", e);
-			delegate.disconnected();
-			if(!socket.isClosed()) {
+			this.clientDelegate.disconnected();
+			if (!socket.isClosed()) {
 				try {
 					socket.close();
 				} catch (IOException e1) {
@@ -62,17 +72,27 @@ public class ClientConnection extends Thread implements Runnable {
 	}
 
 	private void sendAuthenticationRequired() throws ClientStreamException {
-		send(CommandName.Authentication.createCommand("Authentication Required").setStatus(CommandStatus.AccessDenied));
+		send(CommandName.Authentication
+				.createCommand("Authentication Required").setStatus(
+						CommandStatus.AccessDenied));
 	}
 
 	private void sendAuthenticationFailed() throws ClientStreamException {
-		send(CommandName.Authentication.createCommand("Authentication failed.").setStatus(CommandStatus.Error));
+		send(CommandName.Authentication.createCommand("Authentication failed.")
+				.setStatus(CommandStatus.Error));
 	}
-	
+
 	private void sendAuthenticationSuccess() throws ClientStreamException {
-		send(CommandName.Authentication.createCommand("Successfully authenticated."));
+		send(CommandName.Authentication
+				.createCommand("Successfully authenticated."));
 	}
-	
+
+	public void sendError(Command unproceseedCommand, String message)
+			throws ClientStreamException {
+		send(ErrorMessageCommand.fromOriginalCommand(unproceseedCommand,
+				message));
+	}
+
 	public void send(Command command) throws ClientStreamException {
 		try {
 			command.validate();
@@ -89,7 +109,7 @@ public class ClientConnection extends Thread implements Runnable {
 	private Command listen() throws Exception {
 		LineReader reader = new LineReader(socket.getInputStream());
 		String line = reader.readLine();
-		if(line == null) {
+		if (line == null) {
 			return null;
 		}
 		Command command = Command.fromString(line);

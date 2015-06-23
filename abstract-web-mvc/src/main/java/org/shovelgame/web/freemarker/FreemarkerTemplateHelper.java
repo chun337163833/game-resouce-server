@@ -8,7 +8,7 @@ import java.util.Map;
 import javax.persistence.Id;
 import javax.servlet.http.HttpServletRequest;
 
-import org.shovelgame.environment.Environment;
+import org.shovelgame.environment.EnvironmentType;
 import org.shovelgame.environment.EnvironmentAccessor;
 import org.shovelgame.utils.ReflectionUtils;
 import org.shovelgame.utils.StringUtils;
@@ -218,6 +218,6 @@ public class FreemarkerTemplateHelper {
 		return EnvironmentAccessor.getEnvironment().toString();
 	}
 	public boolean isProduction() {
-		return EnvironmentAccessor.getEnvironment().equals(Environment.PRODUCTION);
+		return EnvironmentAccessor.getEnvironment().equals(EnvironmentType.PRODUCTION);
 	}
 }

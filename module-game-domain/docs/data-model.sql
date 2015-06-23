@@ -231,7 +231,8 @@ CREATE TABLE data.player (
 	experience_boost decimal(3,2) DEFAULT 0,
 	experience_boost_expire date,
 	user_name varchar(200) NOT NULL,
-	password varchar(255)
+	password varchar(255),
+	team bigint NOT NULL
 );
 
 CREATE TABLE data.reward_claim ( 
@@ -281,7 +282,8 @@ CREATE TABLE model.skill (
 	icon_name varchar(50) NOT NULL,
 	power decimal(10,3),
 	cooldown integer NOT NULL,
-	ticks integer
+	ticks integer,
+	type varchar(50) NOT NULL
 );
 
 CREATE SEQUENCE i18n.skill_description_id_seq INCREMENT 1 START 1;
@@ -309,8 +311,7 @@ CREATE TABLE data.team (
 	leader bigint NOT NULL,
 	minion_top bigint NOT NULL,
 	minion_mid bigint NOT NULL,
-	minion_bot bigint NOT NULL,
-	owner bigint
+	minion_bot bigint NOT NULL
 );
 
 CREATE SEQUENCE model.trait_id_seq INCREMENT 1 START 1;
@@ -421,6 +422,8 @@ CREATE INDEX IXFK_mission_reward_mission
 	ON model.mission_reward (mission);
 ALTER TABLE data.player
 	ADD CONSTRAINT UQ_player_username UNIQUE (user_name);
+CREATE INDEX IXFK_player_team
+	ON data.player (team);
 CREATE INDEX IXFK_reward_claim_player
 	ON data.reward_claim (player);
 CREATE INDEX IXFK_reward_claim_mission_reward
@@ -453,8 +456,6 @@ CREATE INDEX IXFK_team_minion_02
 	ON data.team (minion_mid);
 CREATE INDEX IXFK_team_minion_03
 	ON data.team (minion_bot);
-CREATE INDEX IXFK_team_player
-	ON data.team (owner);
 CREATE INDEX IXFK_trait_model_attribute_type
 	ON model.trait (affected_attribute_type);
 CREATE INDEX IXFK_trait_model_description_trait_model
@@ -697,6 +698,9 @@ ALTER TABLE model.mission_reward ADD CONSTRAINT FK_mission_reward_item_model
 ALTER TABLE model.mission_reward ADD CONSTRAINT FK_mission_reward_mission 
 	FOREIGN KEY (mission) REFERENCES model.mission (id);
 
+ALTER TABLE data.player ADD CONSTRAINT FK_player_team 
+	FOREIGN KEY (team) REFERENCES data.team (id);
+
 ALTER TABLE data.reward_claim ADD CONSTRAINT FK_reward_claim_player 
 	FOREIGN KEY (player) REFERENCES data.player (id);
 
@@ -742,9 +746,6 @@ ALTER TABLE data.team ADD CONSTRAINT FK_team_minion_02
 
 ALTER TABLE data.team ADD CONSTRAINT FK_team_minion_03 
 	FOREIGN KEY (minion_bot) REFERENCES data.minion (id);
-
-ALTER TABLE data.team ADD CONSTRAINT FK_team_player 
-	FOREIGN KEY (owner) REFERENCES data.player (id);
 
 ALTER TABLE model.trait ADD CONSTRAINT FK_trait_model_attribute_type 
 	FOREIGN KEY (affected_attribute_type) REFERENCES model.attribute_type (id);

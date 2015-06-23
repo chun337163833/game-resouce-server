@@ -19,7 +19,6 @@ import org.shovelgame.game.domain.data.Minion;
 import org.shovelgame.game.domain.data.Player;
 import org.shovelgame.game.domain.data.Rights;
 import org.shovelgame.game.domain.data.Seeker;
-import org.shovelgame.game.domain.data.Team;
 import org.shovelgame.game.domain.model.MissionReward;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -41,9 +40,6 @@ privileged aspect Player_Roo_DbManaged {
     @OneToMany(mappedBy = "owner")
     private Set<Seeker> Player.seekers;
     
-    @OneToMany(mappedBy = "owner")
-    private Set<Team> Player.teams;
-    
     @Column(name = "golds")
     @NotNull
     private Long Player.golds;
@@ -64,7 +60,7 @@ privileged aspect Player_Roo_DbManaged {
     @NotNull
     private String Player.userName;
     
-    @Column(name = "password", length = 50)
+    @Column(name = "password", length = 255)
     private String Player.password;
     
     public Set<MissionReward> Player.getMissionRewards() {
@@ -105,14 +101,6 @@ privileged aspect Player_Roo_DbManaged {
     
     public void Player.setSeekers(Set<Seeker> seekers) {
         this.seekers = seekers;
-    }
-    
-    public Set<Team> Player.getTeams() {
-        return teams;
-    }
-    
-    public void Player.setTeams(Set<Team> teams) {
-        this.teams = teams;
     }
     
     public Long Player.getGolds() {

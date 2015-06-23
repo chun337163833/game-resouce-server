@@ -11,8 +11,8 @@ import org.shovelgame.common.data.filter.FilteredList;
 import org.shovelgame.common.data.filter.RequestBasedFilter;
 import org.shovelgame.domain.common.Entity;
 import org.shovelgame.domain.common.JsonObject;
-import org.shovelgame.environment.Environment;
 import org.shovelgame.environment.EnvironmentType;
+import org.shovelgame.environment.Environment;
 import org.shovelgame.web.spring.ws.datatype.FilteredListJson;
 import org.shovelgame.web.spring.ws.exception.MethodNotAllowedException;
 import org.shovelgame.web.spring.ws.exception.RestWebServiceException;
@@ -56,7 +56,7 @@ public abstract class RestWebServiceWrapper<E extends Entity, W extends JsonObje
 		return getConvertor().convertToWrapper(data);
 	}
 
-	@EnvironmentType(value={Environment.TEST, Environment.DEVELOPMENT}, exception=MethodNotAllowedException.class)
+	@Environment(value={EnvironmentType.TEST, EnvironmentType.DEVELOPMENT}, exception=MethodNotAllowedException.class)
 	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
 	@Transactional()
 	public W _delete(@ModelAttribute("entity") @Valid E data, Errors errors) {

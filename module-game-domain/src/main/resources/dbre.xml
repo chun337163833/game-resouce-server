@@ -98,7 +98,13 @@
         <column name="experience_boost" primaryKey="false" required="false" scale="2" size="3" type="2,numeric"/>
         <column name="experience_boost_expire" primaryKey="false" required="false" scale="0" size="13" type="91,date"/>
         <column name="user_name" primaryKey="false" required="true" scale="0" size="200" type="12,varchar"/>
-        <column name="password" primaryKey="false" required="false" scale="0" size="50" type="12,varchar"/>
+        <column name="password" primaryKey="false" required="false" scale="0" size="255" type="12,varchar"/>
+        <column name="team" primaryKey="false" required="true" scale="0" size="19" type="-5,int8"/>
+        <foreign-key foreignTable="team" name="fk_player_team" onDelete="none" onUpdate="none">
+            <option key="foreignSchemaName" value="data"/>
+            <option key="exported" value="false"/>
+            <reference foreign="id" local="team"/>
+        </foreign-key>
         <foreign-key foreignTable="item" name="fk_item_player" onDelete="none" onUpdate="none">
             <option key="foreignSchemaName" value="data"/>
             <option key="exported" value="true"/>
@@ -124,17 +130,15 @@
             <option key="exported" value="true"/>
             <reference foreign="owner" local="id"/>
         </foreign-key>
-        <foreign-key foreignTable="team" name="fk_team_player" onDelete="none" onUpdate="none">
-            <option key="foreignSchemaName" value="data"/>
-            <option key="exported" value="true"/>
-            <reference foreign="owner" local="id"/>
-        </foreign-key>
         <unique name="pk_player">
             <unique-column name="id"/>
         </unique>
         <unique name="uq_player_username">
             <unique-column name="user_name"/>
         </unique>
+        <index name="ixfk_player_team">
+            <index-column name="team"/>
+        </index>
     </table>
     <table alias="data" name="reward_claim">
         <column name="player" primaryKey="true" required="true" scale="0" size="19" type="-5,int8"/>
@@ -181,7 +185,7 @@
         </index>
     </table>
     <table alias="data" name="role">
-        <column name="id" primaryKey="true" required="true" scale="0" size="19" type="-5,int8"/>
+        <column name="id" primaryKey="true" required="true" scale="0" size="19" type="-5,bigserial"/>
         <column name="code" primaryKey="false" required="true" scale="0" size="50" type="12,varchar"/>
         <foreign-key foreignTable="rights" name="fk_rights_role" onDelete="none" onUpdate="none">
             <option key="foreignSchemaName" value="data"/>
@@ -225,7 +229,6 @@
         <column name="minion_top" primaryKey="false" required="true" scale="0" size="19" type="-5,int8"/>
         <column name="minion_mid" primaryKey="false" required="true" scale="0" size="19" type="-5,int8"/>
         <column name="minion_bot" primaryKey="false" required="true" scale="0" size="19" type="-5,int8"/>
-        <column name="owner" primaryKey="false" required="false" scale="0" size="19" type="-5,int8"/>
         <foreign-key foreignTable="minion" name="fk_team_minion_04" onDelete="none" onUpdate="none">
             <option key="foreignSchemaName" value="data"/>
             <option key="exported" value="false"/>
@@ -246,12 +249,12 @@
             <option key="exported" value="false"/>
             <reference foreign="id" local="minion_bot"/>
         </foreign-key>
-        <foreign-key foreignTable="player" name="fk_team_player" onDelete="none" onUpdate="none">
-            <option key="foreignSchemaName" value="data"/>
-            <option key="exported" value="false"/>
-            <reference foreign="id" local="owner"/>
-        </foreign-key>
         <foreign-key foreignTable="item" name="fk_item_team" onDelete="none" onUpdate="none">
+            <option key="foreignSchemaName" value="data"/>
+            <option key="exported" value="true"/>
+            <reference foreign="team" local="id"/>
+        </foreign-key>
+        <foreign-key foreignTable="player" name="fk_player_team" onDelete="none" onUpdate="none">
             <option key="foreignSchemaName" value="data"/>
             <option key="exported" value="true"/>
             <reference foreign="team" local="id"/>
@@ -278,9 +281,6 @@
         </index>
         <index name="ixfk_team_minion_04">
             <index-column name="leader"/>
-        </index>
-        <index name="ixfk_team_player">
-            <index-column name="owner"/>
         </index>
     </table>
     <table alias="model" name="attribute_type">
@@ -661,6 +661,7 @@
         <column name="power" primaryKey="false" required="false" scale="3" size="10" type="2,numeric"/>
         <column name="cooldown" primaryKey="false" required="true" scale="0" size="10" type="4,int4"/>
         <column name="ticks" primaryKey="false" required="false" scale="0" size="10" type="4,int4"/>
+        <column name="type" primaryKey="false" required="true" scale="0" size="50" type="12,varchar"/>
         <foreign-key foreignTable="attribute_type" name="fk_skill_model_attribute_type" onDelete="none" onUpdate="none">
             <option key="foreignSchemaName" value="model"/>
             <option key="exported" value="false"/>

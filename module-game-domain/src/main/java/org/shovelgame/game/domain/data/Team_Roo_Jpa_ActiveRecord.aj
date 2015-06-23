@@ -14,7 +14,7 @@ privileged aspect Team_Roo_Jpa_ActiveRecord {
     @PersistenceContext
     transient EntityManager Team.entityManager;
     
-    public static final List<String> Team.fieldNames4OrderClauseFilter = java.util.Arrays.asList("");
+    public static final List<String> Team.fieldNames4OrderClauseFilter = java.util.Arrays.asList("owner");
     
     public static final EntityManager Team.entityManager() {
         EntityManager em = new Team().entityManager;
