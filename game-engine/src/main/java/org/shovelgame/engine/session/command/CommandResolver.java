@@ -1,36 +1,25 @@
 package org.shovelgame.engine.session.command;
 
 import org.shovelgame.annotation.Logger;
-import org.shovelgame.engine.io.ClientConnection;
-import org.shovelgame.engine.io.ClientStreamException;
-import org.shovelgame.engine.io.ServerDelegate;
+import org.shovelgame.engine.io.ClientDelegate;
 
 @Logger
 public class CommandResolver {
 
-	private ClientConnection client;
-	private ServerDelegate delegate;
+	private ClientDelegate delegate;
 
-	public CommandResolver(ClientConnection client, ServerDelegate delegate) {
+	public CommandResolver(ClientDelegate delegate) {
 		super();
-		this.client = client;
 		this.delegate = delegate;
 	}
 
-	public void process(Command command) {
+	public void process(Command command) throws CommandException {
 		try {
 			CommandProcessor processor = command.getName().instantiate();
 			processor.process(command, delegate);
-		} catch (InstantiationException | IllegalAccessException e) {
-			log.error("", e);
-			try {
-				client.sendError(command, e.getMessage());
-			} catch (ClientStreamException e1) {
-				log.error("", e);
-			}
+		} catch (Exception e) {
+			throw new CommandException(e);
 		}
 	}
-	
-	
 
 }

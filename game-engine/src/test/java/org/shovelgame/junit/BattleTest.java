@@ -1,40 +1,57 @@
 package org.shovelgame.junit;
 
-import java.io.OutputStream;
 import java.net.Socket;
 import java.util.Base64;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.junit.Assert;
 import org.junit.Test;
-import org.shovelgame.engine.io.LineReader;
+import org.shovelgame.engine.battle.FightingMinion;
+import org.shovelgame.engine.io.CommandInputStreamHelper;
+import org.shovelgame.engine.io.CommandOutputStreamHelper;
+import org.shovelgame.engine.session.command.Command;
 import org.shovelgame.engine.session.command.CommandName;
+import org.shovelgame.engine.session.command.CommandStatus;
 import org.shovelgame.http.HttpResponse;
 import org.shovelgame.http.oauth.OAuthClient;
 import org.shovelgame.http.oauth.OAuthClient.Token;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
+
 public class BattleTest {
 	private String srv = "http://localhost:8080";
 	private String client = Base64.getEncoder().encodeToString("abcd:dcba".getBytes());
+	
 	@Test
 	public void testBattle() throws Exception {
 		StringBuffer errors = new StringBuffer();
 		Token token = getToken(errors);
 		Socket socket = new Socket("localhost", 8888);
-		OutputStream os = socket.getOutputStream();
-		//authenticate
-		os.write(CommandName.Authentication.createCommand(token.getAccessToken()).toJson().getBytes());
-		os.write("\n".getBytes());
-		LineReader reader = new LineReader(socket.getInputStream());
-		reader.readLine();
-		//begin mission
-		os.write(CommandName.Mission.createCommand("1").toJson().getBytes());
-		os.write("\n".getBytes());
-		reader.readLine();
 		
-		os.write(CommandName.UseSkill.createCommand("1").toJson().getBytes());
-		os.write("\n".getBytes());
-		reader.readLine();
+		CommandOutputStreamHelper cos = new CommandOutputStreamHelper(socket.getOutputStream());
+		CommandInputStreamHelper cis = new CommandInputStreamHelper(socket.getInputStream());
+		
+		//authenticate
+		cos.send(CommandName.Authentication.createCommand(token.getAccessToken()));
+		Command command = cis.read();
+		Assert.assertEquals(CommandStatus.Ok, command.getStatus());
+		
+		//begin mission
+		cos.send(CommandName.Mission.createCommand("1"));
+		command = cis.read();
+		Assert.assertEquals(CommandStatus.Ok, command.getStatus());
+		
+		//sync teams
+		cos.send(CommandName.SyncTeams.createCommand());
+		command = cis.read();
+		Assert.assertEquals(CommandStatus.Ok, command.getStatus());
+		
+		cos.send(CommandName.UseSkill.createCommand("1"));
+		command = cis.read();
+		Assert.assertEquals(CommandStatus.Ok, command.getStatus());
 		
 		socket.close();
 	}

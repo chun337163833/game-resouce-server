@@ -9,13 +9,13 @@ import java.util.List;
 import org.shovelgame.annotation.Logger;
 import org.shovelgame.engine.session.command.Command;
 import org.shovelgame.engine.session.command.CommandDelegate;
+import org.shovelgame.engine.session.command.CommandException;
 import org.shovelgame.engine.session.command.CommandResolver;
 import org.shovelgame.game.domain.data.Player;
 import org.shovelgame.spring.oauth.TokenService;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.core.task.TaskExecutor;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
 @Service
@@ -50,7 +50,18 @@ public class ServerConnection implements Runnable, InitializingBean {
 			while ((socket = this.socket.accept()) != null) {
 				ClientConnection client = new ClientConnection(socket,
 						"ClientThread");
-				client.setClientDelegate(new ClientDelegate() {
+				client.setClientDelegate(new ClientHandler() {
+					@Override
+					public List<ClientConnection> getQueue() {
+						List<ClientConnection> queue = new ArrayList<ClientConnection>();
+						for (ClientConnection c : getConnectedClients()) {
+							if (c.getPlayer() == null) {
+								continue;
+							}
+							queue.add(c);
+						}
+						return queue;
+					}
 					@Override
 					public void disconnected() {
 						connectedClients.remove(client);
@@ -75,26 +86,14 @@ public class ServerConnection implements Runnable, InitializingBean {
 				client.setCommandDelegate(new CommandDelegate() {
 
 					@Override
-					public void received(Command command) {
-						CommandResolver processor = new CommandResolver(client,
-								new ServerDelegate() {
-									@Override
-									public List<ClientConnection> getQueue() {
-										List<ClientConnection> queue = new ArrayList<ClientConnection>();
-										for (ClientConnection c : getConnectedClients()) {
-											if (c.getPlayer() == null) {
-												continue;
-											}
-											queue.add(c);
-										}
-										return queue;
-									}
-
-									@Override
-									public ClientConnection getClient() {
-										return client;
-									}
-								});
+					public void received(Command command, ClientConnection from) throws CommandException {
+						CommandResolver processor = new CommandResolver(
+							new ClientDelegate() {
+								@Override
+								public ClientConnection getClient() {
+									return client;
+								}
+							});
 						processor.process(command);
 					}
 				});
@@ -125,5 +124,4 @@ public class ServerConnection implements Runnable, InitializingBean {
 	public synchronized List<ClientConnection> getConnectedClients() {
 		return connectedClients;
 	}
-
 }

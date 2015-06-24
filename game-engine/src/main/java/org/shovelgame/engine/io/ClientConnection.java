@@ -1,12 +1,12 @@
 package org.shovelgame.engine.io;
 
 import java.io.IOException;
-import java.io.OutputStream;
 import java.net.Socket;
 
 import org.shovelgame.annotation.Logger;
 import org.shovelgame.engine.session.command.Command;
 import org.shovelgame.engine.session.command.CommandDelegate;
+import org.shovelgame.engine.session.command.CommandException;
 import org.shovelgame.engine.session.command.CommandName;
 import org.shovelgame.engine.session.command.CommandStatus;
 import org.shovelgame.engine.session.command.ErrorMessageCommand;
@@ -17,7 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Logger
 public class ClientConnection extends Thread implements Runnable {
 	private Socket socket;
-	private ClientDelegate clientDelegate;
+	private ClientHandler handler;
 	private CommandDelegate commandDelegate;
 	private Player player;
 
@@ -26,8 +26,8 @@ public class ClientConnection extends Thread implements Runnable {
 		this.socket = socket;
 	}
 
-	public void setClientDelegate(ClientDelegate clientDelegate) {
-		this.clientDelegate = clientDelegate;
+	public void setClientDelegate(ClientHandler clientDelegate) {
+		this.handler = clientDelegate;
 	}
 
 	public synchronized void setCommandDelegate(CommandDelegate commandDelegate) {
@@ -42,7 +42,7 @@ public class ClientConnection extends Thread implements Runnable {
 			while ((command = listen()) != null) {
 				if (this.player == null) {
 					if (CommandName.Authentication.equals(command.getName())) {
-						this.player = this.clientDelegate.authenticate(command);
+						this.player = this.handler.authenticate(command);
 						if (this.player == null) {
 							this.sendAuthenticationFailed();
 						} else {
@@ -52,15 +52,21 @@ public class ClientConnection extends Thread implements Runnable {
 						this.sendAuthenticationRequired();
 					}
 				} else {
-					this.commandDelegate.received(command);
+					try {
+						this.commandDelegate.received(command, this);
+					} catch (CommandException e) {
+						log.error("", e);
+						this.sendError(command, e.getMessage());
+					}
+					
 				}
 			}
 			if (!socket.isClosed())
 				socket.close();
-			this.clientDelegate.disconnected();
+			this.handler.disconnected();
 		} catch (Exception e) {
 			log.error("", e);
-			this.clientDelegate.disconnected();
+			this.handler.disconnected();
 			if (!socket.isClosed()) {
 				try {
 					socket.close();
@@ -95,11 +101,9 @@ public class ClientConnection extends Thread implements Runnable {
 
 	public void send(Command command) throws ClientStreamException {
 		try {
+			CommandOutputStreamHelper os = new CommandOutputStreamHelper(this.socket.getOutputStream());
 			command.validate();
-			String str = command.toJson();
-			OutputStream os = this.socket.getOutputStream();
-			os.write(str.getBytes());
-			os.write("\n".getBytes());
+			os.send(command);
 		} catch (Exception e) {
 			throw new ClientStreamException(e);
 		}
@@ -107,17 +111,16 @@ public class ClientConnection extends Thread implements Runnable {
 	}
 
 	private Command listen() throws Exception {
-		LineReader reader = new LineReader(socket.getInputStream());
-		String line = reader.readLine();
-		if (line == null) {
-			return null;
-		}
-		Command command = Command.fromString(line);
+		CommandInputStreamHelper helper = new CommandInputStreamHelper(socket.getInputStream());
+		Command command = helper.read();
 		command.validate();
 		return command;
 	}
 
 	public Player getPlayer() {
 		return player;
+	}
+	public ClientHandler getHandler() {
+		return handler;
 	}
 }

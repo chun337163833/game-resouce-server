@@ -1,8 +1,8 @@
 package org.shovelgame.engine.session.command;
 
-import org.shovelgame.engine.io.ServerDelegate;
+import org.shovelgame.engine.io.ClientDelegate;
 
 
 public interface CommandProcessor {
-	void process(Command command, ServerDelegate delegate);
+	void process(Command command, ClientDelegate delegate) throws CommandException;
 }

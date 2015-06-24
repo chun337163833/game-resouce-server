@@ -1,9 +1,10 @@
 package org.shovelgame.engine.io;
 
+import java.io.Closeable;
 import java.io.IOException;
 import java.io.InputStream;
 
-public class LineReader {
+public class LineReader implements Closeable {
 
 	private InputStream in;
 
@@ -54,5 +55,8 @@ public class LineReader {
 		}
 		return true;
 	}
-	
+	@Override
+	public void close() throws IOException {
+		this.in.close();
+	}
 }

@@ -2,6 +2,7 @@ package org.shovelgame.engine.session.command;
 
 import org.shovelgame.engine.session.command.impl.MatchmakingCommand;
 import org.shovelgame.engine.session.command.impl.MissionCommand;
+import org.shovelgame.engine.session.command.impl.SyncTeamsCommand;
 
 public enum CommandName {
 	
@@ -10,6 +11,7 @@ public enum CommandName {
 	Matchmaking(MatchmakingCommand.class),
 	Mission(MissionCommand.class),
 	UseSkill(null),
+	SyncTeams(SyncTeamsCommand.class)
 	;
 	private Class<? extends CommandProcessor> processor;
 	
@@ -22,6 +24,12 @@ public enum CommandName {
 		return this.processor.newInstance();
 	}
 
+	public Command createCommand(BigData data) {
+		Command c = new Command().setParameters(null).setName(this);
+		c.writeDataAsString(data);
+		return c;
+	}
+	
 	public Command createCommand(String... parameters) {
 		return new Command().setParameters(parameters).setName(this);
 	}

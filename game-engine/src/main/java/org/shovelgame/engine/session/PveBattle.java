@@ -3,8 +3,6 @@ package org.shovelgame.engine.session;
 import org.shovelgame.annotation.Logger;
 import org.shovelgame.engine.io.ClientConnection;
 import org.shovelgame.engine.io.ClientStreamException;
-import org.shovelgame.engine.session.command.Command;
-import org.shovelgame.engine.session.command.CommandDelegate;
 import org.shovelgame.engine.session.command.CommandName;
 import org.shovelgame.engine.session.communication.AICommunicator;
 import org.shovelgame.engine.session.communication.Communicator;
@@ -18,13 +16,12 @@ import org.shovelgame.game.domain.model.Mission;
 import org.shovelgame.game.domain.model.MissionReward;
 
 @Logger
-public class PveBattle extends BattleMechanism implements CommandDelegate {
+public class PveBattle extends BattleMechanism {
 
 	private Mission mission;
 
 	public PveBattle(ClientConnection client, Mission mission) {
-		super(new TcpCommunicator(client), new AICommunicator(
-				mission.getTeam()));
+		super(new TcpCommunicator(client), new AICommunicator(mission.getTeam()));
 		this.mission = mission;
 	}
 
@@ -53,12 +50,7 @@ public class PveBattle extends BattleMechanism implements CommandDelegate {
 	}
 	
 	private Communicator getPlayerCommunicator() {
-		return this.team1;
-	}
-	
-	@Override
-	public void received(Command command) {
-		System.out.println(command);
+		return getCommunicator1();
 	}
 	
 }
