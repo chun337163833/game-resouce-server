@@ -48,8 +48,7 @@ public class ServerConnection implements Runnable, InitializingBean {
 		try {
 			Socket socket;
 			while ((socket = this.socket.accept()) != null) {
-				ClientConnection client = new ClientConnection(socket,
-						"ClientThread");
+				ClientConnection client = new ClientConnection(socket);
 				client.setClientDelegate(new ClientHandler() {
 					@Override
 					public List<ClientConnection> getQueue() {

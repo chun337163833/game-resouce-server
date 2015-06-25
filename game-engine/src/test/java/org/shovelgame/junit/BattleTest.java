@@ -7,12 +7,15 @@ import java.util.Map;
 
 import org.junit.Assert;
 import org.junit.Test;
+import org.shovelgame.engine.battle.Battleground;
 import org.shovelgame.engine.battle.FightingMinion;
+import org.shovelgame.engine.battle.TeamType;
 import org.shovelgame.engine.io.CommandInputStreamHelper;
 import org.shovelgame.engine.io.CommandOutputStreamHelper;
 import org.shovelgame.engine.session.command.Command;
 import org.shovelgame.engine.session.command.CommandName;
 import org.shovelgame.engine.session.command.CommandStatus;
+import org.shovelgame.game.domain.enumeration.MinionPosition;
 import org.shovelgame.http.HttpResponse;
 import org.shovelgame.http.oauth.OAuthClient;
 import org.shovelgame.http.oauth.OAuthClient.Token;
@@ -45,11 +48,14 @@ public class BattleTest {
 		Assert.assertEquals(CommandStatus.Ok, command.getStatus());
 		
 		//sync teams
-		cos.send(CommandName.SyncTeams.createCommand());
+		cos.send(CommandName.SyncTeam.createCommand(TeamType.My.name()));
+		command = cis.read();
+		Assert.assertEquals(CommandStatus.Ok, command.getStatus());
+		cos.send(CommandName.SyncTeam.createCommand(TeamType.Opponent.name()));
 		command = cis.read();
 		Assert.assertEquals(CommandStatus.Ok, command.getStatus());
 		
-		cos.send(CommandName.UseSkill.createCommand("1"));
+		cos.send(CommandName.TestKill.createCommand(MinionPosition.Leader.name()));
 		command = cis.read();
 		Assert.assertEquals(CommandStatus.Ok, command.getStatus());
 		

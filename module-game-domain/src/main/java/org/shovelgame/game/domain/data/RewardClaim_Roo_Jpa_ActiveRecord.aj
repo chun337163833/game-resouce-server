@@ -7,7 +7,6 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import org.shovelgame.game.domain.data.RewardClaim;
-import org.shovelgame.game.domain.data.RewardClaimPK;
 import org.springframework.transaction.annotation.Transactional;
 
 privileged aspect RewardClaim_Roo_Jpa_ActiveRecord {
@@ -42,7 +41,7 @@ privileged aspect RewardClaim_Roo_Jpa_ActiveRecord {
         return entityManager().createQuery(jpaQuery, RewardClaim.class).getResultList();
     }
     
-    public static RewardClaim RewardClaim.findRewardClaim(RewardClaimPK id) {
+    public static RewardClaim RewardClaim.findRewardClaim(Long id) {
         if (id == null) return null;
         return entityManager().find(RewardClaim.class, id);
     }

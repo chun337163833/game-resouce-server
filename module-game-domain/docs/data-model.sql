@@ -21,10 +21,6 @@ DROP SEQUENCE IF EXISTS model.minion_attribute_id_seq;
 DROP TABLE IF EXISTS model.minion_model CASCADE;
 DROP SEQUENCE IF EXISTS model.minion_model_id_seq;
 DROP TABLE IF EXISTS model.minion_skill CASCADE;
-DROP TABLE IF EXISTS model.minion_specialization CASCADE;
-DROP SEQUENCE IF EXISTS model.minion_specialization_id_seq;
-DROP TABLE IF EXISTS i18n.minion_specialization_description CASCADE;
-DROP SEQUENCE IF EXISTS i18n.minion_specialization_description_id_seq;
 DROP TABLE IF EXISTS model.minion_trait CASCADE;
 DROP TABLE IF EXISTS model.mission CASCADE;
 DROP SEQUENCE IF EXISTS model.mission_id_seq;
@@ -35,6 +31,7 @@ DROP SEQUENCE IF EXISTS model.mission_reward_id_seq;
 DROP TABLE IF EXISTS data.player CASCADE;
 DROP SEQUENCE IF EXISTS data.player_id_seq;
 DROP TABLE IF EXISTS data.reward_claim CASCADE;
+DROP SEQUENCE IF EXISTS data.reward_claim_id_seq;
 DROP TABLE IF EXISTS data.rights CASCADE;
 DROP TABLE IF EXISTS data.Role CASCADE;
 DROP SEQUENCE IF EXISTS data.Role_id_seq;
@@ -117,7 +114,8 @@ CREATE TABLE model.item_model (
 	max_enchant integer DEFAULT 10,
 	type varchar(10) NOT NULL,
 	icon_name varchar(50) NOT NULL,
-	price integer
+	price integer,
+	rarity varchar(50) NOT NULL
 );
 
 CREATE SEQUENCE i18n.item_model_description_id_seq INCREMENT 1 START 1;
@@ -159,8 +157,9 @@ CREATE TABLE model.minion_model (
 	id bigint DEFAULT nextval(('model.minion_model_id_seq'::text)::regclass) NOT NULL,
 	name varchar(50) NOT NULL,
 	image_bundle_name varchar(50) NOT NULL,
-	specialization bigint NOT NULL,
-	price integer
+	specialization varchar(50) NOT NULL,
+	price integer,
+	rarity varchar(50) NOT NULL
 );
 
 CREATE TABLE model.minion_skill ( 
@@ -168,22 +167,6 @@ CREATE TABLE model.minion_skill (
 	skill bigint NOT NULL,
 	required_level integer NOT NULL,
 	override_power decimal(10,3) DEFAULT 0
-);
-
-CREATE SEQUENCE model.minion_specialization_id_seq INCREMENT 1 START 1;
-
-CREATE TABLE model.minion_specialization ( 
-	id bigint DEFAULT nextval(('model.minion_specialization_id_seq'::text)::regclass) NOT NULL,
-	type varchar(50) NOT NULL
-);
-
-CREATE SEQUENCE i18n.minion_specialization_description_id_seq INCREMENT 1 START 1;
-
-CREATE TABLE i18n.minion_specialization_description ( 
-	id bigint DEFAULT nextval(('i18n.minion_specialization_description_id_seq'::text)::regclass) NOT NULL,
-	specialization bigint NOT NULL,
-	lang char(2) NOT NULL,
-	text text NOT NULL
 );
 
 CREATE TABLE model.minion_trait ( 
@@ -235,7 +218,10 @@ CREATE TABLE data.player (
 	team bigint NOT NULL
 );
 
+CREATE SEQUENCE data.reward_claim_id_seq INCREMENT 1 START 1;
+
 CREATE TABLE data.reward_claim ( 
+	id bigint DEFAULT nextval(('data.reward_claim_id_seq'::text)::regclass) NOT NULL,
 	player bigint NOT NULL,
 	reward bigint NOT NULL
 );
@@ -270,7 +256,8 @@ CREATE TABLE model.seeker_model (
 	name varchar(50) NOT NULL,
 	price integer NOT NULL,
 	image_bundle_name varchar(50) NOT NULL,
-	specialization varchar(50) NOT NULL
+	specialization varchar(50) NOT NULL,
+	rarity varchar(50) NOT NULL
 );
 
 CREATE SEQUENCE model.skill_id_seq INCREMENT 1 START 1;
@@ -396,12 +383,6 @@ CREATE INDEX IXFK_minion_skill_minion_model
 	ON model.minion_skill (minion_model);
 CREATE INDEX IXFK_minion_skill_skill_model
 	ON model.minion_skill (skill);
-ALTER TABLE model.minion_specialization
-	ADD CONSTRAINT UQ_hero_type_code UNIQUE (type);
-CREATE INDEX IXFK_minion_specialization_description_language
-	ON i18n.minion_specialization_description (lang);
-CREATE INDEX IXFK_minion_specialization_description_specialization
-	ON i18n.minion_specialization_description (specialization);
 CREATE INDEX IXFK_minion_trait_trait_model
 	ON model.minion_trait (trait);
 CREATE INDEX IXFK_minion_trait_minion_model
@@ -520,14 +501,6 @@ ALTER TABLE model.minion_skill ADD CONSTRAINT PK_minion_skill
 	PRIMARY KEY (minion_model, skill);
 
 
-ALTER TABLE model.minion_specialization ADD CONSTRAINT PK_hero_type 
-	PRIMARY KEY (id);
-
-
-ALTER TABLE i18n.minion_specialization_description ADD CONSTRAINT PK_minion_specialization_description 
-	PRIMARY KEY (id);
-
-
 ALTER TABLE model.minion_trait ADD CONSTRAINT PK_minion_trait 
 	PRIMARY KEY (minion_model, trait);
 
@@ -549,7 +522,7 @@ ALTER TABLE data.player ADD CONSTRAINT PK_player
 
 
 ALTER TABLE data.reward_claim ADD CONSTRAINT PK_reward_claim 
-	PRIMARY KEY (player, reward);
+	PRIMARY KEY (id);
 
 
 ALTER TABLE data.Role ADD CONSTRAINT PK_Role 
@@ -653,23 +626,11 @@ ALTER TABLE model.minion_attribute ADD CONSTRAINT FK_minion_attribute_attribute_
 ALTER TABLE model.minion_attribute ADD CONSTRAINT FK_minion_attribute_minion_model 
 	FOREIGN KEY (minion_model) REFERENCES model.minion_model (id);
 
-ALTER TABLE model.minion_model ADD CONSTRAINT FK_minion_model_minion_specialization 
-	FOREIGN KEY (specialization) REFERENCES model.minion_specialization (id)
-ON UPDATE NO ACTION;
-
 ALTER TABLE model.minion_skill ADD CONSTRAINT FK_minion_skill_minion_model 
 	FOREIGN KEY (minion_model) REFERENCES model.minion_model (id);
 
 ALTER TABLE model.minion_skill ADD CONSTRAINT FK_minion_skill_skill_model 
 	FOREIGN KEY (skill) REFERENCES model.skill (id);
-
-ALTER TABLE i18n.minion_specialization_description ADD CONSTRAINT FK_minion_specialization_description_language 
-	FOREIGN KEY (lang) REFERENCES i18n.language (id)
-ON UPDATE NO ACTION;
-
-ALTER TABLE i18n.minion_specialization_description ADD CONSTRAINT FK_minion_specialization_description_specialization 
-	FOREIGN KEY (specialization) REFERENCES model.minion_specialization (id)
-ON UPDATE NO ACTION;
 
 ALTER TABLE model.minion_trait ADD CONSTRAINT FK_minion_trait_trait_model 
 	FOREIGN KEY (trait) REFERENCES model.trait (id);

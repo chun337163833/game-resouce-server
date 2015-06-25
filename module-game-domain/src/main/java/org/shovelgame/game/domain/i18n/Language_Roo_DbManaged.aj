@@ -11,7 +11,6 @@ import org.shovelgame.game.domain.i18n.AttributeTypeDescription;
 import org.shovelgame.game.domain.i18n.EnchantmentTypeDescription;
 import org.shovelgame.game.domain.i18n.ItemModelDescription;
 import org.shovelgame.game.domain.i18n.Language;
-import org.shovelgame.game.domain.i18n.MinionSpecializationDescription;
 import org.shovelgame.game.domain.i18n.MissionDescription;
 import org.shovelgame.game.domain.i18n.SkillDescription;
 import org.shovelgame.game.domain.i18n.SkillName;
@@ -28,9 +27,6 @@ privileged aspect Language_Roo_DbManaged {
     
     @OneToMany(mappedBy = "lang")
     private Set<ItemModelDescription> Language.itemModelDescriptions;
-    
-    @OneToMany(mappedBy = "lang")
-    private Set<MinionSpecializationDescription> Language.minionSpecializationDescriptions;
     
     @OneToMany(mappedBy = "lang")
     private Set<MissionDescription> Language.missionDescriptions;
@@ -73,14 +69,6 @@ privileged aspect Language_Roo_DbManaged {
     
     public void Language.setItemModelDescriptions(Set<ItemModelDescription> itemModelDescriptions) {
         this.itemModelDescriptions = itemModelDescriptions;
-    }
-    
-    public Set<MinionSpecializationDescription> Language.getMinionSpecializationDescriptions() {
-        return minionSpecializationDescriptions;
-    }
-    
-    public void Language.setMinionSpecializationDescriptions(Set<MinionSpecializationDescription> minionSpecializationDescriptions) {
-        this.minionSpecializationDescriptions = minionSpecializationDescriptions;
     }
     
     public Set<MissionDescription> Language.getMissionDescriptions() {

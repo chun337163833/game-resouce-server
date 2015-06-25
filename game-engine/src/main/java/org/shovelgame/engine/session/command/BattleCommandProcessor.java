@@ -1,7 +1,6 @@
-package org.shovelgame.engine.session.command.impl;
+package org.shovelgame.engine.session.command;
 
 import org.shovelgame.engine.battle.Battleground;
-import org.shovelgame.engine.session.command.CommandProcessor;
 import org.shovelgame.engine.session.communication.Communicator;
 
 public abstract class BattleCommandProcessor implements CommandProcessor {

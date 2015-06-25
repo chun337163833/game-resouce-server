@@ -17,7 +17,6 @@
 		<class>org.shovelgame.game.domain.i18n.EnchantmentTypeDescription</class>
 		<class>org.shovelgame.game.domain.i18n.ItemModelDescription</class>
 		<class>org.shovelgame.game.domain.i18n.Language</class>
-		<class>org.shovelgame.game.domain.i18n.MinionSpecializationDescription</class>
 		<class>org.shovelgame.game.domain.i18n.MissionDescription</class>
 		<class>org.shovelgame.game.domain.i18n.SkillDescription</class>
 		<class>org.shovelgame.game.domain.i18n.SkillName</class>
@@ -30,7 +29,6 @@
 		<class>org.shovelgame.game.domain.model.MinionAttribute</class>
 		<class>org.shovelgame.game.domain.model.MinionModel</class>
 		<class>org.shovelgame.game.domain.model.MinionSkill</class>
-		<class>org.shovelgame.game.domain.model.MinionSpecialization</class>
 		<class>org.shovelgame.game.domain.model.MinionTrait</class>
 		<class>org.shovelgame.game.domain.model.Mission</class>
 		<class>org.shovelgame.game.domain.model.MissionReward</class>

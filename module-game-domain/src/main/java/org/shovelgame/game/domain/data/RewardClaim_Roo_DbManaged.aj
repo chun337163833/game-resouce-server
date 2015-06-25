@@ -12,11 +12,11 @@ import org.shovelgame.game.domain.model.MissionReward;
 privileged aspect RewardClaim_Roo_DbManaged {
     
     @ManyToOne
-    @JoinColumn(name = "player", referencedColumnName = "id", nullable = false, insertable = false, updatable = false)
+    @JoinColumn(name = "player", referencedColumnName = "id", nullable = false)
     private Player RewardClaim.player;
     
     @ManyToOne
-    @JoinColumn(name = "reward", referencedColumnName = "id", nullable = false, insertable = false, updatable = false)
+    @JoinColumn(name = "reward", referencedColumnName = "id", nullable = false)
     private MissionReward RewardClaim.reward;
     
     public Player RewardClaim.getPlayer() {

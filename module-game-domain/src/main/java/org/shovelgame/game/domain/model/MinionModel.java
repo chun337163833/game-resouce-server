@@ -9,6 +9,7 @@ import javax.validation.constraints.NotNull;
 import org.shovelgame.game.domain.RewardInterface;
 import org.shovelgame.game.domain.data.Minion;
 import org.shovelgame.game.domain.data.Player;
+import org.shovelgame.game.domain.enumeration.MinionSpecialization;
 import org.shovelgame.game.domain.enumeration.Rarity;
 import org.springframework.roo.addon.dbre.RooDbManaged;
 import org.springframework.roo.addon.javabean.RooJavaBean;
@@ -29,6 +30,11 @@ public class MinionModel {
     @NotNull
     @Enumerated(EnumType.STRING)
     private Rarity rarity;
+
+    @Column(name = "specialization", length = 50)
+    @NotNull
+    @Enumerated(EnumType.STRING)
+    private MinionSpecialization specialization;
 
     @Transactional
     @Override

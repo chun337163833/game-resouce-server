@@ -3,11 +3,14 @@
 
 package org.shovelgame.game.domain.data;
 
-import javax.persistence.EmbeddedId;
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import org.shovelgame.game.domain.data.RewardClaim;
-import org.shovelgame.game.domain.data.RewardClaimPK;
 
 privileged aspect RewardClaim_Roo_Jpa_Entity {
     
@@ -15,14 +18,17 @@ privileged aspect RewardClaim_Roo_Jpa_Entity {
     
     declare @type: RewardClaim: @Table(schema = "data", name = "reward_claim");
     
-    @EmbeddedId
-    private RewardClaimPK RewardClaim.id;
+    @Id
+    @SequenceGenerator(name = "rewardClaimGen", sequenceName = "data.reward_claim_id_seq")
+    @GeneratedValue(strategy = GenerationType.AUTO, generator = "rewardClaimGen")
+    @Column(name = "id")
+    private Long RewardClaim.id;
     
-    public RewardClaimPK RewardClaim.getId() {
+    public Long RewardClaim.getId() {
         return this.id;
     }
     
-    public void RewardClaim.setId(RewardClaimPK id) {
+    public void RewardClaim.setId(Long id) {
         this.id = id;
     }
     

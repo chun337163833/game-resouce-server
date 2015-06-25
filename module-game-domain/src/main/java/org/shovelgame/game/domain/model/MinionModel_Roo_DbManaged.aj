@@ -5,15 +5,12 @@ package org.shovelgame.game.domain.model;
 
 import java.util.Set;
 import javax.persistence.Column;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
 import org.shovelgame.game.domain.data.Minion;
 import org.shovelgame.game.domain.model.MinionAttribute;
 import org.shovelgame.game.domain.model.MinionModel;
 import org.shovelgame.game.domain.model.MinionSkill;
-import org.shovelgame.game.domain.model.MinionSpecialization;
 import org.shovelgame.game.domain.model.MinionTrait;
 
 privileged aspect MinionModel_Roo_DbManaged {
@@ -29,10 +26,6 @@ privileged aspect MinionModel_Roo_DbManaged {
     
     @OneToMany(mappedBy = "minionModel")
     private Set<MinionTrait> MinionModel.minionTraits;
-    
-    @ManyToOne
-    @JoinColumn(name = "specialization", referencedColumnName = "id", nullable = false)
-    private MinionSpecialization MinionModel.specialization;
     
     @Column(name = "name", length = 50)
     @NotNull
@@ -75,14 +68,6 @@ privileged aspect MinionModel_Roo_DbManaged {
     
     public void MinionModel.setMinionTraits(Set<MinionTrait> minionTraits) {
         this.minionTraits = minionTraits;
-    }
-    
-    public MinionSpecialization MinionModel.getSpecialization() {
-        return specialization;
-    }
-    
-    public void MinionModel.setSpecialization(MinionSpecialization specialization) {
-        this.specialization = specialization;
     }
     
     public String MinionModel.getName() {

@@ -33,8 +33,6 @@ public enum Rarity {
 	 */
 	private double resourceMultiplier;
 	
-	private double expMultiplier;
-	
 	private Rarity(int seekerLevel, int seekerSearchTime, double chanceToFind, double resourceMultiplier) {
 		this.seekerLevel = seekerLevel;
 		this.seekerSearchTime = seekerSearchTime;

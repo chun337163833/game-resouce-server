@@ -15,14 +15,13 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 @Logger
-public class ClientConnection extends Thread implements Runnable {
+public class ClientConnection implements Runnable {
 	private Socket socket;
 	private ClientHandler handler;
 	private CommandDelegate commandDelegate;
 	private Player player;
 
-	public ClientConnection(Socket socket, String name) {
-		super(name);
+	public ClientConnection(Socket socket) {
 		this.socket = socket;
 	}
 

@@ -141,8 +141,9 @@
         </index>
     </table>
     <table alias="data" name="reward_claim">
-        <column name="player" primaryKey="true" required="true" scale="0" size="19" type="-5,int8"/>
-        <column name="reward" primaryKey="true" required="true" scale="0" size="19" type="-5,int8"/>
+        <column name="id" primaryKey="true" required="true" scale="0" size="19" type="-5,bigserial"/>
+        <column name="player" primaryKey="false" required="true" scale="0" size="19" type="-5,int8"/>
+        <column name="reward" primaryKey="false" required="true" scale="0" size="19" type="-5,int8"/>
         <foreign-key foreignTable="player" name="fk_reward_claim_player" onDelete="none" onUpdate="none">
             <option key="foreignSchemaName" value="data"/>
             <option key="exported" value="false"/>
@@ -154,8 +155,7 @@
             <reference foreign="id" local="reward"/>
         </foreign-key>
         <unique name="pk_reward_claim">
-            <unique-column name="player"/>
-            <unique-column name="reward"/>
+            <unique-column name="id"/>
         </unique>
         <index name="ixfk_reward_claim_mission_reward">
             <index-column name="reward"/>
@@ -386,6 +386,7 @@
         <column name="type" primaryKey="false" required="true" scale="0" size="10" type="12,varchar"/>
         <column name="icon_name" primaryKey="false" required="true" scale="0" size="50" type="12,varchar"/>
         <column name="price" primaryKey="false" required="false" scale="0" size="10" type="4,int4"/>
+        <column name="rarity" primaryKey="false" required="true" scale="0" size="50" type="12,varchar"/>
         <foreign-key foreignTable="attribute_type" name="fk_item_model_attribute_type" onDelete="none" onUpdate="none">
             <option key="foreignSchemaName" value="model"/>
             <option key="exported" value="false"/>
@@ -447,13 +448,9 @@
         <column name="id" primaryKey="true" required="true" scale="0" size="19" type="-5,bigserial"/>
         <column name="name" primaryKey="false" required="true" scale="0" size="50" type="12,varchar"/>
         <column name="image_bundle_name" primaryKey="false" required="true" scale="0" size="50" type="12,varchar"/>
-        <column name="specialization" primaryKey="false" required="true" scale="0" size="19" type="-5,int8"/>
+        <column name="specialization" primaryKey="false" required="true" scale="0" size="50" type="12,varchar"/>
         <column name="price" primaryKey="false" required="false" scale="0" size="10" type="4,int4"/>
-        <foreign-key foreignTable="minion_specialization" name="fk_minion_model_minion_specialization" onDelete="none" onUpdate="none">
-            <option key="foreignSchemaName" value="model"/>
-            <option key="exported" value="false"/>
-            <reference foreign="id" local="specialization"/>
-        </foreign-key>
+        <column name="rarity" primaryKey="false" required="true" scale="0" size="50" type="12,varchar"/>
         <foreign-key foreignTable="minion" name="fk_minion_minion_model_02" onDelete="none" onUpdate="none">
             <option key="foreignSchemaName" value="data"/>
             <option key="exported" value="true"/>
@@ -511,26 +508,6 @@
         <index name="ixfk_minion_skill_skill_model">
             <index-column name="skill"/>
         </index>
-    </table>
-    <table alias="model" name="minion_specialization">
-        <column name="id" primaryKey="true" required="true" scale="0" size="19" type="-5,bigserial"/>
-        <column name="type" primaryKey="false" required="true" scale="0" size="50" type="12,varchar"/>
-        <foreign-key foreignTable="minion_specialization_description" name="fk_minion_specialization_description_specialization" onDelete="none" onUpdate="none">
-            <option key="foreignSchemaName" value="i18n"/>
-            <option key="exported" value="true"/>
-            <reference foreign="specialization" local="id"/>
-        </foreign-key>
-        <foreign-key foreignTable="minion_model" name="fk_minion_model_minion_specialization" onDelete="none" onUpdate="none">
-            <option key="foreignSchemaName" value="model"/>
-            <option key="exported" value="true"/>
-            <reference foreign="specialization" local="id"/>
-        </foreign-key>
-        <unique name="pk_hero_type">
-            <unique-column name="id"/>
-        </unique>
-        <unique name="uq_hero_type_code">
-            <unique-column name="type"/>
-        </unique>
     </table>
     <table alias="model" name="minion_trait">
         <column name="minion_model" primaryKey="true" required="true" scale="0" size="19" type="-5,int8"/>
@@ -639,6 +616,7 @@
         <column name="price" primaryKey="false" required="true" scale="0" size="10" type="4,int4"/>
         <column name="image_bundle_name" primaryKey="false" required="true" scale="0" size="50" type="12,varchar"/>
         <column name="specialization" primaryKey="false" required="true" scale="0" size="50" type="12,varchar"/>
+        <column name="rarity" primaryKey="false" required="true" scale="0" size="50" type="12,varchar"/>
         <foreign-key foreignTable="seeker" name="fk_seeker_seeker_model" onDelete="none" onUpdate="none">
             <option key="foreignSchemaName" value="data"/>
             <option key="exported" value="true"/>
@@ -842,11 +820,6 @@
             <option key="exported" value="true"/>
             <reference foreign="lang" local="id"/>
         </foreign-key>
-        <foreign-key foreignTable="minion_specialization_description" name="fk_minion_specialization_description_language" onDelete="none" onUpdate="none">
-            <option key="foreignSchemaName" value="i18n"/>
-            <option key="exported" value="true"/>
-            <reference foreign="lang" local="id"/>
-        </foreign-key>
         <foreign-key foreignTable="mission_description" name="fk_mission_description_language" onDelete="none" onUpdate="none">
             <option key="foreignSchemaName" value="i18n"/>
             <option key="exported" value="true"/>
@@ -875,31 +848,6 @@
         <unique name="pk_m_language">
             <unique-column name="id"/>
         </unique>
-    </table>
-    <table alias="i18n" name="minion_specialization_description">
-        <column name="id" primaryKey="true" required="true" scale="0" size="19" type="-5,bigserial"/>
-        <column name="specialization" primaryKey="false" required="true" scale="0" size="19" type="-5,int8"/>
-        <column name="lang" primaryKey="false" required="true" scale="0" size="2" type="1,bpchar"/>
-        <column name="text" primaryKey="false" required="true" scale="0" size="2147483647" type="12,text"/>
-        <foreign-key foreignTable="language" name="fk_minion_specialization_description_language" onDelete="none" onUpdate="none">
-            <option key="foreignSchemaName" value="i18n"/>
-            <option key="exported" value="false"/>
-            <reference foreign="id" local="lang"/>
-        </foreign-key>
-        <foreign-key foreignTable="minion_specialization" name="fk_minion_specialization_description_specialization" onDelete="none" onUpdate="none">
-            <option key="foreignSchemaName" value="model"/>
-            <option key="exported" value="false"/>
-            <reference foreign="id" local="specialization"/>
-        </foreign-key>
-        <unique name="pk_minion_specialization_description">
-            <unique-column name="id"/>
-        </unique>
-        <index name="ixfk_minion_specialization_description_language">
-            <index-column name="lang"/>
-        </index>
-        <index name="ixfk_minion_specialization_description_specialization">
-            <index-column name="specialization"/>
-        </index>
     </table>
     <table alias="i18n" name="mission_description">
         <column name="id" primaryKey="true" required="true" scale="0" size="19" type="-5,bigserial"/>

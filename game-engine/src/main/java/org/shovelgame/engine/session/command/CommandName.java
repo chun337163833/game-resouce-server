@@ -1,8 +1,11 @@
 package org.shovelgame.engine.session.command;
 
+import org.shovelgame.engine.session.command.impl.KillCommand;
 import org.shovelgame.engine.session.command.impl.MatchmakingCommand;
 import org.shovelgame.engine.session.command.impl.MissionCommand;
-import org.shovelgame.engine.session.command.impl.SyncTeamsCommand;
+import org.shovelgame.engine.session.command.impl.SyncTeamCommand;
+import org.shovelgame.environment.Environment;
+import org.shovelgame.environment.EnvironmentType;
 
 public enum CommandName {
 	
@@ -11,7 +14,9 @@ public enum CommandName {
 	Matchmaking(MatchmakingCommand.class),
 	Mission(MissionCommand.class),
 	UseSkill(null),
-	SyncTeams(SyncTeamsCommand.class)
+	SyncTeam(SyncTeamCommand.class),
+	TestKill(KillCommand.class),
+	EvtGameEnd(null)
 	;
 	private Class<? extends CommandProcessor> processor;
 	

@@ -1,6 +1,6 @@
 package org.shovelgame.game.domain.enumeration;
 
-public enum MinionSpecializationType {
+public enum MinionSpecialization {
 
 	Tank, Damage, Healer
 	

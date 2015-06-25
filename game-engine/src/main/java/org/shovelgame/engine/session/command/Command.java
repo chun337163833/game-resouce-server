@@ -5,6 +5,7 @@ import java.io.IOException;
 import org.shovelgame.annotation.Logger;
 import org.springframework.util.Assert;
 
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.core.JsonParseException;
@@ -85,7 +86,12 @@ public class Command {
 	}
 
 	public void writeDataAsString(BigData data) {
-		ObjectMapper mapper = new ObjectMapper();
+		ObjectMapper mapper  = new ObjectMapper();
+		mapper.setVisibilityChecker(mapper.getSerializationConfig().getDefaultVisibilityChecker()
+		                .withFieldVisibility(JsonAutoDetect.Visibility.ANY)
+		                .withGetterVisibility(JsonAutoDetect.Visibility.NONE)
+		                .withSetterVisibility(JsonAutoDetect.Visibility.NONE)
+		                .withCreatorVisibility(JsonAutoDetect.Visibility.NONE));
 		try {
 			this.setData(mapper.writeValueAsString(data));
 		} catch (JsonProcessingException e) {
