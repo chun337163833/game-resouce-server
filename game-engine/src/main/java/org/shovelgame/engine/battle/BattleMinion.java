@@ -28,13 +28,6 @@ public class BattleMinion implements StatsOwnerDelegate {
 	 */
 	private Set<BattleTrait> affectedTraits;
 	
-	/**
-	 * Traits of this minion, this traits may not affect this minion.
-	 * This property serves only as information about minion traits for game client.
-	 * This property not serves for calculation !!!
-	 */
-	private Set<BattleTrait> minionTraits;
-	
 	private Set<BattleSkill> skills;
 	
 	@JsonIgnore
@@ -43,12 +36,10 @@ public class BattleMinion implements StatsOwnerDelegate {
 	public BattleMinion(BattleTeam team) {
 		this.team = team;
 		this.skills = new HashSet<>();
-		this.minionTraits = new HashSet<BattleTrait>();
 	}
 	
 	public void build() {
 		Minion minion = getMinion();
-		minion.getMinionModel().getMinionTraits().forEach((MinionTrait t) -> this.minionTraits.add(new BattleTrait(t)));
 		MinionModel model = minion.getMinionModel();
 		model.getMinionSkills().forEach((MinionSkill s) -> this.skills.add(new BattleSkill(s)));
 		
@@ -124,9 +115,7 @@ public class BattleMinion implements StatsOwnerDelegate {
         }
         return null;
     }
-	public Set<BattleTrait> getMinionTraits() {
-		return minionTraits;
-	}
+	
 	public MinionPosition getPosition() {
 		return this.team.getPositionForMinion(this);
 	}

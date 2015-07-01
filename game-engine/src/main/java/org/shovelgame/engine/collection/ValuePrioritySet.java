@@ -1,6 +1,8 @@
 package org.shovelgame.engine.collection;
 
+import java.util.Collection;
 import java.util.HashSet;
+import java.util.Set;
 
 /**
  * This set replace same object if value is higher or lower
@@ -22,6 +24,15 @@ public class ValuePrioritySet<T extends Valuable> extends HashSet<T> {
 
 	private static final long serialVersionUID = 1L;
 
+	@Override
+	public boolean addAll(Collection<? extends T> c) {
+		Set<T> set = new ValuePrioritySet<>();
+		this.forEach((T t) -> set.add(t));
+		c.forEach((T t) -> set.add(t));
+		this.clear();
+		return super.addAll(set);
+	}
+	
 	@Override
 	public boolean add(T e) {
 		T remove = null;

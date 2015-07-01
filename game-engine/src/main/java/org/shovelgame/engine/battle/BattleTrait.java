@@ -17,16 +17,21 @@ import org.springframework.roo.addon.equals.RooEquals;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-@RooEquals(excludeFields={"minionTrait", "targets"})
+@RooEquals(excludeFields={"minionTrait", "targets", "owner"})
 public class BattleTrait implements Valuable {
 
 	@JsonIgnore
 	private MinionTrait minionTrait;
 	private String traitId;
+	
+	@JsonIgnore
+	private BattleMinion owner;
+	
 	private MinionPosition[] targets;
-	public BattleTrait(MinionTrait minionTrait) {
+	public BattleTrait(MinionTrait minionTrait, BattleMinion owner) {
 		super();
 		this.minionTrait = minionTrait;
+		this.owner = owner;
 		Set<MinionPosition> positions = new HashSet<>();
 		minionTrait.getTraitTargets().forEach((TraitTarget t) -> positions.add(t.getPosition()));
 		this.targets = positions.toArray(new MinionPosition[positions.size()]);
@@ -61,6 +66,11 @@ public class BattleTrait implements Valuable {
 	@JsonProperty("power")
 	public BigDecimal getPower() {
 		return this.minionTrait.getPower();
+	}
+	
+	@JsonProperty("source")
+	public MinionPosition getSource() {
+		return this.owner.getPosition();
 	}
 	
 	@Override

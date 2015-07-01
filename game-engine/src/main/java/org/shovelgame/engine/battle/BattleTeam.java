@@ -94,7 +94,7 @@ public class BattleTeam implements BigData {
 
 	
 	private Set<BattleTrait> findTraits(BattleMinion minion, TraitAssignProperties props) {
-		Set<BattleTrait> traits = new HashSet<>();
+		Set<BattleTrait> traits = new ValuePrioritySet<>();
 		for(MinionTrait mtrait: minion.getMinion().getMinionModel().getMinionTraits()) {
 			Trait trait = mtrait.getTrait();
 			if(props.isOpponent!=trait.getAlg().isForOpponent()) {
@@ -106,12 +106,12 @@ public class BattleTeam implements BigData {
 			boolean isPossibleTrait = isSkillTrait || isStatTrait;
 			Set<TraitTarget> targets = mtrait.getTraitTargets();
 			if(CollectionUtils.isEmpty(targets) && minion.getPosition().equals(props.position) && isPossibleTrait) {
-				traits.add(new BattleTrait(mtrait));
+				traits.add(new BattleTrait(mtrait, minion));
 				continue;
 			}
 			for(TraitTarget target: targets) {
 				if(target.getPosition().equals(props.position) && isPossibleTrait) {
-					traits.add(new BattleTrait(mtrait));
+					traits.add(new BattleTrait(mtrait, minion));
 					break;
 				}
 			}
