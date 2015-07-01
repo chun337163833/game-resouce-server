@@ -30,12 +30,14 @@ public class BattleTest {
 	
 	@Test
 	public void testBattle() throws Exception {
+		
 		StringBuffer errors = new StringBuffer();
 		Token token = getToken(errors);
 		Socket socket = new Socket("localhost", 8888);
 		
 		CommandOutputStreamHelper cos = new CommandOutputStreamHelper(socket.getOutputStream());
 		CommandInputStreamHelper cis = new CommandInputStreamHelper(socket.getInputStream());
+		
 		
 		//authenticate
 		cos.send(CommandName.Authentication.createCommand(token.getAccessToken()));
@@ -55,9 +57,20 @@ public class BattleTest {
 		command = cis.read();
 		Assert.assertEquals(CommandStatus.Ok, command.getStatus());
 		
+		//use skills
+		cos.send(CommandName.UseSkill.createCommand(TeamType.Opponent.name(), MinionPosition.Top.name(), "testSkill"));
+		command = cis.read();
+		Assert.assertEquals(CommandStatus.Ok, command.getStatus());
+		
+		cos.send(CommandName.TestDamage.createCommand(MinionPosition.Bot.name(), MinionPosition.Top.name(), MinionPosition.Mid.name(), MinionPosition.Leader.name()));
+		command = cis.read();
+		Assert.assertEquals(CommandStatus.Ok, command.getStatus());
+		
 		cos.send(CommandName.TestKill.createCommand(MinionPosition.Leader.name()));
 		command = cis.read();
 		Assert.assertEquals(CommandStatus.Ok, command.getStatus());
+		
+		
 		
 		socket.close();
 	}

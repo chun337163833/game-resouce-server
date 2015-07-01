@@ -43,7 +43,9 @@
 
 	<bean class="org.shovelgame.logback.configuration.LogBackConfigurator"
 		init-method="configure" p:logBackFile="${logback.file}" />
-
+		
+<!-- 	<bean class="org.shovelgame.environment.EnvironmentAccessor" p:environment="${environment}"/> -->
+	
 	<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
 		<property name="host" value="psychedelic-artists.cz" />
 		<property name="port" value="28" />

@@ -4,17 +4,29 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.BiConsumer;
 
+import javax.annotation.Resource;
+
 import org.shovelgame.annotation.Logger;
 import org.shovelgame.engine.io.ClientConnection;
 import org.shovelgame.engine.session.BattleSession;
 import org.shovelgame.engine.session.command.CommandName;
+import org.shovelgame.engine.session.command.parameters.UseSkillParameters;
 import org.shovelgame.engine.session.communication.Communicator;
-import org.shovelgame.game.domain.data.Team;
+import org.shovelgame.engine.skill.SkillExecutor;
+import org.shovelgame.engine.skill.SkillResult;
+import org.shovelgame.engine.skill.SkillUsageException;
+import org.shovelgame.game.domain.model.MinionSkill;
+import org.springframework.beans.factory.annotation.Configurable;
 @Logger
+@Configurable
 public class Battleground {
 
 	private Map<Communicator, FightingTeam> teams;
 	private BattleSession session;
+	private Queue queue;
+	
+	@Resource(name="skillExecutor")
+	private SkillExecutor executor;
 	
 	public Battleground(Communicator comm1, Communicator comm2, BattleSession session) {
 		super();
@@ -24,8 +36,13 @@ public class Battleground {
 		FightingTeam team2 = new FightingTeam(comm2.getTeam(), this);
 		this.teams.put(comm1, team1);
 		this.teams.put(comm2, team2);
-		team1.build(() -> team2);
-		team2.build(() -> team1);
+		//first initialize all traits across all minions of all teams
+		team1.initializeTraits(() -> team2);
+		team2.initializeTraits(() -> team1);
+		//when all traits are initialized, just initilize all stats
+		team1.initializeStats();
+		team2.initializeStats();
+		this.queue = new Queue(team1, team2);
 	}
 
 	public void update() {
@@ -63,6 +80,17 @@ public class Battleground {
 			}
 		}
 		throw new IllegalStateException("Oops! No communicator by team found.");
+	}
+
+	
+	public SkillResult useSkill(UseSkillParameters params, ClientConnection requestor) throws SkillUsageException {
+		FightingMinion source = this.queue.getCurrent();
+		FightingMinion target = getTeam(params.getTeam(), requestor).getMinions().get(params.getTarget());
+		MinionSkill skill = source.getMinion().getMinionModel().findSkill(params.getSkillId());
+		if(skill == null) {
+			throw new SkillUsageException(String.format("Skill %s not found", params.getSkillId()));
+		}
+		return this.executor.execute(skill, source, target);
 	}
 
 	public void gameEnd(FightingTeam winner) {

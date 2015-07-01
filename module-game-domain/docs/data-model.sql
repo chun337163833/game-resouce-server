@@ -270,7 +270,8 @@ CREATE TABLE model.skill (
 	power decimal(10,3),
 	cooldown integer NOT NULL,
 	ticks integer,
-	type varchar(50) NOT NULL
+	type varchar(50) NOT NULL,
+	skillId varchar(100) NOT NULL
 );
 
 CREATE SEQUENCE i18n.skill_description_id_seq INCREMENT 1 START 1;
@@ -309,7 +310,8 @@ CREATE TABLE model.trait (
 	affected_skill_alg varchar(50),
 	alg varchar(50) NOT NULL,
 	power decimal(10) DEFAULT 0,
-	icon_name varchar(50) NOT NULL
+	icon_name varchar(50) NOT NULL,
+	type varchar(50) NOT NULL
 );
 
 CREATE SEQUENCE i18n.trait_description_id_seq INCREMENT 1 START 1;
@@ -417,6 +419,8 @@ CREATE INDEX IXFK_seeker_seeker_model
 	ON data.seeker (seeker_model);
 CREATE INDEX IXFK_seeker_player
 	ON data.seeker (owner);
+ALTER TABLE model.skill
+	ADD CONSTRAINT UQ_skill_skillId UNIQUE (skillId);
 CREATE INDEX IXFK_skill_model_attribute_type
 	ON model.skill (attribute_type);
 CREATE INDEX IXFK_skill_model_descirption_skill_model

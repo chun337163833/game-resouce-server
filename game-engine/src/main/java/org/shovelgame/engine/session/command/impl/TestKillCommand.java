@@ -14,12 +14,14 @@ import org.shovelgame.engine.session.command.BattleCommandProcessor;
 import org.shovelgame.engine.session.command.Command;
 import org.shovelgame.engine.session.command.CommandException;
 import org.shovelgame.engine.session.command.CommandName;
+import org.shovelgame.environment.Environment;
+import org.shovelgame.environment.EnvironmentType;
 import org.shovelgame.game.domain.enumeration.AttributeManagedType;
 import org.shovelgame.game.domain.enumeration.MinionPosition;
 
 @Logger
-public class KillCommand extends BattleCommandProcessor {
-
+@Environment(value={EnvironmentType.TEST, EnvironmentType.DEVELOPMENT})
+public class TestKillCommand extends BattleCommandProcessor {
 	@Override
 	public void process(Command command, ClientDelegate delegate)
 			throws CommandException {
@@ -29,10 +31,10 @@ public class KillCommand extends BattleCommandProcessor {
 			FightingTeam team = bg.getTeam(TeamType.Opponent, delegate.getClient());
 			for(MinionPosition p: positions) {
 				FightingMinion minion = team.getMinions().get(p);
-				Stat stat = minion.getCurrStatValue(AttributeManagedType.Health);
-				stat.setValue(new BigDecimal(0));
+				Stat stat = minion.getStatValue(AttributeManagedType.Health);
+				stat.changeValue(new BigDecimal(0));
 			}
-			delegate.getClient().send(CommandName.TestKill.createCommand("killed"));
+			delegate.getClient().send(CommandName.TestKill.createCommand().asResponse());
 		} catch (ClientStreamException e) {
 			log.error("", e);
 		}

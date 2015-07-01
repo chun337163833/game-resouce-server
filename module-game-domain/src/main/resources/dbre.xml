@@ -640,6 +640,7 @@
         <column name="cooldown" primaryKey="false" required="true" scale="0" size="10" type="4,int4"/>
         <column name="ticks" primaryKey="false" required="false" scale="0" size="10" type="4,int4"/>
         <column name="type" primaryKey="false" required="true" scale="0" size="50" type="12,varchar"/>
+        <column name="skillid" primaryKey="false" required="true" scale="0" size="100" type="12,varchar"/>
         <foreign-key foreignTable="attribute_type" name="fk_skill_model_attribute_type" onDelete="none" onUpdate="none">
             <option key="foreignSchemaName" value="model"/>
             <option key="exported" value="false"/>
@@ -679,6 +680,7 @@
         <column name="alg" primaryKey="false" required="true" scale="0" size="50" type="12,varchar"/>
         <column name="power" primaryKey="false" required="false" scale="0" size="10" type="2,numeric"/>
         <column name="icon_name" primaryKey="false" required="true" scale="0" size="50" type="12,varchar"/>
+        <column name="type" primaryKey="false" required="true" scale="0" size="50" type="12,varchar"/>
         <foreign-key foreignTable="attribute_type" name="fk_trait_model_attribute_type" onDelete="none" onUpdate="none">
             <option key="foreignSchemaName" value="model"/>
             <option key="exported" value="false"/>

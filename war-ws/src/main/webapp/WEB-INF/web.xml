@@ -47,7 +47,8 @@
 		<param-name>contextConfigLocation</param-name>
 		<param-value>
 			classpath*:META-INF/spring/*-context.xml,
-			classpath*:META-INF/spring/security/*-security.xml
+			classpath*:META-INF/spring/security/*-security.xml,
+			classpath*:META-INF/spring/game-engine.xml
 		</param-value>
 	</context-param>
 	

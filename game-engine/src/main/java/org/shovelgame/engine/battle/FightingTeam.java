@@ -39,11 +39,19 @@ public class FightingTeam implements BigData {
 		this.minions.put(MinionPosition.Bot, new FightingMinion(MinionPosition.Bot, this));
 	}
 
-	public void build(OpponentTeamDelegate delegate) {
+	public void initializeTraits(OpponentTeamDelegate delegate) {
 		this.opponentTeamDelegate = delegate;
 		this.updateTraits();
 	}
 	
+	public void initializeStats() {
+		this.minions.forEach(new BiConsumer<MinionPosition, FightingMinion>() {
+			@Override
+			public void accept(MinionPosition t, FightingMinion u) {
+				u.initializeStats();
+			}
+		});
+	}
 	public void updateTraits() {
 		this.minions.forEach(new BiConsumer<MinionPosition, FightingMinion>() {
 			@Override

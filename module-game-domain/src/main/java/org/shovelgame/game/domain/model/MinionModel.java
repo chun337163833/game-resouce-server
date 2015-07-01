@@ -44,4 +44,13 @@ public class MinionModel {
         m.setOwner(player);
         m.persist();
     }
+
+    public MinionSkill findSkill(String skillId) {
+        for (MinionSkill skill : this.getMinionSkills()) {
+            if (skill.getSkill().getSkillid().equals(skillId)) {
+                return skill;
+            }
+        }
+        return null;
+    }
 }

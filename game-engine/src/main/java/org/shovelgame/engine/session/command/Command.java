@@ -18,8 +18,18 @@ public class Command {
 
 	private CommandName name;
 	private CommandStatus status = CommandStatus.Ok;
+	private boolean response;
 	private String[] parameters = new String[0];
-	
+
+	public Command() {
+		// TODO Auto-generated constructor stub
+	}
+
+	public Command(boolean response) {
+		super();
+		this.response = response;
+	}
+
 	/**
 	 * read only property used for sending big data to client
 	 */
@@ -69,12 +79,12 @@ public class Command {
 		try {
 			Assert.notNull(this.status);
 			Assert.notNull(this.name);
-//			Assert.notNull(this.parameters);
+			// Assert.notNull(this.parameters);
 		} catch (Exception e) {
 			throw new CommandException("Command is not valid.", e);
 		}
 	}
-	
+
 	@JsonProperty("data")
 	public String getData() {
 		return data;
@@ -86,18 +96,32 @@ public class Command {
 	}
 
 	public void writeDataAsString(BigData data) {
-		ObjectMapper mapper  = new ObjectMapper();
-		mapper.setVisibilityChecker(mapper.getSerializationConfig().getDefaultVisibilityChecker()
-		                .withFieldVisibility(JsonAutoDetect.Visibility.ANY)
-		                .withGetterVisibility(JsonAutoDetect.Visibility.NONE)
-		                .withSetterVisibility(JsonAutoDetect.Visibility.NONE)
-		                .withCreatorVisibility(JsonAutoDetect.Visibility.NONE));
+		ObjectMapper mapper = new ObjectMapper();
+		mapper.setVisibilityChecker(mapper.getSerializationConfig()
+				.getDefaultVisibilityChecker()
+				.withFieldVisibility(JsonAutoDetect.Visibility.ANY)
+				.withGetterVisibility(JsonAutoDetect.Visibility.NONE)
+				.withSetterVisibility(JsonAutoDetect.Visibility.NONE)
+				.withCreatorVisibility(JsonAutoDetect.Visibility.NONE));
 		try {
 			this.setData(mapper.writeValueAsString(data));
 		} catch (JsonProcessingException e) {
 			log.error("", e);
 			this.setStatus(CommandStatus.Error);
 		}
+	}
+
+	public boolean isResponse() {
+		return response;
+	}
+
+	public void setResponse(boolean response) {
+		this.response = response;
+	}
+
+	public Command asResponse() {
+		setResponse(true);
+		return this;
 	}
 	
 }

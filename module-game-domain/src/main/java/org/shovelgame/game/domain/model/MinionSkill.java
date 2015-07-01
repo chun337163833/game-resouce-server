@@ -9,4 +9,8 @@ import org.springframework.roo.addon.tostring.RooToString;
 @RooToString(excludeFields = { "minionModel", "skill" })
 @RooJpaActiveRecord(identifierType = MinionSkillPK.class, versionField = "", table = "minion_skill", schema = "model", sequenceName = "model.minion_skill_id_seq")
 public class MinionSkill {
+
+    public void createInstance() {
+        getSkill().getAlg();
+    }
 }

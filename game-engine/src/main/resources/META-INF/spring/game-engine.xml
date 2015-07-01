@@ -31,4 +31,5 @@
 		p:serverExecutor-ref="socketListenerExecutor"
 		init-method="startup"
 		destroy-method="shutdown" />
+	<bean id="skillExecutor" class="org.shovelgame.engine.skill.SkillExecutor" p:scanPackage="org.shovelgame.engine.skill.impl"/>
 </beans>

@@ -6,4 +6,5 @@ public enum SkillAlgorithm {
 	Heal,
 	Swap,
 	Wait
+	
 }

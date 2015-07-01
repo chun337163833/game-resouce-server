@@ -6,13 +6,14 @@ import org.springframework.beans.factory.annotation.Value;
 @Configurable
 public class EnvironmentAccessor { //NOSONAR
 	
-	@Value("${environment:development}")
+	@Value("${environment}")
 	private String environment;
 
 	private static EnvironmentAccessor instance;
 	
 	static {
-		EnvironmentAccessor.instance = new EnvironmentAccessor();
+		EnvironmentAccessor instance = new EnvironmentAccessor();
+		EnvironmentAccessor.instance = instance;
 	}
 	
 	public static EnvironmentType getEnvironment() {

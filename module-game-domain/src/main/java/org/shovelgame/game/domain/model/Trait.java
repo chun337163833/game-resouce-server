@@ -5,6 +5,7 @@ import javax.persistence.Enumerated;
 import javax.validation.constraints.NotNull;
 import org.shovelgame.game.domain.enumeration.SkillAlgorithm;
 import org.shovelgame.game.domain.enumeration.TraitAlgorithm;
+import org.shovelgame.game.domain.enumeration.TraitType;
 import org.springframework.roo.addon.dbre.RooDbManaged;
 import org.springframework.roo.addon.javabean.RooJavaBean;
 import org.springframework.roo.addon.jpa.activerecord.RooJpaActiveRecord;
@@ -24,4 +25,9 @@ public class Trait {
     @NotNull
     @Enumerated(EnumType.STRING)
     private TraitAlgorithm alg;
+
+    @Column(name = "type", length = 50)
+    @NotNull
+    @Enumerated(EnumType.STRING)
+    private TraitType type;
 }

@@ -12,14 +12,12 @@ import org.shovelgame.game.domain.enumeration.MinionPosition;
 import org.shovelgame.game.domain.model.MinionAttribute;
 import org.shovelgame.game.domain.model.MinionModel;
 import org.shovelgame.game.domain.model.MinionTrait;
-import org.slf4j.LoggerFactory;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 @Logger
 public class FightingMinion implements StatsOwnerDelegate {
 
-	private Stat[] maxStats;
-	private Stat[] currStats;
+	private Stat[] stats;
 	private MinionPosition position;
 	private boolean died;
 	/**
@@ -46,11 +44,13 @@ public class FightingMinion implements StatsOwnerDelegate {
 			}
 			stats.add(new Stat(t, new BigDecimal(0), this));
 		}
-		this.maxStats = stats.toArray(new Stat[stats.size()]);
-		// add traits and level and items
-		this.currStats = stats.toArray(new Stat[stats.size()]);
+		this.stats = stats.toArray(new Stat[stats.size()]);
 	}
-
+	public void initializeStats() {
+		for(Stat stat: this.stats) {
+			stat.initialize();
+		}
+	}
 	public void updateTraits() {
 		this.affectedTraits = this.team.findTraitsForPosition(this.position);
 		if(log.isDebugEnabled()) {
@@ -58,16 +58,8 @@ public class FightingMinion implements StatsOwnerDelegate {
 		}
 	}
 
-	public Stat getMaxStatValue(AttributeManagedType type) {
-		return getStatValue(type, this.maxStats);
-	}
-
-	public Stat getCurrStatValue(AttributeManagedType type) {
-		return getStatValue(type, this.currStats);
-	}
-
-	public Stat getStatValue(AttributeManagedType type, Stat[] array) {
-		for (Stat s : array) {
+	public Stat getStatValue(AttributeManagedType type) {
+		for (Stat s : this.stats) {
 			if (s.getType().equals(type)) {
 				return s;
 			}
@@ -81,14 +73,10 @@ public class FightingMinion implements StatsOwnerDelegate {
 		return this;
 	}
 
-	public Stat[] getMaxStats() {
-		return maxStats;
+	public Stat[] getStats() {
+		return stats;
 	}
-
-	public Stat[] getCurrStats() {
-		return currStats;
-	}
-
+	
 	public Minion getMinion() {
 		return this.team.getTeam().getMinionByPosition(this.position);
 	}
