@@ -1,27 +1,35 @@
 package org.shovelgame.engine.battle;
 
 import java.math.BigDecimal;
+import java.util.HashSet;
+import java.util.Set;
 
 import org.shovelgame.engine.collection.Valuable;
 import org.shovelgame.game.domain.enumeration.AttributeManagedType;
+import org.shovelgame.game.domain.enumeration.MinionPosition;
 import org.shovelgame.game.domain.enumeration.SkillAlgorithm;
 import org.shovelgame.game.domain.enumeration.TraitAlgorithm;
 import org.shovelgame.game.domain.enumeration.TraitType;
 import org.shovelgame.game.domain.model.MinionTrait;
+import org.shovelgame.game.domain.model.TraitTarget;
 import org.springframework.roo.addon.equals.RooEquals;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-@RooEquals(excludeFields={"minionTrait"})
+@RooEquals(excludeFields={"minionTrait", "targets"})
 public class BattleTrait implements Valuable {
 
 	@JsonIgnore
 	private MinionTrait minionTrait;
 	private String traitId;
+	private MinionPosition[] targets;
 	public BattleTrait(MinionTrait minionTrait) {
 		super();
 		this.minionTrait = minionTrait;
+		Set<MinionPosition> positions = new HashSet<>();
+		minionTrait.getTraitTargets().forEach((TraitTarget t) -> positions.add(t.getPosition()));
+		this.targets = positions.toArray(new MinionPosition[positions.size()]);
 		this.traitId = minionTrait.getTrait().getTraitId();
 	}
 
@@ -59,7 +67,9 @@ public class BattleTrait implements Valuable {
 	public BigDecimal getValue() {
 		return getPower();
 	}
-	
+	public MinionPosition[] getTargets() {
+		return targets;
+	}
 	@Override
 	public String toString() {
 		return String.format("Trait[%s,%s,%s]", getTraitId(), getType(), getAttribute() == null? "Stat": "Skill");

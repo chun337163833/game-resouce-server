@@ -24,6 +24,7 @@ public class BattleSkill {
 		super();
 		this.minionSkill = skill;
 		this.defaultPower = skill.getPower();
+		this.currentPower = this.defaultPower;
 	}
 
 	public void update(Set<BattleTrait> traits) {
