@@ -31,7 +31,7 @@ public class TestKillCommand extends BattleCommandProcessor {
 			BattleTeam team = bg.getTeam(TeamType.My, delegate.getClient());
 			for(MinionPosition p: positions) {
 				BattleMinion minion = team.getMinions().get(p);
-				Stat stat = minion.getStatValue(AttributeManagedType.Health);
+				Stat stat = minion.getStat(AttributeManagedType.Health);
 				stat.changeValue(new BigDecimal(0));
 			}
 			delegate.getClient().send(CommandName.TestKill.createCommand().asResponse());

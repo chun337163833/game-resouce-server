@@ -68,7 +68,7 @@ public class BattleMinion implements StatsOwnerDelegate {
 		}
 	}
 
-	public Stat getStatValue(AttributeManagedType type) {
+	public Stat getStat(AttributeManagedType type) {
 		for (Stat s : this.stats) {
 			if (s.getType().equals(type)) {
 				return s;

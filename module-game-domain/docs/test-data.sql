@@ -22,17 +22,30 @@ insert into model.item_model (id, attribute_type, value, max_enchant, type, icon
 --test skill
 insert into model.skill (id, alg, attribute_type, icon_name, power, cooldown, ticks, type, skill_id) values (nextval('model.skill_id_seq'), 'Damage', 'Health', 'skill1', 5, 0, 0, 'PhysicalPower', 'testSkill');
 --1
-insert into model.trait (id, type, affected_attribute_type, alg, power, icon_name, trait_id) values (nextval('model.trait_id_seq'), 'Percentage', 'Health', 'Increase', 10, 'health', 'healthBoost');
+insert into model.trait (id, type, affected_attribute_type, alg, power, icon_name, trait_id) values (nextval('model.trait_id_seq'), 'Percentage', 'Health', 'Increase', 0.1, 'health', 'healthBoost');
 --2
 insert into model.trait (id, type, affected_attribute_type, alg, power, icon_name, trait_id) values (nextval('model.trait_id_seq'), 'Addition', 'PhysicalPower', 'Increase', 20, 'health', 'attackBoost');
 --3
-insert into model.trait (id, type, affected_attribute_type, alg, power, icon_name, trait_id) values (nextval('model.trait_id_seq'), 'Percentage', 'Health', 'Decrease', 5, 'health', 'healthWeakness');
+insert into model.trait (id, type, affected_attribute_type, alg, power, icon_name, trait_id) values (nextval('model.trait_id_seq'), 'Percentage', 'Health', 'Decrease', 0.05, 'health', 'healthWeakness');
 --4
-insert into model.trait (id, type, affected_skill_alg, alg, power, icon_name, trait_id) values (nextval('model.trait_id_seq'), 'Percentage', 'Damage', 'Increase', 50, 'health', 'damageSkillBoost');
+insert into model.trait (id, type, affected_skill_alg, alg, power, icon_name, trait_id) values (nextval('model.trait_id_seq'), 'Percentage', 'Damage', 'Increase', 0.5, 'health', 'damageSkillBoost');
 
 --test healer minion
 insert into model.minion_model (id, name, specialization, image_bundle_name, rarity) values (nextval('model.minion_model_id_seq'), 'HealerBot', 'Healer', 'Zola', 'Common');
 insert into model.minion_attribute (id, minion_model, type, value) values (nextval('model.minion_attribute_id_seq'), currval('model.minion_model_id_seq'), 'Health', 100);
+insert into model.minion_attribute (id, minion_model, type, value) values (nextval('model.minion_attribute_id_seq'), currval('model.minion_model_id_seq'), 'Mana', 200);
+insert into model.minion_attribute (id, minion_model, type, value) values (nextval('model.minion_attribute_id_seq'), currval('model.minion_model_id_seq'), 'PhysicalPower', 10);
+insert into model.minion_attribute (id, minion_model, type, value) values (nextval('model.minion_attribute_id_seq'), currval('model.minion_model_id_seq'), 'PhysicalCritChance', 0.3);
+insert into model.minion_attribute (id, minion_model, type, value) values (nextval('model.minion_attribute_id_seq'), currval('model.minion_model_id_seq'), 'PhysicalPenetration', 0.05);
+insert into model.minion_attribute (id, minion_model, type, value) values (nextval('model.minion_attribute_id_seq'), currval('model.minion_model_id_seq'), 'PhysicalResistance', 0.2);
+insert into model.minion_attribute (id, minion_model, type, value) values (nextval('model.minion_attribute_id_seq'), currval('model.minion_model_id_seq'), 'PhysicalCritResistance', 0.05);
+insert into model.minion_attribute (id, minion_model, type, value) values (nextval('model.minion_attribute_id_seq'), currval('model.minion_model_id_seq'), 'SpellPower', 100);
+insert into model.minion_attribute (id, minion_model, type, value) values (nextval('model.minion_attribute_id_seq'), currval('model.minion_model_id_seq'), 'SpellCritChance', 100);
+insert into model.minion_attribute (id, minion_model, type, value) values (nextval('model.minion_attribute_id_seq'), currval('model.minion_model_id_seq'), 'SpellPenetration', 100);
+insert into model.minion_attribute (id, minion_model, type, value) values (nextval('model.minion_attribute_id_seq'), currval('model.minion_model_id_seq'), 'SpellResistance', 100);
+insert into model.minion_attribute (id, minion_model, type, value) values (nextval('model.minion_attribute_id_seq'), currval('model.minion_model_id_seq'), 'SpellCritResistance', 100);
+insert into model.minion_attribute (id, minion_model, type, value) values (nextval('model.minion_attribute_id_seq'), currval('model.minion_model_id_seq'), 'CriticalDamage', 0.5);
+
 insert into model.minion_trait (id, minion_model, trait, required_level) values (nextval('model.minion_trait_id_seq'), currval('model.minion_model_id_seq'), 1, 1);
 insert into model.trait_target (id, trait, position) values (nextval('model.trait_target_id_seq'), currval('model.minion_trait_id_seq'), 'Leader');
 insert into model.trait_target (id, trait, position) values (nextval('model.trait_target_id_seq'), currval('model.minion_trait_id_seq'), 'Bot');
@@ -42,6 +55,18 @@ insert into model.minion_skill (minion_model, skill, required_level) values (cur
 --test damage minion1
 insert into model.minion_model (id, name, specialization, image_bundle_name, rarity) values (nextval('model.minion_model_id_seq'), 'DamageBot1', 'Damage', 'Zola', 'Common');
 insert into model.minion_attribute (id, minion_model, type, value) values (nextval('model.minion_attribute_id_seq'), currval('model.minion_model_id_seq'), 'Health', 150);
+insert into model.minion_attribute (id, minion_model, type, value) values (nextval('model.minion_attribute_id_seq'), currval('model.minion_model_id_seq'), 'Mana', 200);
+insert into model.minion_attribute (id, minion_model, type, value) values (nextval('model.minion_attribute_id_seq'), currval('model.minion_model_id_seq'), 'PhysicalPower', 10);
+insert into model.minion_attribute (id, minion_model, type, value) values (nextval('model.minion_attribute_id_seq'), currval('model.minion_model_id_seq'), 'PhysicalCritChance', 0.3);
+insert into model.minion_attribute (id, minion_model, type, value) values (nextval('model.minion_attribute_id_seq'), currval('model.minion_model_id_seq'), 'PhysicalPenetration', 0.05);
+insert into model.minion_attribute (id, minion_model, type, value) values (nextval('model.minion_attribute_id_seq'), currval('model.minion_model_id_seq'), 'PhysicalResistance', 0.2);
+insert into model.minion_attribute (id, minion_model, type, value) values (nextval('model.minion_attribute_id_seq'), currval('model.minion_model_id_seq'), 'PhysicalCritResistance', 0.05);
+insert into model.minion_attribute (id, minion_model, type, value) values (nextval('model.minion_attribute_id_seq'), currval('model.minion_model_id_seq'), 'SpellPower', 100);
+insert into model.minion_attribute (id, minion_model, type, value) values (nextval('model.minion_attribute_id_seq'), currval('model.minion_model_id_seq'), 'SpellCritChance', 100);
+insert into model.minion_attribute (id, minion_model, type, value) values (nextval('model.minion_attribute_id_seq'), currval('model.minion_model_id_seq'), 'SpellPenetration', 100);
+insert into model.minion_attribute (id, minion_model, type, value) values (nextval('model.minion_attribute_id_seq'), currval('model.minion_model_id_seq'), 'SpellResistance', 100);
+insert into model.minion_attribute (id, minion_model, type, value) values (nextval('model.minion_attribute_id_seq'), currval('model.minion_model_id_seq'), 'SpellCritResistance', 100);
+insert into model.minion_attribute (id, minion_model, type, value) values (nextval('model.minion_attribute_id_seq'), currval('model.minion_model_id_seq'), 'CriticalDamage', 0.5);
 insert into model.minion_trait (id, minion_model, trait, required_level) values (nextval('model.minion_trait_id_seq'), currval('model.minion_model_id_seq'), 2, 1);
 insert into model.trait_target (id, trait, position) values (nextval('model.trait_target_id_seq'), currval('model.minion_trait_id_seq'), 'Mid');
 insert into model.trait_target (id, trait, position) values (nextval('model.trait_target_id_seq'), currval('model.minion_trait_id_seq'), 'Top');
@@ -51,6 +76,18 @@ insert into model.minion_skill (minion_model, skill, required_level) values (cur
 --test damage minion2
 insert into model.minion_model (id, name, specialization, image_bundle_name, rarity) values (nextval('model.minion_model_id_seq'), 'DamageBot2', 'Damage', 'Zola', 'Common');
 insert into model.minion_attribute (id, minion_model, type, value) values (nextval('model.minion_attribute_id_seq'), currval('model.minion_model_id_seq'), 'Health', 150);
+insert into model.minion_attribute (id, minion_model, type, value) values (nextval('model.minion_attribute_id_seq'), currval('model.minion_model_id_seq'), 'Mana', 200);
+insert into model.minion_attribute (id, minion_model, type, value) values (nextval('model.minion_attribute_id_seq'), currval('model.minion_model_id_seq'), 'PhysicalPower', 10);
+insert into model.minion_attribute (id, minion_model, type, value) values (nextval('model.minion_attribute_id_seq'), currval('model.minion_model_id_seq'), 'PhysicalCritChance', 0.3);
+insert into model.minion_attribute (id, minion_model, type, value) values (nextval('model.minion_attribute_id_seq'), currval('model.minion_model_id_seq'), 'PhysicalPenetration', 0.05);
+insert into model.minion_attribute (id, minion_model, type, value) values (nextval('model.minion_attribute_id_seq'), currval('model.minion_model_id_seq'), 'PhysicalResistance', 0.2);
+insert into model.minion_attribute (id, minion_model, type, value) values (nextval('model.minion_attribute_id_seq'), currval('model.minion_model_id_seq'), 'PhysicalCritResistance', 0.05);
+insert into model.minion_attribute (id, minion_model, type, value) values (nextval('model.minion_attribute_id_seq'), currval('model.minion_model_id_seq'), 'SpellPower', 100);
+insert into model.minion_attribute (id, minion_model, type, value) values (nextval('model.minion_attribute_id_seq'), currval('model.minion_model_id_seq'), 'SpellCritChance', 100);
+insert into model.minion_attribute (id, minion_model, type, value) values (nextval('model.minion_attribute_id_seq'), currval('model.minion_model_id_seq'), 'SpellPenetration', 100);
+insert into model.minion_attribute (id, minion_model, type, value) values (nextval('model.minion_attribute_id_seq'), currval('model.minion_model_id_seq'), 'SpellResistance', 100);
+insert into model.minion_attribute (id, minion_model, type, value) values (nextval('model.minion_attribute_id_seq'), currval('model.minion_model_id_seq'), 'SpellCritResistance', 100);
+insert into model.minion_attribute (id, minion_model, type, value) values (nextval('model.minion_attribute_id_seq'), currval('model.minion_model_id_seq'), 'CriticalDamage', 0.5);
 insert into model.minion_trait (id, minion_model, trait, required_level) values (nextval('model.minion_trait_id_seq'), currval('model.minion_model_id_seq'), 3, 1);
 insert into model.trait_target (id, trait, position) values (nextval('model.trait_target_id_seq'), currval('model.minion_trait_id_seq'), 'Leader');
 insert into model.trait_target (id, trait, position) values (nextval('model.trait_target_id_seq'), currval('model.minion_trait_id_seq'), 'Bot');
@@ -63,6 +100,18 @@ insert into model.minion_skill (minion_model, skill, required_level) values (cur
 --test tank minion2
 insert into model.minion_model (id, name, specialization, image_bundle_name, rarity) values (nextval('model.minion_model_id_seq'), 'TankBot', 'Tank', 'Zola', 'Common');
 insert into model.minion_attribute (id, minion_model, type, value) values (nextval('model.minion_attribute_id_seq'), currval('model.minion_model_id_seq'), 'Health', 200);
+insert into model.minion_attribute (id, minion_model, type, value) values (nextval('model.minion_attribute_id_seq'), currval('model.minion_model_id_seq'), 'Mana', 200);
+insert into model.minion_attribute (id, minion_model, type, value) values (nextval('model.minion_attribute_id_seq'), currval('model.minion_model_id_seq'), 'PhysicalPower', 10);
+insert into model.minion_attribute (id, minion_model, type, value) values (nextval('model.minion_attribute_id_seq'), currval('model.minion_model_id_seq'), 'PhysicalCritChance', 0.3);
+insert into model.minion_attribute (id, minion_model, type, value) values (nextval('model.minion_attribute_id_seq'), currval('model.minion_model_id_seq'), 'PhysicalPenetration', 0.05);
+insert into model.minion_attribute (id, minion_model, type, value) values (nextval('model.minion_attribute_id_seq'), currval('model.minion_model_id_seq'), 'PhysicalResistance', 0.2);
+insert into model.minion_attribute (id, minion_model, type, value) values (nextval('model.minion_attribute_id_seq'), currval('model.minion_model_id_seq'), 'PhysicalCritResistance', 0.05);
+insert into model.minion_attribute (id, minion_model, type, value) values (nextval('model.minion_attribute_id_seq'), currval('model.minion_model_id_seq'), 'SpellPower', 100);
+insert into model.minion_attribute (id, minion_model, type, value) values (nextval('model.minion_attribute_id_seq'), currval('model.minion_model_id_seq'), 'SpellCritChance', 100);
+insert into model.minion_attribute (id, minion_model, type, value) values (nextval('model.minion_attribute_id_seq'), currval('model.minion_model_id_seq'), 'SpellPenetration', 100);
+insert into model.minion_attribute (id, minion_model, type, value) values (nextval('model.minion_attribute_id_seq'), currval('model.minion_model_id_seq'), 'SpellResistance', 100);
+insert into model.minion_attribute (id, minion_model, type, value) values (nextval('model.minion_attribute_id_seq'), currval('model.minion_model_id_seq'), 'SpellCritResistance', 100);
+insert into model.minion_attribute (id, minion_model, type, value) values (nextval('model.minion_attribute_id_seq'), currval('model.minion_model_id_seq'), 'CriticalDamage', 0.5);
 insert into model.minion_trait (id, minion_model, trait, required_level) values (nextval('model.minion_trait_id_seq'), currval('model.minion_model_id_seq'), 2, 1);
 insert into model.trait_target (id, trait, position) values (nextval('model.trait_target_id_seq'), currval('model.minion_trait_id_seq'), 'Leader');
 insert into model.trait_target (id, trait, position) values (nextval('model.trait_target_id_seq'), currval('model.minion_trait_id_seq'), 'Bot');
@@ -82,7 +131,18 @@ insert into model.mission_reward (id, mission, value, chance, dtype) values (nex
 --test healer minion
 insert into model.minion_model (id, name, specialization, image_bundle_name, rarity) values (nextval('model.minion_model_id_seq'), 'HealerBot', 'Healer', 'Zola', 'Common');
 insert into model.minion_attribute (id, minion_model, type, value) values (nextval('model.minion_attribute_id_seq'), currval('model.minion_model_id_seq'), 'Health', 50);
-
+insert into model.minion_attribute (id, minion_model, type, value) values (nextval('model.minion_attribute_id_seq'), currval('model.minion_model_id_seq'), 'Mana', 200);
+insert into model.minion_attribute (id, minion_model, type, value) values (nextval('model.minion_attribute_id_seq'), currval('model.minion_model_id_seq'), 'PhysicalPower', 10);
+insert into model.minion_attribute (id, minion_model, type, value) values (nextval('model.minion_attribute_id_seq'), currval('model.minion_model_id_seq'), 'PhysicalCritChance', 0.3);
+insert into model.minion_attribute (id, minion_model, type, value) values (nextval('model.minion_attribute_id_seq'), currval('model.minion_model_id_seq'), 'PhysicalPenetration', 0.05);
+insert into model.minion_attribute (id, minion_model, type, value) values (nextval('model.minion_attribute_id_seq'), currval('model.minion_model_id_seq'), 'PhysicalResistance', 0.2);
+insert into model.minion_attribute (id, minion_model, type, value) values (nextval('model.minion_attribute_id_seq'), currval('model.minion_model_id_seq'), 'PhysicalCritResistance', 0.05);
+insert into model.minion_attribute (id, minion_model, type, value) values (nextval('model.minion_attribute_id_seq'), currval('model.minion_model_id_seq'), 'SpellPower', 100);
+insert into model.minion_attribute (id, minion_model, type, value) values (nextval('model.minion_attribute_id_seq'), currval('model.minion_model_id_seq'), 'SpellCritChance', 100);
+insert into model.minion_attribute (id, minion_model, type, value) values (nextval('model.minion_attribute_id_seq'), currval('model.minion_model_id_seq'), 'SpellPenetration', 100);
+insert into model.minion_attribute (id, minion_model, type, value) values (nextval('model.minion_attribute_id_seq'), currval('model.minion_model_id_seq'), 'SpellResistance', 100);
+insert into model.minion_attribute (id, minion_model, type, value) values (nextval('model.minion_attribute_id_seq'), currval('model.minion_model_id_seq'), 'SpellCritResistance', 100);
+insert into model.minion_attribute (id, minion_model, type, value) values (nextval('model.minion_attribute_id_seq'), currval('model.minion_model_id_seq'), 'CriticalDamage', 0.5);
 insert into model.minion_trait (id, minion_model, trait, required_level) values (nextval('model.minion_trait_id_seq'), currval('model.minion_model_id_seq'), 2, 1);
 insert into model.minion_trait (id, minion_model, trait, required_level) values (nextval('model.minion_trait_id_seq'), currval('model.minion_model_id_seq'), 4, 1);
 
@@ -92,6 +152,18 @@ insert into model.minion_skill (minion_model, skill, required_level) values (cur
 --test damage minion1
 insert into model.minion_model (id, name, specialization, image_bundle_name, rarity) values (nextval('model.minion_model_id_seq'), 'DamageBot1', 'Damage', 'Zola', 'Common');
 insert into model.minion_attribute (id, minion_model, type, value) values (nextval('model.minion_attribute_id_seq'), currval('model.minion_model_id_seq'), 'Health', 150);
+insert into model.minion_attribute (id, minion_model, type, value) values (nextval('model.minion_attribute_id_seq'), currval('model.minion_model_id_seq'), 'Mana', 200);
+insert into model.minion_attribute (id, minion_model, type, value) values (nextval('model.minion_attribute_id_seq'), currval('model.minion_model_id_seq'), 'PhysicalPower', 10);
+insert into model.minion_attribute (id, minion_model, type, value) values (nextval('model.minion_attribute_id_seq'), currval('model.minion_model_id_seq'), 'PhysicalCritChance', 0.3);
+insert into model.minion_attribute (id, minion_model, type, value) values (nextval('model.minion_attribute_id_seq'), currval('model.minion_model_id_seq'), 'PhysicalPenetration', 0.05);
+insert into model.minion_attribute (id, minion_model, type, value) values (nextval('model.minion_attribute_id_seq'), currval('model.minion_model_id_seq'), 'PhysicalResistance', 0.2);
+insert into model.minion_attribute (id, minion_model, type, value) values (nextval('model.minion_attribute_id_seq'), currval('model.minion_model_id_seq'), 'PhysicalCritResistance', 0.05);
+insert into model.minion_attribute (id, minion_model, type, value) values (nextval('model.minion_attribute_id_seq'), currval('model.minion_model_id_seq'), 'SpellPower', 100);
+insert into model.minion_attribute (id, minion_model, type, value) values (nextval('model.minion_attribute_id_seq'), currval('model.minion_model_id_seq'), 'SpellCritChance', 100);
+insert into model.minion_attribute (id, minion_model, type, value) values (nextval('model.minion_attribute_id_seq'), currval('model.minion_model_id_seq'), 'SpellPenetration', 100);
+insert into model.minion_attribute (id, minion_model, type, value) values (nextval('model.minion_attribute_id_seq'), currval('model.minion_model_id_seq'), 'SpellResistance', 100);
+insert into model.minion_attribute (id, minion_model, type, value) values (nextval('model.minion_attribute_id_seq'), currval('model.minion_model_id_seq'), 'SpellCritResistance', 100);
+insert into model.minion_attribute (id, minion_model, type, value) values (nextval('model.minion_attribute_id_seq'), currval('model.minion_model_id_seq'), 'CriticalDamage', 0.5);
 insert into model.minion_trait (id, minion_model, trait, required_level) values (nextval('model.minion_trait_id_seq'), currval('model.minion_model_id_seq'), 3, 1);
 insert into model.trait_target (id, trait, position) values (nextval('model.trait_target_id_seq'), currval('model.minion_trait_id_seq'), 'Leader');
 insert into model.trait_target (id, trait, position) values (nextval('model.trait_target_id_seq'), currval('model.minion_trait_id_seq'), 'Mid');
@@ -101,6 +173,18 @@ insert into model.minion_skill (minion_model, skill, required_level) values (cur
 --test damage minion2
 insert into model.minion_model (id, name, specialization, image_bundle_name, rarity) values (nextval('model.minion_model_id_seq'), 'DamageBot2', 'Damage', 'Zola', 'Common');
 insert into model.minion_attribute (id, minion_model, type, value) values (nextval('model.minion_attribute_id_seq'), currval('model.minion_model_id_seq'), 'Health', 300);
+insert into model.minion_attribute (id, minion_model, type, value) values (nextval('model.minion_attribute_id_seq'), currval('model.minion_model_id_seq'), 'Mana', 200);
+insert into model.minion_attribute (id, minion_model, type, value) values (nextval('model.minion_attribute_id_seq'), currval('model.minion_model_id_seq'), 'PhysicalPower', 10);
+insert into model.minion_attribute (id, minion_model, type, value) values (nextval('model.minion_attribute_id_seq'), currval('model.minion_model_id_seq'), 'PhysicalCritChance', 0.3);
+insert into model.minion_attribute (id, minion_model, type, value) values (nextval('model.minion_attribute_id_seq'), currval('model.minion_model_id_seq'), 'PhysicalPenetration', 0.05);
+insert into model.minion_attribute (id, minion_model, type, value) values (nextval('model.minion_attribute_id_seq'), currval('model.minion_model_id_seq'), 'PhysicalResistance', 0.2);
+insert into model.minion_attribute (id, minion_model, type, value) values (nextval('model.minion_attribute_id_seq'), currval('model.minion_model_id_seq'), 'PhysicalCritResistance', 0.05);
+insert into model.minion_attribute (id, minion_model, type, value) values (nextval('model.minion_attribute_id_seq'), currval('model.minion_model_id_seq'), 'SpellPower', 100);
+insert into model.minion_attribute (id, minion_model, type, value) values (nextval('model.minion_attribute_id_seq'), currval('model.minion_model_id_seq'), 'SpellCritChance', 100);
+insert into model.minion_attribute (id, minion_model, type, value) values (nextval('model.minion_attribute_id_seq'), currval('model.minion_model_id_seq'), 'SpellPenetration', 100);
+insert into model.minion_attribute (id, minion_model, type, value) values (nextval('model.minion_attribute_id_seq'), currval('model.minion_model_id_seq'), 'SpellResistance', 100);
+insert into model.minion_attribute (id, minion_model, type, value) values (nextval('model.minion_attribute_id_seq'), currval('model.minion_model_id_seq'), 'SpellCritResistance', 100);
+insert into model.minion_attribute (id, minion_model, type, value) values (nextval('model.minion_attribute_id_seq'), currval('model.minion_model_id_seq'), 'CriticalDamage', 0.5);
 insert into model.minion_trait (id, minion_model, trait, required_level) values (nextval('model.minion_trait_id_seq'), currval('model.minion_model_id_seq'), 1, 1);
 insert into model.trait_target (id, trait, position) values (nextval('model.trait_target_id_seq'), currval('model.minion_trait_id_seq'), 'Bot');
 insert into model.trait_target (id, trait, position) values (nextval('model.trait_target_id_seq'), currval('model.minion_trait_id_seq'), 'Top');
@@ -110,6 +194,18 @@ insert into model.minion_skill (minion_model, skill, required_level) values (cur
 --test tank minion2
 insert into model.minion_model (id, name, specialization, image_bundle_name, rarity) values (nextval('model.minion_model_id_seq'), 'TankBot', 'Damage', 'Zola', 'Common');
 insert into model.minion_attribute (id, minion_model, type, value) values (nextval('model.minion_attribute_id_seq'), currval('model.minion_model_id_seq'), 'Health', 400);
+insert into model.minion_attribute (id, minion_model, type, value) values (nextval('model.minion_attribute_id_seq'), currval('model.minion_model_id_seq'), 'Mana', 200);
+insert into model.minion_attribute (id, minion_model, type, value) values (nextval('model.minion_attribute_id_seq'), currval('model.minion_model_id_seq'), 'PhysicalPower', 10);
+insert into model.minion_attribute (id, minion_model, type, value) values (nextval('model.minion_attribute_id_seq'), currval('model.minion_model_id_seq'), 'PhysicalCritChance', 0.3);
+insert into model.minion_attribute (id, minion_model, type, value) values (nextval('model.minion_attribute_id_seq'), currval('model.minion_model_id_seq'), 'PhysicalPenetration', 0.05);
+insert into model.minion_attribute (id, minion_model, type, value) values (nextval('model.minion_attribute_id_seq'), currval('model.minion_model_id_seq'), 'PhysicalResistance', 0.2);
+insert into model.minion_attribute (id, minion_model, type, value) values (nextval('model.minion_attribute_id_seq'), currval('model.minion_model_id_seq'), 'PhysicalCritResistance', 0.05);
+insert into model.minion_attribute (id, minion_model, type, value) values (nextval('model.minion_attribute_id_seq'), currval('model.minion_model_id_seq'), 'SpellPower', 100);
+insert into model.minion_attribute (id, minion_model, type, value) values (nextval('model.minion_attribute_id_seq'), currval('model.minion_model_id_seq'), 'SpellCritChance', 100);
+insert into model.minion_attribute (id, minion_model, type, value) values (nextval('model.minion_attribute_id_seq'), currval('model.minion_model_id_seq'), 'SpellPenetration', 100);
+insert into model.minion_attribute (id, minion_model, type, value) values (nextval('model.minion_attribute_id_seq'), currval('model.minion_model_id_seq'), 'SpellResistance', 100);
+insert into model.minion_attribute (id, minion_model, type, value) values (nextval('model.minion_attribute_id_seq'), currval('model.minion_model_id_seq'), 'SpellCritResistance', 100);
+insert into model.minion_attribute (id, minion_model, type, value) values (nextval('model.minion_attribute_id_seq'), currval('model.minion_model_id_seq'), 'CriticalDamage', 0.5);
 insert into model.minion_trait (id, minion_model, trait, required_level, override_power) values (nextval('model.minion_trait_id_seq'), currval('model.minion_model_id_seq'), 1, 1, 50);
 insert into model.trait_target (id, trait, position) values (nextval('model.trait_target_id_seq'), currval('model.minion_trait_id_seq'), 'Top');
 insert into model.trait_target (id, trait, position) values (nextval('model.trait_target_id_seq'), currval('model.minion_trait_id_seq'), 'Mid');

@@ -31,7 +31,7 @@ public class TestDamageCommand extends BattleCommandProcessor {
 			BattleTeam team = bg.getTeam(TeamType.Opponent, delegate.getClient());
 			for(MinionPosition p: positions) {
 				BattleMinion minion = team.getMinions().get(p);
-				Stat stat = minion.getStatValue(AttributeManagedType.Health);
+				Stat stat = minion.getStat(AttributeManagedType.Health);
 				stat.changeValue(stat.getCurrentValue().subtract(BigDecimal.valueOf(50)));
 			}
 			delegate.getClient().send(CommandName.TestDamage.createCommand().asResponse());

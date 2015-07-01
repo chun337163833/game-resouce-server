@@ -8,7 +8,7 @@ public enum TraitType {
 	
 	public BigDecimal add(BigDecimal value, BigDecimal power) {
 		if(Percentage.equals(this)) {
-			return value.divide(BigDecimal.valueOf(100)).multiply(power);
+			return power.multiply(value);
 		}
 		return value;
 	}

@@ -1,17 +1,38 @@
 package org.shovelgame.engine.skill;
 
+import java.math.BigDecimal;
+
 import org.shovelgame.engine.session.command.BigData;
 
 public class SkillResult implements BigData {
 
-	private Long value;
+	private BigDecimal resultValue;
+	private BigDecimal resistedValue;
 
-	public Long getValue() {
-		return value;
+	private boolean critical;
+
+	public BigDecimal getResultValue() {
+		return resultValue;
 	}
 
-	public void setValue(Long value) {
-		this.value = value;
+	public void setResultValue(BigDecimal resultValue) {
+		this.resultValue = resultValue;
+	}
+
+	public BigDecimal getResistedValue() {
+		return resistedValue;
+	}
+
+	public void setResistedValue(BigDecimal resistedValue) {
+		this.resistedValue = resistedValue;
+	}
+	
+	public boolean isCritical() {
+		return critical;
+	}
+
+	public void setCritical(boolean critical) {
+		this.critical = critical;
 	}
 
 }
