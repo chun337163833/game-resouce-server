@@ -4,21 +4,27 @@
 package org.shovelgame.game.domain.model;
 
 import java.math.BigDecimal;
+import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import org.shovelgame.game.domain.model.MinionModel;
 import org.shovelgame.game.domain.model.MinionTrait;
 import org.shovelgame.game.domain.model.Trait;
+import org.shovelgame.game.domain.model.TraitTarget;
 
 privileged aspect MinionTrait_Roo_DbManaged {
     
+    @OneToMany(mappedBy = "trait")
+    private Set<TraitTarget> MinionTrait.traitTargets;
+    
     @ManyToOne
-    @JoinColumn(name = "minion_model", referencedColumnName = "id", nullable = false, insertable = false, updatable = false)
+    @JoinColumn(name = "minion_model", referencedColumnName = "id", nullable = false)
     private MinionModel MinionTrait.minionModel;
     
     @ManyToOne
-    @JoinColumn(name = "trait", referencedColumnName = "id", nullable = false, insertable = false, updatable = false)
+    @JoinColumn(name = "trait", referencedColumnName = "id", nullable = false)
     private Trait MinionTrait.trait;
     
     @Column(name = "required_level")
@@ -26,6 +32,14 @@ privileged aspect MinionTrait_Roo_DbManaged {
     
     @Column(name = "override_power", precision = 10, scale = 3)
     private BigDecimal MinionTrait.overridePower;
+    
+    public Set<TraitTarget> MinionTrait.getTraitTargets() {
+        return traitTargets;
+    }
+    
+    public void MinionTrait.setTraitTargets(Set<TraitTarget> traitTargets) {
+        this.traitTargets = traitTargets;
+    }
     
     public MinionModel MinionTrait.getMinionModel() {
         return minionModel;

@@ -4,8 +4,8 @@ import java.math.BigDecimal;
 
 import org.shovelgame.annotation.Logger;
 import org.shovelgame.engine.battle.Battleground;
-import org.shovelgame.engine.battle.FightingMinion;
-import org.shovelgame.engine.battle.FightingTeam;
+import org.shovelgame.engine.battle.BattleMinion;
+import org.shovelgame.engine.battle.BattleTeam;
 import org.shovelgame.engine.battle.Stat;
 import org.shovelgame.engine.battle.TeamType;
 import org.shovelgame.engine.io.ClientDelegate;
@@ -28,9 +28,9 @@ public class TestKillCommand extends BattleCommandProcessor {
 		Battleground bg = battleDelegate.getBattleground();
 		try {
 			MinionPosition[] positions = MinionPosition.valueOf(command.getParameters());
-			FightingTeam team = bg.getTeam(TeamType.Opponent, delegate.getClient());
+			BattleTeam team = bg.getTeam(TeamType.My, delegate.getClient());
 			for(MinionPosition p: positions) {
-				FightingMinion minion = team.getMinions().get(p);
+				BattleMinion minion = team.getMinions().get(p);
 				Stat stat = minion.getStatValue(AttributeManagedType.Health);
 				stat.changeValue(new BigDecimal(0));
 			}

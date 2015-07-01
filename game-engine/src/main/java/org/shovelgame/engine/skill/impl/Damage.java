@@ -1,23 +1,25 @@
 package org.shovelgame.engine.skill.impl;
 
-import org.shovelgame.engine.battle.FightingMinion;
+import java.math.BigDecimal;
+
+import org.shovelgame.engine.battle.BattleMinion;
+import org.shovelgame.engine.battle.BattleSkill;
 import org.shovelgame.engine.skill.AbstractSkill;
 import org.shovelgame.engine.skill.Skill;
 import org.shovelgame.engine.skill.SkillResult;
 import org.shovelgame.game.domain.enumeration.SkillAlgorithm;
-import org.shovelgame.game.domain.model.MinionSkill;
 
 @Skill(SkillAlgorithm.Damage)
 public class Damage extends AbstractSkill {
-
-	public Damage(MinionSkill skill) {
+	
+	public Damage(BattleSkill skill) {
 		super(skill);
 	}
 
 	@Override
-	public SkillResult process(FightingMinion source, FightingMinion target) {
+	public SkillResult process(BattleMinion source, BattleMinion target) {
 		SkillResult res = new SkillResult();
-		res.setValue(1L);
+//		BigDecimal skillpower = skill.getPower();
 		return res;
 	}
 }

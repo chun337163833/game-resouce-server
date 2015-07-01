@@ -49,9 +49,9 @@ privileged aspect Skill_Roo_DbManaged {
     @Column(name = "ticks")
     private Integer Skill.ticks;
     
-    @Column(name = "skillid", length = 100)
+    @Column(name = "skill_id", length = 100, unique = true)
     @NotNull
-    private String Skill.skillid;
+    private String Skill.skillId;
     
     public Set<SkillDescription> Skill.getSkillDescriptions() {
         return skillDescriptions;
@@ -125,12 +125,12 @@ privileged aspect Skill_Roo_DbManaged {
         this.ticks = ticks;
     }
     
-    public String Skill.getSkillid() {
-        return skillid;
+    public String Skill.getSkillId() {
+        return skillId;
     }
     
-    public void Skill.setSkillid(String skillid) {
-        this.skillid = skillid;
+    public void Skill.setSkillId(String skillId) {
+        this.skillId = skillId;
     }
     
 }

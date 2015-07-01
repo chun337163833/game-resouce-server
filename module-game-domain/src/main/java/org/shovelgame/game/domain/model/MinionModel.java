@@ -47,7 +47,7 @@ public class MinionModel {
 
     public MinionSkill findSkill(String skillId) {
         for (MinionSkill skill : this.getMinionSkills()) {
-            if (skill.getSkill().getSkillid().equals(skillId)) {
+            if (skill.getSkill().getSkillId().equals(skillId)) {
                 return skill;
             }
         }

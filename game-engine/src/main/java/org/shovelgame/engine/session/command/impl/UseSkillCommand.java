@@ -22,6 +22,7 @@ public class UseSkillCommand extends BattleCommandProcessor {
 		} catch (ClientStreamException e){
 			log.error("", e);
 		} catch (SkillUsageException e) {
+			log.error("", e);
 			try {
 				delegate.getClient().sendError(command.asResponse(), e.getMessage());
 			} catch (ClientStreamException e1) {

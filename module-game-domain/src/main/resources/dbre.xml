@@ -510,10 +510,11 @@
         </index>
     </table>
     <table alias="model" name="minion_trait">
-        <column name="minion_model" primaryKey="true" required="true" scale="0" size="19" type="-5,int8"/>
-        <column name="trait" primaryKey="true" required="true" scale="0" size="19" type="-5,int8"/>
+        <column name="minion_model" primaryKey="false" required="true" scale="0" size="19" type="-5,int8"/>
+        <column name="trait" primaryKey="false" required="true" scale="0" size="19" type="-5,int8"/>
         <column name="required_level" primaryKey="false" required="false" scale="0" size="10" type="4,int4"/>
         <column name="override_power" primaryKey="false" required="false" scale="3" size="10" type="2,numeric"/>
+        <column name="id" primaryKey="true" required="true" scale="0" size="19" type="-5,bigserial"/>
         <foreign-key foreignTable="minion_model" name="fk_minion_trait_minion_model" onDelete="none" onUpdate="none">
             <option key="foreignSchemaName" value="model"/>
             <option key="exported" value="false"/>
@@ -524,9 +525,13 @@
             <option key="exported" value="false"/>
             <reference foreign="id" local="trait"/>
         </foreign-key>
+        <foreign-key foreignTable="trait_target" name="fk_trait_target_minion_trait" onDelete="none" onUpdate="none">
+            <option key="foreignSchemaName" value="model"/>
+            <option key="exported" value="true"/>
+            <reference foreign="trait" local="id"/>
+        </foreign-key>
         <unique name="pk_minion_trait">
-            <unique-column name="minion_model"/>
-            <unique-column name="trait"/>
+            <unique-column name="id"/>
         </unique>
         <index name="ixfk_minion_trait_minion_model">
             <index-column name="minion_model"/>
@@ -640,7 +645,7 @@
         <column name="cooldown" primaryKey="false" required="true" scale="0" size="10" type="4,int4"/>
         <column name="ticks" primaryKey="false" required="false" scale="0" size="10" type="4,int4"/>
         <column name="type" primaryKey="false" required="true" scale="0" size="50" type="12,varchar"/>
-        <column name="skillid" primaryKey="false" required="true" scale="0" size="100" type="12,varchar"/>
+        <column name="skill_id" primaryKey="false" required="true" scale="0" size="100" type="12,varchar"/>
         <foreign-key foreignTable="attribute_type" name="fk_skill_model_attribute_type" onDelete="none" onUpdate="none">
             <option key="foreignSchemaName" value="model"/>
             <option key="exported" value="false"/>
@@ -669,6 +674,9 @@
         <unique name="pk_skill_model">
             <unique-column name="id"/>
         </unique>
+        <unique name="uq_skill_skillid">
+            <unique-column name="skill_id"/>
+        </unique>
         <index name="ixfk_skill_model_attribute_type">
             <index-column name="attribute_type"/>
         </index>
@@ -681,6 +689,7 @@
         <column name="power" primaryKey="false" required="false" scale="0" size="10" type="2,numeric"/>
         <column name="icon_name" primaryKey="false" required="true" scale="0" size="50" type="12,varchar"/>
         <column name="type" primaryKey="false" required="true" scale="0" size="50" type="12,varchar"/>
+        <column name="trait_id" primaryKey="false" required="true" scale="0" size="50" type="12,varchar"/>
         <foreign-key foreignTable="attribute_type" name="fk_trait_model_attribute_type" onDelete="none" onUpdate="none">
             <option key="foreignSchemaName" value="model"/>
             <option key="exported" value="false"/>
@@ -701,13 +710,11 @@
             <option key="exported" value="true"/>
             <reference foreign="trait" local="id"/>
         </foreign-key>
-        <foreign-key foreignTable="trait_target" name="fk_trait_target_trait" onDelete="none" onUpdate="none">
-            <option key="foreignSchemaName" value="model"/>
-            <option key="exported" value="true"/>
-            <reference foreign="trait" local="id"/>
-        </foreign-key>
         <unique name="pk_trait_model">
             <unique-column name="id"/>
+        </unique>
+        <unique name="uq_trait_traitid">
+            <unique-column name="trait_id"/>
         </unique>
         <index name="ixfk_trait_model_attribute_type">
             <index-column name="affected_attribute_type"/>
@@ -717,7 +724,7 @@
         <column name="id" primaryKey="true" required="true" scale="0" size="19" type="-5,bigserial"/>
         <column name="trait" primaryKey="false" required="true" scale="0" size="19" type="-5,int8"/>
         <column name="position" primaryKey="false" required="true" scale="0" size="50" type="12,varchar"/>
-        <foreign-key foreignTable="trait" name="fk_trait_target_trait" onDelete="none" onUpdate="none">
+        <foreign-key foreignTable="minion_trait" name="fk_trait_target_minion_trait" onDelete="none" onUpdate="none">
             <option key="foreignSchemaName" value="model"/>
             <option key="exported" value="false"/>
             <reference foreign="id" local="trait"/>

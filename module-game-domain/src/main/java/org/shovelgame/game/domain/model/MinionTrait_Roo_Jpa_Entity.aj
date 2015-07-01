@@ -3,11 +3,14 @@
 
 package org.shovelgame.game.domain.model;
 
-import javax.persistence.EmbeddedId;
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import org.shovelgame.game.domain.model.MinionTrait;
-import org.shovelgame.game.domain.model.MinionTraitPK;
 
 privileged aspect MinionTrait_Roo_Jpa_Entity {
     
@@ -15,14 +18,17 @@ privileged aspect MinionTrait_Roo_Jpa_Entity {
     
     declare @type: MinionTrait: @Table(schema = "model", name = "minion_trait");
     
-    @EmbeddedId
-    private MinionTraitPK MinionTrait.id;
+    @Id
+    @SequenceGenerator(name = "minionTraitGen", sequenceName = "model.minion_trait_id_seq")
+    @GeneratedValue(strategy = GenerationType.AUTO, generator = "minionTraitGen")
+    @Column(name = "id")
+    private Long MinionTrait.id;
     
-    public MinionTraitPK MinionTrait.getId() {
+    public Long MinionTrait.getId() {
         return this.id;
     }
     
-    public void MinionTrait.setId(MinionTraitPK id) {
+    public void MinionTrait.setId(Long id) {
         this.id = id;
     }
     

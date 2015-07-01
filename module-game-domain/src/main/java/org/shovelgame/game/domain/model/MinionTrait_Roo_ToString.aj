@@ -10,7 +10,7 @@ import org.shovelgame.game.domain.model.MinionTrait;
 privileged aspect MinionTrait_Roo_ToString {
     
     public String MinionTrait.toString() {
-        return new ReflectionToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE).setExcludeFieldNames("minionModel", "trait").toString();
+        return new ReflectionToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE).setExcludeFieldNames("minionModel", "trait", "traitTargets").toString();
     }
     
 }

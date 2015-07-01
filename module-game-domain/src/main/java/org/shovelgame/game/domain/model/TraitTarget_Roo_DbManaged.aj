@@ -5,20 +5,20 @@ package org.shovelgame.game.domain.model;
 
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import org.shovelgame.game.domain.model.Trait;
+import org.shovelgame.game.domain.model.MinionTrait;
 import org.shovelgame.game.domain.model.TraitTarget;
 
 privileged aspect TraitTarget_Roo_DbManaged {
     
     @ManyToOne
     @JoinColumn(name = "trait", referencedColumnName = "id", nullable = false)
-    private Trait TraitTarget.trait;
+    private MinionTrait TraitTarget.trait;
     
-    public Trait TraitTarget.getTrait() {
+    public MinionTrait TraitTarget.getTrait() {
         return trait;
     }
     
-    public void TraitTarget.setTrait(Trait trait) {
+    public void TraitTarget.setTrait(MinionTrait trait) {
         this.trait = trait;
     }
     

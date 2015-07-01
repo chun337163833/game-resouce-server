@@ -2,6 +2,7 @@ package org.shovelgame.engine.battle;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -11,29 +12,46 @@ import org.shovelgame.game.domain.enumeration.AttributeManagedType;
 import org.shovelgame.game.domain.enumeration.MinionPosition;
 import org.shovelgame.game.domain.model.MinionAttribute;
 import org.shovelgame.game.domain.model.MinionModel;
+import org.shovelgame.game.domain.model.MinionSkill;
 import org.shovelgame.game.domain.model.MinionTrait;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 @Logger
-public class FightingMinion implements StatsOwnerDelegate {
+public class BattleMinion implements StatsOwnerDelegate {
 
 	private Stat[] stats;
-	private MinionPosition position;
 	private boolean died;
+	
 	/**
-	 * All traits which affect this minion, from enemy team and this team
+	 * Traits which affect this minion.
+	 * This property serves for calculate stats and as information about affected traits for fame client.
 	 */
+	private Set<BattleTrait> affectedTraits;
+	
+	/**
+	 * Traits of this minion, this traits may not affect this minion.
+	 * This property serves only as information about minion traits for game client.
+	 * This property not serves for calculation !!!
+	 */
+	private Set<BattleTrait> minionTraits;
+	
+	private Set<BattleSkill> skills;
+	
 	@JsonIgnore
-	private Set<MinionTrait> affectedTraits;
+	private BattleTeam team;
 
-	@JsonIgnore
-	private FightingTeam team;
-
-	public FightingMinion(MinionPosition position, FightingTeam team) {
-		this.position = position;
+	public BattleMinion(BattleTeam team) {
 		this.team = team;
+		this.skills = new HashSet<>();
+		this.minionTraits = new HashSet<BattleTrait>();
+	}
+	
+	public void build() {
 		Minion minion = getMinion();
+		minion.getMinionModel().getMinionTraits().forEach((MinionTrait t) -> this.minionTraits.add(new BattleTrait(t)));
 		MinionModel model = minion.getMinionModel();
+		model.getMinionSkills().forEach((MinionSkill s) -> this.skills.add(new BattleSkill(s)));
+		
 		List<Stat> stats = new ArrayList<Stat>();
 		typeBlock: for (AttributeManagedType t : AttributeManagedType.values()) {
 			for (MinionAttribute attr : model.getMinionAttributes()) {
@@ -46,13 +64,14 @@ public class FightingMinion implements StatsOwnerDelegate {
 		}
 		this.stats = stats.toArray(new Stat[stats.size()]);
 	}
-	public void initializeStats() {
-		for(Stat stat: this.stats) {
-			stat.initialize();
-		}
-	}
+	
+	/**
+	 * Update traits for this minion and his skills.
+	 */
 	public void updateTraits() {
-		this.affectedTraits = this.team.findTraitsForPosition(this.position);
+		MinionPosition position = getPosition();
+		this.affectedTraits = this.team.findTraitsForStats(position);
+		this.skills.forEach((BattleSkill s) -> s.update(this.team.findTraitsForSkill(position, s.getMinionSkill().getSkill().getAlg())));
 		if(log.isDebugEnabled()) {
 			log.debug(String.format("MinonTraits[%s:%s]", position.name(), this.affectedTraits.size()));
 		}
@@ -69,7 +88,7 @@ public class FightingMinion implements StatsOwnerDelegate {
 	}
 	
 	@Override
-	public FightingMinion getOwner() {
+	public BattleMinion getOwner() {
 		return this;
 	}
 
@@ -78,20 +97,16 @@ public class FightingMinion implements StatsOwnerDelegate {
 	}
 	
 	public Minion getMinion() {
-		return this.team.getTeam().getMinionByPosition(this.position);
+		return this.team.getTeam().getMinionByPosition(getPosition());
 	}
 
-	public MinionPosition getPosition() {
-		return position;
-	}
-
-	public Set<MinionTrait> getAffectedTraits() {
+	public Set<BattleTrait> getAffectedTraits() {
 		return affectedTraits;
 	}
 	
 	public void died() {
 		this.died = true;
-		if(MinionPosition.Leader.equals(this.position)) {
+		if(MinionPosition.Leader.equals(getPosition())) {
 			this.team.getInstance().gameEnd(this.team.getOpponentTeamDelegate().getTeam());			
 		} else {
 			this.team.getInstance().update();
@@ -101,4 +116,19 @@ public class FightingMinion implements StatsOwnerDelegate {
 	public boolean isDied() {
 		return died;
 	}
+	public BattleSkill findSkill(String skillId) {
+        for (BattleSkill skill : this.skills) {
+            if (skillId.equals(skill.getSkillId())) {
+                return skill;
+            }
+        }
+        return null;
+    }
+	public Set<BattleTrait> getMinionTraits() {
+		return minionTraits;
+	}
+	public MinionPosition getPosition() {
+		return this.team.getPositionForMinion(this);
+	}
+	
 }

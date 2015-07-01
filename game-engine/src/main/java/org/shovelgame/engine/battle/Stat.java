@@ -21,36 +21,34 @@ public class Stat {
 	public Stat(AttributeManagedType type, BigDecimal value, StatsOwnerDelegate delegate) {
 		super();
 		this.type = type;
-		this.defaultValue = value;
 		this.delegate = delegate;
+		this.defaultValue = value;
+		this.maxValue = value;
 	}
 
 	public AttributeManagedType getType() {
 		return type;
 	}
-
-	public void initialize() {
-		this.maxValue = getRealValue();
-		this.currentValue = this.maxValue;
-	}
-	
 	public void recalculate() {
 		this.maxValue = getRealValue();
+		if(this.currentValue == null) {
+			this.currentValue = this.maxValue;
+		}
 		if(this.maxValue.doubleValue() < this.currentValue.doubleValue()) {
 			this.currentValue = BigDecimal.valueOf(this.maxValue.doubleValue());
 		}
 	}
 
 	public BigDecimal getRealValue() {
-		FightingMinion minion = this.delegate.getOwner();
+		BattleMinion minion = this.delegate.getOwner();
 		// TODO get all trait, items and item enchantment what are eligible to 
 		// increase this stat and increase value
 		BigDecimal value = this.defaultValue;
-		for (MinionTrait trait : minion.getAffectedTraits()) {
-			AttributeManagedType type = trait.getTrait().getAffectedAttributeType().getId();
+		for (BattleTrait trait : minion.getAffectedTraits()) {
+			AttributeManagedType type = trait.getAttribute();
 			if (type.equals(getType())) {
-				BigDecimal calculatedValue = trait.getTrait().getType().add(value, trait.getPower());
-				if (TraitAlgorithm.Increase.equals(trait.getTrait().getAlg())) {
+				BigDecimal calculatedValue = trait.getType().add(value, trait.getPower());
+				if (TraitAlgorithm.Increase.equals(trait.getTraitAlgorithm())) {
 					value = value.add(calculatedValue);
 				} else {
 					value = value.subtract(calculatedValue);

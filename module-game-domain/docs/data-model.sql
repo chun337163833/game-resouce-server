@@ -22,6 +22,7 @@ DROP TABLE IF EXISTS model.minion_model CASCADE;
 DROP SEQUENCE IF EXISTS model.minion_model_id_seq;
 DROP TABLE IF EXISTS model.minion_skill CASCADE;
 DROP TABLE IF EXISTS model.minion_trait CASCADE;
+DROP SEQUENCE IF EXISTS model.minion_trait_id_seq;
 DROP TABLE IF EXISTS model.mission CASCADE;
 DROP SEQUENCE IF EXISTS model.mission_id_seq;
 DROP TABLE IF EXISTS i18n.mission_description CASCADE;
@@ -169,11 +170,14 @@ CREATE TABLE model.minion_skill (
 	override_power decimal(10,3) DEFAULT 0
 );
 
+CREATE SEQUENCE model.minion_trait_id_seq INCREMENT 1 START 1;
+
 CREATE TABLE model.minion_trait ( 
 	minion_model bigint NOT NULL,
 	trait bigint NOT NULL,
 	required_level integer DEFAULT 1,
-	override_power decimal(10,3)
+	override_power decimal(10,3),
+	id bigint DEFAULT nextval(('model.minion_trait_id_seq'::text)::regclass) NOT NULL
 );
 
 CREATE SEQUENCE model.mission_id_seq INCREMENT 1 START 1;
@@ -271,7 +275,7 @@ CREATE TABLE model.skill (
 	cooldown integer NOT NULL,
 	ticks integer,
 	type varchar(50) NOT NULL,
-	skillId varchar(100) NOT NULL
+	skill_id varchar(100) NOT NULL
 );
 
 CREATE SEQUENCE i18n.skill_description_id_seq INCREMENT 1 START 1;
@@ -311,7 +315,8 @@ CREATE TABLE model.trait (
 	alg varchar(50) NOT NULL,
 	power decimal(10) DEFAULT 0,
 	icon_name varchar(50) NOT NULL,
-	type varchar(50) NOT NULL
+	type varchar(50) NOT NULL,
+	trait_id varchar(50) NOT NULL
 );
 
 CREATE SEQUENCE i18n.trait_description_id_seq INCREMENT 1 START 1;
@@ -420,7 +425,7 @@ CREATE INDEX IXFK_seeker_seeker_model
 CREATE INDEX IXFK_seeker_player
 	ON data.seeker (owner);
 ALTER TABLE model.skill
-	ADD CONSTRAINT UQ_skill_skillId UNIQUE (skillId);
+	ADD CONSTRAINT UQ_skill_skillId UNIQUE (skill_id);
 CREATE INDEX IXFK_skill_model_attribute_type
 	ON model.skill (attribute_type);
 CREATE INDEX IXFK_skill_model_descirption_skill_model
@@ -443,6 +448,8 @@ CREATE INDEX IXFK_team_minion_03
 	ON data.team (minion_bot);
 CREATE INDEX IXFK_trait_model_attribute_type
 	ON model.trait (affected_attribute_type);
+ALTER TABLE model.trait
+	ADD CONSTRAINT UQ_trait_traitId UNIQUE (trait_id);
 CREATE INDEX IXFK_trait_model_description_trait_model
 	ON i18n.trait_description (trait);
 CREATE INDEX IXFK_trait_model_description_language
@@ -506,7 +513,7 @@ ALTER TABLE model.minion_skill ADD CONSTRAINT PK_minion_skill
 
 
 ALTER TABLE model.minion_trait ADD CONSTRAINT PK_minion_trait 
-	PRIMARY KEY (minion_model, trait);
+	PRIMARY KEY (id);
 
 
 ALTER TABLE model.mission ADD CONSTRAINT PK_mission 
@@ -727,5 +734,5 @@ ALTER TABLE i18n.trait_name ADD CONSTRAINT FK_trait_name_trait
 ALTER TABLE i18n.trait_name ADD CONSTRAINT FK_trait_name_language 
 	FOREIGN KEY (lang) REFERENCES i18n.language (id);
 
-ALTER TABLE model.trait_target ADD CONSTRAINT FK_trait_target_trait 
-	FOREIGN KEY (trait) REFERENCES model.trait (id);
+ALTER TABLE model.trait_target ADD CONSTRAINT FK_trait_target_minion_trait 
+	FOREIGN KEY (trait) REFERENCES model.minion_trait (id);

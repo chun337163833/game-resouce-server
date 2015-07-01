@@ -6,9 +6,9 @@ import org.springframework.roo.addon.jpa.activerecord.RooJpaActiveRecord;
 import org.springframework.roo.addon.tostring.RooToString;
 
 @RooJavaBean
-@RooJpaActiveRecord(identifierType = MinionTraitPK.class, versionField = "", table = "minion_trait", schema = "model", sequenceName = "model.minion_trait_id_seq")
 @RooDbManaged(automaticallyDelete = true)
-@RooToString(excludeFields = { "minionModel", "trait" })
+@RooJpaActiveRecord(versionField = "", table = "minion_trait", schema = "model", sequenceName = "model.minion_trait_id_seq")
+@RooToString(excludeFields = { "minionModel", "trait", "traitTargets" })
 public class MinionTrait {
 
     public BigDecimal getPower() {

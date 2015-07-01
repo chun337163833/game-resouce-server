@@ -1,9 +1,9 @@
 package org.shovelgame.engine.skill;
 
-import org.shovelgame.engine.battle.FightingMinion;
+import org.shovelgame.engine.battle.BattleMinion;
 
 public interface ISkill {
 	
-	SkillResult process(FightingMinion source, FightingMinion target);
+	SkillResult process(BattleMinion source, BattleMinion target);
 
 }

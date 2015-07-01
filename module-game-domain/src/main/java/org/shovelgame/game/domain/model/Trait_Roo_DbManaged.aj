@@ -15,7 +15,6 @@ import org.shovelgame.game.domain.i18n.TraitName;
 import org.shovelgame.game.domain.model.AttributeType;
 import org.shovelgame.game.domain.model.MinionTrait;
 import org.shovelgame.game.domain.model.Trait;
-import org.shovelgame.game.domain.model.TraitTarget;
 
 privileged aspect Trait_Roo_DbManaged {
     
@@ -28,9 +27,6 @@ privileged aspect Trait_Roo_DbManaged {
     @OneToMany(mappedBy = "trait")
     private Set<MinionTrait> Trait.minionTraits;
     
-    @OneToMany(mappedBy = "trait")
-    private Set<TraitTarget> Trait.traitTargets;
-    
     @ManyToOne
     @JoinColumn(name = "affected_attribute_type", referencedColumnName = "id")
     private AttributeType Trait.affectedAttributeType;
@@ -41,6 +37,10 @@ privileged aspect Trait_Roo_DbManaged {
     @Column(name = "icon_name", length = 50)
     @NotNull
     private String Trait.iconName;
+    
+    @Column(name = "trait_id", length = 50, unique = true)
+    @NotNull
+    private String Trait.traitId;
     
     public Set<TraitDescription> Trait.getTraitDescriptions() {
         return traitDescriptions;
@@ -66,14 +66,6 @@ privileged aspect Trait_Roo_DbManaged {
         this.minionTraits = minionTraits;
     }
     
-    public Set<TraitTarget> Trait.getTraitTargets() {
-        return traitTargets;
-    }
-    
-    public void Trait.setTraitTargets(Set<TraitTarget> traitTargets) {
-        this.traitTargets = traitTargets;
-    }
-    
     public AttributeType Trait.getAffectedAttributeType() {
         return affectedAttributeType;
     }
@@ -96,6 +88,14 @@ privileged aspect Trait_Roo_DbManaged {
     
     public void Trait.setIconName(String iconName) {
         this.iconName = iconName;
+    }
+    
+    public String Trait.getTraitId() {
+        return traitId;
+    }
+    
+    public void Trait.setTraitId(String traitId) {
+        this.traitId = traitId;
     }
     
 }

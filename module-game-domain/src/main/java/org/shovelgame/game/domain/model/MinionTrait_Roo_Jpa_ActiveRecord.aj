@@ -7,7 +7,6 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import org.shovelgame.game.domain.model.MinionTrait;
-import org.shovelgame.game.domain.model.MinionTraitPK;
 import org.springframework.transaction.annotation.Transactional;
 
 privileged aspect MinionTrait_Roo_Jpa_ActiveRecord {
@@ -42,7 +41,7 @@ privileged aspect MinionTrait_Roo_Jpa_ActiveRecord {
         return entityManager().createQuery(jpaQuery, MinionTrait.class).getResultList();
     }
     
-    public static MinionTrait MinionTrait.findMinionTrait(MinionTraitPK id) {
+    public static MinionTrait MinionTrait.findMinionTrait(Long id) {
         if (id == null) return null;
         return entityManager().find(MinionTrait.class, id);
     }

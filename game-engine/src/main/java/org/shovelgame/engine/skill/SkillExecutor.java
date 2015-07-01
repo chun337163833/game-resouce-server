@@ -7,7 +7,8 @@ import java.util.Map;
 
 import javax.annotation.PostConstruct;
 
-import org.shovelgame.engine.battle.FightingMinion;
+import org.shovelgame.engine.battle.BattleMinion;
+import org.shovelgame.engine.battle.BattleSkill;
 import org.shovelgame.game.domain.enumeration.SkillAlgorithm;
 import org.shovelgame.game.domain.model.MinionSkill;
 import org.shovelgame.utils.ReflectionUtils;
@@ -35,7 +36,7 @@ public class SkillExecutor {
 			this.skills.put(ann.value(), (Class<ISkill>) cls);
 		}
 	}
-	public SkillResult execute(MinionSkill skill, FightingMinion source, FightingMinion target) throws SkillUsageException {
+	public SkillResult execute(BattleSkill skill, BattleMinion source, BattleMinion target) throws SkillUsageException {
 		try {
 			ISkill iSkill = instantiate(skill);
 			return iSkill.process(source, target);
@@ -44,17 +45,17 @@ public class SkillExecutor {
 		}
 	}
 	
-	private ISkill instantiate(MinionSkill skill) throws Exception {
-		SkillAlgorithm alg = skill.getSkill().getAlg();
+	private ISkill instantiate(BattleSkill skill) throws Exception {
+		SkillAlgorithm alg = skill.getMinionSkill().getSkill().getAlg();
 		Class<ISkill> cls = this.skills.get(alg);
 		try {
 			if(cls == null) {
 				throw new Exception(String.format("Skill definition for algorithm %s not exist.", alg));
 			}
-			Constructor<ISkill> constructor = cls.getConstructor(MinionSkill.class);
+			Constructor<ISkill> constructor = cls.getConstructor(BattleSkill.class);
 			return constructor.newInstance(skill);
 		} catch (NoSuchMethodException | SecurityException e) {
-			throw new Exception(String.format("Constructor of class %s with argument of type %s not found or not visible", cls.getName(), MinionSkill.class.getName()));
+			throw new Exception(String.format("Constructor of class %s with argument of type %s not found or not visible", cls.getName(), BattleSkill.class.getName()));
 		}
 	}
 	

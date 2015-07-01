@@ -1,5 +1,6 @@
 package org.shovelgame.junit;
 
+import java.math.BigDecimal;
 import java.net.Socket;
 import java.util.Base64;
 import java.util.HashMap;
@@ -7,8 +8,6 @@ import java.util.Map;
 
 import org.junit.Assert;
 import org.junit.Test;
-import org.shovelgame.engine.battle.Battleground;
-import org.shovelgame.engine.battle.FightingMinion;
 import org.shovelgame.engine.battle.TeamType;
 import org.shovelgame.engine.io.CommandInputStreamHelper;
 import org.shovelgame.engine.io.CommandOutputStreamHelper;
@@ -16,17 +15,24 @@ import org.shovelgame.engine.session.command.Command;
 import org.shovelgame.engine.session.command.CommandName;
 import org.shovelgame.engine.session.command.CommandStatus;
 import org.shovelgame.game.domain.enumeration.MinionPosition;
+import org.shovelgame.game.domain.enumeration.TraitType;
 import org.shovelgame.http.HttpResponse;
 import org.shovelgame.http.oauth.OAuthClient;
 import org.shovelgame.http.oauth.OAuthClient.Token;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializationFeature;
-
 public class BattleTest {
 	private String srv = "http://localhost:8080";
 	private String client = Base64.getEncoder().encodeToString("abcd:dcba".getBytes());
+	
+	@Test
+	public void testAttributeBoost() {
+		BigDecimal val = new BigDecimal(400);
+		BigDecimal cv = val;
+		cv = cv.add(TraitType.Percentage.add(cv, BigDecimal.valueOf(10)));
+		cv = cv.add(TraitType.Percentage.add(cv, BigDecimal.valueOf(10)));
+		cv = cv.subtract(TraitType.Percentage.add(cv, BigDecimal.valueOf(5)));
+		Assert.assertEquals(BigDecimal.valueOf(459.8).doubleValue(), cv.doubleValue(), .0);
+	}
 	
 	@Test
 	public void testBattle() throws Exception {
@@ -58,7 +64,7 @@ public class BattleTest {
 		Assert.assertEquals(CommandStatus.Ok, command.getStatus());
 		
 		//use skills
-		cos.send(CommandName.UseSkill.createCommand(TeamType.Opponent.name(), MinionPosition.Top.name(), "testSkill"));
+		cos.send(CommandName.UseSkill.createCommand(TeamType.Opponent.name(), MinionPosition.Leader.name(), "testSkill"));
 		command = cis.read();
 		Assert.assertEquals(CommandStatus.Ok, command.getStatus());
 		
@@ -66,11 +72,13 @@ public class BattleTest {
 		command = cis.read();
 		Assert.assertEquals(CommandStatus.Ok, command.getStatus());
 		
-		cos.send(CommandName.TestKill.createCommand(MinionPosition.Leader.name()));
+		cos.send(CommandName.TestKill.createCommand(MinionPosition.Top.name()));
 		command = cis.read();
 		Assert.assertEquals(CommandStatus.Ok, command.getStatus());
 		
-		
+		cos.send(CommandName.SyncTeam.createCommand(TeamType.My.name()));
+		command = cis.read();
+		Assert.assertEquals(CommandStatus.Ok, command.getStatus());
 		
 		socket.close();
 	}
