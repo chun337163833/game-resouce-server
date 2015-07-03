@@ -26,7 +26,8 @@ public class PveBattle extends BattleSession {
 	@Override
 	public void begin() {
 		Communicator c = getPlayerCommunicator();
-		c.send(CommandName.Mission.createCommand("Begin").asResponse());
+		c.send(CommandName.Mission.createCommand().asResponse());
+		getBattleground().start();
 	}
 	
 	@Override

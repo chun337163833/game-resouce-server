@@ -13,7 +13,6 @@ import org.shovelgame.game.domain.enumeration.MinionPosition;
 import org.shovelgame.game.domain.model.MinionAttribute;
 import org.shovelgame.game.domain.model.MinionModel;
 import org.shovelgame.game.domain.model.MinionSkill;
-import org.shovelgame.game.domain.model.MinionTrait;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 @Logger
@@ -41,7 +40,7 @@ public class BattleMinion implements StatsOwnerDelegate {
 	public void build() {
 		Minion minion = getMinion();
 		MinionModel model = minion.getMinionModel();
-		model.getMinionSkills().forEach((MinionSkill s) -> this.skills.add(new BattleSkill(s)));
+		model.getMinionSkills().forEach((MinionSkill s) -> this.skills.add(new BattleSkill(s, team)));
 		
 		List<Stat> stats = new ArrayList<Stat>();
 		typeBlock: for (AttributeManagedType t : AttributeManagedType.values()) {
@@ -97,10 +96,9 @@ public class BattleMinion implements StatsOwnerDelegate {
 	
 	public void died() {
 		this.died = true;
+		this.team.getInstance().getQueue().update();
 		if(MinionPosition.Leader.equals(getPosition())) {
 			this.team.getInstance().gameEnd(this.team.getOpponentTeamDelegate().getTeam());			
-		} else {
-			this.team.getInstance().update();
 		}
 	}
 

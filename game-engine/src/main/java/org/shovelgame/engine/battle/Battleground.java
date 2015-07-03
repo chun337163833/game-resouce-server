@@ -6,6 +6,8 @@ import java.util.Map;
 import javax.annotation.Resource;
 
 import org.shovelgame.annotation.Logger;
+import org.shovelgame.engine.battle.queue.Queue;
+import org.shovelgame.engine.battle.queue.QueuePosition;
 import org.shovelgame.engine.io.ClientConnection;
 import org.shovelgame.engine.session.BattleSession;
 import org.shovelgame.engine.session.command.CommandName;
@@ -19,7 +21,9 @@ import org.springframework.beans.factory.annotation.Configurable;
 @Logger
 @Configurable
 public class Battleground {
-
+	public static final String TEAM1 = "team1";
+	public static final String TEAM2 = "team2";
+	
 	private Map<Communicator, BattleTeam> teams;
 	private BattleSession session;
 	private Queue queue;
@@ -31,8 +35,8 @@ public class Battleground {
 		super();
 		this.teams = new HashMap<>();
 		this.session = session;
-		BattleTeam team1 = new BattleTeam(comm1.getTeam(), this);
-		BattleTeam team2 = new BattleTeam(comm2.getTeam(), this);
+		BattleTeam team1 = new BattleTeam(comm1.getTeam(), this, TEAM1);
+		BattleTeam team2 = new BattleTeam(comm2.getTeam(), this, TEAM2);
 		this.teams.put(comm1, team1);
 		this.teams.put(comm2, team2);
 		//first initialize all traits across all minions of all teams
@@ -40,7 +44,8 @@ public class Battleground {
 		team2.setOpponentDelegate(() -> team1);
 		//when all traits are initialized, just initilize all stats
 		this.update();
-		this.queue = new Queue(team1, team2);
+		this.queue = new Queue(this);
+		this.queue.initialize();
 	}
 
 	public void update() {
@@ -56,12 +61,11 @@ public class Battleground {
 		return teams;
 	}
 	
-	public BattleTeam getTeam(TeamType type, ClientConnection requestor) {
+	public BattleTeam getTeam(String teamId, ClientConnection requestor) {
 		for(Map.Entry<Communicator, BattleTeam> entry: this.teams.entrySet()) {
-			boolean isMyTeam = entry.getKey().equals(requestor) && TeamType.My.equals(type);
-			boolean isOpponentTeam = !entry.getKey().equals(requestor) && TeamType.Opponent.equals(type);
-			if(isMyTeam || isOpponentTeam) {
-				return entry.getValue();
+			BattleTeam team = entry.getValue();
+			if(team.getTeamId().equals(teamId)) {
+				return team;
 			}
 		}
 		throw new IllegalStateException("Oops! Team for requestor not found!!");
@@ -81,22 +85,46 @@ public class Battleground {
 	
 	public SkillResult useSkill(UseSkillParameters params, ClientConnection requestor) throws SkillUsageException {
 		BattleMinion source = this.queue.getCurrent();
-		BattleMinion target = getTeam(params.getTeam(), requestor).getMinions().get(params.getTarget());
+		BattleMinion target = getTeam(params.getTeamId(), requestor).getMinions().get(params.getTarget());
 		BattleSkill skill = source.findSkill(params.getSkillId());
 		if(skill == null) {
 			throw new SkillUsageException(String.format("Skill %s not found", params.getSkillId()));
 		}
-		return this.executor.execute(skill, source, target);
+		if(!skill.canUse(params)) {
+			throw new SkillUsageException(String.format("Skill %s cannot be used to %s -> %s", params.getSkillId(), params.getTeamId(), params.getTarget().name()));	
+		}
+		SkillResult result = this.executor.execute(skill, source, target);
+		this.update();
+		return result;
 	}
 
+	public BattleMinion getMinionByQueuePosition(QueuePosition position) {
+		for(Map.Entry<Communicator, BattleTeam> entry: this.teams.entrySet()) {
+			BattleTeam team = entry.getValue();
+			if(team.getTeamId().equals(position.getTeamId())) {
+				return team.getMinions().get(position.getPosition());
+			}
+		}
+		throw new IllegalStateException(String.format("Not minion found for queue position %s", position.toString()));
+	}
+	
 	public void gameEnd(BattleTeam winner) {
-		Communicator c = getCommunicatorByTeam(winner);
-		c.send(CommandName.EvtGameEnd.createCommand(TeamType.My.name()));
-		c = getCommunicatorByTeam(winner.getOpponentTeamDelegate().getTeam());
-		c.send(CommandName.EvtGameEnd.createCommand(TeamType.Opponent.name()));
+		this.teams.forEach((Communicator c, BattleTeam team) -> c.send(CommandName.EvtGameEnd.createCommand(winner.getTeamId())));
 		this.session.end(winner.getTeam());
 	}
 	
-
+	public void start() {
+		//first send teamid to client
+		this.teams.forEach((Communicator c, BattleTeam t) -> c.send(CommandName.EvtTeamIdAssociation.createCommand(t.getTeamId())));
+		BattleTeam nextTeam = queue.getCurrentTeam();
+		nextTeam.getCommunicator().send(CommandName.EvtStartTurn.createCommand());
+	}
 	
+	public void nextTurn() {
+		BattleTeam nextTeam = queue.next();
+		nextTeam.getCommunicator().send(CommandName.EvtStartTurn.createCommand());
+	}
+	public Queue getQueue() {
+		return queue;
+	}
 }

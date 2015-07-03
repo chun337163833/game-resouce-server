@@ -8,19 +8,31 @@ import org.shovelgame.engine.session.command.impl.SyncTeamCommand;
 import org.shovelgame.engine.session.command.impl.UseSkillCommand;
 
 public enum CommandName {
-	Authentication(null),
+	Authentication,
 	Matchmaking(MatchmakingCommand.class),
 	Mission(MissionCommand.class),
 	UseSkill(UseSkillCommand.class),
 	SyncTeam(SyncTeamCommand.class),
 	TestKill(TestKillCommand.class),
 	TestDamage(TestDamageCommand.class),
-	EvtGameEnd(null)
+	EvtGameEnd(true),
+	EvtSkillUsed(true),
+	EvtStartTurn(true),
+	EvtTeamIdAssociation(true)
 	;
 	
 	private Class<? extends CommandProcessor> processor;
+	private boolean event;
+	private CommandName() {
+		// TODO Auto-generated constructor stub
+	}
 	
 	
+	private CommandName(boolean event) {
+		this.event = event;
+	}
+
+
 	private CommandName(Class<? extends CommandProcessor> processor) {
 		this.processor = processor;
 	}
@@ -32,10 +44,17 @@ public enum CommandName {
 	public Command createCommand(BigData data) {
 		Command c = new Command().setParameters(null).setName(this);
 		c.writeDataAsString(data);
+		if(event) {
+			return c.asEvent();
+		}
 		return c;
 	}
 	
 	public Command createCommand(String... parameters) {
-		return new Command().setParameters(parameters).setName(this);
+		Command c = new Command().setParameters(parameters).setName(this);
+		if(event) {
+			return c.asEvent();
+		}
+		return c;
 	}
 }

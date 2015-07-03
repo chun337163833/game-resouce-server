@@ -8,7 +8,7 @@ import java.util.Map;
 
 import org.junit.Assert;
 import org.junit.Test;
-import org.shovelgame.engine.battle.TeamType;
+import org.shovelgame.engine.battle.Battleground;
 import org.shovelgame.engine.io.CommandInputStreamHelper;
 import org.shovelgame.engine.io.CommandOutputStreamHelper;
 import org.shovelgame.engine.session.command.Command;
@@ -54,34 +54,52 @@ public class BattleTest {
 		cos.send(CommandName.Mission.createCommand("1"));
 		command = cis.read();
 		Assert.assertEquals(CommandStatus.Ok, command.getStatus());
+		Command ev = null;
+		String teamId = null;
+		while((ev = cis.read()) != null) {
+			if(CommandName.EvtSkillUsed.equals(ev.getName())) {
+				System.out.println(String.format("Using skill %s", ev.getData()));
+			} if(CommandName.EvtStartTurn.equals(ev.getName())) {
+				cos.send(CommandName.UseSkill.createCommand(Battleground.TEAM1, MinionPosition.Leader.name(), "testSkill"));
+				command = cis.read();
+				Assert.assertEquals(CommandStatus.Ok, command.getStatus());
+			} else if(CommandName.EvtGameEnd.equals(ev.getName())) {
+				if(ev.getParameters()[0].equals(teamId)) {
+					System.out.println("Im winner");
+				} else {
+					System.out.println("Im looser");	
+				}
+			} else if(CommandName.EvtTeamIdAssociation.equals(ev.getName())) {
+				teamId = ev.getParameters()[0];
+			}
+		}
 		
 		//sync teams
-		cos.send(CommandName.SyncTeam.createCommand(TeamType.My.name()));
+		cos.send(CommandName.SyncTeam.createCommand(Battleground.TEAM1));
 		command = cis.read();
 		Assert.assertEquals(CommandStatus.Ok, command.getStatus());
-		cos.send(CommandName.SyncTeam.createCommand(TeamType.Opponent.name()));
-		command = cis.read();
-		Assert.assertEquals(CommandStatus.Ok, command.getStatus());
-		
-		//use skills
-		cos.send(CommandName.UseSkill.createCommand(TeamType.Opponent.name(), MinionPosition.Leader.name(), "testSkill"));
+		cos.send(CommandName.SyncTeam.createCommand(Battleground.TEAM2));
 		command = cis.read();
 		Assert.assertEquals(CommandStatus.Ok, command.getStatus());
 		
-		cos.send(CommandName.TestDamage.createCommand(MinionPosition.Bot.name(), MinionPosition.Top.name(), MinionPosition.Mid.name(), MinionPosition.Leader.name()));
-		command = cis.read();
-		Assert.assertEquals(CommandStatus.Ok, command.getStatus());
+//		//use skills
+
 		
-		cos.send(CommandName.TestKill.createCommand(MinionPosition.Top.name()));
-		command = cis.read();
-		Assert.assertEquals(CommandStatus.Ok, command.getStatus());
+//		cos.send(CommandName.TestDamage.createCommand(MinionPosition.Bot.name(), MinionPosition.Top.name(), MinionPosition.Mid.name(), MinionPosition.Leader.name()));
+//		command = cis.read();
+//		Assert.assertEquals(CommandStatus.Ok, command.getStatus());
+//		
+//		cos.send(CommandName.TestKill.createCommand(MinionPosition.Top.name()));
+//		command = cis.read();
+//		Assert.assertEquals(CommandStatus.Ok, command.getStatus());
 		
-		cos.send(CommandName.SyncTeam.createCommand(TeamType.My.name()));
-		command = cis.read();
-		Assert.assertEquals(CommandStatus.Ok, command.getStatus());
+//		cos.send(CommandName.SyncTeam.createCommand(TeamType.My.name()));
+//		command = cis.read();
+//		Assert.assertEquals(CommandStatus.Ok, command.getStatus());
 		
 		socket.close();
 	}
+
 	private Token getToken(StringBuffer errors) throws Exception {
 		OAuthClient cl = new OAuthClient(srv+"/oauth-server/oauth/token");		
 		cl.setEncodedClientAuthorization(client).setUsername("test").setPassword("a");

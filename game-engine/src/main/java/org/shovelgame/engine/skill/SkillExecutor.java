@@ -10,7 +10,6 @@ import javax.annotation.PostConstruct;
 import org.shovelgame.engine.battle.BattleMinion;
 import org.shovelgame.engine.battle.BattleSkill;
 import org.shovelgame.game.domain.enumeration.SkillAlgorithm;
-import org.shovelgame.game.domain.model.MinionSkill;
 import org.shovelgame.utils.ReflectionUtils;
 import org.shovelgame.utils.StringUtils;
 

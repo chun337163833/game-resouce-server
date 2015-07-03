@@ -3,7 +3,6 @@ package org.shovelgame.engine.session;
 import org.shovelgame.annotation.Logger;
 import org.shovelgame.engine.battle.Battleground;
 import org.shovelgame.engine.io.ClientConnection;
-import org.shovelgame.engine.io.ClientStreamException;
 import org.shovelgame.engine.session.command.BattleCommandProcessor;
 import org.shovelgame.engine.session.command.BattleCommandProcessor.BattleDelegate;
 import org.shovelgame.engine.session.command.Command;

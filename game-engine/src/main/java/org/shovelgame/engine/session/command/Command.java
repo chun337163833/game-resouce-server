@@ -20,6 +20,7 @@ public class Command {
 	private CommandName name;
 	private CommandStatus status = CommandStatus.Ok;
 	private boolean response;
+	private boolean event;
 	private String[] parameters = new String[0];
 
 	public Command() {
@@ -116,13 +117,17 @@ public class Command {
 	public boolean isResponse() {
 		return response;
 	}
-
-	public void setResponse(boolean response) {
-		this.response = response;
+	public boolean isEvent() {
+		return event;
 	}
 
+	public Command asEvent() {
+		this.event = true;
+		return this;
+	}
+	
 	public Command asResponse() {
-		setResponse(true);
+		this.response = true;
 		return this;
 	}
 	

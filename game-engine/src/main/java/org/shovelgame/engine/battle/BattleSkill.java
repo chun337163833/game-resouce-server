@@ -1,14 +1,17 @@
 package org.shovelgame.engine.battle;
 
 import java.math.BigDecimal;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
+import org.shovelgame.engine.session.command.parameters.UseSkillParameters;
 import org.shovelgame.game.domain.enumeration.AttributeManagedType;
+import org.shovelgame.game.domain.enumeration.MinionPosition;
 import org.shovelgame.game.domain.enumeration.SkillType;
 import org.shovelgame.game.domain.enumeration.TraitAlgorithm;
 import org.shovelgame.game.domain.model.MinionSkill;
-import org.shovelgame.game.domain.model.MinionTrait;
 import org.shovelgame.game.domain.model.Skill;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -25,10 +28,15 @@ public class BattleSkill {
 	private SkillType type;
 	private AttributeManagedType attribute;
 	private Set<BattleTrait> traits = new HashSet<>();
-
-	public BattleSkill(MinionSkill skill) {
+	@JsonIgnore
+	private BattleTeam ownerTeam;
+	
+	private Map<String, MinionPosition[]> availablePositions;
+	
+	public BattleSkill(MinionSkill skill, BattleTeam team) {
 		super();
 		this.minionSkill = skill;
+		this.ownerTeam = team;
 		this.defaultPower = skill.getPower();
 		this.currentPower = this.defaultPower;
 		Skill s = skill.getSkill();
@@ -44,6 +52,7 @@ public class BattleSkill {
 		}
 		this.traits = traits;
 		this.traits.forEach((BattleTrait t) -> update(t));
+		this.resolveSkillAvailability();
 	}
 
 	private void update(BattleTrait trait) {
@@ -55,6 +64,11 @@ public class BattleSkill {
 		}
 	}
 
+	private void resolveSkillAvailability() {
+		availablePositions = new HashMap<>();
+		//TODO resolve skill availability
+	}
+	
 	public MinionSkill getMinionSkill() {
 		return minionSkill;
 	}
@@ -92,6 +106,18 @@ public class BattleSkill {
 		return attribute;
 	}
 
+	public boolean canUse(UseSkillParameters params) {
+		MinionPosition[] positions = this.availablePositions.get(params.getTeamId());
+		if(positions != null) {
+			for(MinionPosition pos: positions) {
+				if(pos.equals(params.getTarget())) {
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+	
 	@Override
 	public String toString() {
 		return String.format("Skill[%s] -> traits[%d]", getSkillId(),

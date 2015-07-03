@@ -3,11 +3,10 @@ package org.shovelgame.engine.session.command.impl;
 import java.math.BigDecimal;
 
 import org.shovelgame.annotation.Logger;
-import org.shovelgame.engine.battle.Battleground;
 import org.shovelgame.engine.battle.BattleMinion;
 import org.shovelgame.engine.battle.BattleTeam;
+import org.shovelgame.engine.battle.Battleground;
 import org.shovelgame.engine.battle.Stat;
-import org.shovelgame.engine.battle.TeamType;
 import org.shovelgame.engine.io.ClientDelegate;
 import org.shovelgame.engine.io.ClientStreamException;
 import org.shovelgame.engine.session.command.BattleCommandProcessor;
@@ -28,7 +27,7 @@ public class TestDamageCommand extends BattleCommandProcessor {
 		Battleground bg = battleDelegate.getBattleground();
 		try {
 			MinionPosition[] positions = MinionPosition.valueOf(command.getParameters());
-			BattleTeam team = bg.getTeam(TeamType.Opponent, delegate.getClient());
+			BattleTeam team = bg.getTeam(Battleground.TEAM1, delegate.getClient());
 			for(MinionPosition p: positions) {
 				BattleMinion minion = team.getMinions().get(p);
 				Stat stat = minion.getStat(AttributeManagedType.Health);
