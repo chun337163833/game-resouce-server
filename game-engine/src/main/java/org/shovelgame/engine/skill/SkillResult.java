@@ -14,6 +14,8 @@ public class SkillResult implements BigData {
 	private boolean swap;
 	private boolean overtime;
 	private boolean tick;
+	private boolean temporary;
+	private boolean resisted;
 
 	public BigDecimal getResultValue() {
 		return resultValue;
@@ -69,6 +71,22 @@ public class SkillResult implements BigData {
 
 	public void setTick(boolean tick) {
 		this.tick = tick;
+	}
+
+	public boolean isTemporary() {
+		return temporary;
+	}
+
+	public void setTemporary(boolean temporary) {
+		this.temporary = temporary;
+	}
+
+	public boolean isResisted() {
+		return resisted;
+	}
+
+	public void setResisted(boolean resisted) {
+		this.resisted = resisted;
 	}
 
 }

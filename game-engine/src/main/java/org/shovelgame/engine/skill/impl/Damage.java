@@ -12,7 +12,6 @@ import org.shovelgame.engine.skill.OvertimeSkill;
 import org.shovelgame.engine.skill.Skill;
 import org.shovelgame.engine.skill.SkillResult;
 import org.shovelgame.engine.skill.SkillUsageException;
-import org.shovelgame.game.domain.ChanceEvaluator;
 import org.shovelgame.game.domain.enumeration.AttributeManagedType;
 import org.shovelgame.game.domain.enumeration.SkillAlgorithm;
 
@@ -31,7 +30,7 @@ public class Damage extends AbstractSkill implements OvertimeSkill {
 			res.setOvertime(true);
 			target.getEffects().add(new OvertimeEffect(this));
 		} else {
-			res = calculate(source, target);
+			res = processInternal(source, target);
 		}
 		return res;
 	}
@@ -46,26 +45,27 @@ public class Damage extends AbstractSkill implements OvertimeSkill {
 		return super.skill.getTicks();
 	}
 
-	private SkillResult calculate(BattleMinion source, BattleMinion target) {
-		SkillResult res = new SkillResult();
-		res.setCritical(ChanceEvaluator.success(resolveCriticalChance(source, target)));
-		BigDecimal power = resolvePower(source);
-		BigDecimal critDmg = resolveCriticalDamage(source);
-		BigDecimal resistance = resolveResistance(source, target);
-		if(res.isCritical()) {
-			power = power.add(power.multiply(critDmg));
+	public SkillResult processInternal(BattleMinion source, BattleMinion target) {
+		boolean positive = isPositive();
+		SkillResult res = calculate(source, target, AttributeManagedType.Health, positive);
+		Stat stat = target.getStat(AttributeManagedType.Health);
+		if(positive) {
+			BigDecimal value = stat.getCurrentValue().add(res.getResultValue());
+			stat.changeValue(value);
+		} else {
+			BigDecimal value = stat.getCurrentValue().subtract(res.getResultValue());
+			stat.changeValue(value);
 		}
-		res.setResistedValue(power.multiply(resistance));
-		res.setResultValue(power.subtract(res.getResistedValue()));
-		Stat targetHealth = target.getStat(AttributeManagedType.Health);
-		BigDecimal health = targetHealth.getCurrentValue().subtract(res.getResultValue());
-		targetHealth.changeValue(health);
 		return res;
+	}
+	
+	public boolean isPositive() {
+		return false;
 	}
 	
 	@Override
 	public SkillResult tick(BattleMinion target) {
-		SkillResult result = this.calculate(super.skill.getMinion(), target);
+		SkillResult result = this.processInternal(super.skill.getMinion(), target);
 		result.setTick(true);
 		UseSkillParameters params = new UseSkillParameters();
 		params.setSkillId(getSourceId());

@@ -71,6 +71,9 @@ public class Stat {
 	public void changeValue(BigDecimal value) {
 		this.currentValue = value;
 		this.recalculate();
+		if(this.currentValue.doubleValue() > this.maxValue.doubleValue()) {
+			this.currentValue = this.maxValue;
+		}
 		if(AttributeManagedType.Health.equals(getType()) && this.currentValue.intValue() <= 0) {
 			this.delegate.getOwner().died();
 		}

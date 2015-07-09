@@ -4,6 +4,8 @@ import java.math.BigDecimal;
 
 import org.shovelgame.engine.battle.BattleMinion;
 import org.shovelgame.engine.battle.BattleSkill;
+import org.shovelgame.engine.battle.Stat;
+import org.shovelgame.game.domain.ChanceEvaluator;
 import org.shovelgame.game.domain.enumeration.AttributeManagedType;
 import org.shovelgame.game.domain.enumeration.SkillType;
 
@@ -23,7 +25,7 @@ public abstract class AbstractSkill implements ISkill {
 		if(!isPhysical()) {
 			power = minion.getStat(AttributeManagedType.SpellPower).getCurrentValue();
 		}
-		return power.multiply(skill.getCurrentPower());
+		return power.add(power.multiply(skill.getCurrentPower()));
 	}
 	
 	public BigDecimal resolveCriticalChance(BattleMinion source, BattleMinion target) {
@@ -38,6 +40,25 @@ public abstract class AbstractSkill implements ISkill {
 	
 	public BigDecimal resolveCriticalDamage(BattleMinion minion) {
 		return minion.getStat(AttributeManagedType.CriticalDamage).getCurrentValue();
+	}
+	
+	protected SkillResult calculate(BattleMinion source, BattleMinion target, AttributeManagedType type, boolean isPositive) {
+		SkillResult res = new SkillResult();
+		res.setCritical(ChanceEvaluator.success(resolveCriticalChance(source, target)));
+		BigDecimal power = resolvePower(source);
+		BigDecimal critDmg = resolveCriticalDamage(source);
+		BigDecimal resistance = resolveResistance(source, target);
+		if(res.isCritical()) {
+			power = power.add(power.multiply(critDmg));
+		}
+		if(!isPositive) {
+			res.setResistedValue(power.multiply(resistance));
+			res.setResultValue(power.subtract(res.getResistedValue()));
+		} else {
+			res.setResistedValue(BigDecimal.valueOf(0));
+			res.setResultValue(power);
+		}
+		return res;
 	}
 	
 	public BigDecimal resolveResistance(BattleMinion attacker, BattleMinion defender) {

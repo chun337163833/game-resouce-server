@@ -4,7 +4,11 @@ public enum SkillAlgorithm {
 
 	Damage(TeamTarget.Enemy), 
 	Heal(TeamTarget.Local, new MinionPosition[]{MinionPosition.Bot, MinionPosition.Top, MinionPosition.Mid, MinionPosition.Leader}), 
-	Swap(TeamTarget.Local);
+	Swap(TeamTarget.Local),
+	Buff(TeamTarget.Local, new MinionPosition[]{MinionPosition.Bot, MinionPosition.Top, MinionPosition.Mid, MinionPosition.Leader}),
+	Debuff(TeamTarget.Enemy, new MinionPosition[]{MinionPosition.Bot, MinionPosition.Top, MinionPosition.Mid, MinionPosition.Leader})
+	;
+	
 	
 	private MinionPosition[] targets = {MinionPosition.Bot, MinionPosition.Top, MinionPosition.Mid};
 	private TeamTarget teamTarget;
