@@ -1,5 +1,4 @@
 package org.shovelgame.engine.session.command.impl;
-
 import org.shovelgame.annotation.Logger;
 import org.shovelgame.engine.battle.Battleground;
 import org.shovelgame.engine.io.ClientDelegate;
@@ -13,7 +12,6 @@ import org.shovelgame.engine.skill.SkillResult;
 import org.shovelgame.engine.skill.SkillUsageException;
 @Logger
 public class UseSkillCommand extends BattleCommandProcessor {
-
 	@Override
 	public void process(Command command, ClientDelegate delegate) throws CommandException {
 		UseSkillParameters parameters = UseSkillParameters.read(command.getParameters());
@@ -21,6 +19,7 @@ public class UseSkillCommand extends BattleCommandProcessor {
 		try {
 			SkillResult result = bg.useSkill(parameters, delegate.getClient());
 			result.setMetadata(parameters);
+			bg.update();
 			delegate.getClient().send(CommandName.UseSkill.createCommand().asResponse());
 			bg.getSession().sendAll(CommandName.EvtSkillUsed.createCommand(result));
 			bg.nextTurn();
@@ -35,5 +34,4 @@ public class UseSkillCommand extends BattleCommandProcessor {
 			}
 		}
 	}
-
 }

@@ -26,6 +26,10 @@ privileged aspect ItemEnchantment_Roo_DbManaged {
     @NotNull
     private BigDecimal ItemEnchantment.baseValue;
     
+    @Column(name = "required_enchant")
+    @NotNull
+    private Integer ItemEnchantment.requiredEnchant;
+    
     public EnchantmentType ItemEnchantment.getEnchantmentType() {
         return enchantmentType;
     }
@@ -48,6 +52,14 @@ privileged aspect ItemEnchantment_Roo_DbManaged {
     
     public void ItemEnchantment.setBaseValue(BigDecimal baseValue) {
         this.baseValue = baseValue;
+    }
+    
+    public Integer ItemEnchantment.getRequiredEnchant() {
+        return requiredEnchant;
+    }
+    
+    public void ItemEnchantment.setRequiredEnchant(Integer requiredEnchant) {
+        this.requiredEnchant = requiredEnchant;
     }
     
 }

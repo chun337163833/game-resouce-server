@@ -2,6 +2,8 @@ package org.shovelgame.engine.battle;
 
 import java.math.BigDecimal;
 
+import org.shovelgame.engine.skill.TemporarySkill;
+import org.shovelgame.engine.skill.TemporaryState;
 import org.shovelgame.game.domain.enumeration.AttributeManagedType;
 import org.shovelgame.game.domain.enumeration.TraitAlgorithm;
 import org.shovelgame.game.domain.model.MinionTrait;
@@ -41,9 +43,15 @@ public class Stat {
 
 	public BigDecimal getRealValue() {
 		BattleMinion minion = this.delegate.getOwner();
-		// TODO get all trait, items and item enchantment what are eligible to 
-		// increase this stat and increase value
 		BigDecimal value = this.defaultValue;
+		for(BattleItem item: minion.getTeam().getItems()) {
+			value = item.update(type, value);
+		}
+		for(TemporaryState state: minion.getStates()) {
+			if(state.getAttribute().equals(getType())) {
+				value = value.add(state.getValue());
+			}
+		}
 		for (BattleTrait trait : minion.getAffectedTraits()) {
 			AttributeManagedType type = trait.getAttribute();
 			if (type.equals(getType())) {
@@ -55,6 +63,8 @@ public class Stat {
 				}
 			}
 		}
+		
+		
 		return value;
 	}
 

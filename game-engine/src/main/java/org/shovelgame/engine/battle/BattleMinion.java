@@ -2,11 +2,14 @@ package org.shovelgame.engine.battle;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 import org.shovelgame.annotation.Logger;
+import org.shovelgame.engine.skill.OvertimeEffect;
+import org.shovelgame.engine.skill.TemporaryState;
 import org.shovelgame.game.domain.data.Minion;
 import org.shovelgame.game.domain.enumeration.AttributeManagedType;
 import org.shovelgame.game.domain.enumeration.MinionPosition;
@@ -23,24 +26,27 @@ public class BattleMinion implements StatsOwnerDelegate {
 	
 	/**
 	 * Traits which affect this minion.
-	 * This property serves for calculate stats and as information about affected traits for fame client.
+	 * This property serves for calculate stats and as information about affected traits for same client.
 	 */
 	private Set<BattleTrait> affectedTraits;
 	
 	private Set<BattleSkill> skills;
-	
+	private List<OvertimeEffect> effects;
+	private List<TemporaryState> states;
 	@JsonIgnore
 	private BattleTeam team;
 
 	public BattleMinion(BattleTeam team) {
 		this.team = team;
 		this.skills = new HashSet<>();
+		this.effects = new ArrayList<>();
+		this.states = new ArrayList<>();
 	}
 	
 	public void build() {
 		Minion minion = getMinion();
 		MinionModel model = minion.getMinionModel();
-		model.getMinionSkills().forEach((MinionSkill s) -> this.skills.add(new BattleSkill(s, team)));
+		model.getMinionSkills().forEach((MinionSkill s) -> this.skills.add(new BattleSkill(s, this)));
 		
 		List<Stat> stats = new ArrayList<Stat>();
 		typeBlock: for (AttributeManagedType t : AttributeManagedType.values()) {
@@ -61,7 +67,12 @@ public class BattleMinion implements StatsOwnerDelegate {
 	public void updateTraits() {
 		MinionPosition position = getPosition();
 		this.affectedTraits = this.team.findTraitsForStats(position);
-		this.skills.forEach((BattleSkill s) -> s.update(this.team.findTraitsForSkill(position, s.getMinionSkill().getSkill().getAlg())));
+		this.skills.forEach((BattleSkill s) -> 
+		{	
+			Set<BattleTrait> traits = this.team.findTraitsForSkill(position, s.getMinionSkill().getSkill().getAlg());
+			Set<BattleItem> items = new HashSet<>(Arrays.asList(this.team.getItems()));
+			s.update(traits, items);
+		});
 		if(log.isDebugEnabled()) {
 			log.debug(String.format("MinonTraits[%s:%s]", position.name(), this.affectedTraits.size()));
 		}
@@ -114,8 +125,20 @@ public class BattleMinion implements StatsOwnerDelegate {
         return null;
     }
 	
+	public BattleTeam getTeam() {
+		return team;
+	}
+	
 	public MinionPosition getPosition() {
 		return this.team.getPositionForMinion(this);
 	}
-	
+	public Set<BattleSkill> getSkills() {
+		return skills;
+	}
+	public List<OvertimeEffect> getEffects() {
+		return effects;
+	}
+	public List<TemporaryState> getStates() {
+		return states;
+	}
 }

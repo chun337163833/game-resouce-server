@@ -1,6 +1,9 @@
 package org.shovelgame.engine.battle;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.function.BiConsumer;
@@ -8,6 +11,7 @@ import java.util.function.BiConsumer;
 import org.shovelgame.engine.collection.ValuePrioritySet;
 import org.shovelgame.engine.session.command.BigData;
 import org.shovelgame.engine.session.communication.Communicator;
+import org.shovelgame.game.domain.data.Item;
 import org.shovelgame.game.domain.data.Team;
 import org.shovelgame.game.domain.enumeration.MinionPosition;
 import org.shovelgame.game.domain.enumeration.SkillAlgorithm;
@@ -23,12 +27,18 @@ public class BattleTeam implements BigData {
 	private Map<MinionPosition, BattleMinion> minions;
 
 	private String teamId;
-
+	
+	
+	private BattleItem[] items;
+	
 	@JsonIgnore
 	private OpponentTeamDelegate opponentTeamDelegate;
 
 	@JsonIgnore
 	private Team team;
+	
+	@JsonIgnore
+	private MinionPosition[] order = {MinionPosition.Leader, MinionPosition.Top, MinionPosition.Mid, MinionPosition.Bot};
 
 	@JsonIgnore
 	private Battleground instance;
@@ -37,6 +47,9 @@ public class BattleTeam implements BigData {
 		this.team = team;
 		this.instance = instance;
 		this.teamId = teamId;
+		List<BattleItem> items = new ArrayList<>();
+		team.getItems().forEach((Item i) -> items.add(new BattleItem(i)));
+		this.items = items.toArray(new BattleItem[team.getItems().size()]);
 		this.minions = new HashMap<>();
 		this.minions.put(MinionPosition.Leader, new BattleMinion(this));
 		this.minions.put(MinionPosition.Top, new BattleMinion(this));
@@ -178,9 +191,14 @@ public class BattleTeam implements BigData {
 		}
 
 	}
-
+	
 	public String getTeamId() {
 		return teamId;
 	}
-
+	public MinionPosition[] getOrder() {
+		return order;
+	}
+	public BattleItem[] getItems() {
+		return items;
+	}
 }

@@ -11,6 +11,9 @@ public class SkillResult implements BigData {
 	private BigDecimal resistedValue;
 	private UseSkillParameters metadata;
 	private boolean critical;
+	private boolean swap;
+	private boolean overtime;
+	private boolean tick;
 
 	public BigDecimal getResultValue() {
 		return resultValue;
@@ -43,4 +46,29 @@ public class SkillResult implements BigData {
 	public void setMetadata(UseSkillParameters metadata) {
 		this.metadata = metadata;
 	}
+
+	public boolean isSwap() {
+		return swap;
+	}
+
+	public void setSwap(boolean swap) {
+		this.swap = swap;
+	}
+
+	public boolean isOvertime() {
+		return overtime;
+	}
+
+	public void setOvertime(boolean overtime) {
+		this.overtime = overtime;
+	}
+
+	public boolean isTick() {
+		return tick;
+	}
+
+	public void setTick(boolean tick) {
+		this.tick = tick;
+	}
+
 }

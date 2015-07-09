@@ -358,6 +358,7 @@
         <column name="item_model" primaryKey="false" required="true" scale="0" size="19" type="-5,int8"/>
         <column name="enchantment_type" primaryKey="false" required="true" scale="0" size="19" type="-5,int8"/>
         <column name="base_value" primaryKey="false" required="true" scale="3" size="10" type="2,numeric"/>
+        <column name="required_enchant" primaryKey="false" required="true" scale="0" size="10" type="4,int4"/>
         <foreign-key foreignTable="enchantment_type" name="fk_enchantment_model_enchantment_type" onDelete="none" onUpdate="none">
             <option key="foreignSchemaName" value="model"/>
             <option key="exported" value="false"/>
@@ -644,7 +645,7 @@
         <column name="power" primaryKey="false" required="false" scale="3" size="10" type="2,numeric"/>
         <column name="cooldown" primaryKey="false" required="true" scale="0" size="10" type="4,int4"/>
         <column name="ticks" primaryKey="false" required="false" scale="0" size="10" type="4,int4"/>
-        <column name="type" primaryKey="false" required="true" scale="0" size="50" type="12,varchar"/>
+        <column name="type" primaryKey="false" required="false" scale="0" size="50" type="12,varchar"/>
         <column name="skill_id" primaryKey="false" required="true" scale="0" size="100" type="12,varchar"/>
         <foreign-key foreignTable="attribute_type" name="fk_skill_model_attribute_type" onDelete="none" onUpdate="none">
             <option key="foreignSchemaName" value="model"/>

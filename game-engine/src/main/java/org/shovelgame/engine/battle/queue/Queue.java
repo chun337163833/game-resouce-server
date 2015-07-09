@@ -11,7 +11,6 @@ import org.shovelgame.engine.battle.BattleTeam;
 import org.shovelgame.engine.battle.Battleground;
 import org.shovelgame.engine.session.communication.Communicator;
 import org.shovelgame.game.domain.enumeration.MinionPosition;
-import org.springframework.util.CollectionUtils;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -24,9 +23,6 @@ public class Queue {
 	@JsonIgnore
 	private int bufferSize = 20;
 	
-	@JsonIgnore
-	private MinionPosition[] defaultOrder = { MinionPosition.Top, MinionPosition.Mid, MinionPosition.Bot, MinionPosition.Leader };
-
 	@JsonIgnore
 	private String startingTeam;
 	
@@ -89,14 +85,18 @@ public class Queue {
 			if(fightersPerRound == fightersPositioned) {
 				fightersPositioned = 0;
 				round++;
+				this.battleground.newRound();
 			}
 		}
 	}
+	
+	
 	
 	private MinionPosition findPosition(String teamId) {
 		List<QueuePosition> reverse = new ArrayList<>(Arrays.asList(this.positions));
 		Collections.reverse(reverse);
 		BattleTeam team = findTeamById(teamId);
+		MinionPosition[] defaultOrder = team.getOrder();
 		for(QueuePosition q: reverse) {
 			if(q == null) {
 				continue;
@@ -104,7 +104,7 @@ public class Queue {
 			if(q.getTeamId().equals(teamId)) {
 				MinionPosition lastPosition = q.getPosition();
 				boolean next = false;
-				for(MinionPosition p: this.defaultOrder) {
+				for(MinionPosition p: defaultOrder) {
 					if(next) {
 						BattleMinion minion = team.getMinions().get(p);
 						if(!minion.isDied()) {
@@ -120,13 +120,13 @@ public class Queue {
 				break;
 			}
 		}
-		for(MinionPosition p: this.defaultOrder) {
+		for(MinionPosition p: defaultOrder) {
 			BattleMinion minion = team.getMinions().get(p);
 			if(!minion.isDied()) {
 				return p;
 			}
 		}
-		return this.defaultOrder[0];
+		return defaultOrder[0];
 	}
 	
 	public BattleTeam next() {

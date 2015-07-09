@@ -103,7 +103,8 @@ CREATE TABLE model.item_enchantment (
 	id bigint DEFAULT nextval(('model.item_enchantment_id_seq'::text)::regclass) NOT NULL,
 	item_model bigint NOT NULL,
 	enchantment_type bigint NOT NULL,
-	base_value decimal(10,3) NOT NULL
+	base_value decimal(10,3) NOT NULL,
+	required_enchant integer NOT NULL
 );
 
 CREATE SEQUENCE model.item_model_id_seq INCREMENT 1 START 1;
@@ -274,7 +275,7 @@ CREATE TABLE model.skill (
 	power decimal(10,3),
 	cooldown integer NOT NULL,
 	ticks integer,
-	type varchar(50) NOT NULL,
+	type varchar(50),
 	skill_id varchar(100) NOT NULL
 );
 

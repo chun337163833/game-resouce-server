@@ -23,6 +23,14 @@ import org.shovelgame.http.oauth.OAuthClient.Token;
 public class BattleTest {
 	private String srv = "http://localhost:8080";
 	private String client = Base64.getEncoder().encodeToString("abcd:dcba".getBytes());
+
+	@Test
+	public void testt() {
+		String m = "M:\\SDMS\\Bericht\\nove nazvy\\2010\\2010-002_Servisní smlouva IMIS\\Jednací protokol_ŠA - 15.9.2009 - 1.922.760,00 CZK (rok 2010), 1.884.360,00 CZK (rok 2011), 1.846.680,00 CZK (rok 2012)_14133.tiff";
+		String m2 = "Dodací list_FA ŠA ( Únor, Březen, Duben)  27.504,75 CZK NEP 0510,  Paušál ( Únor, Březen, Duben)  2.147.274,00 CZK  NE_13617.PDF";
+		System.out.println(m.length());
+		System.out.println(m2.length());
+	}
 	
 	@Test
 	public void testAttributeBoost() {
@@ -59,8 +67,8 @@ public class BattleTest {
 		while((ev = cis.read()) != null) {
 			if(CommandName.EvtSkillUsed.equals(ev.getName())) {
 				System.out.println(String.format("Using skill %s", ev.getData()));
-			} if(CommandName.EvtStartTurn.equals(ev.getName())) {
-				cos.send(CommandName.UseSkill.createCommand(Battleground.TEAM1, MinionPosition.Leader.name(), "testSkill"));
+			} else if(CommandName.EvtStartTurn.equals(ev.getName())) {
+				cos.send(CommandName.UseSkill.createCommand(Battleground.TEAM1, "swapSkill", MinionPosition.Top.name()));
 				command = cis.read();
 				Assert.assertEquals(CommandStatus.Ok, command.getStatus());
 			} else if(CommandName.EvtGameEnd.equals(ev.getName())) {

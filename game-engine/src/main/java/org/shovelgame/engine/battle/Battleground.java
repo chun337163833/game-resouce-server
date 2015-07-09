@@ -1,6 +1,8 @@
 package org.shovelgame.engine.battle;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
@@ -13,6 +15,7 @@ import org.shovelgame.engine.session.BattleSession;
 import org.shovelgame.engine.session.command.CommandName;
 import org.shovelgame.engine.session.command.parameters.UseSkillParameters;
 import org.shovelgame.engine.session.communication.Communicator;
+import org.shovelgame.engine.skill.OvertimeEffect;
 import org.shovelgame.engine.skill.SkillExecutor;
 import org.shovelgame.engine.skill.SkillResult;
 import org.shovelgame.engine.skill.SkillUsageException;
@@ -51,9 +54,9 @@ public class Battleground {
 	public void update() {
 		this.teams.forEach((Communicator t, BattleTeam u) -> u.updateTraits());
 		this.teams.forEach((Communicator t, BattleTeam u) -> {
-			u.getMinions().forEach((MinionPosition o, BattleMinion m) -> {for(Stat s: m.getStats()) {
-				s.recalculate();
-			}});
+			u.getMinions().forEach((MinionPosition o, BattleMinion m) -> {
+				for(Stat s: m.getStats()) {s.recalculate();}
+			});
 			
 		});
 	}	
@@ -93,8 +96,11 @@ public class Battleground {
 		if(!skill.canUse(params)) {
 			throw new SkillUsageException(String.format("Skill %s cannot be used to %s -> %s", params.getSkillId(), params.getTeamId(), params.getTarget().name()));	
 		}
+		if(params.getSource() == null) {
+			params.setSource(source.getPosition());
+		}
 		SkillResult result = this.executor.execute(skill, source, target);
-		this.update();
+		skill.setReuse();
 		return result;
 	}
 
@@ -105,7 +111,17 @@ public class Battleground {
 				return team.getMinions().get(position.getPosition());
 			}
 		}
-		throw new IllegalStateException(String.format("Not minion found for queue position %s", position.toString()));
+		throw new IllegalStateException(String.format("No minion found for queue position %s", position.toString()));
+	}
+	
+	public void newRound() {
+		this.teams.forEach((Communicator c, BattleTeam team) -> 
+		team.getMinions().forEach((MinionPosition p, BattleMinion m) -> 
+		{
+			m.getSkills().forEach((BattleSkill s) -> s.newRound());
+		}
+		));
+		
 	}
 	
 	public void gameEnd(BattleTeam winner) {
@@ -122,6 +138,16 @@ public class Battleground {
 	
 	public void nextTurn() {
 		BattleTeam nextTeam = queue.next();
+		List<OvertimeEffect> expiredEffects = new ArrayList<>();
+		BattleMinion minion = queue.getCurrent();
+		minion.getEffects().forEach((OvertimeEffect o) -> 
+		{
+			SkillResult result = o.tick(minion);
+			getSession().sendAll(CommandName.EvtSkillUsed.createCommand(result).asEvent());
+			if(o.isExpired()){expiredEffects.add(o);}
+			
+		});
+		minion.getEffects().removeAll(expiredEffects);
 		nextTeam.getCommunicator().send(CommandName.EvtStartTurn.createCommand());
 	}
 	public Queue getQueue() {

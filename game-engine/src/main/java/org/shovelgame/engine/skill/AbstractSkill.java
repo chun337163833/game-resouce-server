@@ -4,7 +4,6 @@ import java.math.BigDecimal;
 
 import org.shovelgame.engine.battle.BattleMinion;
 import org.shovelgame.engine.battle.BattleSkill;
-import org.shovelgame.engine.battle.Stat;
 import org.shovelgame.game.domain.enumeration.AttributeManagedType;
 import org.shovelgame.game.domain.enumeration.SkillType;
 
