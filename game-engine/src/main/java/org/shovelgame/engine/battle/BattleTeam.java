@@ -66,11 +66,11 @@ public class BattleTeam implements BigData {
 		this.opponentTeamDelegate = delegate;
 	}
 
-	public void updateTraits() {
+	public void update() {
 		this.minions.forEach(new BiConsumer<MinionPosition, BattleMinion>() {
 			@Override
 			public void accept(MinionPosition t, BattleMinion u) {
-				u.updateTraits();
+				u.update();
 			}
 		});
 	}

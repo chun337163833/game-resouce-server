@@ -47,7 +47,7 @@ public class Debuff extends AbstractSkill implements TemporarySkill {
 			result.setResultValue(result.getResultValue().multiply(BigDecimal.valueOf(-1)));
 		}
 		if(result.getResultValue().intValue() == 0) {
-			result.setResisted(true);	
+			result.setResisted(true);
 		}
 		result.setTemporary(true);
 		return result;

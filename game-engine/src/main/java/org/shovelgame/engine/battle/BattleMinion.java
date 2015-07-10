@@ -64,7 +64,7 @@ public class BattleMinion implements StatsOwnerDelegate {
 	/**
 	 * Update traits for this minion and his skills.
 	 */
-	public void updateTraits() {
+	public void update() {
 		MinionPosition position = getPosition();
 		this.affectedTraits = this.team.findTraitsForStats(position);
 		this.skills.forEach((BattleSkill s) -> 

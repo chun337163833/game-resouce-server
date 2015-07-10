@@ -52,7 +52,7 @@ public class Battleground {
 	}
 
 	public void update() {
-		this.teams.forEach((Communicator t, BattleTeam u) -> u.updateTraits());
+		this.teams.forEach((Communicator t, BattleTeam u) -> u.update());
 		this.teams.forEach((Communicator t, BattleTeam u) -> {
 			u.getMinions().forEach((MinionPosition o, BattleMinion m) -> {
 				for(Stat s: m.getStats()) {s.recalculate();}

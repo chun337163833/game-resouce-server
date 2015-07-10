@@ -24,7 +24,11 @@ public class Item {
 
     public Set<ItemEnchantment> getActiveEnchantments() {
         Set<ItemEnchantment> set = new HashSet<>();
-        getItemModel().getItemEnchantments().forEach((ItemEnchantment e) -> {if(e.getRequiredEnchant() <= getEnchant()) {set.add(e);}});
+        getItemModel().getItemEnchantments().forEach((ItemEnchantment e) -> {
+        	if(e.getRequiredEnchant() <= getEnchant()) {
+        		set.add(e);
+        	}
+        });
         return set;
     }
 }
