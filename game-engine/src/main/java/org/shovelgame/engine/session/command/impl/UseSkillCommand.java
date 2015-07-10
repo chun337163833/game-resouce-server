@@ -8,6 +8,7 @@ import org.shovelgame.engine.session.command.Command;
 import org.shovelgame.engine.session.command.CommandException;
 import org.shovelgame.engine.session.command.CommandName;
 import org.shovelgame.engine.session.command.parameters.UseSkillParameters;
+import org.shovelgame.engine.session.communication.Communicator;
 import org.shovelgame.engine.skill.SkillResult;
 import org.shovelgame.engine.skill.SkillUsageException;
 @Logger
@@ -20,11 +21,10 @@ public class UseSkillCommand extends BattleCommandProcessor {
 			SkillResult result = bg.useSkill(parameters, delegate.getClient());
 			result.setMetadata(parameters);
 			bg.update();
-			delegate.getClient().send(CommandName.UseSkill.createCommand().asResponse());
+			Communicator comm = bg.getCommunicatorByClient(delegate.getClient());
+			comm.send(CommandName.UseSkill.createCommand().asResponse());
 			bg.getSession().sendAll(CommandName.EvtSkillUsed.createCommand(result));
 			bg.nextTurn();
-		} catch (ClientStreamException e) {
-			log.error("", e);
 		} catch (SkillUsageException e) {
 			log.error("", e);
 			try {

@@ -107,7 +107,7 @@ public class BattleMinion implements StatsOwnerDelegate {
 	
 	public void died() {
 		this.died = true;
-		this.team.getInstance().getQueue().update();
+//		this.team.getInstance().getQueue().update();
 		if(MinionPosition.Leader.equals(getPosition())) {
 			this.team.getInstance().gameEnd(this.team.getOpponentTeamDelegate().getTeam());			
 		}

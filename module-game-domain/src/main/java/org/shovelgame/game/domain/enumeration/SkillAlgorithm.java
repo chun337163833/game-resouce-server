@@ -4,7 +4,7 @@ public enum SkillAlgorithm {
 
 	Damage(TeamTarget.Enemy), 
 	Heal(TeamTarget.Local, new MinionPosition[]{MinionPosition.Bot, MinionPosition.Top, MinionPosition.Mid, MinionPosition.Leader}), 
-	Swap(TeamTarget.Local),
+	Swap(TeamTarget.Local, false),
 	Buff(TeamTarget.Local, new MinionPosition[]{MinionPosition.Bot, MinionPosition.Top, MinionPosition.Mid, MinionPosition.Leader}),
 	Debuff(TeamTarget.Enemy, new MinionPosition[]{MinionPosition.Bot, MinionPosition.Top, MinionPosition.Mid, MinionPosition.Leader})
 	;
@@ -12,6 +12,14 @@ public enum SkillAlgorithm {
 	
 	private MinionPosition[] targets = {MinionPosition.Bot, MinionPosition.Top, MinionPosition.Mid};
 	private TeamTarget teamTarget;
+	private boolean myself = true;
+	
+	
+	
+	private SkillAlgorithm(TeamTarget teamTarget, boolean myself) {
+		this.myself = myself;
+		this.teamTarget = teamTarget;
+	}
 
 	private SkillAlgorithm(TeamTarget teamTarget) {
 		this.teamTarget = teamTarget;
@@ -30,5 +38,8 @@ public enum SkillAlgorithm {
 	}
 	public TeamTarget getTeamTarget() {
 		return teamTarget;
+	}
+	public boolean isMyself() {
+		return myself;
 	}
 }

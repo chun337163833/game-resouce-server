@@ -64,7 +64,7 @@ public class Battleground {
 		return teams;
 	}
 	
-	public BattleTeam getTeam(String teamId, ClientConnection requestor) {
+	public BattleTeam getTeam(String teamId) {
 		for(Map.Entry<Communicator, BattleTeam> entry: this.teams.entrySet()) {
 			BattleTeam team = entry.getValue();
 			if(team.getTeamId().equals(teamId)) {
@@ -85,10 +85,17 @@ public class Battleground {
 		throw new IllegalStateException("Oops! No communicator by team found.");
 	}
 
-	
+	public Communicator getCommunicatorByClient(ClientConnection client) {
+		for(Map.Entry<Communicator, BattleTeam> entry: this.teams.entrySet()) {
+			if(entry.getValue().getCommunicator().getConnection().equals(client)) {
+				return entry.getKey();
+			}
+		}
+		throw new IllegalStateException("Oops! No communicator by team found.");
+	}
 	public SkillResult useSkill(UseSkillParameters params, ClientConnection requestor) throws SkillUsageException {
 		BattleMinion source = this.queue.getCurrent();
-		BattleMinion target = getTeam(params.getTeamId(), requestor).getMinions().get(params.getTarget());
+		BattleMinion target = getTeam(params.getTeamId()).getMinions().get(params.getTarget());
 		BattleSkill skill = source.findSkill(params.getSkillId());
 		if(skill == null) {
 			throw new SkillUsageException(String.format("Skill %s not found", params.getSkillId()));
@@ -148,7 +155,7 @@ public class Battleground {
 			
 		});
 		minion.getEffects().removeAll(expiredEffects);
-		nextTeam.getCommunicator().send(CommandName.EvtStartTurn.createCommand());
+		nextTeam.getCommunicator().send(CommandName.EvtStartTurn.createCommand(minion.getPosition().name()));
 	}
 	public Queue getQueue() {
 		return queue;

@@ -1,7 +1,7 @@
 package org.shovelgame.engine.session;
 
 import org.shovelgame.annotation.Logger;
-import org.shovelgame.engine.io.ClientConnection;
+import org.shovelgame.engine.ai.AI;
 import org.shovelgame.engine.session.command.CommandName;
 import org.shovelgame.engine.session.communication.AICommunicator;
 import org.shovelgame.engine.session.communication.Communicator;
@@ -17,10 +17,11 @@ import org.shovelgame.game.domain.model.MissionReward;
 public class PveBattle extends BattleSession {
 
 	private Mission mission;
-
-	public PveBattle(ClientConnection client, Mission mission) {
-		super(new TcpCommunicator(client), new AICommunicator(mission.getTeam()));
-		this.mission = mission;
+	
+	public PveBattle(TcpCommunicator tcpcommunicator, AICommunicator aicommunicator) {
+		super(tcpcommunicator, aicommunicator);
+		this.mission = aicommunicator.getMission();
+		aicommunicator.setAi(new AI(getBattleground()));
 	}
 
 	@Override

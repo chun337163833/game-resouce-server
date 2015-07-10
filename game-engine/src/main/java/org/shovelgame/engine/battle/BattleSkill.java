@@ -109,8 +109,11 @@ public class BattleSkill {
 		if(TeamTarget.Local.equals(teamTarget) || TeamTarget.Both.equals(teamTarget)) {
 			Set<MinionPosition> pos = new HashSet<>();
 			pos.addAll(Arrays.asList(positions));
-			pos.remove(this.minion.getPosition());
-			this.availablePositions.put(ownerTeam.getTeamId(), positions);
+			if(!this.minionSkill.getSkill().getAlg().isMyself()) {
+				pos.remove(this.minion.getPosition());
+			}
+			clearDiedFromAvailability(pos, ownerTeam.getMinions());
+			this.availablePositions.put(ownerTeam.getTeamId(), pos.toArray(new MinionPosition[pos.size()]));
 		} 
 		if(TeamTarget.Enemy.equals(teamTarget) || TeamTarget.Both.equals(teamTarget)) {
 			String teamId = ownerTeam.getOpponentTeamDelegate().getTeam().getTeamId();
@@ -119,11 +122,27 @@ public class BattleSkill {
 				Set<MinionPosition> pos = new HashSet<>();
 				pos.addAll(Arrays.asList(positions));
 				pos.add(MinionPosition.Leader);
+				clearDiedFromAvailability(pos, ownerTeam.getOpponentTeamDelegate().getTeam().getMinions());
 				this.availablePositions.put(teamId, pos.toArray(new MinionPosition[pos.size()]));
 			} else {
+				Set<MinionPosition> pos = new HashSet<>();
+				pos.addAll(Arrays.asList(positions));
+				clearDiedFromAvailability(pos, ownerTeam.getOpponentTeamDelegate().getTeam().getMinions());
 				this.availablePositions.put(teamId, positions);
 			}
 		}
+	}
+	
+	private void clearDiedFromAvailability(Set<MinionPosition> availablePositions, Map<MinionPosition, BattleMinion> minions) {
+		Set<MinionPosition> delete = new HashSet<>();
+		for(MinionPosition p: availablePositions) {
+			BattleMinion m = minions.get(p);
+			if(m.isDied()) {
+				delete.add(p);
+			}
+			
+		}
+		availablePositions.removeAll(delete);
 	}
 	
 	public MinionSkill getMinionSkill() {
@@ -193,5 +212,8 @@ public class BattleSkill {
 	}
 	public BattleMinion getMinion() {
 		return minion;
+	}
+	public Map<String, MinionPosition[]> getAvailablePositions() {
+		return availablePositions;
 	}
 }

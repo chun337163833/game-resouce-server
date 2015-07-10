@@ -2,7 +2,7 @@ package org.shovelgame.engine.session;
 
 import org.shovelgame.annotation.Logger;
 import org.shovelgame.engine.battle.Battleground;
-import org.shovelgame.engine.io.ClientConnection;
+import org.shovelgame.engine.io.ClientDelegate;
 import org.shovelgame.engine.session.command.BattleCommandProcessor;
 import org.shovelgame.engine.session.command.BattleCommandProcessor.BattleDelegate;
 import org.shovelgame.engine.session.command.Command;
@@ -52,13 +52,13 @@ public abstract class BattleSession implements BattleDelegate, CommandDelegate {
 	}
 	
 	@Override
-	public void received(Command command, final ClientConnection from) throws CommandException {
+	public void received(Command command, ClientDelegate from) throws CommandException {
 		try {
 			CommandProcessor processor = command.getName().instantiate();
 			if (processor instanceof BattleCommandProcessor) {
 				BattleCommandProcessor battleProcessor = (BattleCommandProcessor) processor;
 				battleProcessor.setBattleDelegate(this);
-				battleProcessor.process(command, () -> from);
+				battleProcessor.process(command, from);
 			}
 		} catch (Exception e) {
 			throw new CommandException(e);

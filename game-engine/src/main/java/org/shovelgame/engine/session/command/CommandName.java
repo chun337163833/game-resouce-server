@@ -1,16 +1,22 @@
 package org.shovelgame.engine.session.command;
 
-import org.shovelgame.engine.session.command.impl.TestDamageCommand;
-import org.shovelgame.engine.session.command.impl.TestKillCommand;
 import org.shovelgame.engine.session.command.impl.MatchmakingCommand;
 import org.shovelgame.engine.session.command.impl.MissionCommand;
 import org.shovelgame.engine.session.command.impl.SyncTeamCommand;
+import org.shovelgame.engine.session.command.impl.TestDamageCommand;
+import org.shovelgame.engine.session.command.impl.TestKillCommand;
 import org.shovelgame.engine.session.command.impl.UseSkillCommand;
 
 public enum CommandName {
 	Authentication,
 	Matchmaking(MatchmakingCommand.class),
 	Mission(MissionCommand.class),
+	/**
+	 * 0 = target team id
+	   1 = skill id
+	   2 = target minion position
+	   3 = source minion position -> optional, depends on skill
+	 */
 	UseSkill(UseSkillCommand.class),
 	SyncTeam(SyncTeamCommand.class),
 	TestKill(TestKillCommand.class),

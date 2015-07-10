@@ -27,7 +27,7 @@ public class ServerConnection implements Runnable, InitializingBean {
 	private TaskExecutor serverExecutor;
 	private int port;
 	private ServerSocket socket;
-	private List<ClientConnection> connectedClients = new ArrayList<ClientConnection>();
+	private List<PlayerConnection> connectedClients = new ArrayList<>();
 
 	@Override
 	public void afterPropertiesSet() throws Exception {
@@ -48,12 +48,12 @@ public class ServerConnection implements Runnable, InitializingBean {
 		try {
 			Socket socket;
 			while ((socket = this.socket.accept()) != null) {
-				ClientConnection client = new ClientConnection(socket);
-				client.setClientDelegate(new ClientHandler() {
+				PlayerConnection client = new PlayerConnection(socket);
+				client.setClientDelegate(new PlayerHandler() {
 					@Override
-					public List<ClientConnection> getQueue() {
-						List<ClientConnection> queue = new ArrayList<ClientConnection>();
-						for (ClientConnection c : getConnectedClients()) {
+					public List<PlayerConnection> getQueue() {
+						List<PlayerConnection> queue = new ArrayList<PlayerConnection>();
+						for (PlayerConnection c : getConnectedClients()) {
 							if (c.getPlayer() == null) {
 								continue;
 							}
@@ -85,7 +85,7 @@ public class ServerConnection implements Runnable, InitializingBean {
 				client.setCommandDelegate(new CommandDelegate() {
 
 					@Override
-					public void received(Command command, ClientConnection from) throws CommandException {
+					public void received(Command command, ClientDelegate from) throws CommandException {
 						CommandResolver processor = new CommandResolver(
 							new ClientDelegate() {
 								@Override
@@ -120,7 +120,7 @@ public class ServerConnection implements Runnable, InitializingBean {
 		this.serverExecutor = serverExecutor;
 	}
 
-	public synchronized List<ClientConnection> getConnectedClients() {
+	public synchronized List<PlayerConnection> getConnectedClients() {
 		return connectedClients;
 	}
 }

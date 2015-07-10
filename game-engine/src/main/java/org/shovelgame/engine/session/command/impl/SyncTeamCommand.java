@@ -17,7 +17,7 @@ public class SyncTeamCommand extends BattleCommandProcessor {
 		
 		Battleground bg = battleDelegate.getBattleground();
 		String teamId = String.valueOf(command.getParameters()[0]);
-		Command syncComand = CommandName.SyncTeam.createCommand(bg.getTeam(teamId, delegate.getClient()));
+		Command syncComand = CommandName.SyncTeam.createCommand(bg.getTeam(teamId));
 		try {
 			delegate.getClient().send(syncComand.asResponse());
 		} catch (ClientStreamException e) {
