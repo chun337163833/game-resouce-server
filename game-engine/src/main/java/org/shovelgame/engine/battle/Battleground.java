@@ -71,7 +71,7 @@ public class Battleground {
 				return team;
 			}
 		}
-		throw new IllegalStateException("Oops! Team for requestor not found!!");
+		throw new IllegalStateException(String.format("Oops! Team %s not found!!", teamId));
 	}
 	public BattleSession getSession() {
 		return session;

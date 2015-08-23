@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import org.shovelgame.annotation.Logger;
 import org.springframework.util.Assert;
+import org.springframework.util.StringUtils;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -68,8 +69,10 @@ public class Command {
 		return this;
 	}
 
-	public static Command fromString(String json) throws JsonParseException,
-			JsonMappingException, IOException {
+	public static Command fromString(String json) throws IOException, JsonParseException, JsonMappingException {
+		if(StringUtils.isEmpty(json)) {
+			return null;
+		}
 		return new ObjectMapper().readValue(json, Command.class);
 	}
 
@@ -105,7 +108,7 @@ public class Command {
 				.withGetterVisibility(JsonAutoDetect.Visibility.NONE)
 				.withSetterVisibility(JsonAutoDetect.Visibility.NONE)
 				.withCreatorVisibility(JsonAutoDetect.Visibility.NONE));
-		mapper.enable(SerializationFeature.INDENT_OUTPUT);
+//		mapper.enable(SerializationFeature.INDENT_OUTPUT);
 		try {
 			this.setData(mapper.writeValueAsString(data));
 		} catch (JsonProcessingException e) {

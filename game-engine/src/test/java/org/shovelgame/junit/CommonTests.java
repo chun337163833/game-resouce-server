@@ -63,7 +63,7 @@ public class CommonTests {
 		int legend = 0;
 		int nothing = 0;
 		for(int i = 0; i < 100; i++) {
-			Rarity r = Rarity.resolveRarityForSeekerReward(5);
+			Rarity r = Rarity.resolveRarityForSeekerReward(30);
 			if(r == null) {
 				nothing++;
 			} else if(Rarity.Common.equals(r)) {

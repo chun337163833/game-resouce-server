@@ -15,7 +15,7 @@ public class CommandInputStreamHelper {
 	}
 
 	public Command read() throws IOException {
-		return Command.fromString(reader.readLine());
+		return Command.fromString(reader.readLine().replace("\0", ""));
 	}
 
 }

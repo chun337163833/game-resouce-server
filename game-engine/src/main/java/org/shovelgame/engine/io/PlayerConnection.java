@@ -20,7 +20,6 @@ public class PlayerConnection implements Runnable, ClientConnection {
 	private PlayerHandler handler;
 	private CommandDelegate commandDelegate;
 	private Player player;
-
 	public PlayerConnection(Socket socket) {
 		this.socket = socket;
 	}
@@ -50,6 +49,8 @@ public class PlayerConnection implements Runnable, ClientConnection {
 					} else {
 						this.sendAuthenticationRequired();
 					}
+				} else if(command.getName().equals(CommandName.KeepAlive)){
+					//TODO keepalive
 				} else {
 					try {
 						this.commandDelegate.received(command, () -> this);
@@ -88,7 +89,7 @@ public class PlayerConnection implements Runnable, ClientConnection {
 
 	private void sendAuthenticationSuccess() throws ClientStreamException {
 		send(CommandName.Authentication
-				.createCommand("Successfully authenticated."));
+				.createCommand("Successfully authenticated.").asResponse());
 	}
 
 	public void sendError(Command unproceseedCommand, String message)
@@ -110,9 +111,15 @@ public class PlayerConnection implements Runnable, ClientConnection {
 
 	private Command listen() throws Exception {
 		CommandInputStreamHelper helper = new CommandInputStreamHelper(socket.getInputStream());
-		Command command = helper.read();
-		command.validate();
-		return command;
+		try {
+			Command command = helper.read();
+			command.validate();
+			return command;
+		} catch (Exception e) {
+			log.error("Error");
+			return null;
+		}
+		
 	}
 
 	public Player getPlayer() {

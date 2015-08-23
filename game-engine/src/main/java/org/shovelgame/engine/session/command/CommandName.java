@@ -11,6 +11,7 @@ public enum CommandName {
 	Authentication,
 	Matchmaking(MatchmakingCommand.class),
 	Mission(MissionCommand.class),
+	KeepAlive,
 	/**
 	 * 0 = target team id
 	   1 = skill id
