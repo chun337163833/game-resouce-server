@@ -54,6 +54,7 @@ public class BattleTest {
 		cos.send(CommandName.Mission.createCommand("1"));
 		command = cis.read();
 		Assert.assertEquals(CommandStatus.Ok, command.getStatus());
+		
 		Command ev = null;
 		String teamId = null;
 		while((ev = cis.read()) != null) {
@@ -61,8 +62,6 @@ public class BattleTest {
 				System.out.println(String.format("Using skill %s", ev.getData()));
 			} else if(CommandName.EvtStartTurn.equals(ev.getName())) {
 				cos.send(CommandName.UseSkill.createCommand(Battleground.TEAM1, "swapSkill", MinionPosition.Top.name()));
-				command = cis.read();
-				Assert.assertEquals(CommandStatus.Ok, command.getStatus());
 			} else if(CommandName.EvtGameEnd.equals(ev.getName())) {
 				if(ev.getParameters()[0].equals(teamId)) {
 					System.out.println("Im winner");
@@ -71,6 +70,11 @@ public class BattleTest {
 				}
 			} else if(CommandName.EvtTeamIdAssociation.equals(ev.getName())) {
 				teamId = ev.getParameters()[0];
+				cos.send(CommandName.SyncTeam.createCommand(Battleground.TEAM1));
+			} else if(CommandName.SyncTeam.equals(ev.getName())) {
+				System.out.println(ev.getData());
+			} else if(CommandName.UseSkill.equals(ev.getName())) {
+				System.out.println(ev.getData());
 			}
 		}
 		

@@ -5,45 +5,6 @@
 	<persistence-unit name="puMainDB" transaction-type="RESOURCE_LOCAL">
 		<provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
 		<non-jta-data-source>jdbc/db</non-jta-data-source>
-		<class>org.shovelgame.game.domain.data.Item</class>
-		<class>org.shovelgame.game.domain.data.Minion</class>
-		<class>org.shovelgame.game.domain.data.Player</class>
-		<class>org.shovelgame.game.domain.data.RewardClaim</class>
-		<class>org.shovelgame.game.domain.data.Rights</class>
-		<class>org.shovelgame.game.domain.data.Role</class>
-		<class>org.shovelgame.game.domain.data.Seeker</class>
-		<class>org.shovelgame.game.domain.data.Team</class>
-		<class>org.shovelgame.game.domain.i18n.AttributeTypeDescription</class>
-		<class>org.shovelgame.game.domain.i18n.EnchantmentTypeDescription</class>
-		<class>org.shovelgame.game.domain.i18n.ItemModelDescription</class>
-		<class>org.shovelgame.game.domain.i18n.Language</class>
-		<class>org.shovelgame.game.domain.i18n.MissionDescription</class>
-		<class>org.shovelgame.game.domain.i18n.SkillDescription</class>
-		<class>org.shovelgame.game.domain.i18n.SkillName</class>
-		<class>org.shovelgame.game.domain.i18n.TraitDescription</class>
-		<class>org.shovelgame.game.domain.i18n.TraitName</class>
-		<class>org.shovelgame.game.domain.model.AttributeType</class>
-		<class>org.shovelgame.game.domain.model.EnchantmentType</class>
-		<class>org.shovelgame.game.domain.model.ItemEnchantment</class>
-		<class>org.shovelgame.game.domain.model.ItemModel</class>
-		<class>org.shovelgame.game.domain.model.MinionAttribute</class>
-		<class>org.shovelgame.game.domain.model.MinionModel</class>
-		<class>org.shovelgame.game.domain.model.MinionSkill</class>
-		<class>org.shovelgame.game.domain.model.MinionTrait</class>
-		<class>org.shovelgame.game.domain.model.Mission</class>
-		<class>org.shovelgame.game.domain.model.MissionReward</class>
-		<class>org.shovelgame.game.domain.model.SeekerModel</class>
-		<class>org.shovelgame.game.domain.model.Skill</class>
-		<class>org.shovelgame.game.domain.model.Trait</class>
-		<class>org.shovelgame.game.domain.model.TraitTarget</class>
-
-
-		<class>org.shovelgame.game.domain.model.reward.DiamondReward</class>
-		<class>org.shovelgame.game.domain.model.reward.GoldReward</class>
-		<class>org.shovelgame.game.domain.model.reward.ItemReward</class>
-		<class>org.shovelgame.game.domain.model.reward.MinionReward</class>
-		<class>org.shovelgame.game.domain.model.reward.SeekerReward</class>
-
-		<exclude-unlisted-classes>true</exclude-unlisted-classes>
+		<exclude-unlisted-classes>false</exclude-unlisted-classes>
 	</persistence-unit>
 </persistence>
