@@ -55,7 +55,7 @@ insert into data.minion (id, minion_model, level) values (nextval('data.minion_i
 insert into model.minion_skill (minion_model, skill, required_level) values (currval('model.minion_model_id_seq'), 1, 1);
 
 --test damage minion1
-insert into model.minion_model (id, name, specialization, image_bundle_name, rarity) values (nextval('model.minion_model_id_seq'), 'DamageBot1', 'Damage', 'Zola', 'Common');
+insert into model.minion_model (id, name, specialization, image_bundle_name, rarity) values (nextval('model.minion_model_id_seq'), 'DamageBot1', 'Damage', 'Tera', 'Common');
 insert into model.minion_attribute (id, minion_model, type, value) values (nextval('model.minion_attribute_id_seq'), currval('model.minion_model_id_seq'), 'Health', 150);
 insert into model.minion_attribute (id, minion_model, type, value) values (nextval('model.minion_attribute_id_seq'), currval('model.minion_model_id_seq'), 'Mana', 200);
 insert into model.minion_attribute (id, minion_model, type, value) values (nextval('model.minion_attribute_id_seq'), currval('model.minion_model_id_seq'), 'PhysicalPower', 10);
