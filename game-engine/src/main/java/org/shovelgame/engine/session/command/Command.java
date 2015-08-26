@@ -108,7 +108,7 @@ public class Command {
 				.withGetterVisibility(JsonAutoDetect.Visibility.NONE)
 				.withSetterVisibility(JsonAutoDetect.Visibility.NONE)
 				.withCreatorVisibility(JsonAutoDetect.Visibility.NONE));
-//		mapper.enable(SerializationFeature.INDENT_OUTPUT);
+		mapper.enable(SerializationFeature.INDENT_OUTPUT);
 		try {
 			this.setData(mapper.writeValueAsString(data));
 		} catch (JsonProcessingException e) {

@@ -9,7 +9,6 @@ import org.shovelgame.engine.session.command.Command;
 public class TcpCommunicator extends Communicator {
 
 	ClientConnection connection;
-
 	public TcpCommunicator(PlayerConnection connection) {
 		super(connection.getPlayer().getTeam(), connection);
 		this.connection = connection;
@@ -21,7 +20,6 @@ public class TcpCommunicator extends Communicator {
 	@Override
 	public void send(Command command) {
 		try {
-			log.info("Sending command " + command.getName().name());
 			this.connection.send(command);
 		} catch (ClientStreamException e) {
 			log.error("", e);

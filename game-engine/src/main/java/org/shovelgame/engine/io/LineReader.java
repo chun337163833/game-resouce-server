@@ -29,11 +29,12 @@ public class LineReader implements Closeable {
 		char[] lastchars = new char[endOfLineCharacters.length];
 		while ((content = in.read()) != -1) {
 			char c = (char) content;
-			builder.append(c);
 			this.moveChar(lastchars, c);
 			if(isEndOfLine(lastchars, endOfLineCharacters)) {
+//				String value = builder.substring(0, builder.length()-1);
 				return builder.toString();
 			}
+			builder.append(c);
 		}
 		return null;
 	}

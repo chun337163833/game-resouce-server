@@ -24,25 +24,17 @@ public class ConnectionTest {
 		Socket s = ss.accept();
 		InputStream is = s.getInputStream();
 		OutputStream os = s.getOutputStream();
-		LineReader reader = new LineReader(is);
-		try {
-			String line = null;
-			while((line = reader.readLine()) != null) {
-				Command c = Command.fromString(line);
-				if(c.getStatus().equals(CommandStatus.Ok)) {
-					c = CommandName.Authentication.createCommand("Successfully authenticated.").asResponse();
-					os.write(c.toJson().getBytes());
-					os.write("\n".getBytes());
-				}
-//				os.write(new String("test").getBytes());
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			reader.close();
-			ss.close();
+		for(int i = 0; i < 200; i++) {
+			System.out.println("send " + i);
+			os.write(("test " + i).getBytes());
+			os.write('\n');
+//			Thread.sleep(50);
 		}
-		
+		os.write('\0');
+		int v = -1;
+		while((v = is.read()) > 0) {
+			
+		}
 	}
 	
 }

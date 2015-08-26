@@ -20,6 +20,7 @@ public class PlayerConnection implements Runnable, ClientConnection {
 	private PlayerHandler handler;
 	private CommandDelegate commandDelegate;
 	private Player player;
+	private Object lock = new Object();
 	public PlayerConnection(Socket socket) {
 		this.socket = socket;
 	}
@@ -99,14 +100,15 @@ public class PlayerConnection implements Runnable, ClientConnection {
 	}
 
 	public void send(Command command) throws ClientStreamException {
-		try {
-			CommandOutputStreamHelper os = new CommandOutputStreamHelper(this.socket.getOutputStream());
-			command.validate();
-			os.send(command);
-		} catch (Exception e) {
-			throw new ClientStreamException(e);
+		synchronized (this.lock) {
+			try {
+				CommandOutputStreamHelper os = new CommandOutputStreamHelper(this.socket.getOutputStream());
+				command.validate();
+				os.send(command);
+			} catch (Exception e) {
+				throw new ClientStreamException(e);
+			}
 		}
-
 	}
 
 	private Command listen() throws Exception {
@@ -116,7 +118,8 @@ public class PlayerConnection implements Runnable, ClientConnection {
 			command.validate();
 			return command;
 		} catch (Exception e) {
-			log.error("Error");
+			log.error("Important error when reading data");
+			log.debug("", e);
 			return null;
 		}
 		
