@@ -119,7 +119,7 @@ insert into model.trait_target (id, trait, position) values (nextval('model.trai
 insert into model.trait_target (id, trait, position) values (nextval('model.trait_target_id_seq'), currval('model.minion_trait_id_seq'), 'Bot');
 insert into data.minion (id, minion_model, level) values (nextval('data.minion_id_seq'), currval('model.minion_model_id_seq'), 30);
 insert into model.minion_skill (minion_model, skill, required_level) values (currval('model.minion_model_id_seq'), 1, 1);
-insert into data.team (id, leader, minion_bot, minion_mid, minion_top) values (nextval('data.team_id_seq'), 1, 2, 3, 4);
+insert into data.team (id, leader, minion_bot, minion_mid, minion_top) values (nextval('data.team_id_seq'), 2, 3, 1, 4);
 
 insert into model.mission (id, team) values (nextval('model.mission_id_seq'), currval('data.team_id_seq'));
 
