@@ -4,8 +4,11 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
+import java.util.Properties;
 import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
@@ -47,7 +50,8 @@ public class ResourceDownloadController {
 	}
 	
 	@RequestMapping("textures/{bundle}/{state}")
-	public List<String> getAllImagesInSubfolder(@PathVariable("bundle") String bundle, @PathVariable("state") String state) {
+	public ImageStateData getAllImagesInSubfolder(@PathVariable("bundle") String bundle, @PathVariable("state") String state) {
+		ImageStateData data = new ImageStateData();
 		List<String> files = new ArrayList<>();
 		File file = new File(bundlesPath + bundle + File.separator + state);
 		if(file.isDirectory()) {
@@ -55,7 +59,24 @@ public class ResourceDownloadController {
 				files.add(s);
 			}
 		}
-		return files;
+		File stateData = new File(bundlesPath + bundle + File.separator + state + ".data");
+		if(stateData.exists()) {
+			Properties props = new Properties();
+			FileInputStream fis = null;
+			try {
+				fis = new FileInputStream(stateData);
+				props.load(fis);
+				for(Map.Entry<Object, Object> entry: props.entrySet()) {
+					data.data.put(entry.getKey().toString(), entry.getValue().toString());
+				}
+			} catch (IOException e) {
+				log.error("", e);
+			} finally {
+				IOUtils.closeQuietly(fis);
+			}
+		}
+		data.images = files.toArray(new String[files.size()]);
+		return data;
 	}
 	
 	@RequestMapping("textures/**")
@@ -75,15 +96,20 @@ public class ResourceDownloadController {
 			log.error("", e);
 			return null;
 		} finally {
-			if(in != null) {
-				try {
-					in.close();
-				} catch (IOException e) {
-					log.error("", e);
-				}
-			}
+			IOUtils.closeQuietly(in);
 		}
 	   
+	}
+	
+	public class ImageStateData {
+		private String[] images;
+		private Map<String, String> data = new HashMap<>();
+		public Map<String, String> getData() {
+			return data;
+		}
+		public String[] getImages() {
+			return images;
+		}
 	}
 	
 	public class ImageBundles {

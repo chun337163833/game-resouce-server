@@ -76,7 +76,7 @@ insert into data.minion (id, minion_model, level) values (nextval('data.minion_i
 insert into model.minion_skill (minion_model, skill, required_level) values (currval('model.minion_model_id_seq'), 1, 1);
 
 --test damage minion2
-insert into model.minion_model (id, name, specialization, image_bundle_name, rarity) values (nextval('model.minion_model_id_seq'), 'DamageBot2', 'Damage', 'Zola', 'Common');
+insert into model.minion_model (id, name, specialization, image_bundle_name, rarity) values (nextval('model.minion_model_id_seq'), 'DamageBot2', 'Damage', 'Armodius', 'Common');
 insert into model.minion_attribute (id, minion_model, type, value) values (nextval('model.minion_attribute_id_seq'), currval('model.minion_model_id_seq'), 'Health', 150);
 insert into model.minion_attribute (id, minion_model, type, value) values (nextval('model.minion_attribute_id_seq'), currval('model.minion_model_id_seq'), 'Mana', 200);
 insert into model.minion_attribute (id, minion_model, type, value) values (nextval('model.minion_attribute_id_seq'), currval('model.minion_model_id_seq'), 'PhysicalPower', 10);
@@ -174,7 +174,7 @@ insert into data.minion (id, minion_model, level) values (nextval('data.minion_i
 insert into model.minion_skill (minion_model, skill, required_level) values (currval('model.minion_model_id_seq'), 1, 1);
 
 --test damage minion2
-insert into model.minion_model (id, name, specialization, image_bundle_name, rarity) values (nextval('model.minion_model_id_seq'), 'DamageBot2', 'Damage', 'Zola', 'Common');
+insert into model.minion_model (id, name, specialization, image_bundle_name, rarity) values (nextval('model.minion_model_id_seq'), 'DamageBot2', 'Damage', 'Tera', 'Common');
 insert into model.minion_attribute (id, minion_model, type, value) values (nextval('model.minion_attribute_id_seq'), currval('model.minion_model_id_seq'), 'Health', 300);
 insert into model.minion_attribute (id, minion_model, type, value) values (nextval('model.minion_attribute_id_seq'), currval('model.minion_model_id_seq'), 'Mana', 200);
 insert into model.minion_attribute (id, minion_model, type, value) values (nextval('model.minion_attribute_id_seq'), currval('model.minion_model_id_seq'), 'PhysicalPower', 10);
@@ -195,7 +195,7 @@ insert into data.minion (id, minion_model, level) values (nextval('data.minion_i
 insert into model.minion_skill (minion_model, skill, required_level) values (currval('model.minion_model_id_seq'), 1, 1);
 
 --test tank minion2
-insert into model.minion_model (id, name, specialization, image_bundle_name, rarity) values (nextval('model.minion_model_id_seq'), 'TankBot', 'Damage', 'Zola', 'Common');
+insert into model.minion_model (id, name, specialization, image_bundle_name, rarity) values (nextval('model.minion_model_id_seq'), 'TankBot', 'Damage', 'Armodius', 'Common');
 insert into model.minion_attribute (id, minion_model, type, value) values (nextval('model.minion_attribute_id_seq'), currval('model.minion_model_id_seq'), 'Health', 400);
 insert into model.minion_attribute (id, minion_model, type, value) values (nextval('model.minion_attribute_id_seq'), currval('model.minion_model_id_seq'), 'Mana', 200);
 insert into model.minion_attribute (id, minion_model, type, value) values (nextval('model.minion_attribute_id_seq'), currval('model.minion_model_id_seq'), 'PhysicalPower', 10);
