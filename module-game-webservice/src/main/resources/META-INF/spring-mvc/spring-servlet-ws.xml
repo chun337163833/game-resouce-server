@@ -18,7 +18,7 @@
     <bean class="org.springframework.web.servlet.i18n.AcceptHeaderLocaleResolver" />
     
 	<!-- browse module controllers -->
-	<context:component-scan base-package="org.shovelgame.atlant.web.spring.controller.ws" />
+	<context:component-scan base-package="org.shovelgame.web.spring.controller.ws" />
 	
 	<!-- browse abstract error controllers -->
 	<context:component-scan base-package="org.shovelgame.web.spring.ws.error.controller" />

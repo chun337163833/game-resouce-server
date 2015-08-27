@@ -73,6 +73,7 @@
 		access-decision-manager-ref="accessDecisionManager">
 		<sec:anonymous enabled="false" />
 		
+		<sec:intercept-url pattern="/ws/resources/**" access="ROLE_PLAYER" />
 		<sec:intercept-url pattern="/ws/**" access="SCOPE_READ" method="GET" />
 		<sec:intercept-url pattern="/ws/**" access="SCOPE_WRITE" />
 		
