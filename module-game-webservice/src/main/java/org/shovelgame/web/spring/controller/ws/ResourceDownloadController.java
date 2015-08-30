@@ -90,8 +90,8 @@ public class ResourceDownloadController {
 			in = new FileInputStream(file);
 			 final HttpHeaders headers = new HttpHeaders();
 			    headers.setContentType(MediaType.IMAGE_PNG);
-
-			    return new ResponseEntity<byte[]>(IOUtils.toByteArray(in), headers, HttpStatus.CREATED);
+			    Thread.sleep(500);
+			    return new ResponseEntity<byte[]>(IOUtils.toByteArray(in), headers, HttpStatus.OK);
 		} catch (Exception e) {
 			log.error("", e);
 			return null;
