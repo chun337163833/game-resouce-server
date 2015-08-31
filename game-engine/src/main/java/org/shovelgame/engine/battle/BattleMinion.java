@@ -46,7 +46,7 @@ public class BattleMinion implements StatsOwnerDelegate {
 
 	public void build() {
 		Minion minion = getMinion();
-		this.skin = minion.getMinionModel().getImageBundleName();
+		this.skin = minion.getMinionModel().getTexture().getId();
 		MinionModel model = minion.getMinionModel();
 		model.getMinionSkills().forEach((MinionSkill s) -> this.skills.add(new BattleSkill(s, this)));
 

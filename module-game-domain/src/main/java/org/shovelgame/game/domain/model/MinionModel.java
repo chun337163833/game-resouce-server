@@ -19,8 +19,8 @@ import org.springframework.roo.addon.tostring.RooToString;
 @RooJavaBean
 @RooDbManaged(automaticallyDelete = true)
 @RooJpaActiveRecord(finders = { "findMinionModelsByRarity" }, versionField = "", table = "minion_model", schema = "model", sequenceName = "model.minion_model_id_seq")
-@RooToString(excludeFields = { "minions", "minionSkills", "minionTraits", "attributes", "qualityGrade", "minionAttributes", "specialization", "missionRewardMinions", "missionRewards" })
 @RewardInterface
+@RooToString(excludeFields = { "minions", "minionSkills", "minionTraits", "attributes", "qualityGrade", "minionAttributes", "specialization", "missionRewardMinions", "missionRewards", "texture" })
 public class MinionModel {
 
     @Transient

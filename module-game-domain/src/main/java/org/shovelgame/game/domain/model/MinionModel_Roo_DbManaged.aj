@@ -5,9 +5,12 @@ package org.shovelgame.game.domain.model;
 
 import java.util.Set;
 import javax.persistence.Column;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
 import org.shovelgame.game.domain.data.Minion;
+import org.shovelgame.game.domain.data.Texture;
 import org.shovelgame.game.domain.model.MinionAttribute;
 import org.shovelgame.game.domain.model.MinionModel;
 import org.shovelgame.game.domain.model.MinionSkill;
@@ -27,13 +30,13 @@ privileged aspect MinionModel_Roo_DbManaged {
     @OneToMany(mappedBy = "minionModel")
     private Set<MinionTrait> MinionModel.minionTraits;
     
+    @ManyToOne
+    @JoinColumn(name = "texture", referencedColumnName = "id", nullable = false)
+    private Texture MinionModel.texture;
+    
     @Column(name = "name", length = 50)
     @NotNull
     private String MinionModel.name;
-    
-    @Column(name = "image_bundle_name", length = 50)
-    @NotNull
-    private String MinionModel.imageBundleName;
     
     @Column(name = "price")
     private Integer MinionModel.price;
@@ -70,20 +73,20 @@ privileged aspect MinionModel_Roo_DbManaged {
         this.minionTraits = minionTraits;
     }
     
+    public Texture MinionModel.getTexture() {
+        return texture;
+    }
+    
+    public void MinionModel.setTexture(Texture texture) {
+        this.texture = texture;
+    }
+    
     public String MinionModel.getName() {
         return name;
     }
     
     public void MinionModel.setName(String name) {
         this.name = name;
-    }
-    
-    public String MinionModel.getImageBundleName() {
-        return imageBundleName;
-    }
-    
-    public void MinionModel.setImageBundleName(String imageBundleName) {
-        this.imageBundleName = imageBundleName;
     }
     
     public Integer MinionModel.getPrice() {

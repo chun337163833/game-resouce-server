@@ -98,6 +98,10 @@ DROP TABLE IF EXISTS data.team CASCADE
 ;
 DROP SEQUENCE IF EXISTS data.team_id_seq
 ;
+DROP TABLE IF EXISTS data.texture CASCADE
+;
+DROP TABLE IF EXISTS data.texture_group CASCADE
+;
 DROP TABLE IF EXISTS model.trait CASCADE
 ;
 DROP SEQUENCE IF EXISTS model.trait_id_seq
@@ -113,6 +117,8 @@ DROP SEQUENCE IF EXISTS i18n.trait_name_id_seq
 DROP TABLE IF EXISTS model.trait_target CASCADE
 ;
 DROP SEQUENCE IF EXISTS model.trait_target_id_seq
+;
+DROP TABLE IF EXISTS data.version CASCADE
 ;
 
 CREATE TABLE model.attribute_type ( 
@@ -237,7 +243,7 @@ CREATE SEQUENCE model.minion_model_id_seq INCREMENT 1 START 1
 CREATE TABLE model.minion_model ( 
 	id bigint DEFAULT nextval(('model.minion_model_id_seq'::text)::regclass) NOT NULL,
 	name varchar(50) NOT NULL,
-	image_bundle_name varchar(50) NOT NULL,
+	texture varchar(100) NOT NULL,
 	specialization varchar(50) NOT NULL,
 	price integer,
 	rarity varchar(50) NOT NULL
@@ -415,6 +421,18 @@ CREATE TABLE data.team (
 )
 ;
 
+CREATE TABLE data.texture ( 
+	id varchar(100) NOT NULL,
+	texture_group varchar(100) NOT NULL,
+	version decimal(5,2) NOT NULL
+)
+;
+
+CREATE TABLE data.texture_group ( 
+	id varchar(100) NOT NULL
+)
+;
+
 CREATE SEQUENCE model.trait_id_seq INCREMENT 1 START 1
 ;
 
@@ -459,6 +477,12 @@ CREATE TABLE model.trait_target (
 	id bigint DEFAULT nextval(('model.trait_target_id_seq'::text)::regclass) NOT NULL,
 	trait bigint NOT NULL,
 	position varchar(50) NOT NULL
+)
+;
+
+CREATE TABLE data.version ( 
+	value decimal(5,2) NOT NULL,
+	current boolean DEFAULT false NOT NULL
 )
 ;
 
@@ -522,6 +546,9 @@ CREATE INDEX IXFK_minion_attribute_minion_model
 ;
 CREATE INDEX IXFK_minion_model_minion_specialization
 	ON model.minion_model (specialization)
+;
+CREATE INDEX IXFK_minion_model_texture
+	ON model.minion_model (texture)
 ;
 CREATE INDEX IXFK_minion_skill_minion_model
 	ON model.minion_skill (minion_model)
@@ -612,6 +639,12 @@ CREATE INDEX IXFK_team_minion_02
 ;
 CREATE INDEX IXFK_team_minion_03
 	ON data.team (minion_bot)
+;
+CREATE INDEX IXFK_texture_texture_group
+	ON data.texture (texture_group)
+;
+CREATE INDEX IXFK_texture_version
+	ON data.texture (version)
 ;
 CREATE INDEX IXFK_trait_model_attribute_type
 	ON model.trait (affected_attribute_type)
@@ -764,6 +797,16 @@ ALTER TABLE data.team ADD CONSTRAINT PK_team
 ;
 
 
+ALTER TABLE data.texture ADD CONSTRAINT PK_texture 
+	PRIMARY KEY (id)
+;
+
+
+ALTER TABLE data.texture_group ADD CONSTRAINT PK_texture_group 
+	PRIMARY KEY (id)
+;
+
+
 ALTER TABLE model.trait ADD CONSTRAINT PK_trait_model 
 	PRIMARY KEY (id)
 ;
@@ -781,6 +824,11 @@ ALTER TABLE i18n.trait_name ADD CONSTRAINT PK_trait_name
 
 ALTER TABLE model.trait_target ADD CONSTRAINT PK_trait_target 
 	PRIMARY KEY (id)
+;
+
+
+ALTER TABLE data.version ADD CONSTRAINT PK_version 
+	PRIMARY KEY (value)
 ;
 
 
@@ -857,6 +905,10 @@ ALTER TABLE model.minion_attribute ADD CONSTRAINT FK_minion_attribute_attribute_
 
 ALTER TABLE model.minion_attribute ADD CONSTRAINT FK_minion_attribute_minion_model 
 	FOREIGN KEY (minion_model) REFERENCES model.minion_model (id)
+;
+
+ALTER TABLE model.minion_model ADD CONSTRAINT FK_minion_model_texture 
+	FOREIGN KEY (texture) REFERENCES data.texture (id)
 ;
 
 ALTER TABLE model.minion_skill ADD CONSTRAINT FK_minion_skill_minion_model 
@@ -966,6 +1018,14 @@ ALTER TABLE data.team ADD CONSTRAINT FK_team_minion_02
 
 ALTER TABLE data.team ADD CONSTRAINT FK_team_minion_03 
 	FOREIGN KEY (minion_bot) REFERENCES data.minion (id)
+;
+
+ALTER TABLE data.texture ADD CONSTRAINT FK_texture_texture_group 
+	FOREIGN KEY (texture_group) REFERENCES data.texture_group (id)
+;
+
+ALTER TABLE data.texture ADD CONSTRAINT FK_texture_version 
+	FOREIGN KEY (version) REFERENCES data.version (value)
 ;
 
 ALTER TABLE model.trait ADD CONSTRAINT FK_trait_model_attribute_type 

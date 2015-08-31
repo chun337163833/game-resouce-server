@@ -31,7 +31,7 @@ privileged aspect Trait_Roo_DbManaged {
     @JoinColumn(name = "affected_attribute_type", referencedColumnName = "id")
     private AttributeType Trait.affectedAttributeType;
     
-    @Column(name = "power", precision = 10)
+    @Column(name = "power", precision = 10, scale = 3)
     private BigDecimal Trait.power;
     
     @Column(name = "icon_name", length = 50)

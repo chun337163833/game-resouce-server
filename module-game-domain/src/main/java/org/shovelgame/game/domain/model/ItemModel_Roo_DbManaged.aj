@@ -31,7 +31,7 @@ privileged aspect ItemModel_Roo_DbManaged {
     @JoinColumn(name = "attribute_type", referencedColumnName = "id", nullable = false)
     private AttributeType ItemModel.attributeType;
     
-    @Column(name = "value", precision = 10, scale = 5)
+    @Column(name = "value", precision = 10, scale = 3)
     @NotNull
     private BigDecimal ItemModel.value;
     

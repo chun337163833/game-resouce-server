@@ -1,0 +1,2 @@
+database introspect --schema "data model i18n"
+database reverse engineer --schema "data model i18n" --disableVersionFields --package "org.shovelgame.game.domain"
