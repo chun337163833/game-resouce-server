@@ -24,7 +24,7 @@ public class BattleMinion implements StatsOwnerDelegate {
 
 	private Stat[] stats;
 	private boolean died;
-	private String skin;
+	private String name;
 	/**
 	 * Traits which affect this minion. This property serves for calculate stats
 	 * and as information about affected traits for same client.
@@ -46,7 +46,7 @@ public class BattleMinion implements StatsOwnerDelegate {
 
 	public void build() {
 		Minion minion = getMinion();
-		this.skin = minion.getMinionModel().getTexture().getId();
+		this.name = minion.getMinionModel().getTexture().getId();
 		MinionModel model = minion.getMinionModel();
 		model.getMinionSkills().forEach((MinionSkill s) -> this.skills.add(new BattleSkill(s, this)));
 
@@ -146,12 +146,8 @@ public class BattleMinion implements StatsOwnerDelegate {
 		return states;
 	}
 
-	public String getSkin() {
-		return skin;
-	}
-
-	public void setSkin(String skin) {
-		this.skin = skin;
+	public String getName() {
+		return name;
 	}
 
 }

@@ -60,6 +60,11 @@ public class ResourceDownloadController {
 		return groups;
 	}
 	
+	@RequestMapping("sync/states/{version}")
+	public String[] getStates(@PathVariable("version") BigDecimal version) {
+		return this.bundlesStates;
+	}
+	
 	@RequestMapping("sync/textures/{group}/{version}")
 	public ImageBundles syncTexturesByGroup(@PathVariable("group") String group, @PathVariable("version") BigDecimal version) {
 		ImageBundles bundles = new ImageBundles();
@@ -73,7 +78,7 @@ public class ResourceDownloadController {
 			ib[i] = b;
 		}
 		bundles.bundles = ib;
-		bundles.states = bundlesStates;
+//		bundles.states = bundlesStates;
 		return bundles;
 	}
 	
@@ -121,6 +126,11 @@ public class ResourceDownloadController {
 	
 	@RequestMapping("textures/**")
 	public ResponseEntity<byte[]> getImage(HttpServletRequest request) {
+		String wait = request.getParameter("wait");
+		long waitTime = 0;
+		if(!StringUtils.isEmpty(wait)) {
+			waitTime = Long.valueOf(wait);
+		}
 		String path = request.getRequestURI();
 		path = path.replace(request.getContextPath(), "").replace(request.getServletPath(), "");
 		path = path.replace("/resources/textures/", "");
@@ -128,10 +138,10 @@ public class ResourceDownloadController {
 		FileInputStream in = null;
 		try {
 			in = new FileInputStream(file);
-			 final HttpHeaders headers = new HttpHeaders();
-			    headers.setContentType(MediaType.IMAGE_PNG);
-//			    Thread.sleep(500);
-			    return new ResponseEntity<byte[]>(IOUtils.toByteArray(in), headers, HttpStatus.OK);
+			final HttpHeaders headers = new HttpHeaders();
+			headers.setContentType(MediaType.IMAGE_PNG);
+			Thread.sleep(waitTime);
+			return new ResponseEntity<byte[]>(IOUtils.toByteArray(in), headers, HttpStatus.OK);
 		} catch (Exception e) {
 			log.error("", e);
 			return null;
@@ -153,10 +163,6 @@ public class ResourceDownloadController {
 	
 	public class ImageBundles {
 		private ImageBundle[] bundles;
-		private String[] states;
-		public String[] getStates() {
-			return states;
-		}
 		public ImageBundle[] getBundles() {
 			return bundles;
 		}

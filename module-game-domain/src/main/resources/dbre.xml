@@ -302,6 +302,11 @@
             <option key="exported" value="true"/>
             <reference foreign="texture" local="id"/>
         </foreign-key>
+        <foreign-key foreignTable="mission" name="fk_mission_texture" onDelete="none" onUpdate="none">
+            <option key="foreignSchemaName" value="model"/>
+            <option key="exported" value="true"/>
+            <reference foreign="background" local="id"/>
+        </foreign-key>
         <unique name="pk_texture">
             <unique-column name="id"/>
         </unique>
@@ -603,11 +608,17 @@
     </table>
     <table alias="model" name="mission">
         <column name="id" primaryKey="true" required="true" scale="0" size="19" type="-5,bigserial"/>
-        <column name="team" primaryKey="false" required="false" scale="0" size="19" type="-5,int8"/>
+        <column name="team" primaryKey="false" required="true" scale="0" size="19" type="-5,int8"/>
+        <column name="background" primaryKey="false" required="true" scale="0" size="100" type="12,varchar"/>
         <foreign-key foreignTable="team" name="fk_mission_team" onDelete="none" onUpdate="none">
             <option key="foreignSchemaName" value="data"/>
             <option key="exported" value="false"/>
             <reference foreign="id" local="team"/>
+        </foreign-key>
+        <foreign-key foreignTable="texture" name="fk_mission_texture" onDelete="none" onUpdate="none">
+            <option key="foreignSchemaName" value="data"/>
+            <option key="exported" value="false"/>
+            <reference foreign="id" local="background"/>
         </foreign-key>
         <foreign-key foreignTable="mission_description" name="fk_mission_description_mission" onDelete="none" onUpdate="none">
             <option key="foreignSchemaName" value="i18n"/>
@@ -624,6 +635,9 @@
         </unique>
         <index name="ixfk_mission_team">
             <index-column name="team"/>
+        </index>
+        <index name="ixfk_mission_texture">
+            <index-column name="background"/>
         </index>
     </table>
     <table alias="model" name="mission_reward">

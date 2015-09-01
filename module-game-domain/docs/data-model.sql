@@ -275,7 +275,8 @@ CREATE SEQUENCE model.mission_id_seq INCREMENT 1 START 1
 
 CREATE TABLE model.mission ( 
 	id bigint DEFAULT nextval(('model.mission_id_seq'::text)::regclass) NOT NULL,
-	team bigint
+	team bigint NOT NULL,
+	background varchar(100) NOT NULL
 )
 ;
 
@@ -564,6 +565,9 @@ CREATE INDEX IXFK_minion_trait_minion_model
 ;
 CREATE INDEX IXFK_mission_team
 	ON model.mission (team)
+;
+CREATE INDEX IXFK_mission_texture
+	ON model.mission (background)
 ;
 CREATE INDEX IXFK_mission_description_language
 	ON i18n.mission_description (lang)
@@ -929,6 +933,10 @@ ALTER TABLE model.minion_trait ADD CONSTRAINT FK_minion_trait_minion_model
 
 ALTER TABLE model.mission ADD CONSTRAINT FK_mission_team 
 	FOREIGN KEY (team) REFERENCES data.team (id)
+;
+
+ALTER TABLE model.mission ADD CONSTRAINT FK_mission_texture 
+	FOREIGN KEY (background) REFERENCES data.texture (id)
 ;
 
 ALTER TABLE i18n.mission_description ADD CONSTRAINT FK_mission_description_language 

@@ -14,7 +14,7 @@ privileged aspect TextureGroup_Roo_Jpa_ActiveRecord {
     @PersistenceContext
     transient EntityManager TextureGroup.entityManager;
     
-    public static final List<String> TextureGroup.fieldNames4OrderClauseFilter = java.util.Arrays.asList("");
+    public static final List<String> TextureGroup.fieldNames4OrderClauseFilter = java.util.Arrays.asList("GROUP_CLASSES", "GROUP_BACKGROUNDS", "GROUP_HUD", "GROUP_ICONS", "GROUP_SKILLS");
     
     public static final EntityManager TextureGroup.entityManager() {
         EntityManager em = new TextureGroup().entityManager;

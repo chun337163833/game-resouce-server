@@ -11,11 +11,15 @@ import org.shovelgame.game.domain.data.Texture;
 import org.shovelgame.game.domain.data.TextureGroup;
 import org.shovelgame.game.domain.data.Version;
 import org.shovelgame.game.domain.model.MinionModel;
+import org.shovelgame.game.domain.model.Mission;
 
 privileged aspect Texture_Roo_DbManaged {
     
     @OneToMany(mappedBy = "texture")
     private Set<MinionModel> Texture.minionModels;
+    
+    @OneToMany(mappedBy = "background")
+    private Set<Mission> Texture.missions;
     
     @ManyToOne
     @JoinColumn(name = "texture_group", referencedColumnName = "id", nullable = false)
@@ -31,6 +35,14 @@ privileged aspect Texture_Roo_DbManaged {
     
     public void Texture.setMinionModels(Set<MinionModel> minionModels) {
         this.minionModels = minionModels;
+    }
+    
+    public Set<Mission> Texture.getMissions() {
+        return missions;
+    }
+    
+    public void Texture.setMissions(Set<Mission> missions) {
+        this.missions = missions;
     }
     
     public TextureGroup Texture.getTextureGroup() {

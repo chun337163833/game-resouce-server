@@ -10,7 +10,7 @@ import org.shovelgame.game.domain.data.Texture;
 privileged aspect Texture_Roo_ToString {
     
     public String Texture.toString() {
-        return new ReflectionToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE).setExcludeFieldNames("minionModels", "textureGroup", "version").toString();
+        return new ReflectionToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE).setExcludeFieldNames("minionModels", "textureGroup", "version", "missions").toString();
     }
     
 }

@@ -8,6 +8,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import org.shovelgame.game.domain.data.Team;
+import org.shovelgame.game.domain.data.Texture;
 import org.shovelgame.game.domain.i18n.MissionDescription;
 import org.shovelgame.game.domain.model.Mission;
 import org.shovelgame.game.domain.model.MissionReward;
@@ -21,8 +22,12 @@ privileged aspect Mission_Roo_DbManaged {
     private Set<MissionReward> Mission.missionRewards;
     
     @ManyToOne
-    @JoinColumn(name = "team", referencedColumnName = "id")
+    @JoinColumn(name = "team", referencedColumnName = "id", nullable = false)
     private Team Mission.team;
+    
+    @ManyToOne
+    @JoinColumn(name = "background", referencedColumnName = "id", nullable = false)
+    private Texture Mission.background;
     
     public Set<MissionDescription> Mission.getMissionDescriptions() {
         return missionDescriptions;
@@ -46,6 +51,14 @@ privileged aspect Mission_Roo_DbManaged {
     
     public void Mission.setTeam(Team team) {
         this.team = team;
+    }
+    
+    public Texture Mission.getBackground() {
+        return background;
+    }
+    
+    public void Mission.setBackground(Texture background) {
+        this.background = background;
     }
     
 }

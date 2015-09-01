@@ -10,7 +10,7 @@ import org.shovelgame.game.domain.model.Mission;
 privileged aspect Mission_Roo_ToString {
     
     public String Mission.toString() {
-        return new ReflectionToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE).setExcludeFieldNames("missionDescriptions", "missionRewards", "team").toString();
+        return new ReflectionToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE).setExcludeFieldNames("missionDescriptions", "missionRewards", "team", "backgroung", "background").toString();
     }
     
 }
