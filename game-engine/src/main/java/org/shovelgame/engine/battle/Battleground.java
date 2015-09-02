@@ -140,7 +140,7 @@ public class Battleground {
 		//first send teamid to client
 		this.teams.forEach((Communicator c, BattleTeam t) -> c.send(CommandName.EvtTeamIdAssociation.createCommand(t.getTeamId())));
 		BattleTeam nextTeam = queue.getCurrentTeam();
-		nextTeam.getCommunicator().send(CommandName.EvtStartTurn.createCommand());
+		nextTeam.youTurn();
 	}
 	
 	public void nextTurn() {
@@ -155,7 +155,7 @@ public class Battleground {
 			
 		});
 		minion.getEffects().removeAll(expiredEffects);
-		nextTeam.getCommunicator().send(CommandName.EvtStartTurn.createCommand(minion.getPosition().name()));
+		nextTeam.youTurn();
 	}
 	public Queue getQueue() {
 		return queue;

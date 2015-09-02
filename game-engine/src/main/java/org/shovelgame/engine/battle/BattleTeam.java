@@ -10,6 +10,7 @@ import java.util.function.BiConsumer;
 
 import org.shovelgame.engine.collection.ValuePrioritySet;
 import org.shovelgame.engine.session.command.BigData;
+import org.shovelgame.engine.session.command.CommandName;
 import org.shovelgame.engine.session.communication.Communicator;
 import org.shovelgame.game.domain.data.Item;
 import org.shovelgame.game.domain.data.Team;
@@ -200,5 +201,10 @@ public class BattleTeam implements BigData {
 	}
 	public BattleItem[] getItems() {
 		return items;
+	}
+
+	public void youTurn() {
+		BattleMinion minion = getInstance().getQueue().getCurrent();
+		getCommunicator().send(CommandName.EvtStartTurn.createCommand(minion.getPosition().name()));
 	}
 }

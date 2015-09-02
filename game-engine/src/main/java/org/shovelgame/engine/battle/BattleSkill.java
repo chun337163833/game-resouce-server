@@ -29,7 +29,9 @@ public class BattleSkill {
 	private Integer ticks;
 	private SkillType type;
 	private AttributeManagedType attribute;
+	@JsonIgnore
 	private Set<BattleTrait> traits = new HashSet<>();
+	@JsonIgnore
 	private Set<BattleItem> items = new HashSet<>();
 	
 	private Integer reuse = 0;
