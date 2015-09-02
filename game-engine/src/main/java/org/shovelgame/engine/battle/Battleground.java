@@ -95,13 +95,14 @@ public class Battleground {
 	}
 	public SkillResult useSkill(UseSkillParameters params, ClientConnection requestor) throws SkillUsageException {
 		BattleMinion source = this.queue.getCurrent();
-		BattleMinion target = getTeam(params.getTeamId()).getMinions().get(params.getTarget());
+		params.setSourceTeam(source.getTeam().getTeamId());
+		BattleMinion target = getTeam(params.getTargetTeam()).getMinions().get(params.getTarget());
 		BattleSkill skill = source.findSkill(params.getSkillId());
 		if(skill == null) {
 			throw new SkillUsageException(String.format("Skill %s not found", params.getSkillId()));
 		}
 		if(!skill.canUse(params)) {
-			throw new SkillUsageException(String.format("Skill %s cannot be used to %s -> %s", params.getSkillId(), params.getTeamId(), params.getTarget().name()));	
+			throw new SkillUsageException(String.format("Skill %s cannot be used to %s -> %s", params.getSkillId(), params.getTargetTeam(), params.getTarget().name()));	
 		}
 		if(params.getSource() == null) {
 			params.setSource(source.getPosition());
@@ -144,7 +145,7 @@ public class Battleground {
 	}
 	
 	public void nextTurn() {
-		BattleTeam nextTeam = queue.next();
+		queue.next();
 		List<OvertimeEffect> expiredEffects = new ArrayList<>();
 		BattleMinion minion = queue.getCurrent();
 		minion.getEffects().forEach((OvertimeEffect o) -> 
@@ -155,7 +156,6 @@ public class Battleground {
 			
 		});
 		minion.getEffects().removeAll(expiredEffects);
-		nextTeam.youTurn();
 	}
 	public Queue getQueue() {
 		return queue;

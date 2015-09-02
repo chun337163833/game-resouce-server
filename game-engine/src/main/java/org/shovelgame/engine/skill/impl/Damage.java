@@ -2,6 +2,7 @@ package org.shovelgame.engine.skill.impl;
 
 import java.math.BigDecimal;
 
+import org.shovelgame.annotation.Logger;
 import org.shovelgame.engine.battle.BattleMinion;
 import org.shovelgame.engine.battle.BattleSkill;
 import org.shovelgame.engine.battle.Stat;
@@ -16,6 +17,7 @@ import org.shovelgame.game.domain.enumeration.AttributeManagedType;
 import org.shovelgame.game.domain.enumeration.SkillAlgorithm;
 
 @Skill(SkillAlgorithm.Damage)
+@Logger
 public class Damage extends AbstractSkill implements OvertimeSkill {
 	
 	public Damage(BattleSkill skill) {
@@ -52,9 +54,11 @@ public class Damage extends AbstractSkill implements OvertimeSkill {
 		if(positive) {
 			BigDecimal value = stat.getCurrentValue().add(res.getResultValue());
 			stat.changeValue(value);
+			log.debug("target health " + value);
 		} else {
 			BigDecimal value = stat.getCurrentValue().subtract(res.getResultValue());
 			stat.changeValue(value);
+			log.debug("target health " + value);
 		}
 		return res;
 	}
@@ -69,8 +73,9 @@ public class Damage extends AbstractSkill implements OvertimeSkill {
 		result.setTick(true);
 		UseSkillParameters params = new UseSkillParameters();
 		params.setSkillId(getSourceId());
-		params.setSource(target.getPosition());
-		params.setTeamId(target.getTeam().getTeamId());
+		params.setTarget(target.getPosition());
+		params.setTargetTeam(target.getTeam().getTeamId());
+		result.setMetadata(params);
 		return result;
 	}
 

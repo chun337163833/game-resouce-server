@@ -10,7 +10,10 @@ public class ErrorMessageCommand extends Command {
 		c.setName(command.getName());
 		c.setStatus(CommandStatus.Error);
 		c.setMessage(message);
-		return c;
+		if(command.isEvent()) {
+			return (ErrorMessageCommand) c.asEvent();
+		}
+		return (ErrorMessageCommand) c.asResponse();
 	}
 	
 	

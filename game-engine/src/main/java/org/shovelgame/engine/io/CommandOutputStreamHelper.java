@@ -19,16 +19,21 @@ public class CommandOutputStreamHelper {
 	}
 
 	public void send(Command command) throws IOException {
-		byte[] data = Base64.getEncoder().encode(command.toJson().getBytes());
+		sendRaw(command.toJson());
 		log.info(String.format("Command(%s) > %s", command.getName().name(), command.getStatus().name()));
-		output.write(data);
-		output.write('\n');
 //		try {
 //			Thread.sleep(50);
 //		} catch (InterruptedException e) {
 //			log.debug("", e);
 //		}
 	}
-
+	
+	public void sendRaw(String s ) throws IOException {
+		byte[] data = Base64.getEncoder().encode(s.getBytes());
+		
+		output.write(data);
+		output.write('\n');
+	}
+	
 
 }

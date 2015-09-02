@@ -206,5 +206,6 @@ public class BattleTeam implements BigData {
 	public void youTurn() {
 		BattleMinion minion = getInstance().getQueue().getCurrent();
 		getCommunicator().send(CommandName.EvtStartTurn.createCommand(minion.getPosition().name()));
+		this.opponentTeamDelegate.getTeam().getCommunicator().send(CommandName.EvtEnemyTurn.createCommand(minion.getPosition().name()));
 	}
 }

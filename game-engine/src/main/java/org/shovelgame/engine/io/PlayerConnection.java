@@ -118,6 +118,7 @@ public class PlayerConnection implements Runnable, ClientConnection {
 			command.validate();
 			return command;
 		} catch (Exception e) {
+			sendError(CommandName.EvtCommandError.createCommand(), "Cannot process last command");
 			log.error("Important error when reading data");
 			log.debug("", e);
 			return null;

@@ -5,6 +5,7 @@ import org.shovelgame.engine.session.command.impl.MissionCommand;
 import org.shovelgame.engine.session.command.impl.SyncTeamCommand;
 import org.shovelgame.engine.session.command.impl.TestDamageCommand;
 import org.shovelgame.engine.session.command.impl.TestKillCommand;
+import org.shovelgame.engine.session.command.impl.TurnEndCommand;
 import org.shovelgame.engine.session.command.impl.UseSkillCommand;
 
 public enum CommandName {
@@ -22,10 +23,13 @@ public enum CommandName {
 	SyncTeam(SyncTeamCommand.class),
 	TestKill(TestKillCommand.class),
 	TestDamage(TestDamageCommand.class),
+	TurnEnd(TurnEndCommand.class),
 	EvtGameEnd(true),
 	EvtSkillUsed(true),
 	EvtStartTurn(true),
-	EvtTeamIdAssociation(true)
+	EvtEnemyTurn(true),
+	EvtTeamIdAssociation(true),
+	EvtCommandError(true)
 	;
 	
 	private Class<? extends CommandProcessor> processor;

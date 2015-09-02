@@ -130,7 +130,7 @@ public class BattleSkill {
 				Set<MinionPosition> pos = new HashSet<>();
 				pos.addAll(Arrays.asList(positions));
 				clearDiedFromAvailability(pos, ownerTeam.getOpponentTeamDelegate().getTeam().getMinions());
-				this.availablePositions.put(teamId, positions);
+				this.availablePositions.put(teamId, pos.toArray(new MinionPosition[pos.size()]));
 			}
 		}
 	}
@@ -188,7 +188,7 @@ public class BattleSkill {
 		if(this.reuse > 0) {
 			return false;
 		}
-		MinionPosition[] positions = this.availablePositions.get(params.getTeamId());
+		MinionPosition[] positions = this.availablePositions.get(params.getTargetTeam());
 		if(positions != null) {
 			for(MinionPosition pos: positions) {
 				if(pos.equals(params.getTarget())) {

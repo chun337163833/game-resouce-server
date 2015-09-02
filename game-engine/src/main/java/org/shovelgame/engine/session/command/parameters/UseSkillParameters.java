@@ -7,12 +7,14 @@ public class UseSkillParameters {
 	private MinionPosition target;
 	private MinionPosition source;
 
-	private String teamId;
+	private String sourceTeam;
+	private String targetTeam;
+
 	private String skillId;
 
 	public static UseSkillParameters read(String[] params) {
 		UseSkillParameters p = new UseSkillParameters();
-		p.teamId = params[0];
+		p.targetTeam = params[0];
 		p.skillId = params[1];
 		p.target = MinionPosition.valueOf(params[2]);
 		if (params.length > 3)
@@ -22,10 +24,6 @@ public class UseSkillParameters {
 
 	public MinionPosition getTarget() {
 		return target;
-	}
-
-	public String getTeamId() {
-		return teamId;
 	}
 
 	public String getSkillId() {
@@ -44,12 +42,24 @@ public class UseSkillParameters {
 		this.target = target;
 	}
 
-	public void setTeamId(String teamId) {
-		this.teamId = teamId;
-	}
-
 	public void setSkillId(String skillId) {
 		this.skillId = skillId;
+	}
+
+	public String getSourceTeam() {
+		return sourceTeam;
+	}
+
+	public void setSourceTeam(String sourceTeam) {
+		this.sourceTeam = sourceTeam;
+	}
+
+	public String getTargetTeam() {
+		return targetTeam;
+	}
+
+	public void setTargetTeam(String targetTeam) {
+		this.targetTeam = targetTeam;
 	}
 
 }
