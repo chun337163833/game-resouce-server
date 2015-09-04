@@ -2,6 +2,7 @@ package org.shovelgame.engine.session.command;
 
 import org.shovelgame.engine.session.command.impl.MatchmakingCommand;
 import org.shovelgame.engine.session.command.impl.MissionCommand;
+import org.shovelgame.engine.session.command.impl.SyncMinionsCommand;
 import org.shovelgame.engine.session.command.impl.SyncTeamCommand;
 import org.shovelgame.engine.session.command.impl.TestDamageCommand;
 import org.shovelgame.engine.session.command.impl.TestKillCommand;
@@ -24,12 +25,15 @@ public enum CommandName {
 	TestKill(TestKillCommand.class),
 	TestDamage(TestDamageCommand.class),
 	TurnEnd(TurnEndCommand.class),
+	SyncMinions(SyncMinionsCommand.class),
+	
 	EvtGameEnd(true),
 	EvtSkillUsed(true),
 	EvtStartTurn(true),
 	EvtEnemyTurn(true),
 	EvtTeamIdAssociation(true),
-	EvtCommandError(true)
+	EvtCommandError(true),
+	EvtSyncMinion(true)
 	;
 	
 	private Class<? extends CommandProcessor> processor;
@@ -51,9 +55,11 @@ public enum CommandName {
 	public CommandProcessor instantiate() throws InstantiationException, IllegalAccessException {
 		return this.processor.newInstance();
 	}
-
 	public Command createCommand(BigData data) {
-		Command c = new Command().setParameters(null).setName(this);
+		return createCommand(data, new String[0]);
+	}
+	public Command createCommand(BigData data, String... parameters) {
+		Command c = new Command().setParameters(parameters).setName(this);
 		c.writeDataAsString(data);
 		if(event) {
 			return c.asEvent();

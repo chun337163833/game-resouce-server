@@ -1,7 +1,6 @@
 package org.shovelgame.engine.battle;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -205,7 +204,9 @@ public class BattleTeam implements BigData {
 
 	public void youTurn() {
 		BattleMinion minion = getInstance().getQueue().getCurrent();
-		getCommunicator().send(CommandName.EvtStartTurn.createCommand(minion.getPosition().name()));
-		this.opponentTeamDelegate.getTeam().getCommunicator().send(CommandName.EvtEnemyTurn.createCommand(minion.getPosition().name()));
+		if(!getInstance().getSession().isGameEnd()) {
+			getCommunicator().send(CommandName.EvtStartTurn.createCommand(minion.getPosition().name()));
+			this.opponentTeamDelegate.getTeam().getCommunicator().send(CommandName.EvtEnemyTurn.createCommand(minion.getPosition().name()));
+		}
 	}
 }

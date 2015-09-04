@@ -57,7 +57,6 @@ public class Battleground {
 			u.getMinions().forEach((MinionPosition o, BattleMinion m) -> {
 				for(Stat s: m.getStats()) {s.recalculate();}
 			});
-			
 		});
 	}	
 	public Map<Communicator, BattleTeam> getTeams() {
@@ -132,9 +131,10 @@ public class Battleground {
 		
 	}
 	
-	public void gameEnd(BattleTeam winner) {
-		this.teams.forEach((Communicator c, BattleTeam team) -> c.send(CommandName.EvtGameEnd.createCommand(winner.getTeamId())));
+	public void gameEnd(BattleTeam winner) {		
 		this.session.end(winner.getTeam());
+		this.session.setGameEnd(true);
+		this.teams.forEach((Communicator c, BattleTeam team) -> c.send(CommandName.EvtGameEnd.createCommand(winner.getTeamId())));
 	}
 	
 	public void start() {

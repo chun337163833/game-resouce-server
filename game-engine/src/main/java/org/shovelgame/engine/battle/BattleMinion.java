@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Set;
 
 import org.shovelgame.annotation.Logger;
+import org.shovelgame.engine.session.command.BigData;
 import org.shovelgame.engine.skill.OvertimeEffect;
 import org.shovelgame.engine.skill.TemporaryState;
 import org.shovelgame.game.domain.data.Minion;
@@ -20,7 +21,7 @@ import org.shovelgame.game.domain.model.MinionSkill;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Logger
-public class BattleMinion implements StatsOwnerDelegate {
+public class BattleMinion implements StatsOwnerDelegate, BigData {
 
 	private Stat[] stats;
 	private boolean died;

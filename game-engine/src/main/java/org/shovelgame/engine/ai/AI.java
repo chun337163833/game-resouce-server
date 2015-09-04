@@ -1,7 +1,5 @@
 package org.shovelgame.engine.ai;
 
-import java.util.Map;
-
 import org.shovelgame.engine.battle.BattleMinion;
 import org.shovelgame.engine.battle.BattleSkill;
 import org.shovelgame.engine.battle.BattleTeam;
@@ -11,10 +9,8 @@ import org.shovelgame.engine.io.ClientStreamException;
 import org.shovelgame.engine.session.command.Command;
 import org.shovelgame.engine.session.command.CommandException;
 import org.shovelgame.engine.session.command.CommandName;
-import org.shovelgame.engine.session.command.parameters.UseSkillParameters;
 import org.shovelgame.game.domain.enumeration.MinionPosition;
 import org.shovelgame.game.domain.enumeration.SkillAlgorithm;
-import org.springframework.util.Assert;
 
 public class AI implements ClientConnection {
 
@@ -42,7 +38,7 @@ public class AI implements ClientConnection {
 	public void received(Command command) throws ClientStreamException {
 		if(CommandName.EvtTeamIdAssociation.equals(command.getName())) {
 			this.team = battleground.getTeam(command.getParameters()[0]);
-		} else if(CommandName.EvtStartTurn.equals(command.getName())) {
+		} else if(CommandName.EvtStartTurn.equals(command.getName()) && !battleground.getSession().isGameEnd()) {
 			this.play(MinionPosition.valueOf(command.getParameters()[0]));
 		}
 	}

@@ -18,7 +18,8 @@ public abstract class BattleSession implements BattleDelegate, CommandDelegate {
 	protected Communicator team1;
 	protected Communicator team2;
 	private Battleground battleground;
-	
+	private boolean gameEnd;
+
 	public BattleSession(Communicator team1, Communicator team2) {
 		Assert.notNull(team1, "team1 argument is mandatory");
 		Assert.notNull(team2, "team2 argument is mandatory");
@@ -45,12 +46,12 @@ public abstract class BattleSession implements BattleDelegate, CommandDelegate {
 	public Battleground getBattleground() {
 		return this.battleground;
 	}
-	
+
 	public void sendAll(Command command) {
 		team1.send(command);
 		team2.send(command);
 	}
-	
+
 	@Override
 	public void received(Command command, ClientDelegate from) throws CommandException {
 		try {
@@ -64,4 +65,13 @@ public abstract class BattleSession implements BattleDelegate, CommandDelegate {
 			throw new CommandException(e);
 		}
 	}
+
+	public boolean isGameEnd() {
+		return gameEnd;
+	}
+
+	public void setGameEnd(boolean gameEnd) {
+		this.gameEnd = gameEnd;
+	}
+
 }
